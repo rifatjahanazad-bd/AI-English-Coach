@@ -1,192 +1,251 @@
 # AI English Coach 🎙️✨
 
-**AI English Coach** is a modern, modular AI-powered web application and speech practice tool designed for IELTS, TOEFL, and fluency preparation.
+**AI English Coach** is a modern, modular AI-powered web platform and speech practice engine designed for IELTS, TOEFL, and CEFR English fluency preparation.
 
-It features an interactive frontend with an **AI Chat Coach**, a **4-Track Practice Arena** (Grammar, Vocabulary, Listening, Writing), and a **Full Speaking Test Simulator**, alongside **VocalPrep**, a Python-based audio capture and transcription engine.
+The application combines an interactive Single Page Application (SPA) frontend with a high-performance Python FastAPI backend, offering an **AI Personal Mentor**, an **A1–C2 Modular Practice Arena** (Grammar, Vocabulary, Listening, Writing), a **Real-Time Speaking Test Simulator with Lossless Audio Compression**, and an **AI Meme Learning Engine**.
+
+---
+
+## 🌟 Key Application Features
+
+### 1. 💬 AI Personal Mentor & Conversational Coach
+- **Adaptive Pedagogical Tutor**: Real-time 1-on-1 coaching for IELTS Speaking and general conversation drills.
+- **Contextual Feedback**: Instant correction of grammatical errors, vocabulary alternatives, and natural phrasing suggestions.
+- **Quick-Suggestion Chips**: Click-to-ask prompts (*"Correct my grammar"*, *"Teach me idioms"*, *"Practice Part 2 Speaking"*).
+- **Persistent Chat History**: Session messages stored securely in SQLite (`chat_history`).
+
+### 2. 📚 Practice Arena (CEFR A1–C2 Curricula)
+- **Full CEFR Syllabi**: Comprehensive structured syllabi for **Grammar**, **Vocabulary**, **Listening**, and **Writing** across CEFR levels (A1 to C2).
+- **Class-Level Drills**: Deep-linked interactive quizzes (e.g. `/practice/grammar/a1/class02`) with tap-to-reveal answer keys and star-difficulty ratings.
+- **Database-Backed Modules**: Curricula stored and retrieved directly from SQLite (`curriculum_modules` & `curriculum_classes`).
+- **Live Progress & Scoring**: Automatically tracks module completion and quiz scores in `user_progress` and `quiz_scores`.
+
+### 3. 🎙️ Speaking Test Simulation (Real-Time Audio & IELTS AI)
+- **24 Curated Topics**: IELTS Part 1, 2, and 3 topics categorized by difficulty (*Easy*, *Medium*, *Hard*) with a *🎲 Surprise Me* randomizer.
+- **Microphone Recorder**: Browser-based audio capture with waveform visualization and countdown timer.
+- **Lossless Audio Preprocessing**:
+  - Compresses audio via FFmpeg (`16kHz, mono, PCM 16-bit WAV` voice filter) before sending to LLM.
+  - Zero-loss speech quality verification comparing transcriptions via `audio_to_txt.transcribe_audio`.
+- **Comprehensive IELTS Score Report**:
+  - **4 Assessment Criteria**: Fluency & Coherence, Lexical Resource, Grammatical Range & Accuracy, Pronunciation (Band 1.0–9.0).
+  - **📊 Gap Analysis**: Pause frequency detection (🕳️) and vocabulary repetition alerts (📚).
+  - **🚀 Targeted Recommendations**: Model answer upgrades (*"What you should have said"*), advanced transitional connectors, and next focus areas.
+
+### 4. ⚡ 1-Click Validated Meme Engine
+- **Humorous English Learning**: Generates relatable grammar and IELTS memes via MIMO LLM (`mimo-v2.6-flash:free`) and Memegen API.
+- **Defective Placeholder Filtering (`meme_validator.py`)**: Automatically detects and rejects blank or striped background placeholders (e.g., low-saturation gray artifacts) and regenerates verified templates.
+- **Pixel-Accurate Watermark Cropping (`meme_crop.py`)**: Configurable pixel cropping to eliminate external border watermarks.
+- **Rate-Limiting Quotas**: 1 meme per click, 15 memes/day quota, and an automated 30-minute cooldown enforced via SQLite.
+
+### 5. 🎯 Study Goals & Targets
+- Customizable target IELTS band score (e.g. Band 7.5), target exam deadline, daily study minutes, and primary focus skill.
 
 ---
 
-## 🌟 Application Highlights
+## 🧭 Client-Side URL Routing
 
-### 1. 💬 AI Chat Coach
-- Conversational English practice with instant feedback and grammar corrections.
-- Quick-suggestion chips (e.g. *Correct my grammar*, *Teach me idioms*, *Roleplay a cafe order*).
-- Modern sticky bottom input bar for a clean chat experience.
+The application features a client-side URL router (`router.js`) integrated with FastAPI SPA fallbacks, allowing direct deep-linking and browser navigation:
 
-### 2. 📚 Practice Arena (4 Targeted Tracks)
-- **Grammar Lessons**: Conditionals, inversion, passive voice, and complex connectors.
-- **Vocabulary Lessons**: Band 8+ collocations, natural idioms, and topic-specific vocabulary.
-- **Listening Tests**: Accent variation, connected speech comprehension, and note-taking.
-- **Writing Lessons**: Essay introductions, thesis generation, and paragraph coherence.
-- Real-time word counter and instant AI feedback with Band score analysis.
-
-### 3. 🎙️ Speaking Test Simulation
-- **24 IELTS Topics** categorized by difficulty (*Easy, Medium, Hard*) with a *🎲 Surprise Me* randomizer.
-- Live microphone recorder with animated audio waveforms and a 5-minute countdown ring.
-- Comprehensive IELTS score report covering **Fluency & Coherence**, **Lexical Resource**, **Grammatical Range**, and **Pronunciation**.
-
----
+| Route Pattern | View / Section | Description |
+|---|---|---|
+| `/home` | Dashboard / Chat | Overview, quick stats, and chat tutor |
+| `/personalmentor` | AI Chat Coach | Dedicated conversational coaching screen |
+| `/goal` | Study Targets | Target band, exam date, and daily study minutes |
+| `/test` | Speaking Arena | 24 IELTS speaking topics catalog |
+| `/test/:topicId` | Speaking Simulation | Live voice recording for specific topic (e.g. `/test/travel`) |
+| `/practice` | Practice Overview | Track selector (Grammar, Vocab, Listening, Writing) |
+| `/practice/:track` | Track Level Selector | CEFR level grid (A1, A2, B1, B2, C1, C2) |
+| `/practice/:track/:level` | Level Syllabus Grid | Class module list for selected level (e.g. `/practice/grammar/a1`) |
+| `/practice/:track/:level/:classId` | Class Quiz & Drill | Interactive exercises for specific class (e.g. `/practice/grammar/a1/class02`) |
 
 ---
 
 ## 🏗️ System Architecture & Data Flow
 
-![AI English Coach System Architecture](docs/architecture_diagram.jpg)
-
-### High-Level Component & Processing Flow
+Detailed visual architecture and complete sequence diagrams are documented in [`docs/ARCHITECTURE_AND_USER_FLOW.md`](docs/ARCHITECTURE_AND_USER_FLOW.md).
 
 ```mermaid
 graph TD
     subgraph UI ["1. Frontend Web Client (Vanilla JS / CSS SPA)"]
-        ChatUI["💬 AI Chat Coach<br/>(chat.js)"]
-        PracticeUI["📚 Practice Arena (A1-C2)<br/>(4 Tracks: Grammar, Vocab, Listen, Write)"]
-        MemeUI["⚡ Meme Break<br/>(3 Memes Batch & 30m Cooldown)"]
-        SpeakingUI["🎙️ Speaking Test Simulator<br/>(Mic Recording & Band Score Ring)"]
+        Router["🧭 Client Router (router.js)<br/>Deep links: /home, /goal, /practice/:track/:level/:classId"]
+        ChatUI["💬 Chat Tutor (chat.js)"]
+        SpeakingUI["🎙️ Speaking Test (test.js)"]
+        PracticeUI["📚 CEFR Practice (modulepractice.js)"]
+        MemeUI["⚡ Meme Generator (api.js)"]
     end
 
-    subgraph API ["2. Backend FastAPI Server (backend/server.py)"]
-        ChatEndpoint["POST /api/chat"]
-        ModuleEndpoint["GET /api/modules/{track}/{level}"]
-        ProgressEndpoint["GET/POST /api/progress & /api/scores"]
-        MemeEndpoint["GET/POST /api/meme/status & /generate"]
-        SpeakingEndpoint["POST /api/speaking/evaluate"]
+    subgraph API ["2. Modular Backend API (backend/api/)"]
+        AppFactory["FastAPI App Factory (app.py)"]
+        R_Chat["POST /api/chat & GET /history"]
+        R_Speaking["POST /api/speaking/evaluate & /verify-compression"]
+        R_Modules["GET /api/modules/{track}/{level}/{classId}"]
+        R_Meme["POST /api/meme/generate & GET /status"]
+        R_Goals["GET/POST /api/goal"]
+        R_Prompts["GET /api/prompts"]
     end
 
-    subgraph ENGINES ["3. Processing & AI Evaluation Engines"]
-        VocalPrep["🎙️ Speech-to-Text Pipeline<br/>(ffmpeg audio conversion + Google Web Speech)"]
-        LLMs["🤖 Token Harbor Free Models<br/>(deepseek-v4.1-flash & mimo-v2.6-flash)"]
-        Heuristics["⚙️ Fallback Offline Heuristics<br/>(Lexical diversity, connectors, pace)"]
+    subgraph Engines ["3. Processing & AI Engines"]
+        PromptEngine["📝 Dynamic Prompt Engine (prompt_loader.py)<br/>Centralized backend/prompt.txt (auto-reload)"]
+        AudioEngine["🎙️ Lossless Compression & Evaluator<br/>FFmpeg 16kHz Mono + audio_to_txt + DeepSeek"]
+        MemeEngine["⚡ Meme Engine<br/>MIMO LLM + meme_validator + meme_crop"]
     end
 
-    subgraph DB ["4. Persistence Layer (SQLite: backend/database/app.db)"]
-        UsersTable[("users")]
-        ProgressTable[("user_progress")]
-        ScoresTable[("user_scores")]
-        MemeLimitsTable[("meme_rate_limits<br/>(15/day quota + 30m cooldown)")]
-        MemeHistTable[("meme_history")]
+    subgraph Storage ["4. Persistence Layer (backend/database/app.db)"]
+        DB_Modules[("curriculum_modules & curriculum_classes")]
+        DB_Progress[("user_progress & quiz_scores")]
+        DB_Memes[("meme_history & meme_rate_limits")]
+        DB_Users[("users & user_goals")]
     end
 
-    %% Client to API
-    ChatUI -->|User prompt + context| ChatEndpoint
-    PracticeUI -->|Fetch curriculum JSON| ModuleEndpoint
-    PracticeUI -->|Save quiz score| ProgressEndpoint
-    MemeUI -->|Request 3 memes batch| MemeEndpoint
-    SpeakingUI -->|Audio WAV/MP3 or Transcript| SpeakingEndpoint
+    UI --> AppFactory
+    AppFactory --> R_Chat & R_Speaking & R_Modules & R_Meme & R_Goals & R_Prompts
 
-    %% API to Engines & DB
-    ChatEndpoint -->|Coaching prompt| LLMs
-    ModuleEndpoint -->|Reads modules/grammar/*.json| PracticeUI
-    ProgressEndpoint --> ProgressTable
-    ProgressEndpoint --> ScoresTable
-    MemeEndpoint --> MemeLimitsTable
-    MemeEndpoint --> MemeHistTable
-    MemeEndpoint -->|Generate humor concepts| LLMs
-
-    SpeakingEndpoint --> VocalPrep
-    VocalPrep -->|Transcript + WPM metrics| LLMs
-    LLMs -.->|On network issue| Heuristics
-    LLMs -->|Official IELTS Scores: FC, LR, GRA, Pron| SpeakingUI
-
-    classDef client fill:#1E293B,stroke:#38BDF8,stroke-width:2px,color:#F8FAFC;
-    classDef server fill:#0F172A,stroke:#A855F7,stroke-width:2px,color:#F8FAFC;
-    classDef engine fill:#111827,stroke:#10B981,stroke-width:2px,color:#F8FAFC;
-    classDef data fill:#18181B,stroke:#F59E0B,stroke-width:2px,color:#F8FAFC;
-
-    class ChatUI,PracticeUI,MemeUI,SpeakingUI client;
-    class ChatEndpoint,ModuleEndpoint,ProgressEndpoint,MemeEndpoint,SpeakingEndpoint server;
-    class VocalPrep,LLMs,Heuristics engine;
-    class UsersTable,ProgressTable,ScoresTable,MemeLimitsTable,MemeHistTable data;
+    R_Chat --> DB_Progress
+    R_Modules --> DB_Modules
+    R_Meme --> MemeEngine --> DB_Memes
+    R_Speaking --> AudioEngine
+    R_Goals --> DB_Users
+    R_Prompts --> PromptEngine
 ```
 
 ---
 
-## 🚀 Running the Web App & Server
-
-Start the full backend server with auto-reload (serves both API endpoints and the UI):
-
-```bash
-# Start FastAPI backend server on port 3000
-python3 -m uvicorn backend.server:app --host 0.0.0.0 --port 3000 --reload
-```
-
-Open your browser to:
-- **`http://localhost:3000/UI/`** (Interactive Learning Platform)
-- **`http://localhost:3000/docs`** (Interactive Swagger API documentation)
-
----
-
-## 📁 Modular UI Architecture
-
-The frontend is modularized for easy maintenance:
+## 📁 Repository Structure
 
 ```text
-UI/
-├── index.html            # Main SPA dashboard
-├── README.md             # Detailed UI maintenance guide
-├── css/                  # Modular styles
-│   ├── base.css          # Design tokens, typography, and reset
-│   ├── layout.css        # App shell, header, and navigation tabs
-│   ├── components.css    # Reusable buttons, cards, pills, progress rings
-│   ├── chat.css          # Chat Coach styling & sticky input bar
-│   ├── practice.css      # 4 practice track cards & exercise layout
-│   ├── test.css          # Speaking test topics, recorder & score reports
-│   └── style.css         # Master stylesheet importing all modular CSS
-└── js/                   # Modular scripts
-    ├── data.js           # Lesson questions & 24 test topics
-    ├── chat.js           # Chat logic, messages, and suggestions
-    ├── practice.js       # Track selector, exercises, and AI feedback
-    ├── test.js           # Voice recording, timer, and test evaluation
-    └── app.js            # App coordinator & page routing
+├── UI/                                  # Frontend client application
+│   ├── index.html                       # Single-page application entry point
+│   ├── css/                             # Modular styling
+│   │   ├── base.css                     # Tokens, typography, reset
+│   │   ├── layout.css                   # Header, app shell, tabs
+│   │   ├── components.css               # Buttons, cards, badges, modal
+│   │   ├── chat.css                     # Chat bubbles, input bar
+│   │   ├── practice.css                 # Practice arena & syllabi
+│   │   └── test.css                     # Waveform, timer, score report
+│   └── js/                              # Modular ES scripts
+│       ├── router.js                    # Client-side router & path parameters
+│       ├── api.js                       # Centralized backend API client
+│       ├── auth.js                      # User session & preferences state
+│       ├── chat.js                      # Chatbot dialogue interactions
+│       ├── test.js                      # Voice recording, timer, evaluation UI
+│       ├── data.js                      # Topics catalog & fallback content
+│       └── practice/                    # CEFR practice sub-modules
+│           ├── modulepractice.js        # Syllabus loader & class drill views
+│           ├── practiceUI.js            # Category & level grid renderers
+│           └── components/              # Cards, layout, learning widgets
+│
+├── backend/                             # Python backend application
+│   ├── server.py                        # Uvicorn entry point
+│   ├── prompt.txt                       # Centralized master system prompts
+│   ├── prompt_loader.py                 # Dynamic prompt loader with auto-reload
+│   ├── audio_to_txt.py                  # Audio transcription engine
+│   ├── chatbot.py                       # Personal mentor conversation engine
+│   ├── mp3_txt_speaking_evaluator.py    # FFmpeg lossless compression & IELTS scoring
+│   ├── api/                             # Structured API package
+│   │   ├── app.py                       # FastAPI factory, CORS, static & SPA mounts
+│   │   ├── config.py                    # Environment & configuration paths
+│   │   ├── models/schemas.py            # Pydantic request/response schemas
+│   │   └── routes/                      # Domain-specific route controllers
+│   │       ├── auth.py                  # Authentication & preferences
+│   │       ├── chat.py                  # Tutor chat & history
+│   │       ├── goals.py                 # Band targets & study minutes
+│   │       ├── memes.py                 # Validated meme generation & quotas
+│   │       ├── modules.py               # Database-backed CEFR syllabi
+│   │       ├── speaking.py              # Audio evaluation & compression checks
+│   │       └── system.py                # Health checks, route map & prompt inspection
+│   ├── database/                        # Database persistence layer
+│   │   ├── db.py                        # SQLite schema & query helpers
+│   │   └── app.db                       # Active SQLite database file
+│   └── meme_generator/                  # Humor engine
+│       ├── meme_generator.py            # MIMO LLM concept & Memegen caller
+│       ├── meme_validator.py            # Defective placeholder validator
+│       └── meme_crop.py                 # Pixel watermark cropper
+│
+├── docs/                                # Project documentation
+│   ├── ARCHITECTURE_AND_USER_FLOW.md    # Comprehensive system diagrams & specs
+│   └── architecture_diagram.jpg         # Architecture diagram graphic
+├── lessons/                             # Curriculum source texts (A1-C2)
+├── checklist.txt                        # Master user command & postponed tasks log
+├── vibecoder_security_review.xlsx       # OWASP Vibecoder Security Review spreadsheet
+└── requirements.txt                     # Python dependencies
 ```
 
 ---
 
-## 🎙️ VocalPrep CLI (Audio Recording & Transcription)
+## 🚀 Getting Started
 
-The repository also includes `audio_to_txt.py` for live microphone recording and automated speech-to-text conversion.
+### 1. Prerequisites
+- **Python**: 3.10 or higher
+- **FFmpeg**: Required for audio compression and transcription (`brew install ffmpeg` on macOS, `sudo apt install ffmpeg` on Ubuntu)
 
-### 1. Setup
+### 2. Installation
 
 ```bash
-# Create and activate virtual environment
+# 1. Clone the repository
+git clone https://github.com/rifatjahanazad-bd/AI-English-Coach.git
+cd AI-English-Coach
+
+# 2. Create and activate a virtual environment
 python3 -m venv .venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 
-# Install dependencies
+# 3. Install dependencies
 pip install -r requirements.txt
 ```
 
-### 2. Usage
+### 3. Environment Variables
+
+Create a `.env` file in the root directory:
+
+```ini
+# TokenHarbor / OpenRouter API Key for LLM access
+TOKENHARBOR_API_KEY=your_tokenharbor_api_key_here
+
+# Optional: Google Gemini API Key
+GEMINI_API_KEY=your_gemini_api_key_here
+```
+
+### 4. Running the Application
+
+Start the FastAPI application:
 
 ```bash
-# Standard 5-minute practice session (press Ctrl+C anytime to stop & transcribe)
-python audio_to_txt.py
-
-# Timed drill (e.g., 60 seconds)
-python audio_to_txt.py --duration 60
-
-# Transcribe an existing .wav audio file
-python audio_to_txt.py --file input/my_practice_session.wav
+python3 -m uvicorn backend.server:app --host 0.0.0.0 --port 3000 --reload
 ```
+
+Once running, access:
+- **Web Application**: [`http://localhost:3000/home`](http://localhost:3000/home)
+- **Interactive Swagger API Docs**: [`http://localhost:3000/docs`](http://localhost:3000/docs)
+- **Prompt Inspection Endpoint**: [`http://localhost:3000/api/prompts`](http://localhost:3000/api/prompts)
 
 ---
 
-## 🎭 AI English & IELTS Meme Generator
+## 🛠️ Developer & CLI Utilities
 
-Generate humorous, relatable memes for IELTS & English learners using the MIMO model (`mimo-v2.6-flash:free`):
+### Centralized Prompt Editing
+All AI system prompts are located in [`backend/prompt.txt`](backend/prompt.txt). Prompts are reloaded on modification automatically by `prompt_loader.py` without requiring server restarts.
 
+### Microphone Transcription CLI (`audio_to_txt.py`)
+Record audio and test transcription from the terminal:
 ```bash
-# Interactive mode (Press ENTER to generate memes, or type a custom topic)
-python backend/meme_generator/meme_generator.py
+# Record for 60 seconds and transcribe
+python backend/audio_to_txt.py --duration 60
 
-# Generate a single meme on a specific topic
-python backend/meme_generator/meme_generator.py --topic "IELTS Speaking"
+# Transcribe an existing audio file
+python backend/audio_to_txt.py --file input/sample.wav
 ```
 
-All generated memes are automatically saved to `output/memes/`.
+### Terminal Meme Generator (`meme_generator.py`)
+```bash
+# Generate meme on a custom topic
+python backend/meme_generator/meme_generator.py --topic "Third Conditionals"
+```
+
+### Security Audit Report
+An OWASP-based security review spreadsheet is available at [`vibecoder_security_review.xlsx`](vibecoder_security_review.xlsx), documenting vulnerability triage, evidence lines, and remediation priorities.
 
 ---
 
 ## 📄 License
 
-MIT License. Open for personal practice, education, and contributions!
+MIT License. Open for educational, personal practice, and open-source contributions.
