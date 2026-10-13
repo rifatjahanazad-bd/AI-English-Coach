@@ -1,0 +1,203 @@
+================================================================================
+AI ENGLISH COACH - MASTER CHECKLIST & FUTURE ROADMAP
+================================================================================
+This document tracks all features, user commands, architectural decisions,
+API verification steps, and postponed items ("for later") to revisit.
+
+DO NOT CHANGE EXISTING WORKING CODE WITHOUT REVIEWING THIS CHECKLIST.
+================================================================================
+
+--------------------------------------------------------------------------------
+1. ITEMS EXPLICITLY POSTPONED FOR LATER (USER DIRECTIVES)
+--------------------------------------------------------------------------------
+[ ] USER DATA & PROFILE OPTIONS
+    - Origin: "also for user data later we will implement options..."
+    - Current State: SQLite `users` table created with `preferences_json`,
+      and endpoints `/api/auth/status`, `/api/auth/user/{user_id}`,
+      `/api/auth/preferences` are live.
+    - Later Tasks:
+      * Add user preference settings in frontend (dark/light theme, study timer,
+        target band selection, daily reminder intervals).
+      * Implement authentication/login options (guest vs registered learner).
+      * Store learning streaks, study session history, and bookmarked questions.
+
+[ ] UI UPDATES & REDESIGN
+    - Origin: "we are not changing ui... remember it... do not change UI until i
+      mention this... in any further massage..."
+    - Current State: Strict freeze maintained on all files in `UI/`.
+    - Later Tasks:
+      * Connect frontend practice UI to pull dynamically from `/api/modules` DB.
+      * Connect frontend meme generator button to display cropped 1-per-click meme.
+      * Update Speaking Test arena to visualize audio compression meter & waveforms.
+      * Implement responsive settings modal for user goal & options.
+
+[ ] MEME CROPPING PARAMETER TUNING (PER TEMPLATE)
+    - Origin: "make sure the cropping parameter is in px so later i can map and
+      set a exact crop parameter so that we don't show the label of other
+      production in our website... use backend/meme_generator/meme_crop.py"
+    - Current State: `crop_meme_image()` supports pixel arguments
+      (`top_px`, `bottom_px`, `left_px`, `right_px`), defaulting to 14px bottom crop.
+    - Later Tasks:
+      * Test each of the 19 verified templates against Memegen to fine-tune exact
+        pixel margins (`TEMPLATE_CROP_OVERRIDES` in `meme_crop.py`).
+      * Ensure watermarks and production stamps are 100% invisible on all templates.
+
+[ ] EXPANDING CURRICULA BEYOND GRAMMAR (VOCABULARY, WRITING, LISTENING)
+    - Origin: "and inside db files make lets save our modules... pulls data from database"
+    - Current State: 8 Grammar levels (A1, A2, B1, B1+, B1PLUS, B2, C1, C2)
+      seeded into `curriculum_modules` & `curriculum_classes`.
+    - Later Tasks:
+      * Generate structured JSON files for Vocabulary tracks (A1 to C2).
+      * Generate structured JSON files for Writing & Listening tracks.
+      * Seed newly added tracks into SQLite using `seed_curriculum_modules()`.
+
+
+--------------------------------------------------------------------------------
+2. SYSTEM PROMPTS & TWEAKING GUIDE (backend/prompt.txt)
+--------------------------------------------------------------------------------
+[ ] PROMPT TWEAKING & EXPERIMENTATION
+    - Origin: "keep all system prompt inside this backend/prompt.txt.. so that
+      later i can work on the system prompt input, output and tweak setting...
+      and use the prompts from here where it needs..."
+    - Active Sections in `backend/prompt.txt`:
+      1. [IELTS_COACH_PROMPT]       -> Controls AI Tutor (chatbot.py)
+      2. [SPEAKING_EVALUATOR_PROMPT]-> Controls IELTS Speaking Test evaluation
+      3. [MEME_CONCEPT_PROMPT]      -> Controls single meme joke generation
+      4. [MEME_BATCH_PROMPT]        -> Controls batch meme concept generation
+    - Dynamic Reloading:
+      * Managed by `backend/prompt_loader.py`.
+      * Automatically checks file modification time (`mtime`).
+      * Edits in `backend/prompt.txt` take effect immediately without server reboot.
+    - Prompt Verification:
+      * Run: `curl http://localhost:3000/api/prompts` to inspect loaded sections.
+
+
+--------------------------------------------------------------------------------
+3. SPEAKING TEST & AUDIO LOSSLESS COMPRESSION PIPELINE
+--------------------------------------------------------------------------------
+[ ] AUDIO RECORDING & EVALUATION VERIFICATION
+    - Origin: "check in frontend we are able to record audio in speaking test section
+      and process it in backend files in here... before sending to llm ... compress
+      and process the audio for size issue and make sure the speech quality doesn't
+      lose during compression.. match using audiototxt file... if main and compressed
+      file gives same output then ok.. neither we have to cng compression method...
+      and make sure ai returns all these valid fields..."
+    - Required Evaluator Response Fields (Strictly Enforced):
+      * overall_band (0.0 - 9.0)
+      * cefr_level (A2, B1, B2, C1, C2)
+      * Fluency & Coherence
+      * Lexical Resource
+      * Grammatical Range
+      * Pronunciation
+      * 📊 Gap Analysis:
+        - 🕳️ Pause frequency and flow connector advice
+        - 📚 Limited topic vocabulary & synonyms
+      * 🚀 Where to improve:
+        - 🎯 What you should have said (Add & High-band snippet)
+        - 🔗 Better connectors ("In contrast", "Consequently", "To illustrate")
+        - 📚 Focus topics next (Technology, Culture, Sports)
+    - Compression Pipeline:
+      * ffmpeg Opus/OGG or 16kHz mono WAV 64kbps compression with silence trimming.
+      * `verify-compression` endpoint: transcribes both original and compressed files
+        with `audio_to_txt.py` to assert 100% transcript equality.
+
+
+--------------------------------------------------------------------------------
+4. MEME GENERATOR QUALITY & RATE LIMIT GUARANTEES
+--------------------------------------------------------------------------------
+[ ] MEME GENERATION CHECKLIST
+    - Origin: "filter this type of generated meme (no image in background/not
+      generated perfectly) create another script inside meme_generator called
+      meme_validator and validate the generated meme before showing the user...
+      generate another instead of showing this... generete 1 meme per click...
+      currently we are creating 3 memes..."
+    - Quality & Rules:
+      * 1 meme per click enforced (avoid creating 3 memes).
+      * Rate limiting: 15 memes per day quota.
+      * Session cooldown: 3 memes in a session trigger a 30-minute cooldown.
+      * Defective Placeholder Detection (`backend/meme_generator/meme_validator.py`):
+        Filters out Memegen striped placeholders (mean_sat < 8.0, channel_diff < 4.0).
+        Automatically retries with verified backup templates until a valid image exists.
+      * Pixel Cropping (`backend/meme_generator/meme_crop.py`):
+        Removes bottom 14px footer watermark before presenting image to user.
+
+
+--------------------------------------------------------------------------------
+5. STRUCTURED BACKEND API ARCHITECTURE (backend/api/)
+--------------------------------------------------------------------------------
+[ ] BACKEND MODULARITY & CODE STRUCTURE
+    - Origin: "keep api file and application files (api, auth, app,chat,...
+      we w'll only keep ui files inside ui and other files on structured folder
+      system) inside this folder (backend/api) and make sure my api is written
+      in python and used structured way... doesn't keep all files inside api script"
+    - Modular Layout:
+      backend/api/
+      ├── __init__.py          -> Re-exports app, create_app
+      ├── app.py               -> FastAPI app factory, CORS, SPA routes, static mounts
+      ├── config.py            -> Paths, constants, limits, env variables
+      ├── models/
+      │   ├── __init__.py
+      │   └── schemas.py       -> Pydantic validation models
+      └── routes/
+          ├── __init__.py      -> Router registration aggregator
+          ├── auth.py          -> User session & profile preferences
+          ├── modules.py       -> Curriculum modules, classes, progress, scores from SQLite
+          ├── chat.py          -> AI tutor conversation & dialogue history
+          ├── memes.py         -> 1-meme-per-click, validation, cropping, cooldowns
+          ├── speaking.py      -> Audio upload, compression check, speaking topics
+          ├── goals.py         -> User target band, exam date, daily study time
+          └── system.py        -> Health check, route catalog, prompt inspector
+    - Root Entrypoint:
+      `backend/server.py` cleanly re-exports `app` from `backend.api.app`.
+
+
+--------------------------------------------------------------------------------
+6. DATABASE STORAGE & SCHEMA (backend/database/app.db)
+--------------------------------------------------------------------------------
+[ ] SQLITE TABLES REFERENCE
+    1. `curriculum_modules` (track, level, title, emoji, topic_count, data_json, updated_at)
+    2. `curriculum_classes` (track, level, class_id, class_index, title, class_json, updated_at)
+    3. `users`              (user_id, display_name, email, role, preferences_json, created_at, updated_at)
+    4. `user_progress`      (user_id, track, level, module_id, is_completed, updated_at)
+    5. `quiz_scores`        (id, user_id, track, level, module_id, score, total, percentage, created_at)
+    6. `chat_history`       (id, user_id, sender, message, created_at)
+    7. `meme_history`       (id, user_id, template, top_text, bottom_text, topic, image_url, created_at)
+    8. `meme_rate_limits`   (user_id, day_date, day_count, session_count, last_batch_time, cooldown_until)
+    9. `user_goals`         (user_id, target_band, target_exam_date, daily_minutes, current_focus, target_level, notes, updated_at)
+
+
+--------------------------------------------------------------------------------
+7. QUICK API VERIFICATION COMMANDS (COPY & PASTE TO TEST)
+--------------------------------------------------------------------------------
+# Health & Status:
+curl -s http://localhost:3000/api/health
+
+# Prompts inspection:
+curl -s http://localhost:3000/api/prompts
+
+# Load all curriculum modules from database:
+curl -s http://localhost:3000/api/modules
+
+# Load single level (A1) from database:
+curl -s http://localhost:3000/api/modules/grammar/A1
+
+# Load single class (Class 2) from database:
+curl -s http://localhost:3000/api/modules/grammar/a1/class02
+
+# Check meme quota & cooldown status:
+curl -s "http://localhost:3000/api/meme/status?user_id=guest"
+
+# Generate 1 validated, cropped meme:
+curl -s -X POST http://localhost:3000/api/meme/generate \
+  -H "Content-Type: application/json" \
+  -d '{"user_id":"guest","topic":"Grammar Mistakes","count":1,"bottom_px":14}'
+
+# Fetch Speaking Test topics (24 topics):
+curl -s http://localhost:3000/api/speaking/topics
+
+# User goal settings:
+curl -s http://localhost:3000/api/goal/guest
+
+# User profile and options:
+curl -s "http://localhost:3000/api/auth/status?user_id=guest"
+================================================================================
