@@ -394,49 +394,13 @@ def extract_json_object(raw_text: str) -> Optional[Dict[str, Any]]:
 # -------------------------------------------------------------------------
 # IELTS Speaking Criteria Prompt
 # -------------------------------------------------------------------------
-SYSTEM_EVALUATOR_PROMPT = """You are an official Senior IELTS Speaking Examiner.
-Evaluate the candidate's spoken response against official IELTS criteria:
-1. Fluency and Coherence (FC)
-2. Lexical Resource (LR)
-3. Grammatical Range and Accuracy (GRA)
-4. Pronunciation (Pron)
+from backend.prompt_loader import get_speaking_evaluator_prompt
 
-Scoring Rules:
-- Scores MUST be on the 0.0 - 9.0 scale, in 0.5 increments (e.g. 5.5, 6.0, 6.5, 7.0, 7.5, 8.0).
-- Overall band is the average of the 4 scores, rounded to nearest 0.5 increment.
-- Map to CEFR Level: 4.0-4.5=A2, 5.0-5.5=B1, 6.0-6.5=B2, 7.0-8.0=C1, 8.5-9.0=C2.
+def get_active_evaluator_prompt() -> str:
+    """Dynamically returns the evaluator prompt from backend/prompt.txt."""
+    return get_speaking_evaluator_prompt()
 
-OUTPUT ONLY STRICT JSON MATCHING THIS EXACT TEMPLATE (NO MARKDOWN CODE FENCES):
-{
-  "overall_band": 7.5,
-  "cefr_level": "C1",
-  "Fluency & Coherence": 7.0,
-  "Lexical Resource": 7.5,
-  "Grammatical Range": 7.0,
-  "Pronunciation": 8.0,
-  "Gap Analysis": [
-    "🕳️ You paused 12 times — work on flow using connectors like \\"well\\", \\"actually\\".",
-    "📚 Limited topic vocabulary — try synonyms for \\"good\\": remarkable, stunning, impressive."
-  ],
-  "Where to improve": {
-    "What you should have said": {
-      "Add": "Furthermore, the journey taught me...",
-      "High-band snippet": "The breathtaking scenery left me speechless."
-    },
-    "Better connectors": [
-      "In contrast",
-      "Consequently",
-      "To illustrate"
-    ],
-    "Focus topics next": [
-      "Technology",
-      "Culture",
-      "Sports"
-    ]
-  },
-  "feedback_summary": "Examiner summary in 1-2 clear sentences."
-}
-"""
+SYSTEM_EVALUATOR_PROMPT = get_speaking_evaluator_prompt()
 
 
 # -------------------------------------------------------------------------
@@ -758,9 +722,10 @@ Output only the JSON assessment:"""
     if gemini_client and (model.startswith("gemini") or not get_ai_client()):
         try:
             gem_model = model if model.startswith("gemini") else "gemini-2.5-flash"
+            active_eval_prompt = get_active_evaluator_prompt() or SYSTEM_EVALUATOR_PROMPT
             resp = gemini_client.models.generate_content(
                 model=gem_model,
-                contents=SYSTEM_EVALUATOR_PROMPT + "\n\n" + user_content
+                contents=active_eval_prompt + "\n\n" + user_content
             )
             raw_text = resp.text or ""
             result_data = extract_json_object(raw_text)
@@ -782,13 +747,15 @@ Output only the JSON assessment:"""
     if PRIMARY_MODEL not in candidate_models:
         candidate_models.append(PRIMARY_MODEL)
 
+    active_eval_prompt = get_active_evaluator_prompt() or SYSTEM_EVALUATOR_PROMPT
+
     if client:
         for m_name in candidate_models:
             try:
                 response = client.chat.completions.create(
                     model=m_name,
                     messages=[
-                        {"role": "system", "content": SYSTEM_EVALUATOR_PROMPT},
+                        {"role": "system", "content": active_eval_prompt},
                         {"role": "user", "content": user_content}
                     ],
                     temperature=0.3,

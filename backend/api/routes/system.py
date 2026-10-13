@@ -95,3 +95,19 @@ def get_api_routes():
             }
         ]
     }
+
+
+@router.get("/prompts")
+def get_system_prompts():
+    """
+    Returns all centralized system prompts currently loaded from backend/prompt.txt,
+    allowing the developer or app to inspect and verify active prompts.
+    """
+    from backend.prompt_loader import load_all_prompts, PROMPT_FILE
+    prompts = load_all_prompts(force_reload=True)
+    return {
+        "prompt_file": str(PROMPT_FILE),
+        "sections": list(prompts.keys()),
+        "prompts": prompts
+    }
+

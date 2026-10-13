@@ -268,24 +268,8 @@ def generate_meme_concept_with_mimo(
         else "about English grammar, IELTS preparation, strange English idioms, or funny learner mistakes"
     )
 
-    prompt = f"""You are a creative humor writer specializing in relatable English learning and IELTS memes.
-Generate a funny, high-impact meme concept {topic_prompt}.
-
-Rules:
-1. 'template' MUST be chosen from one of these exact keys: [{templates_list}]
-2. 'top_text' and 'bottom_text' must each be punchy and SHORT (max 7-9 words each).
-3. Do not use special characters or punctuation in top_text/bottom_text like slashes or quotes.
-4. Output strictly valid JSON with no markdown wrapping.
-
-Format:
-{{
-  "template": "template_name",
-  "top_text": "Punchy top text",
-  "bottom_text": "Punchy bottom text",
-  "topic": "Short Topic name",
-  "joke": "A witty one-line takeaway or explanation"
-}}
-"""
+    from backend.prompt_loader import get_meme_concept_prompt
+    prompt = get_meme_concept_prompt(topic_prompt=topic_prompt, templates_list=templates_list)
 
     try:
         response = client.chat.completions.create(
@@ -339,27 +323,8 @@ def generate_batch_meme_concepts(
         else "about English grammar traps, IELTS Speaking/Writing, tricky prepositions, or funny learner mistakes"
     )
 
-    prompt = f"""You are a creative humor writer specializing in relatable English learning and IELTS memes.
-Generate exactly {count} distinct, hilarious, high-impact meme concepts {topic_prompt}.
-Make sure each meme uses a DIFFERENT template and focuses on a different angle or joke!
-
-Rules:
-1. 'template' MUST be chosen from one of these exact keys: [{templates_list}]
-2. 'top_text' and 'bottom_text' must each be punchy and SHORT (max 7-9 words each).
-3. Do not use special characters or punctuation like slashes or quotes.
-4. Output strictly a JSON array of {count} objects, with no markdown wrapping.
-
-Format:
-[
-  {{
-    "template": "template_name",
-    "top_text": "Punchy top text",
-    "bottom_text": "Punchy bottom text",
-    "topic": "Short Topic name",
-    "joke": "A witty one-line takeaway or explanation"
-  }}
-]
-"""
+    from backend.prompt_loader import get_meme_batch_prompt
+    prompt = get_meme_batch_prompt(count=count, topic_prompt=topic_prompt, templates_list=templates_list)
 
     try:
         response = client.chat.completions.create(
