@@ -13,6 +13,16 @@ const grammarPracticeModule = {
     emoji: '📐',
     badge: 'Band 7+ Focus',
     chipLabel: '📐 Grammar Drill',
+    // CEFR level cards (sources: lessons/grammar/*.txt). C2 has no source yet.
+    levels: [
+        { level: 'A1', title: 'Beginner', emoji: '🌱', desc: 'Foundations: to be, present simple, articles a/an, plurals & everyday prepositions.', count: 36, status: 'ready' },
+        { level: 'A2', title: 'Elementary', emoji: '🌿', desc: 'Past continuous, present perfect, comparatives, modals & conditionals 1 & 2.', count: 41, status: 'ready' },
+        { level: 'B1', title: 'Intermediate', emoji: '🌳', desc: 'Full verb tenses, passive voice, reported speech, relative clauses & phrasal verbs.', count: 41, status: 'ready' },
+        { level: 'B1+', title: 'Upper-Intermediate', emoji: '🌲', desc: 'Narrative tenses, future perfect, wishes & regrets, advanced passive & deduction.', count: 36, status: 'ready' },
+        { level: 'B2', title: 'Pre-Advanced', emoji: '⛰️', desc: 'Mixed conditionals, inversion, cleft sentences, participle clauses & speculation.', count: 33, status: 'ready' },
+        { level: 'C1', title: 'Advanced', emoji: '🏔️', desc: 'Advanced tenses, subjunctive, perfect tenses, inversion & formal agreement.', count: 10, status: 'ready' },
+        { level: 'C2', title: 'Mastery', emoji: '👑', desc: 'Inversion, cleft sentences, subjunctive, ellipsis, hedging & rhetorical syntax.', count: 10, status: 'ready' }
+    ],
     subtopics: [
         {
             id: 'conditionals',

@@ -1,0 +1,149 @@
+AI English Coach - UI Project Structure
+=====================================
+Generated: 2026-10-13
+Root served: UI/ -> http://localhost:3000/
+Entry point: UI/index.html
+
+TREE
+----
+UI/
+├── index.html            # SPA shell: 3 pages + script tags
+├── STRUCTURE.txt         # this file
+├── README.md             # maintenance guide (docs only)
+├── css/
+│   ├── style.css         # master importer only (imports 6 files below, order matters)
+│   ├── base.css          # tokens: colors, fonts, reset, utilities
+│   ├── layout.css        # header, side-tabs, main-content, bottom-nav, .page/.hidden
+│   ├── components.css    # cards, btn-primary/secondary, pill-chip, progress-ring, collapsible
+│   ├── chat.css          # chat-container, message-row, bubble, typingIndicator, quick-chip, send-btn
+│   ├── practice.css      # category cards, subtopics-list, exercise view, feedback cards
+│   └── test.css          # topic-grid/card, timer-ring, record-button, score report
+└── js/
+    ├── app.js            # boot: DOMContentLoaded -> initIcons, initNavigation, initChat, initPractice, initSpeakingTest
+    ├── data.js           # DATA ONLY: const practiceData (4 tracks x 4 subtopics), const topics (24)
+    ├── chat.js           # function initChat
+    ├── test.js           # function initSpeakingTest
+    └── practice/
+        ├── grammar.js    # TRACK 1 registry: const grammarPracticeModule + window.*
+        ├── grammar/      # SECTIONS + GAME (scaffold until screens built)
+        │   ├── A1.js     # window.grammarSections.A1 (src: lessons/grammar/A1*.txt)
+        │   ├── A2.js     # window.grammarSections.A2 (src: lessons/grammar/A2*.txt)
+        │   ├── B1.js     # window.grammarSections.B1 (src: lessons/grammar/B1*.txt)
+        │   ├── B2.js     # window.grammarSections.B2 (src: lessons/grammar/B2*.txt)
+        │   ├── C1.js     # window.grammarSections.C1 (src: lessons/grammar/C1*.txt)
+        │   ├── C2.js     # window.grammarSections.C2 (empty: no source file yet)
+        │   └── game.js   # window.grammarGame (v1: single quiz form)
+        ├── vocabulary.js # TRACK 2 registry
+        ├── vocabulary/   # A1.js A2.js B1.js B2.js C1.js C2.js + game.js (same shape)
+        ├── listening.js  # TRACK 3 registry
+        ├── listening/    # A1.js A2.js B1.js B2.js C1.js C2.js + game.js (same shape)
+        ├── components/
+        │   ├── cards.js      # Level cards & subtopic buttons
+        │   ├── module_list.js# Module list cards (done / todo)
+        │   ├── learning.js   # Structured topic view (Learn points, questions, Q&A)
+        │   └── layout.js     # Unified 2-pane layout engine for all levels (A1-C2)
+        ├── modulepractice.js # Module practice wrapper & progress store
+        └── practiceUI.js     # function initPractice + window.initPractice (orchestrator, NOT content)
+
+LOAD ORDER - DO NOT REORDER
+---------------------------
+CSS (UI/css/style.css):
+  base.css -> layout.css -> components.css -> chat.css -> practice.css -> test.css
+
+JS (UI/index.html script tags):
+  1. js/data.js
+  2. js/chat.js
+  3. js/practice/grammar.js
+  4. js/practice/vocabulary.js
+  5. js/practice/listening.js
+  6. js/practice/writing.js
+  7. js/practice/practiceUI.js
+  8. js/test.js
+  9. js/app.js
+
+PAGES (UI/index.html)
+---------------------
+[PAGE 1] #pageChat (section, default active)
+  #chatMessages (chat-container)
+  #typingIndicator (message-row ai)
+  #chatInput (text input)
+  #sendBtn (send button)
+  .quick-chip (suggestion chips)
+
+[PAGE 2] #pagePractice
+  #practiceStep1 (visible first)
+    #practiceCategoryList (practice-category-scroll)
+      .practice-category-card[data-category=grammar|vocabulary|listening|writing]
+    #practiceNextBtn
+  #practiceStep2 (hidden first)
+    #practiceBackBtn
+    #practiceSelectedCategoryPill
+    #practiceSubtopicsList (subtopics-list)
+    #currentTopicChip
+    #currentQuestionNum
+    #practiceQuestionText
+    #practiceQuestionHint
+    #answerText (textarea)
+    #wordCount
+    #contextLink (optional text input)
+    #submitAnswerBtn
+    #feedbackPanel.hidden (feedback-stack)
+
+[PAGE 3] #pageTest
+  #testStep1 (topic select)
+    #topicGrid (topic-grid, rendered from topics[])
+    #surpriseBtn
+    #startRecordingBtn
+  #testStep2.hidden (record)
+    #timerRing > #timerText
+    #recordBtn
+    #promptText
+    #pauseBtn
+    #stopSubmitBtn
+  #testStep3.hidden (score report)
+    #retakeTestBtn
+
+NAVIGATION (UI/js/app.js)
+-------------------------
+.side-tab[data-page] (desktop) + .bottom-nav-item[data-page] (mobile)
+  data-page values: chat | practice | test
+  pages{} map in initNavigation() must match section ids pageChat/pagePractice/pageTest
+
+JS MODULES
+----------
+app.js: initIcons(), initNavigation()
+chat.js: initChat() - user msgs, AI msgs, typing indicator, quick chips
+data.js: const practiceData, const topics, function escapeHtml()
+practice/grammar.js etc: const <track>PracticeModule { id, title, emoji, badge, chipLabel, subtopics[] }
+practice/practiceUI.js: initPractice(), window.initPractice, getModule(), goToStep2(), loadCategoryExercise()
+test.js: initSpeakingTest(), updateTopicSelection(), updateTimerDisplay()
+
+CSS MAP
+-------
+base.css: palette, fonts, reset
+layout.css: app-shell, app-header, side-tabs, main-content, bottom-nav, .page/.active/.hidden
+components.css: card, btn, pill-chip, progress-ring, collapsible
+chat.css: chat page only
+practice.css: practice page only
+test.css: test page only
+
+DATA SHAPES (copy these to add content)
+---------------------------------------
+Practice subtopic:
+  { id, title, desc, question, hint }
+  Add to: practiceData.<track>.subtopics in data.js + mirror in practice/<track>.js
+
+Speaking topic:
+  { name, emoji, difficulty: 'easy'|'medium'|'hard', prompt }
+  Add to: topics[] in data.js (test.js auto-renders card + difficulty pill)
+
+SAFE EDIT RULES
+---------------
+1. HTML <-> JS: never rename an id without updating getElementById in its init* function.
+2. CSS <-> JS: .page.active / .hidden / .selected are logic - style them, don't rename.
+3. Add 5th track: copy practice/<track>.js -> register in practiceUI.js modules{} ->
+   add card with data-category in #practiceCategoryList -> add entry in practiceData.
+4. Add new page: add <section id="pageX"> + side-tab + bottom-nav item with data-page="X" ->
+   extend pages{} in app.js -> create css/x.css (import in style.css) ->
+   create js/x.js (script tag before app.js, call initX() in boot).
+5. Keep script + CSS import order unchanged.

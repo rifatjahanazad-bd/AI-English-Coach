@@ -1,0 +1,379 @@
+{
+  "present": {
+    "title": "Present Tenses (Is / Are & Continuous)",
+    "emoji": "\u26a1",
+    "description": "Practice rapid syntax with Present Simple & Continuous actions.",
+    "items": [
+      {
+        "id": "pr-1",
+        "context": "A fluffy cat napping quietly",
+        "emoji": "\ud83d\udc31",
+        "chunks": [
+          "The cat",
+          "is sleeping",
+          "on the warm sofa."
+        ],
+        "distractor": null
+      },
+      {
+        "id": "pr-2",
+        "context": "Children playing in the schoolyard",
+        "emoji": "\u26bd",
+        "chunks": [
+          "The children",
+          "are playing",
+          "football outside."
+        ],
+        "distractor": null
+      },
+      {
+        "id": "pr-3",
+        "context": "A chef preparing vegetable soup",
+        "emoji": "\ud83c\udf72",
+        "chunks": [
+          "The chef",
+          "is cooking",
+          "fresh soup",
+          "in the kitchen."
+        ],
+        "distractor": null
+      },
+      {
+        "id": "pr-4",
+        "context": "A girl reading an exciting adventure book",
+        "emoji": "\ud83d\udcd6",
+        "chunks": [
+          "She",
+          "is reading",
+          "a new book",
+          "in the library."
+        ],
+        "distractor": null
+      },
+      {
+        "id": "pr-5",
+        "context": "Two friends riding bicycles in the park",
+        "emoji": "\ud83d\udeb2",
+        "chunks": [
+          "They",
+          "are riding",
+          "their bicycles",
+          "together."
+        ],
+        "distractor": null
+      },
+      {
+        "id": "pr-6",
+        "context": "The sun shining brightly today",
+        "emoji": "\u2600\ufe0f",
+        "chunks": [
+          "The sun",
+          "is shining",
+          "brightly today."
+        ],
+        "distractor": null
+      },
+      {
+        "id": "pr-7",
+        "context": "Birds singing early in the morning",
+        "emoji": "\ud83d\udc26",
+        "chunks": [
+          "The birds",
+          "are singing",
+          "in the tall tree."
+        ],
+        "distractor": null
+      },
+      {
+        "id": "pr-8",
+        "context": "A young boy drinking cold orange juice",
+        "emoji": "\ud83e\udd64",
+        "chunks": [
+          "He",
+          "is drinking",
+          "a glass of juice."
+        ],
+        "distractor": null
+      }
+    ]
+  },
+  "past_future": {
+    "title": "Past & Future Tenses (Did, Will & Going to)",
+    "emoji": "\u23f3",
+    "description": "Assemble narrative sentences across past events and future plans.",
+    "items": [
+      {
+        "id": "pf-1",
+        "context": "Yesterday we visited the grand museum",
+        "emoji": "\ud83c\udfdb\ufe0f",
+        "chunks": [
+          "We",
+          "visited",
+          "the national museum",
+          "yesterday."
+        ],
+        "distractor": null
+      },
+      {
+        "id": "pf-2",
+        "context": "He bought fresh apples at the market",
+        "emoji": "\ud83c\udf4e",
+        "chunks": [
+          "He",
+          "bought",
+          "fresh apples",
+          "at the grocery store."
+        ],
+        "distractor": null
+      },
+      {
+        "id": "pf-3",
+        "context": "Tomorrow it will rain heavily",
+        "emoji": "\ud83c\udf27\ufe0f",
+        "chunks": [
+          "It",
+          "will rain",
+          "heavily tomorrow",
+          "afternoon."
+        ],
+        "distractor": null
+      },
+      {
+        "id": "pf-4",
+        "context": "They are going to travel to London",
+        "emoji": "\u2708\ufe0f",
+        "chunks": [
+          "They",
+          "are going to visit",
+          "London",
+          "next summer."
+        ],
+        "distractor": null
+      },
+      {
+        "id": "pf-5",
+        "context": "She wrote an inspiring letter to her friend",
+        "emoji": "\u2709\ufe0f",
+        "chunks": [
+          "She",
+          "wrote",
+          "a long letter",
+          "last night."
+        ],
+        "distractor": null
+      },
+      {
+        "id": "pf-6",
+        "context": "The student finished all homework early",
+        "emoji": "\ud83d\udcdd",
+        "chunks": [
+          "The student",
+          "finished",
+          "the homework",
+          "before dinner."
+        ],
+        "distractor": null
+      },
+      {
+        "id": "pf-7",
+        "context": "I will call you as soon as I arrive",
+        "emoji": "\ud83d\udcde",
+        "chunks": [
+          "I",
+          "will call you",
+          "when I arrive home."
+        ],
+        "distractor": null
+      },
+      {
+        "id": "pf-8",
+        "context": "We saw an incredible movie last weekend",
+        "emoji": "\ud83c\udfac",
+        "chunks": [
+          "We",
+          "saw",
+          "an exciting film",
+          "last Saturday."
+        ],
+        "distractor": null
+      }
+    ]
+  },
+  "location": {
+    "title": "Location & Prepositions (In, On, Under, Next to)",
+    "emoji": "\ud83d\udccd",
+    "description": "Fast spatial grammar matching items to their exact locations.",
+    "items": [
+      {
+        "id": "loc-1",
+        "context": "A puppy hiding beneath the wooden table",
+        "emoji": "\ud83d\udc36",
+        "chunks": [
+          "The small puppy",
+          "is hiding",
+          "under the wooden table."
+        ],
+        "distractor": null
+      },
+      {
+        "id": "loc-2",
+        "context": "Keys resting on the dining table",
+        "emoji": "\ud83d\udd11",
+        "chunks": [
+          "The car keys",
+          "are lying",
+          "on the kitchen counter."
+        ],
+        "distractor": null
+      },
+      {
+        "id": "loc-3",
+        "context": "A clock hanging on the wall between posters",
+        "emoji": "\u23f0",
+        "chunks": [
+          "The clock",
+          "hangs",
+          "on the wall",
+          "between the posters."
+        ],
+        "distractor": null
+      },
+      {
+        "id": "loc-4",
+        "context": "A red car parked in front of the house",
+        "emoji": "\ud83d\ude97",
+        "chunks": [
+          "A red car",
+          "is parked",
+          "in front of",
+          "the house."
+        ],
+        "distractor": null
+      },
+      {
+        "id": "loc-5",
+        "context": "Books organized neatly inside the backpack",
+        "emoji": "\ud83c\udf92",
+        "chunks": [
+          "The textbooks",
+          "are inside",
+          "the blue backpack."
+        ],
+        "distractor": null
+      },
+      {
+        "id": "loc-6",
+        "context": "A coffee cup sitting next to the laptop",
+        "emoji": "\u2615",
+        "chunks": [
+          "The hot coffee",
+          "is sitting",
+          "next to",
+          "the laptop."
+        ],
+        "distractor": null
+      },
+      {
+        "id": "loc-7",
+        "context": "A bridge crossing over the wide river",
+        "emoji": "\ud83c\udf09",
+        "chunks": [
+          "The stone bridge",
+          "crosses",
+          "over the deep river."
+        ],
+        "distractor": null
+      }
+    ]
+  },
+  "modals": {
+    "title": "Questions & Modals (Can, Must, Should, Wh-)",
+    "emoji": "\u2753",
+    "description": "Construct interrogatives and modal expressions rapidly.",
+    "items": [
+      {
+        "id": "mod-1",
+        "context": "Asking where the train station is located",
+        "emoji": "\ud83d\ude89",
+        "chunks": [
+          "Where",
+          "is",
+          "the nearest train station",
+          "?"
+        ],
+        "distractor": null
+      },
+      {
+        "id": "mod-2",
+        "context": "Can penguins fly in the cold sky?",
+        "emoji": "\ud83d\udc27",
+        "chunks": [
+          "Penguins",
+          "cannot fly",
+          "in the sky."
+        ],
+        "distractor": null
+      },
+      {
+        "id": "mod-3",
+        "context": "Asking what time the store opens tomorrow",
+        "emoji": "\ud83c\udfea",
+        "chunks": [
+          "What time",
+          "does",
+          "the supermarket open",
+          "tomorrow?"
+        ],
+        "distractor": null
+      },
+      {
+        "id": "mod-4",
+        "context": "Students should study before the test",
+        "emoji": "\ud83d\udcda",
+        "chunks": [
+          "You",
+          "should study",
+          "carefully before",
+          "the final exam."
+        ],
+        "distractor": null
+      },
+      {
+        "id": "mod-5",
+        "context": "Is there any fresh milk left in the fridge?",
+        "emoji": "\ud83e\udd5b",
+        "chunks": [
+          "Is there",
+          "any milk left",
+          "in the refrigerator",
+          "?"
+        ],
+        "distractor": null
+      },
+      {
+        "id": "mod-6",
+        "context": "Why did she leave the party so early?",
+        "emoji": "\ud83c\udf89",
+        "chunks": [
+          "Why",
+          "did she leave",
+          "the birthday party",
+          "so early?"
+        ],
+        "distractor": null
+      },
+      {
+        "id": "mod-7",
+        "context": "We must wear seatbelts in the car",
+        "emoji": "\ud83d\udee1\ufe0f",
+        "chunks": [
+          "Everyone",
+          "must wear",
+          "a seatbelt",
+          "in the car."
+        ],
+        "distractor": null
+      }
+    ]
+  }
+}

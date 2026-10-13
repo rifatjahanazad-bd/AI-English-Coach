@@ -43,6 +43,14 @@ function initPractice() {
     const wordCountSpan = document.getElementById('wordCount');
     const submitAnswerBtn = document.getElementById('submitAnswerBtn');
     const feedbackPanel = document.getElementById('feedbackPanel');
+    // Grammar CEFR levels view (grammar-only; other tracks ignore these)
+    const grammarLevelsCard = document.getElementById('grammarLevelsCard');
+    const grammarLevelsGrid = document.getElementById('grammarLevelsGrid');
+    const practiceSubtopicsCard = document.getElementById('practiceSubtopicsCard');
+    // Module view for selected level (rendered by modulepractice.js)
+    const modulePracticeCard = document.getElementById('modulePracticeCard');
+    const modulePracticeView = document.getElementById('modulePracticeView');
+    let selectedGrammarLevel = null;
 
     // Helper: update Next button text
     function updateNextButtonLabel() {
@@ -88,8 +96,28 @@ function initPractice() {
             if (practiceStep2) practiceStep2.classList.add('hidden');
             if (practiceStep1) practiceStep1.classList.remove('hidden');
             if (feedbackPanel) feedbackPanel.classList.add('hidden');
+            selectedGrammarLevel = null;
+            if (modulePracticeCard) modulePracticeCard.classList.add('hidden');
+            if (modulePracticeView) modulePracticeView.innerHTML = '';
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
+    }
+
+    // Grammar levels mode toggle (grammar-only; no-ops for other tracks)
+    function setGrammarMode(on) {
+        if (grammarLevelsCard) grammarLevelsCard.classList.toggle('hidden', !on);
+        if (practiceSubtopicsCard) practiceSubtopicsCard.classList.toggle('hidden', on);
+        const questionCard = document.querySelector('#practiceStep2 .question-card');
+        const textareaWrap = answerText ? answerText.closest('.textarea-wrapper') : null;
+        const linkWrap = document.querySelector('#practiceStep2 .link-input');
+        // In levels mode the question card becomes the level detail panel (shown on select);
+        // writing exercise controls stay hidden until module pages land.
+        if (questionCard) questionCard.classList.toggle('hidden', on && !selectedGrammarLevel);
+        if (textareaWrap) textareaWrap.style.display = on ? 'none' : '';
+        if (linkWrap) linkWrap.style.display = on ? 'none' : '';
+        if (submitAnswerBtn) submitAnswerBtn.style.display = on ? 'none' : '';
+        // Module view only shows after a grammar level is selected
+        if (modulePracticeCard) modulePracticeCard.classList.toggle('hidden', !on || !selectedGrammarLevel);
     }
 
     // 4. Load Subtopics & Initial Exercise
@@ -98,12 +126,154 @@ function initPractice() {
         if (!mod) return;
         selectedSubtopicIndex = 0;
 
+        // Track hook for CSS (mirrors UI/css/practice.css sections 1-4). Additive only.
+        if (practiceStep2) practiceStep2.dataset.activeTrack = (mod.id || catKey);
+
         if (practiceSelectedCategoryPill) {
             practiceSelectedCategoryPill.textContent = `${mod.emoji} ${mod.title}`;
         }
 
+        // Grammar track shows CEFR level cards (A1-C2) instead of generic subtopics.
+        if ((mod.id || catKey) === 'grammar' && Array.isArray(mod.levels)) {
+            selectedGrammarLevel = null;
+            setGrammarMode(true);
+            renderGrammarLevels(mod);
+            if (feedbackPanel) feedbackPanel.classList.add('hidden');
+            return;
+        }
+        setGrammarMode(false);
+
         renderSubtopics(mod);
         renderExercise(mod, 0);
+    }
+
+    // Grammar CEFR levels grid (cards with thumbnail + description + game teaser).
+    // Module/topic/game screens land next — selecting a level shows its detail panel.
+    function renderGrammarLevels(mod) {
+        if (!grammarLevelsGrid) return;
+        grammarLevelsGrid.innerHTML = '';
+        const sections = window.grammarSections || {};
+        const game = window.grammarGame || { type: 'quiz' };
+
+        mod.levels.forEach((lv) => {
+            const sec = sections[lv.level] || {};
+            const status = sec.status || lv.status || 'ready';
+            if (window.PracticeCards && typeof window.PracticeCards.createGrammarLevelCard === 'function') {
+                // Card view lives in js/practice/components/cards.js
+                grammarLevelsGrid.appendChild(window.PracticeCards.createGrammarLevelCard({
+                    lv, sec, game,
+                    onSelect: () => selectGrammarLevel(mod, lv, sec)
+                }));
+                return;
+            }
+            const desc = sec.desc || lv.desc || '';
+            const count = (sec.count != null ? sec.count : lv.count) || 0;
+            const soon = status === 'soon';
+            const card = document.createElement('button');
+            card.className = 'grammar-level-card' + (soon ? ' is-soon' : '');
+            card.dataset.level = lv.level;
+            card.disabled = !!soon;
+            card.innerHTML = `
+                <span class="grammar-level-thumb">
+                    <span class="grammar-level-code">${escapeHtml(lv.level)}</span>
+                    <span class="grammar-level-emoji">${escapeHtml(sec.emoji || lv.emoji || '📐')}</span>
+                </span>
+                <h4>${escapeHtml(lv.level)} · ${escapeHtml(sec.title || lv.title || '')}</h4>
+                <span class="caption">${escapeHtml(desc)}</span>
+                <span class="grammar-level-meta">
+                    <span class="grammar-level-count${soon ? ' soon' : ''}">${soon ? 'Coming soon' : count + ' topics'}</span>
+                    <span class="caption">🎮 ${escapeHtml(game.type || 'quiz')}</span>
+                </span>
+            `;
+            if (!soon) {
+                card.addEventListener('click', () => selectGrammarLevel(mod, lv, sec));
+            }
+            grammarLevelsGrid.appendChild(card);
+        });
+    }
+
+    function selectGrammarLevel(mod, lv, sec) {
+        selectedGrammarLevel = lv.level;
+        document.querySelectorAll('.grammar-level-card').forEach(c => {
+            c.classList.toggle('selected', c.dataset.level === lv.level);
+        });
+        if (practiceSelectedCategoryPill) {
+            practiceSelectedCategoryPill.textContent = `${mod.emoji} Grammar · ${lv.level}`;
+        }
+        // Level detail panel (module pages with topics/games land next step).
+        const count = (sec.count != null ? sec.count : lv.count) || 0;
+        const game = window.grammarGame || { type: 'quiz' };
+        if (currentTopicChip) currentTopicChip.textContent = `📌 Grammar · ${lv.level} ${sec.title || lv.title || ''}`;
+        if (currentQuestionNum) currentQuestionNum.textContent = `${count} topics · 🎮 ${game.type || 'quiz'} game`;
+        if (practiceQuestionText) practiceQuestionText.textContent = `${sec.emoji || lv.emoji || '📐'} ${lv.level} — ${sec.title || lv.title || ''}`;
+        if (practiceQuestionHint) practiceQuestionHint.innerHTML = `💡 ${escapeHtml(sec.desc || lv.desc || '')}<br>Modules, topics & game land on the module pages (next step).`;
+        const questionCard = document.querySelector('#practiceStep2 .question-card');
+        if (feedbackPanel) feedbackPanel.classList.add('hidden');
+        // Drill in: hide levels grid + detail panel, show this level's modules.
+        if (grammarLevelsCard) grammarLevelsCard.classList.add('hidden');
+        if (questionCard) questionCard.classList.add('hidden');
+        // Module look for this level (markup lives in modulepractice.js)
+        if (window.ModulePractice && typeof window.ModulePractice.renderLevelModules === 'function') {
+            const items = sec.items || lv.items || [];
+            const showModules = () => window.ModulePractice.renderLevelModules(modulePracticeView, {
+                track: 'grammar',
+                level: lv.level,
+                title: sec.title || lv.title || '',
+                desc: sec.desc || lv.desc || '',
+                emoji: sec.emoji || lv.emoji || '📐',
+                count: (sec.count != null ? sec.count : lv.count) || 0,
+                status: sec.status || lv.status || 'ready',
+                items,
+                game: window.grammarGame || { type: 'quiz' },
+                onSelectModule: (item, idx) => {
+                    // 2-pane layout keeps module list and topic learning together seamlessly
+                },
+                onSubmitAnswer: (item, text) => {
+                    if (!text) return;
+                    // Reuse the shared AI feedback builder for the active track
+                    buildFeedbackContent(selectedCategory, 0, text);
+                    if (feedbackPanel) {
+                        feedbackPanel.classList.remove('hidden');
+                        feedbackPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }
+                },
+                onPlayGame: () => {
+                    window.open('../backend/game/index.html', '_blank');
+                }
+            });
+            showModules();
+            if (modulePracticeCard) modulePracticeCard.classList.remove('hidden');
+            if (modulePracticeCard) modulePracticeCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+
+    // Back from modules list to the levels grid
+    function backToGrammarLevels() {
+        selectedGrammarLevel = null;
+        if (modulePracticeCard) modulePracticeCard.classList.add('hidden');
+        if (modulePracticeView) modulePracticeView.innerHTML = '';
+        if (grammarLevelsCard) grammarLevelsCard.classList.remove('hidden');
+        const mod = getModule('grammar');
+        if (practiceSelectedCategoryPill && mod) {
+            practiceSelectedCategoryPill.textContent = `${mod.emoji} ${mod.title}`;
+        }
+        if (grammarLevelsCard) grammarLevelsCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Single module page under level/topic/ — back returns to this level's modules
+    function showModuleSingle(mod, lv, sec, item, idx, items, showModules) {
+        if (!window.ModulePractice || typeof window.ModulePractice.renderModuleSingle !== 'function') return;
+        window.ModulePractice.renderModuleSingle(modulePracticeView, {
+            track: 'grammar',
+            level: lv.level,
+            item,
+            idx,
+            total: items.length,
+            emoji: sec.emoji || lv.emoji || '📐',
+            game: window.grammarGame || { type: 'quiz' },
+            onBackModules: () => showModules(),
+            onToggleComplete: () => showModules()
+        });
     }
 
     function renderSubtopics(mod) {
@@ -111,8 +281,25 @@ function initPractice() {
         practiceSubtopicsList.innerHTML = '';
 
         mod.subtopics.forEach((sub, idx) => {
+            // Card view lives in js/practice/components/cards.js (fallback below)
+            if (window.PracticeCards && typeof window.PracticeCards.createSubtopicButton === 'function') {
+                const btn = window.PracticeCards.createSubtopicButton({
+                    sub,
+                    trackId: (mod.id || 'grammar'),
+                    selected: idx === selectedSubtopicIndex,
+                    onSelect: () => {
+                        document.querySelectorAll('.subtopic-btn').forEach(b => b.classList.remove('selected'));
+                        btn.classList.add('selected');
+                        selectedSubtopicIndex = idx;
+                        renderExercise(mod, idx);
+                    }
+                });
+                practiceSubtopicsList.appendChild(btn);
+                return;
+            }
             const btn = document.createElement('button');
-            btn.className = 'subtopic-btn' + (idx === selectedSubtopicIndex ? ' selected' : '');
+            // Track hook class mirrors UI/css/practice.css sections 1-4. Additive only.
+            btn.className = 'subtopic-btn track-' + (mod.id || 'grammar') + (idx === selectedSubtopicIndex ? ' selected' : '');
             btn.innerHTML = `
                 <span class="title">${escapeHtml(sub.title)}</span>
                 <span class="desc">${escapeHtml(sub.desc)}</span>

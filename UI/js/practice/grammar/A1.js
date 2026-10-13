@@ -1,0 +1,3695 @@
+/**
+ * GRAMMAR · SECTION A1 — 20 classes
+ * Synchronized with UI/modules/grammar/A1.json
+ */
+window.grammarSections = window.grammarSections || {};
+window.grammarSections.A1 = {
+    "level": "A1",
+    "title": "Beginner",
+    "desc": "Foundations: to be, present simple, articles a/an, plurals & everyday prepositions.",
+    "emoji": "🌱",
+    "count": 36,
+    "status": "ready",
+    "items": [
+        {
+            "id": "class-1",
+            "title": "Class 1: To be + word order",
+            "desc": "am / is / are in positive, negative and question forms / Short answers (Yes, I am. / No, she isn't.)",
+            "type": "Lesson",
+            "learn": [
+                "am / is / are in positive, negative and question forms",
+                "Short answers (Yes, I am. / No, she isn't.)",
+                "Basic order: Subject + Verb + Object (+ place + time)"
+            ],
+            "questions": [
+                {
+                    "q": "I ___ happy today.",
+                    "options": [
+                        "am",
+                        "is",
+                        "are",
+                        "be"
+                    ],
+                    "answer": "am",
+                    "explanation": "Use 'am' with the subject pronoun 'I'."
+                },
+                {
+                    "q": "Make negative: \"He is a teacher.\"",
+                    "options": [
+                        "He isn't a teacher.",
+                        "He not is a teacher.",
+                        "He isn't be a teacher.",
+                        "He aren't a teacher."
+                    ],
+                    "answer": "He isn't a teacher.",
+                    "explanation": "Negative of 'is' is 'isn't' (or 'is not')."
+                },
+                {
+                    "q": "Put in order: is / where / the station / ?",
+                    "options": [
+                        "Where is the station?",
+                        "Where the station is?",
+                        "Is where the station?",
+                        "The station where is?"
+                    ],
+                    "answer": "Where is the station?",
+                    "explanation": "Question word + be + subject: 'Where is the station?'."
+                },
+                {
+                    "q": "\"Are you a student?\" Which short answer is correct?",
+                    "options": [
+                        "Yes, I am.",
+                        "Yes, I'm.",
+                        "Yes, I are.",
+                        "Yes, I be."
+                    ],
+                    "answer": "Yes, I am.",
+                    "explanation": "Positive short answers are never contracted (not 'Yes, I'm')."
+                },
+                {
+                    "q": "My brother and I ___ late.",
+                    "options": [
+                        "are",
+                        "am",
+                        "is",
+                        "be"
+                    ],
+                    "answer": "are",
+                    "explanation": "'My brother and I' = we (plural subject), so use 'are'."
+                },
+                {
+                    "q": "Which sentence is WRONG?",
+                    "options": [
+                        "We not are tired.",
+                        "We aren't tired.",
+                        "We're not tired.",
+                        "We are tired."
+                    ],
+                    "answer": "We not are tired.",
+                    "explanation": "Negative 'not' comes after 'be', not before."
+                },
+                {
+                    "q": "Put in order: to school / goes / every day / Tom",
+                    "options": [
+                        "Tom goes to school every day.",
+                        "Tom goes every day to school.",
+                        "Every day Tom to school goes.",
+                        "Tom to school every day goes."
+                    ],
+                    "answer": "Tom goes to school every day.",
+                    "explanation": "Subject + verb + place + time: Tom goes to school every day."
+                },
+                {
+                    "q": "My glasses ___ on the table.",
+                    "options": [
+                        "are",
+                        "is",
+                        "am",
+                        "was"
+                    ],
+                    "answer": "are",
+                    "explanation": "'Glasses' is always plural in English even though it refers to one item."
+                },
+                {
+                    "q": "Correct the sentence: \"I have 20 years.\"",
+                    "options": [
+                        "I am 20 years old.",
+                        "I have 20 years old.",
+                        "I has 20 years.",
+                        "I am having 20 years."
+                    ],
+                    "answer": "I am 20 years old.",
+                    "explanation": "English uses 'be', not 'have', when stating age."
+                },
+                {
+                    "q": "Which sentence order is correct?",
+                    "options": [
+                        "Maria likes music very much.",
+                        "Maria likes very much music.",
+                        "Maria very much likes music.",
+                        "Maria music likes very much."
+                    ],
+                    "answer": "Maria likes music very much.",
+                    "explanation": "The direct object ('music') comes straight after the verb."
+                },
+                {
+                    "q": "They ___ from Spain.",
+                    "options": [
+                        "are",
+                        "is",
+                        "am",
+                        "be"
+                    ],
+                    "answer": "are",
+                    "explanation": "Use 'are' with plural subject 'They'."
+                },
+                {
+                    "q": "\"Is she English?\" \"No, she ___.\"",
+                    "options": [
+                        "isn't",
+                        "aren't",
+                        "not is",
+                        "doesn't"
+                    ],
+                    "answer": "isn't",
+                    "explanation": "Short negative answer for 'she' is 'No, she isn't.'"
+                },
+                {
+                    "q": "Where ___ you from?",
+                    "options": [
+                        "are",
+                        "is",
+                        "am",
+                        "do"
+                    ],
+                    "answer": "are",
+                    "explanation": "Questions with subject 'you' use 'are'."
+                },
+                {
+                    "q": "Alex and David ___ best friends.",
+                    "options": [
+                        "are",
+                        "is",
+                        "am",
+                        "be"
+                    ],
+                    "answer": "are",
+                    "explanation": "Two people = plural 'they', so use 'are'."
+                },
+                {
+                    "q": "The weather ___ sunny today.",
+                    "options": [
+                        "is",
+                        "are",
+                        "am",
+                        "be"
+                    ],
+                    "answer": "is",
+                    "explanation": "'The weather' is singular (it), so use 'is'."
+                }
+            ],
+            "outcome": "I can say who or what someone is, and build a simple sentence in the right order."
+        },
+        {
+            "id": "class-2",
+            "title": "Class 2: This, that, these, those + this vs it",
+            "desc": "This/these = near; that/those = far / Singular vs plural",
+            "type": "Lesson",
+            "learn": [
+                "This/these = near; that/those = far",
+                "Singular vs plural",
+                "\"This\" to point and introduce; \"it\" to talk about something already named"
+            ],
+            "questions": [
+                {
+                    "q": "___ (near) are my keys.",
+                    "options": [
+                        "These",
+                        "This",
+                        "That",
+                        "Those"
+                    ],
+                    "answer": "These",
+                    "explanation": "'These' is used for plural items close to the speaker."
+                },
+                {
+                    "q": "\"What's ___ over there?\" (far away)",
+                    "options": [
+                        "that",
+                        "this",
+                        "these",
+                        "it"
+                    ],
+                    "answer": "that",
+                    "explanation": "'That' refers to a singular item at a distance."
+                },
+                {
+                    "q": "Make plural: \"This is a bus.\"",
+                    "options": [
+                        "These are buses.",
+                        "Those are buses.",
+                        "This are buses.",
+                        "These is buses."
+                    ],
+                    "answer": "These are buses.",
+                    "explanation": "Plural of 'This is a bus' is 'These are buses'."
+                },
+                {
+                    "q": "You hold a pen: \"___ is my pen. ___ is a good pen.\"",
+                    "options": [
+                        "This, It",
+                        "It, This",
+                        "These, It",
+                        "That, This"
+                    ],
+                    "answer": "This, It",
+                    "explanation": "The first mention points ('this'); after that we refer back with 'it'."
+                },
+                {
+                    "q": "You point at cars far away: \"___ cars are expensive.\"",
+                    "options": [
+                        "Those",
+                        "These",
+                        "That",
+                        "This"
+                    ],
+                    "answer": "Those",
+                    "explanation": "'Those' is for plural objects far away."
+                },
+                {
+                    "q": "On the phone you ask who is calling: \"Hello, who is ___?\"",
+                    "options": [
+                        "that",
+                        "this",
+                        "it",
+                        "these"
+                    ],
+                    "answer": "that",
+                    "explanation": "On the phone, you ask 'Who is that?' and introduce yourself with 'This is...'."
+                },
+                {
+                    "q": "Correct the sentence: \"Those is my bag.\"",
+                    "options": [
+                        "That is my bag.",
+                        "Those is my bags.",
+                        "This are my bag.",
+                        "Those are my bag."
+                    ],
+                    "answer": "That is my bag.",
+                    "explanation": "'Bag' is singular, so use 'That is my bag' (or 'Those are my bags')."
+                },
+                {
+                    "q": "You hold two shoes: \"How much are ___?\"",
+                    "options": [
+                        "these",
+                        "this",
+                        "that",
+                        "those"
+                    ],
+                    "answer": "these",
+                    "explanation": "'Shoes' is plural and close to the speaker."
+                },
+                {
+                    "q": "\"Look at that dog. ___ is so big!\"",
+                    "options": [
+                        "It",
+                        "This",
+                        "That",
+                        "These"
+                    ],
+                    "answer": "It",
+                    "explanation": "The dog is already introduced, so refer back with 'It'."
+                },
+                {
+                    "q": "\"___ is raining and ___ is cold today.\"",
+                    "options": [
+                        "It, it",
+                        "This, that",
+                        "It, this",
+                        "There, it"
+                    ],
+                    "answer": "It, it",
+                    "explanation": "Talking about weather conditions always uses dummy pronoun 'It'."
+                },
+                {
+                    "q": "Do you like ___ photo in my hand?",
+                    "options": [
+                        "this",
+                        "that",
+                        "these",
+                        "those"
+                    ],
+                    "answer": "this",
+                    "explanation": "A single photo held in hand takes 'this'."
+                },
+                {
+                    "q": "Look at ___ stars in the night sky!",
+                    "options": [
+                        "those",
+                        "these",
+                        "that",
+                        "this"
+                    ],
+                    "answer": "those",
+                    "explanation": "Stars are plural and far away, so use 'those'."
+                }
+            ],
+            "outcome": "I can point at things near and far and refer back to them with \"it\"."
+        },
+        {
+            "id": "class-3",
+            "title": "Class 3: Pronouns and possessive adjectives",
+            "desc": "Subject pronouns: I, you, he, she, it, we, they / Possessive adjectives: my, your, his, her, its, our, their",
+            "type": "Lesson",
+            "learn": [
+                "Subject pronouns: I, you, he, she, it, we, they",
+                "Possessive adjectives: my, your, his, her, its, our, their",
+                "Object pronouns: me, you, him, her, it, us, them"
+            ],
+            "questions": [
+                {
+                    "q": "My parents are here. ___ are nice.",
+                    "options": [
+                        "They",
+                        "Them",
+                        "Their",
+                        "Theirs"
+                    ],
+                    "answer": "They",
+                    "explanation": "Subject pronoun for parents is 'They'."
+                },
+                {
+                    "q": "Maria and Tom are friends. ___ live in Paris.",
+                    "options": [
+                        "They",
+                        "Them",
+                        "Their",
+                        "We"
+                    ],
+                    "answer": "They",
+                    "explanation": "Subject pronoun is 'They'."
+                },
+                {
+                    "q": "This is my sister. ___ name is Eva.",
+                    "options": [
+                        "Her",
+                        "She",
+                        "Hers",
+                        "His"
+                    ],
+                    "answer": "Her",
+                    "explanation": "Possessive adjective for a female person is 'Her'."
+                },
+                {
+                    "q": "The dog hurt ___ leg.",
+                    "options": [
+                        "its",
+                        "it's",
+                        "his",
+                        "their"
+                    ],
+                    "answer": "its",
+                    "explanation": "'Its' (no apostrophe) is the possessive adjective for an animal."
+                },
+                {
+                    "q": "\"Give ___ the keys, please.\" (said to you by Anna and me)",
+                    "options": [
+                        "us",
+                        "we",
+                        "our",
+                        "ours"
+                    ],
+                    "answer": "us",
+                    "explanation": "Object pronoun after the verb 'give' is 'us'."
+                },
+                {
+                    "q": "\"Anna and ___ went home.\"",
+                    "options": [
+                        "I",
+                        "me",
+                        "my",
+                        "mine"
+                    ],
+                    "answer": "I",
+                    "explanation": "'Anna and I' is the subject of the sentence."
+                },
+                {
+                    "q": "I like Sam, but he doesn't like ___.",
+                    "options": [
+                        "me",
+                        "I",
+                        "my",
+                        "mine"
+                    ],
+                    "answer": "me",
+                    "explanation": "Object pronoun after the verb 'like' is 'me'."
+                },
+                {
+                    "q": "I know Dan, but I don't know ___ sister.",
+                    "options": [
+                        "his",
+                        "him",
+                        "he",
+                        "he's"
+                    ],
+                    "answer": "his",
+                    "explanation": "Possessive adjective modifying 'sister' is 'his'."
+                },
+                {
+                    "q": "You and I are friends. ___ are happy.",
+                    "options": [
+                        "We",
+                        "Us",
+                        "Our",
+                        "They"
+                    ],
+                    "answer": "We",
+                    "explanation": "'You and I' = 'We' (subject pronoun)."
+                },
+                {
+                    "q": "Tom and Eva have a dog. ___ dog is called Max.",
+                    "options": [
+                        "Their",
+                        "They're",
+                        "There",
+                        "Theirs"
+                    ],
+                    "answer": "Their",
+                    "explanation": "'Their' indicates possession ('They're' = they are, 'There' = place)."
+                }
+            ],
+            "outcome": "I can choose the right pronoun or possessive for who does or receives the action."
+        },
+        {
+            "id": "class-4",
+            "title": "Class 4: Whose, possessive 's + have got",
+            "desc": "\"Whose is this?\" / \"It's Mike's.\" / 's for one owner, s' for plural owners",
+            "type": "Lesson",
+            "learn": [
+                "\"Whose is this?\" / \"It's Mike's.\"",
+                "'s for one owner, s' for plural owners",
+                "have got / has got"
+            ],
+            "questions": [
+                {
+                    "q": "___ phone is this?",
+                    "options": [
+                        "Who's",
+                        "Whose",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "Whose",
+                    "explanation": "Whose"
+                },
+                {
+                    "q": "\"These are the girls' coats.\" How many girls are there?",
+                    "options": [
+                        "More than one",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "More than one",
+                    "explanation": "More than one. The apostrophe comes after the s (girls')."
+                },
+                {
+                    "q": "He ___ got two sisters.",
+                    "options": [
+                        "have",
+                        "has",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "has",
+                    "explanation": "has"
+                },
+                {
+                    "q": "\"Peter's got a dog.\" What does 's mean here?",
+                    "options": [
+                        "is",
+                        "has",
+                        "belongs to",
+                        "are"
+                    ],
+                    "answer": "has",
+                    "explanation": "has. Peter has got a dog. 's can mean is, has, or possession."
+                },
+                {
+                    "q": "Correct the sentence: \"The childrens' toys are old.\"",
+                    "options": [
+                        "The children's toys are old",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "The children's toys are old",
+                    "explanation": "The children's toys are old. \"Children\" is already plural, so add 's."
+                },
+                {
+                    "q": "The room belongs to two boys. \"It's the ___ room.\"",
+                    "options": [
+                        "boy's",
+                        "boys'",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "boys'",
+                    "explanation": "boys'. Two boys = s'."
+                },
+                {
+                    "q": "\"Have you got a pen?\" \"No, ___.\" (a) I haven't got. (b) I haven't. (c) I don't.",
+                    "options": [
+                        "",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "",
+                    "explanation": "(b). The short answer ends at \"haven't\"."
+                },
+                {
+                    "q": "\"___ at the door?\" \"It's the postman.\"",
+                    "options": [
+                        "Whose",
+                        "Who's",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "Who's",
+                    "explanation": "Who's. It means \"who is\"."
+                },
+                {
+                    "q": "Correct the sentence: \"Has you got a pen?\"",
+                    "options": [
+                        "Have you got a pen?",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "Have you got a pen?",
+                    "explanation": "Have you got a pen?"
+                },
+                {
+                    "q": "Rewrite with 's: \"the book of my sister\"",
+                    "options": [
+                        "my sister's book",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "my sister's book",
+                    "explanation": "my sister's book"
+                },
+                {
+                    "q": "___ phone is this?",
+                    "options": [
+                        "Who's",
+                        "Whose",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "Whose",
+                    "explanation": "Whose"
+                },
+                {
+                    "q": "\"These are the girls' coats.\" How many girls are there?",
+                    "options": [
+                        "More than one",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "More than one",
+                    "explanation": "More than one. The apostrophe comes after the s (girls')."
+                },
+                {
+                    "q": "He ___ got two sisters.",
+                    "options": [
+                        "have",
+                        "has",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "has",
+                    "explanation": "has"
+                },
+                {
+                    "q": "\"Peter's got a dog.\" What does 's mean here?",
+                    "options": [
+                        "is",
+                        "has",
+                        "belongs to",
+                        "are"
+                    ],
+                    "answer": "has",
+                    "explanation": "has. Peter has got a dog. 's can mean is, has, or possession."
+                },
+                {
+                    "q": "Correct the sentence: \"The childrens' toys are old.\"",
+                    "options": [
+                        "The children's toys are old",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "The children's toys are old",
+                    "explanation": "The children's toys are old. \"Children\" is already plural, so add 's."
+                },
+                {
+                    "q": "The room belongs to two boys. \"It's the ___ room.\"",
+                    "options": [
+                        "boy's",
+                        "boys'",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "boys'",
+                    "explanation": "boys'. Two boys = s'."
+                }
+            ],
+            "outcome": "I can say who things belong to and what I have."
+        },
+        {
+            "id": "class-5",
+            "title": "Class 5: A/an, plurals + the / no article",
+            "desc": "a before consonant SOUNDS, an before vowel SOUNDS / Regular and irregular plurals",
+            "type": "Lesson",
+            "learn": [
+                "a before consonant SOUNDS, an before vowel SOUNDS",
+                "Regular and irregular plurals",
+                "When to use a/an, the, or no article"
+            ],
+            "questions": [
+                {
+                    "q": "___ egg",
+                    "options": [
+                        "a",
+                        "an",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "an",
+                    "explanation": "an"
+                },
+                {
+                    "q": "Plural of \"city\"",
+                    "options": [
+                        "cities",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "cities",
+                    "explanation": "cities"
+                },
+                {
+                    "q": "Plural of \"child\"",
+                    "options": [
+                        "children",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "children",
+                    "explanation": "children"
+                },
+                {
+                    "q": "___ hour",
+                    "options": [
+                        "a",
+                        "an",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "an",
+                    "explanation": "an. The h is silent, so it starts with a vowel sound."
+                },
+                {
+                    "q": "___ university",
+                    "options": [
+                        "a",
+                        "an",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "a",
+                    "explanation": "a. It starts with a \"y\" sound (/j/)."
+                },
+                {
+                    "q": "Plural of knife, tooth, sheep",
+                    "options": [
+                        "knives, teeth, sheep",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "knives, teeth, sheep",
+                    "explanation": "knives, teeth, sheep (sheep does not change)"
+                },
+                {
+                    "q": "\"I like ___ pizza. ___ pizza on the table is cold.\"",
+                    "options": [
+                        "no article, The",
+                        "the",
+                        "no article",
+                        "is"
+                    ],
+                    "answer": "no article, The",
+                    "explanation": "no article, The. In general = no article; a specific pizza = the."
+                },
+                {
+                    "q": "He is ___ honest man.",
+                    "options": [
+                        "a",
+                        "an",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "an",
+                    "explanation": "an. Silent h again."
+                },
+                {
+                    "q": "She plays ___ guitar and ___ football.",
+                    "options": [
+                        "the guitar, no article football",
+                        "the",
+                        "no article",
+                        "is"
+                    ],
+                    "answer": "the guitar, no article football",
+                    "explanation": "the guitar, no article football. Instruments take \"the\"; sports do not."
+                },
+                {
+                    "q": "\"I had ___ breakfast at 8.\"",
+                    "options": [
+                        "a",
+                        "the",
+                        "no article",
+                        "is"
+                    ],
+                    "answer": "no article",
+                    "explanation": "no article. Meals take no article."
+                },
+                {
+                    "q": "___ egg",
+                    "options": [
+                        "a",
+                        "an",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "an",
+                    "explanation": "an"
+                },
+                {
+                    "q": "Plural of \"city\"",
+                    "options": [
+                        "cities",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "cities",
+                    "explanation": "cities"
+                },
+                {
+                    "q": "Plural of \"child\"",
+                    "options": [
+                        "children",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "children",
+                    "explanation": "children"
+                },
+                {
+                    "q": "___ hour",
+                    "options": [
+                        "a",
+                        "an",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "an",
+                    "explanation": "an. The h is silent, so it starts with a vowel sound."
+                },
+                {
+                    "q": "___ university",
+                    "options": [
+                        "a",
+                        "an",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "a",
+                    "explanation": "a. It starts with a \"y\" sound (/j/)."
+                },
+                {
+                    "q": "Plural of knife, tooth, sheep",
+                    "options": [
+                        "knives, teeth, sheep",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "knives, teeth, sheep",
+                    "explanation": "knives, teeth, sheep (sheep does not change)"
+                }
+            ],
+            "outcome": "I can use a/an/the correctly and make plurals."
+        },
+        {
+            "id": "class-6",
+            "title": "Class 6: Adjectives + adverbs of manner",
+            "desc": "Adjectives go before nouns and after \"be\"; they never change for plural / Adverbs end in -ly (quick → quickly)",
+            "type": "Lesson",
+            "learn": [
+                "Adjectives go before nouns and after \"be\"; they never change for plural",
+                "Adverbs end in -ly (quick → quickly)",
+                "Irregular: good → well, fast → fast, hard → hard"
+            ],
+            "questions": [
+                {
+                    "q": "She is a ___ singer.",
+                    "options": [
+                        "good",
+                        "well",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "good",
+                    "explanation": "good. It describes a noun (singer)."
+                },
+                {
+                    "q": "He runs very ___.",
+                    "options": [
+                        "fast",
+                        "fastly",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "fast",
+                    "explanation": "fast. \"Fastly\" does not exist."
+                },
+                {
+                    "q": "Make an adverb from \"angry\".",
+                    "options": [
+                        "angrily",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "angrily",
+                    "explanation": "angrily"
+                },
+                {
+                    "q": "She looks ___.",
+                    "options": [
+                        "happy",
+                        "happily",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "happy",
+                    "explanation": "happy. After \"look/feel/smell/be\" we use an adjective."
+                },
+                {
+                    "q": "Correct the sentence: \"I have two reds cars.\"",
+                    "options": [
+                        "two red cars",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "two red cars",
+                    "explanation": "two red cars. Adjectives do not take -s."
+                },
+                {
+                    "q": "He works very ___.",
+                    "options": [
+                        "hard",
+                        "hardly",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "hard",
+                    "explanation": "hard. \"Hardly\" means almost not."
+                },
+                {
+                    "q": "She speaks English very ___.",
+                    "options": [
+                        "good",
+                        "well",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "well",
+                    "explanation": "well. It describes the verb \"speaks\"."
+                },
+                {
+                    "q": "\"Drive ___!\"",
+                    "options": [
+                        "careful",
+                        "carefully",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "carefully",
+                    "explanation": "carefully"
+                },
+                {
+                    "q": "I got up ___ this morning, so I missed the bus.",
+                    "options": [
+                        "late",
+                        "lately",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "late",
+                    "explanation": "late. \"Lately\" means recently."
+                },
+                {
+                    "q": "Which is correct? (a) a red small car (b) a small red car",
+                    "options": [
+                        "",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "",
+                    "explanation": "(b). Size comes before colour."
+                },
+                {
+                    "q": "She is a ___ singer.",
+                    "options": [
+                        "good",
+                        "well",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "good",
+                    "explanation": "good. It describes a noun (singer)."
+                },
+                {
+                    "q": "He runs very ___.",
+                    "options": [
+                        "fast",
+                        "fastly",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "fast",
+                    "explanation": "fast. \"Fastly\" does not exist."
+                },
+                {
+                    "q": "Make an adverb from \"angry\".",
+                    "options": [
+                        "angrily",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "angrily",
+                    "explanation": "angrily"
+                },
+                {
+                    "q": "She looks ___.",
+                    "options": [
+                        "happy",
+                        "happily",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "happy",
+                    "explanation": "happy. After \"look/feel/smell/be\" we use an adjective."
+                },
+                {
+                    "q": "Correct the sentence: \"I have two reds cars.\"",
+                    "options": [
+                        "two red cars",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "two red cars",
+                    "explanation": "two red cars. Adjectives do not take -s."
+                },
+                {
+                    "q": "He works very ___.",
+                    "options": [
+                        "hard",
+                        "hardly",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "hard",
+                    "explanation": "hard. \"Hardly\" means almost not."
+                }
+            ],
+            "outcome": "I can describe things and say how people do things."
+        },
+        {
+            "id": "class-7",
+            "title": "Class 7: Present simple",
+            "desc": "Present simple for habits, routines, facts / he/she/it + -s / -es / -ies",
+            "type": "Lesson",
+            "learn": [
+                "Present simple for habits, routines, facts",
+                "he/she/it + -s / -es / -ies",
+                "don't/doesn't + base verb; do/does questions"
+            ],
+            "questions": [
+                {
+                    "q": "She ___ (like) tea.",
+                    "options": [
+                        "likes",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "likes",
+                    "explanation": "likes"
+                },
+                {
+                    "q": "My sister ___ (study) English.",
+                    "options": [
+                        "studies",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "studies",
+                    "explanation": "studies"
+                },
+                {
+                    "q": "Make negative: \"She works on Sundays.\"",
+                    "options": [
+                        "She doesn't work on Sundays",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "She doesn't work on Sundays",
+                    "explanation": "She doesn't work on Sundays."
+                },
+                {
+                    "q": "My father ___ (watch) the news every night.",
+                    "options": [
+                        "watches",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "watches",
+                    "explanation": "watches. Words ending in -ch add -es."
+                },
+                {
+                    "q": "Which is correct? (a) He don't know. (b) He doesn't knows. (c) He doesn't know.",
+                    "options": [
+                        "",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "",
+                    "explanation": "(c). After doesn't, the verb has no -s."
+                },
+                {
+                    "q": "Which is correct? (a) Does she goes? (b) Do she go? (c) Does she go?",
+                    "options": [
+                        "",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "",
+                    "explanation": "(c). \"Does\" already carries the -s."
+                },
+                {
+                    "q": "My sister ___ (try) hard and my brother ___ (play) a lot.",
+                    "options": [
+                        "tries, plays",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "tries, plays",
+                    "explanation": "tries, plays. Consonant + y → -ies; vowel + y → -s."
+                },
+                {
+                    "q": "What time ___ the film start?",
+                    "options": [
+                        "do",
+                        "does",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "does",
+                    "explanation": "does. \"Film\" = it."
+                },
+                {
+                    "q": "My cat ___ (not/like) milk.",
+                    "options": [
+                        "doesn't like",
+                        "not",
+                        "like",
+                        "is"
+                    ],
+                    "answer": "doesn't like",
+                    "explanation": "doesn't like"
+                },
+                {
+                    "q": "She ___ (have) a shower at 7.",
+                    "options": [
+                        "has",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "has",
+                    "explanation": "has. Irregular: have → has."
+                },
+                {
+                    "q": "She ___ (like) tea.",
+                    "options": [
+                        "likes",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "likes",
+                    "explanation": "likes"
+                },
+                {
+                    "q": "My sister ___ (study) English.",
+                    "options": [
+                        "studies",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "studies",
+                    "explanation": "studies"
+                },
+                {
+                    "q": "Make negative: \"She works on Sundays.\"",
+                    "options": [
+                        "She doesn't work on Sundays",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "She doesn't work on Sundays",
+                    "explanation": "She doesn't work on Sundays."
+                },
+                {
+                    "q": "My father ___ (watch) the news every night.",
+                    "options": [
+                        "watches",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "watches",
+                    "explanation": "watches. Words ending in -ch add -es."
+                },
+                {
+                    "q": "Which is correct? (a) He don't know. (b) He doesn't knows. (c) He doesn't know.",
+                    "options": [
+                        "",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "",
+                    "explanation": "(c). After doesn't, the verb has no -s."
+                },
+                {
+                    "q": "Which is correct? (a) Does she goes? (b) Do she go? (c) Does she go?",
+                    "options": [
+                        "",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "",
+                    "explanation": "(c). \"Does\" already carries the -s."
+                }
+            ],
+            "outcome": "I can talk about my daily life and facts."
+        },
+        {
+            "id": "class-8",
+            "title": "Class 8: Questions + adverbs of frequency",
+            "desc": "Order: Question word + do/does + subject + verb / who, what, where, when, why, how, what time",
+            "type": "Lesson",
+            "learn": [
+                "Order: Question word + do/does + subject + verb",
+                "who, what, where, when, why, how, what time",
+                "always, usually, often, sometimes, never, and where they go"
+            ],
+            "questions": [
+                {
+                    "q": "___ is your name?",
+                    "options": [
+                        "What",
+                        "Who",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "What",
+                    "explanation": "What"
+                },
+                {
+                    "q": "\"___ do you live?\" \"In Rome.\"",
+                    "options": [
+                        "Where",
+                        "When",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "Where",
+                    "explanation": "Where"
+                },
+                {
+                    "q": "Add \"never\": \"I am late.\"",
+                    "options": [
+                        "I am never late",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "I am never late",
+                    "explanation": "I am never late. (After \"be\".)"
+                },
+                {
+                    "q": "Put in order: does / what time / she / get up",
+                    "options": [
+                        "What time does she get up?",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "What time does she get up?",
+                    "explanation": "What time does she get up?"
+                },
+                {
+                    "q": "Which is correct? (a) Where she lives? (b) Where does she live? (c) Where does she lives?",
+                    "options": [
+                        "",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "",
+                    "explanation": "(b)"
+                },
+                {
+                    "q": "\"___ is that man?\" \"He's my uncle.\"",
+                    "options": [
+                        "What",
+                        "Who",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "Who",
+                    "explanation": "Who. We ask about people with \"who\"."
+                },
+                {
+                    "q": "Add \"sometimes\": \"I am tired on Mondays.\"",
+                    "options": [
+                        "I am sometimes tired on Mondays",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "I am sometimes tired on Mondays",
+                    "explanation": "I am sometimes tired on Mondays."
+                },
+                {
+                    "q": "\"How ___ do you go to the cinema?\" \"Twice a month.\"",
+                    "options": [
+                        "much",
+                        "many",
+                        "often",
+                        "is"
+                    ],
+                    "answer": "often",
+                    "explanation": "often. \"How often\" asks about frequency."
+                },
+                {
+                    "q": "What does \"I don't always eat breakfast\" mean? (a) I never eat breakfast. (b) I sometimes eat breakfast.",
+                    "options": [
+                        "",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "",
+                    "explanation": "(b). \"Not always\" does not mean \"never\"."
+                },
+                {
+                    "q": "\"Who ___ (like) pizza?\"",
+                    "options": [
+                        "likes",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "likes",
+                    "explanation": "likes. When \"who\" is the subject, no do/does is used, and the verb takes -s."
+                },
+                {
+                    "q": "___ is your name?",
+                    "options": [
+                        "What",
+                        "Who",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "What",
+                    "explanation": "What"
+                },
+                {
+                    "q": "\"___ do you live?\" \"In Rome.\"",
+                    "options": [
+                        "Where",
+                        "When",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "Where",
+                    "explanation": "Where"
+                },
+                {
+                    "q": "Add \"never\": \"I am late.\"",
+                    "options": [
+                        "I am never late",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "I am never late",
+                    "explanation": "I am never late. (After \"be\".)"
+                },
+                {
+                    "q": "Put in order: does / what time / she / get up",
+                    "options": [
+                        "What time does she get up?",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "What time does she get up?",
+                    "explanation": "What time does she get up?"
+                },
+                {
+                    "q": "Which is correct? (a) Where she lives? (b) Where does she live? (c) Where does she lives?",
+                    "options": [
+                        "",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "",
+                    "explanation": "(b)"
+                },
+                {
+                    "q": "\"___ is that man?\" \"He's my uncle.\"",
+                    "options": [
+                        "What",
+                        "Who",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "Who",
+                    "explanation": "Who. We ask about people with \"who\"."
+                }
+            ],
+            "outcome": "I can ask questions and say how often I do things."
+        },
+        {
+            "id": "class-9",
+            "title": "Class 9: Present continuous + present simple or continuous?",
+            "desc": "am/is/are + verb-ing for actions now / Negatives and questions",
+            "type": "Lesson",
+            "learn": [
+                "am/is/are + verb-ing for actions now",
+                "Negatives and questions",
+                "Present simple (routine) vs present continuous (now / temporary)"
+            ],
+            "questions": [
+                {
+                    "q": "I ___ (study) now.",
+                    "options": [
+                        "am studying",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "am studying",
+                    "explanation": "am studying"
+                },
+                {
+                    "q": "What ___ she doing?",
+                    "options": [
+                        "is",
+                        "does",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "is",
+                    "explanation": "is"
+                },
+                {
+                    "q": "Add -ing to \"write\".",
+                    "options": [
+                        "writing",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "writing",
+                    "explanation": "writing (drop the e)"
+                },
+                {
+                    "q": "I ___ (know) the answer.",
+                    "options": [
+                        "know",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "know",
+                    "explanation": "know. \"Know\" is a state verb and is not used in the continuous."
+                },
+                {
+                    "q": "Be quiet! The baby ___ (sleep).",
+                    "options": [
+                        "is sleeping",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "is sleeping",
+                    "explanation": "is sleeping"
+                },
+                {
+                    "q": "Which is correct? (a) Do you working? (b) Are you working? (c) You are working?",
+                    "options": [
+                        "",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "",
+                    "explanation": "(b). It is a question, so \"Are\" comes first."
+                },
+                {
+                    "q": "Tom usually ___ (wear) a suit, but today he ___ (wear) jeans.",
+                    "options": [
+                        "wears, is wearing",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "wears, is wearing",
+                    "explanation": "wears, is wearing"
+                },
+                {
+                    "q": "Why ___ (you / laugh)?",
+                    "options": [
+                        "are you laughing",
+                        "you",
+                        "laugh",
+                        "is"
+                    ],
+                    "answer": "are you laughing",
+                    "explanation": "are you laughing"
+                },
+                {
+                    "q": "I ___ (not / understand) this word.",
+                    "options": [
+                        "don't understand",
+                        "not",
+                        "understand",
+                        "is"
+                    ],
+                    "answer": "don't understand",
+                    "explanation": "don't understand. State verbs are not used in the continuous."
+                },
+                {
+                    "q": "Look! She ___ (have) lunch now.",
+                    "options": [
+                        "is having",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "is having",
+                    "explanation": "is having. Here \"have\" means eat, so the continuous is OK (\"She has a car\" would not be)."
+                },
+                {
+                    "q": "I ___ (study) now.",
+                    "options": [
+                        "am studying",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "am studying",
+                    "explanation": "am studying"
+                },
+                {
+                    "q": "What ___ she doing?",
+                    "options": [
+                        "is",
+                        "does",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "is",
+                    "explanation": "is"
+                },
+                {
+                    "q": "Add -ing to \"write\".",
+                    "options": [
+                        "writing",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "writing",
+                    "explanation": "writing (drop the e)"
+                },
+                {
+                    "q": "I ___ (know) the answer.",
+                    "options": [
+                        "know",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "know",
+                    "explanation": "know. \"Know\" is a state verb and is not used in the continuous."
+                },
+                {
+                    "q": "Be quiet! The baby ___ (sleep).",
+                    "options": [
+                        "is sleeping",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "is sleeping",
+                    "explanation": "is sleeping"
+                },
+                {
+                    "q": "Which is correct? (a) Do you working? (b) Are you working? (c) You are working?",
+                    "options": [
+                        "",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "",
+                    "explanation": "(b). It is a question, so \"Are\" comes first."
+                }
+            ],
+            "outcome": "I can say what is happening now and what happens regularly."
+        },
+        {
+            "id": "class-10",
+            "title": "Class 10: The imperative + can/can't",
+            "desc": "Imperatives: Sit down! Don't talk! / can/can't for ability, possibility, permission",
+            "type": "Lesson",
+            "learn": [
+                "Imperatives: Sit down! Don't talk!",
+                "can/can't for ability, possibility, permission",
+                "Questions with can"
+            ],
+            "questions": [
+                {
+                    "q": "___ (close) the window, please.",
+                    "options": [
+                        "Close",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "Close",
+                    "explanation": "Close"
+                },
+                {
+                    "q": "Make negative: \"Open the door.\"",
+                    "options": [
+                        "Don't open the door",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "Don't open the door",
+                    "explanation": "Don't open the door."
+                },
+                {
+                    "q": "She ___ play the piano.",
+                    "options": [
+                        "can",
+                        "cans",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "can",
+                    "explanation": "can"
+                },
+                {
+                    "q": "Correct the sentence: \"She can to swim.\"",
+                    "options": [
+                        "She can swim",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "She can swim",
+                    "explanation": "She can swim. \"Can\" is followed by the base verb, never \"to\"."
+                },
+                {
+                    "q": "Make negative: \"Be late.\"",
+                    "options": [
+                        "Don't be late",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "Don't be late",
+                    "explanation": "Don't be late. The negative imperative of \"be\" uses \"don't\" too."
+                },
+                {
+                    "q": "Which is correct? (a) Do you can swim? (b) Can you swim?",
+                    "options": [
+                        "",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "",
+                    "explanation": "(b)"
+                },
+                {
+                    "q": "\"Can I sit here?\" What does it ask for? (a) ability (b) permission",
+                    "options": [
+                        "",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "",
+                    "explanation": "(b). It is a request for permission, not about ability."
+                },
+                {
+                    "q": "Please ___ (not / touch) the paintings.",
+                    "options": [
+                        "Don't touch",
+                        "not",
+                        "touch",
+                        "is"
+                    ],
+                    "answer": "Don't touch",
+                    "explanation": "Don't touch"
+                },
+                {
+                    "q": "I ___ hear you.",
+                    "options": [
+                        "can't",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "can't",
+                    "explanation": "can't"
+                },
+                {
+                    "q": "Correct the sentence: \"He cans speak French.\"",
+                    "options": [
+                        "He can speak French",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "He can speak French",
+                    "explanation": "He can speak French. \"Can\" never takes -s."
+                },
+                {
+                    "q": "___ (close) the window, please.",
+                    "options": [
+                        "Close",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "Close",
+                    "explanation": "Close"
+                },
+                {
+                    "q": "Make negative: \"Open the door.\"",
+                    "options": [
+                        "Don't open the door",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "Don't open the door",
+                    "explanation": "Don't open the door."
+                },
+                {
+                    "q": "She ___ play the piano.",
+                    "options": [
+                        "can",
+                        "cans",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "can",
+                    "explanation": "can"
+                },
+                {
+                    "q": "Correct the sentence: \"She can to swim.\"",
+                    "options": [
+                        "She can swim",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "She can swim",
+                    "explanation": "She can swim. \"Can\" is followed by the base verb, never \"to\"."
+                },
+                {
+                    "q": "Make negative: \"Be late.\"",
+                    "options": [
+                        "Don't be late",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "Don't be late",
+                    "explanation": "Don't be late. The negative imperative of \"be\" uses \"don't\" too."
+                },
+                {
+                    "q": "Which is correct? (a) Do you can swim? (b) Can you swim?",
+                    "options": [
+                        "",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "",
+                    "explanation": "(b)"
+                }
+            ],
+            "outcome": "I can give instructions, say what I can/can't do, and ask permission."
+        },
+        {
+            "id": "class-11",
+            "title": "Class 11: At, in, on (time and place) + position words",
+            "desc": "Time: at (clock, night), in (months, years, parts of day), on (days, dates) / Place: at (point), in (inside), on (surface)",
+            "type": "Lesson",
+            "learn": [
+                "Time: at (clock, night), in (months, years, parts of day), on (days, dates)",
+                "Place: at (point), in (inside), on (surface)",
+                "next to, under, between, in front of, behind, over"
+            ],
+            "questions": [
+                {
+                    "q": "The class starts ___ 5 o'clock.",
+                    "options": [
+                        "at",
+                        "in",
+                        "on",
+                        "is"
+                    ],
+                    "answer": "at",
+                    "explanation": "at"
+                },
+                {
+                    "q": "I was born ___ 1999.",
+                    "options": [
+                        "at",
+                        "in",
+                        "on",
+                        "is"
+                    ],
+                    "answer": "in",
+                    "explanation": "in"
+                },
+                {
+                    "q": "See you ___ Friday.",
+                    "options": [
+                        "at",
+                        "in",
+                        "on",
+                        "is"
+                    ],
+                    "answer": "on",
+                    "explanation": "on"
+                },
+                {
+                    "q": "I work ___ night and sleep ___ the afternoon.",
+                    "options": [
+                        "at, in",
+                        "at",
+                        "in",
+                        "on"
+                    ],
+                    "answer": "at, in",
+                    "explanation": "at, in. The exception: \"at night\" but \"in the afternoon\"."
+                },
+                {
+                    "q": "My birthday is ___ 5th May.",
+                    "options": [
+                        "at",
+                        "in",
+                        "on",
+                        "is"
+                    ],
+                    "answer": "on",
+                    "explanation": "on. Specific dates use \"on\"."
+                },
+                {
+                    "q": "We're ___ the bus and she's ___ bed.",
+                    "options": [
+                        "on, in",
+                        "at",
+                        "in",
+                        "on"
+                    ],
+                    "answer": "on, in",
+                    "explanation": "on, in. You travel on a bus; you are in bed."
+                },
+                {
+                    "q": "A bridge goes ___ the river.",
+                    "options": [
+                        "over",
+                        "on",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "over",
+                    "explanation": "over"
+                },
+                {
+                    "q": "I'm sitting ___ you, on your right.",
+                    "options": [
+                        "between",
+                        "next to",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "next to",
+                    "explanation": "next to"
+                },
+                {
+                    "q": "Cars wait ___ the traffic lights.",
+                    "options": [
+                        "at",
+                        "in",
+                        "on",
+                        "is"
+                    ],
+                    "answer": "at",
+                    "explanation": "at. Traffic lights are a point."
+                },
+                {
+                    "q": "We have a party ___ Christmas Day, but we give presents ___ Christmas.",
+                    "options": [
+                        "on, at",
+                        "at",
+                        "on",
+                        "is"
+                    ],
+                    "answer": "on, at",
+                    "explanation": "on, at. A specific day = on; the festival period = at."
+                },
+                {
+                    "q": "The class starts ___ 5 o'clock.",
+                    "options": [
+                        "at",
+                        "in",
+                        "on",
+                        "is"
+                    ],
+                    "answer": "at",
+                    "explanation": "at"
+                },
+                {
+                    "q": "I was born ___ 1999.",
+                    "options": [
+                        "at",
+                        "in",
+                        "on",
+                        "is"
+                    ],
+                    "answer": "in",
+                    "explanation": "in"
+                },
+                {
+                    "q": "See you ___ Friday.",
+                    "options": [
+                        "at",
+                        "in",
+                        "on",
+                        "is"
+                    ],
+                    "answer": "on",
+                    "explanation": "on"
+                },
+                {
+                    "q": "I work ___ night and sleep ___ the afternoon.",
+                    "options": [
+                        "at, in",
+                        "at",
+                        "in",
+                        "on"
+                    ],
+                    "answer": "at, in",
+                    "explanation": "at, in. The exception: \"at night\" but \"in the afternoon\"."
+                },
+                {
+                    "q": "My birthday is ___ 5th May.",
+                    "options": [
+                        "at",
+                        "in",
+                        "on",
+                        "is"
+                    ],
+                    "answer": "on",
+                    "explanation": "on. Specific dates use \"on\"."
+                },
+                {
+                    "q": "We're ___ the bus and she's ___ bed.",
+                    "options": [
+                        "on, in",
+                        "at",
+                        "in",
+                        "on"
+                    ],
+                    "answer": "on, in",
+                    "explanation": "on, in. You travel on a bus; you are in bed."
+                }
+            ],
+            "outcome": "I can say when and where things happen and where they are."
+        },
+        {
+            "id": "class-12",
+            "title": "Class 12: There is/are + there or it",
+            "desc": "There is / are; there was / were / Questions and negatives",
+            "type": "Lesson",
+            "learn": [
+                "There is / are; there was / were",
+                "Questions and negatives",
+                "There (something exists) vs It (weather, time, a thing already named)"
+            ],
+            "questions": [
+                {
+                    "q": "___ a book on the table.",
+                    "options": [
+                        "There is",
+                        "There are",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "There is",
+                    "explanation": "There is"
+                },
+                {
+                    "q": "___ three chairs in the room.",
+                    "options": [
+                        "There is",
+                        "There are",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "There are",
+                    "explanation": "There are"
+                },
+                {
+                    "q": "Make a question: \"There is a bank near here.\"",
+                    "options": [
+                        "Is there a bank near here?",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "Is there a bank near here?",
+                    "explanation": "Is there a bank near here?"
+                },
+                {
+                    "q": "\"___ a pen and two books on the desk.\"",
+                    "options": [
+                        "There is",
+                        "There are",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "There is",
+                    "explanation": "There is. We match the first noun (a pen) in a list."
+                },
+                {
+                    "q": "\"___ is hot today.\"",
+                    "options": [
+                        "It",
+                        "There",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "It",
+                    "explanation": "It. Weather uses \"it\"."
+                },
+                {
+                    "q": "\"___ are 30 students in my class.\"",
+                    "options": [
+                        "They",
+                        "It",
+                        "There",
+                        "is"
+                    ],
+                    "answer": "There",
+                    "explanation": "There. We say \"there are\" to say something exists."
+                },
+                {
+                    "q": "I saw \"Titanic\". ___ was very long.",
+                    "options": [
+                        "It",
+                        "There",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "It",
+                    "explanation": "It. The film was already named."
+                },
+                {
+                    "q": "___ was a good film on TV last night.",
+                    "options": [
+                        "It",
+                        "There",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "There",
+                    "explanation": "There. A new thing is introduced."
+                },
+                {
+                    "q": "How many people ___ there at the party?",
+                    "options": [
+                        "was",
+                        "were",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "were",
+                    "explanation": "were"
+                },
+                {
+                    "q": "There ___ any eggs. (negative)",
+                    "options": [
+                        "aren't",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "aren't",
+                    "explanation": "aren't. \"Eggs\" is plural."
+                },
+                {
+                    "q": "___ a book on the table.",
+                    "options": [
+                        "There is",
+                        "There are",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "There is",
+                    "explanation": "There is"
+                },
+                {
+                    "q": "___ three chairs in the room.",
+                    "options": [
+                        "There is",
+                        "There are",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "There are",
+                    "explanation": "There are"
+                },
+                {
+                    "q": "Make a question: \"There is a bank near here.\"",
+                    "options": [
+                        "Is there a bank near here?",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "Is there a bank near here?",
+                    "explanation": "Is there a bank near here?"
+                },
+                {
+                    "q": "\"___ a pen and two books on the desk.\"",
+                    "options": [
+                        "There is",
+                        "There are",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "There is",
+                    "explanation": "There is. We match the first noun (a pen) in a list."
+                },
+                {
+                    "q": "\"___ is hot today.\"",
+                    "options": [
+                        "It",
+                        "There",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "It",
+                    "explanation": "It. Weather uses \"it\"."
+                },
+                {
+                    "q": "\"___ are 30 students in my class.\"",
+                    "options": [
+                        "They",
+                        "It",
+                        "There",
+                        "is"
+                    ],
+                    "answer": "There",
+                    "explanation": "There. We say \"there are\" to say something exists."
+                }
+            ],
+            "outcome": "I can describe what exists in a place and talk about weather and time."
+        },
+        {
+            "id": "class-13",
+            "title": "Class 13: A/some/any + quantity words",
+            "desc": "Countable (apples) and uncountable (milk, advice) / some / any",
+            "type": "Lesson",
+            "learn": [
+                "Countable (apples) and uncountable (milk, advice)",
+                "some / any",
+                "much, many, a lot of, a little, a few"
+            ],
+            "questions": [
+                {
+                    "q": "I'd like ___ water.",
+                    "options": [
+                        "some",
+                        "any",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "some",
+                    "explanation": "some"
+                },
+                {
+                    "q": "Do you have ___ brothers?",
+                    "options": [
+                        "some",
+                        "any",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "any",
+                    "explanation": "any"
+                },
+                {
+                    "q": "How ___ money do you have?",
+                    "options": [
+                        "much",
+                        "many",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "much",
+                    "explanation": "much"
+                },
+                {
+                    "q": "Would you like ___ tea?",
+                    "options": [
+                        "some",
+                        "any",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "some",
+                    "explanation": "some. Offers use \"some\"."
+                },
+                {
+                    "q": "Can I have ___ biscuits?",
+                    "options": [
+                        "some",
+                        "any",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "some",
+                    "explanation": "some. Requests expecting \"yes\" use \"some\"."
+                },
+                {
+                    "q": "I have ___ friends in London, so I'm not alone.",
+                    "options": [
+                        "a few",
+                        "few",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "a few",
+                    "explanation": "a few. \"A few\" is positive; \"few\" is almost none."
+                },
+                {
+                    "q": "How ___ people were there?",
+                    "options": [
+                        "much",
+                        "many",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "many",
+                    "explanation": "many. \"People\" is countable."
+                },
+                {
+                    "q": "Correct the sentence: \"I don't have many money.\"",
+                    "options": [
+                        "I don't have much money",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "I don't have much money",
+                    "explanation": "I don't have much money. \"Money\" is uncountable."
+                },
+                {
+                    "q": "Which is correct? (a) an advice (b) some advice (c) advices",
+                    "options": [
+                        "",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "",
+                    "explanation": "(b). \"Advice\" has no plural and no \"a/an\"."
+                },
+                {
+                    "q": "I need ___ sugar in my tea.",
+                    "options": [
+                        "a few",
+                        "a little",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "a little",
+                    "explanation": "a little. \"Sugar\" is uncountable."
+                },
+                {
+                    "q": "I'd like ___ water.",
+                    "options": [
+                        "some",
+                        "any",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "some",
+                    "explanation": "some"
+                },
+                {
+                    "q": "Do you have ___ brothers?",
+                    "options": [
+                        "some",
+                        "any",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "any",
+                    "explanation": "any"
+                },
+                {
+                    "q": "How ___ money do you have?",
+                    "options": [
+                        "much",
+                        "many",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "much",
+                    "explanation": "much"
+                },
+                {
+                    "q": "Would you like ___ tea?",
+                    "options": [
+                        "some",
+                        "any",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "some",
+                    "explanation": "some. Offers use \"some\"."
+                },
+                {
+                    "q": "Can I have ___ biscuits?",
+                    "options": [
+                        "some",
+                        "any",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "some",
+                    "explanation": "some. Requests expecting \"yes\" use \"some\"."
+                },
+                {
+                    "q": "I have ___ friends in London, so I'm not alone.",
+                    "options": [
+                        "a few",
+                        "few",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "a few",
+                    "explanation": "a few. \"A few\" is positive; \"few\" is almost none."
+                }
+            ],
+            "outcome": "I can talk about amounts and ask how much or how many."
+        },
+        {
+            "id": "class-14",
+            "title": "Class 14: Was/were",
+            "desc": "Past of be: was/were / Negatives and questions",
+            "type": "Lesson",
+            "learn": [
+                "Past of be: was/were",
+                "Negatives and questions",
+                "Short answers"
+            ],
+            "questions": [
+                {
+                    "q": "I ___ tired yesterday.",
+                    "options": [
+                        "was",
+                        "were",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "was",
+                    "explanation": "was"
+                },
+                {
+                    "q": "They ___ at the cinema.",
+                    "options": [
+                        "was",
+                        "were",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "were",
+                    "explanation": "were"
+                },
+                {
+                    "q": "Make negative: \"She was ill.\"",
+                    "options": [
+                        "She wasn't ill",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "She wasn't ill",
+                    "explanation": "She wasn't ill."
+                },
+                {
+                    "q": "You and I ___ late.",
+                    "options": [
+                        "was",
+                        "were",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "were",
+                    "explanation": "were. \"You and I\" = we."
+                },
+                {
+                    "q": "My keys ___ on the table.",
+                    "options": [
+                        "was",
+                        "were",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "were",
+                    "explanation": "were. Keys is plural."
+                },
+                {
+                    "q": "___ there a party last night?",
+                    "options": [
+                        "Was",
+                        "Were",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "Was",
+                    "explanation": "Was. \"Party\" is singular."
+                },
+                {
+                    "q": "Where ___ you born?",
+                    "options": [
+                        "was",
+                        "were",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "were",
+                    "explanation": "were. \"You\" always takes \"were\"."
+                },
+                {
+                    "q": "\"Were your parents at home?\" \"No, they ___.\"",
+                    "options": [
+                        "wasn't",
+                        "weren't",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "weren't",
+                    "explanation": "weren't"
+                },
+                {
+                    "q": "How ___ your holidays?",
+                    "options": [
+                        "was",
+                        "were",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "were",
+                    "explanation": "were. Holidays is plural."
+                },
+                {
+                    "q": "___ Tom and Anna at school?",
+                    "options": [
+                        "Was",
+                        "Were",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "Were",
+                    "explanation": "Were. Two people."
+                },
+                {
+                    "q": "I ___ tired yesterday.",
+                    "options": [
+                        "was",
+                        "were",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "was",
+                    "explanation": "was"
+                },
+                {
+                    "q": "They ___ at the cinema.",
+                    "options": [
+                        "was",
+                        "were",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "were",
+                    "explanation": "were"
+                },
+                {
+                    "q": "Make negative: \"She was ill.\"",
+                    "options": [
+                        "She wasn't ill",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "She wasn't ill",
+                    "explanation": "She wasn't ill."
+                },
+                {
+                    "q": "You and I ___ late.",
+                    "options": [
+                        "was",
+                        "were",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "were",
+                    "explanation": "were. \"You and I\" = we."
+                },
+                {
+                    "q": "My keys ___ on the table.",
+                    "options": [
+                        "was",
+                        "were",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "were",
+                    "explanation": "were. Keys is plural."
+                },
+                {
+                    "q": "___ there a party last night?",
+                    "options": [
+                        "Was",
+                        "Were",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "Was",
+                    "explanation": "Was. \"Party\" is singular."
+                }
+            ],
+            "outcome": "I can say where I was and how things were in the past."
+        },
+        {
+            "id": "class-15",
+            "title": "Class 15: Past simple, regular and irregular verbs",
+            "desc": "Regular: -ed, -ied, doubled letter / Common irregular verbs",
+            "type": "Lesson",
+            "learn": [
+                "Regular: -ed, -ied, doubled letter",
+                "Common irregular verbs",
+                "Past time words: yesterday, last week, two days ago"
+            ],
+            "questions": [
+                {
+                    "q": "Yesterday I ___ (play) tennis.",
+                    "options": [
+                        "played",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "played",
+                    "explanation": "played"
+                },
+                {
+                    "q": "Past of \"cry\"",
+                    "options": [
+                        "cried",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "cried",
+                    "explanation": "cried"
+                },
+                {
+                    "q": "Past of \"stop\"",
+                    "options": [
+                        "stopped",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "stopped",
+                    "explanation": "stopped"
+                },
+                {
+                    "q": "Past of \"visit\"",
+                    "options": [
+                        "visited",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "visited",
+                    "explanation": "visited. A stressed first syllable does not double the final letter."
+                },
+                {
+                    "q": "Past of \"read\"",
+                    "options": [
+                        "read",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "read",
+                    "explanation": "read. It is spelled the same, pronounced /red/."
+                },
+                {
+                    "q": "Past of \"teach\" and \"catch\"",
+                    "options": [
+                        "taught, caught",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "taught, caught",
+                    "explanation": "taught, caught"
+                },
+                {
+                    "q": "Which -ed ending has a /t/ sound? (a) played (b) washed (c) wanted",
+                    "options": [
+                        "",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "",
+                    "explanation": "(b). \"Washed\" = /wɒʃt/. \"Played\" = /d/, \"wanted\" = /ɪd/."
+                },
+                {
+                    "q": "Past of \"put\"",
+                    "options": [
+                        "put",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "put",
+                    "explanation": "put. No change."
+                },
+                {
+                    "q": "I came here two years ___.",
+                    "options": [
+                        "ago",
+                        "last",
+                        "before",
+                        "is"
+                    ],
+                    "answer": "ago",
+                    "explanation": "ago"
+                },
+                {
+                    "q": "We ___ (drink) coffee and ___ (eat) cake.",
+                    "options": [
+                        "drank, ate",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "drank, ate",
+                    "explanation": "drank, ate"
+                },
+                {
+                    "q": "Yesterday I ___ (play) tennis.",
+                    "options": [
+                        "played",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "played",
+                    "explanation": "played"
+                },
+                {
+                    "q": "Past of \"cry\"",
+                    "options": [
+                        "cried",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "cried",
+                    "explanation": "cried"
+                },
+                {
+                    "q": "Past of \"stop\"",
+                    "options": [
+                        "stopped",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "stopped",
+                    "explanation": "stopped"
+                },
+                {
+                    "q": "Past of \"visit\"",
+                    "options": [
+                        "visited",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "visited",
+                    "explanation": "visited. A stressed first syllable does not double the final letter."
+                },
+                {
+                    "q": "Past of \"read\"",
+                    "options": [
+                        "read",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "read",
+                    "explanation": "read. It is spelled the same, pronounced /red/."
+                },
+                {
+                    "q": "Past of \"teach\" and \"catch\"",
+                    "options": [
+                        "taught, caught",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "taught, caught",
+                    "explanation": "taught, caught"
+                }
+            ],
+            "outcome": "I can talk about finished actions in the past."
+        },
+        {
+            "id": "class-16",
+            "title": "Class 16: Past simple, negatives and questions",
+            "desc": "didn't + base verb / Did + subject + base verb",
+            "type": "Lesson",
+            "learn": [
+                "didn't + base verb",
+                "Did + subject + base verb",
+                "Short answers"
+            ],
+            "questions": [
+                {
+                    "q": "I ___ go to school yesterday.",
+                    "options": [
+                        "didn't",
+                        "don't",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "didn't",
+                    "explanation": "didn't"
+                },
+                {
+                    "q": "Did she ___ (come)?",
+                    "options": [
+                        "come",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "come",
+                    "explanation": "come"
+                },
+                {
+                    "q": "Make negative: \"He called me.\"",
+                    "options": [
+                        "He didn't call me",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "He didn't call me",
+                    "explanation": "He didn't call me."
+                },
+                {
+                    "q": "Correct the sentence: \"She didn't went.\"",
+                    "options": [
+                        "She didn't go",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "She didn't go",
+                    "explanation": "She didn't go."
+                },
+                {
+                    "q": "Negative of \"I was there.\"",
+                    "options": [
+                        "I wasn't there",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "I wasn't there",
+                    "explanation": "I wasn't there. \"Be\" does not use \"didn't\"."
+                },
+                {
+                    "q": "Where ___ you go?",
+                    "options": [
+                        "do",
+                        "did",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "did",
+                    "explanation": "did"
+                },
+                {
+                    "q": "Who ___ (break) the window?",
+                    "options": [
+                        "broke",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "broke",
+                    "explanation": "broke. When \"who\" is the subject there is no \"did\", and the verb is in past form."
+                },
+                {
+                    "q": "\"Did they win?\" \"Yes, they ___.\"",
+                    "options": [
+                        "did",
+                        "do",
+                        "won",
+                        "is"
+                    ],
+                    "answer": "did",
+                    "explanation": "did"
+                },
+                {
+                    "q": "Which is correct? (a) Did she bought? (b) Did she buy? (c) Does she bought?",
+                    "options": [
+                        "",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "",
+                    "explanation": "(b)"
+                },
+                {
+                    "q": "Did you ___ (see) him?",
+                    "options": [
+                        "see",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "see",
+                    "explanation": "see"
+                },
+                {
+                    "q": "I ___ go to school yesterday.",
+                    "options": [
+                        "didn't",
+                        "don't",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "didn't",
+                    "explanation": "didn't"
+                },
+                {
+                    "q": "Did she ___ (come)?",
+                    "options": [
+                        "come",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "come",
+                    "explanation": "come"
+                },
+                {
+                    "q": "Make negative: \"He called me.\"",
+                    "options": [
+                        "He didn't call me",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "He didn't call me",
+                    "explanation": "He didn't call me."
+                },
+                {
+                    "q": "Correct the sentence: \"She didn't went.\"",
+                    "options": [
+                        "She didn't go",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "She didn't go",
+                    "explanation": "She didn't go."
+                },
+                {
+                    "q": "Negative of \"I was there.\"",
+                    "options": [
+                        "I wasn't there",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "I wasn't there",
+                    "explanation": "I wasn't there. \"Be\" does not use \"didn't\"."
+                },
+                {
+                    "q": "Where ___ you go?",
+                    "options": [
+                        "do",
+                        "did",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "did",
+                    "explanation": "did"
+                }
+            ],
+            "outcome": "I can ask about and deny past events."
+        },
+        {
+            "id": "class-17",
+            "title": "Class 17: Verbs + to/-ing + would like",
+            "desc": "want, need, hope, decide + to + infinitive / enjoy, like, love, hate, finish + -ing",
+            "type": "Lesson",
+            "learn": [
+                "want, need, hope, decide + to + infinitive",
+                "enjoy, like, love, hate, finish + -ing",
+                "Would you like...? / I'd like..."
+            ],
+            "questions": [
+                {
+                    "q": "I want ___ (go) home.",
+                    "options": [
+                        "to go",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "to go",
+                    "explanation": "to go"
+                },
+                {
+                    "q": "She enjoys ___ (read).",
+                    "options": [
+                        "reading",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "reading",
+                    "explanation": "reading"
+                },
+                {
+                    "q": "Would you like ___ tea?",
+                    "options": [
+                        "a",
+                        "some",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "some",
+                    "explanation": "some"
+                },
+                {
+                    "q": "I'd like ___ (see) the menu.",
+                    "options": [
+                        "to see",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "to see",
+                    "explanation": "to see"
+                },
+                {
+                    "q": "Which is a wish NOW? (a) I like swimming. (b) I'd like to swim.",
+                    "options": [
+                        "",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "",
+                    "explanation": "(b). \"Would like\" = want now; \"like\" = general feeling."
+                },
+                {
+                    "q": "He finished ___ (do) his homework.",
+                    "options": [
+                        "doing",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "doing",
+                    "explanation": "doing. \"Finish\" is followed by -ing."
+                },
+                {
+                    "q": "Correct the sentence: \"I want that you help me.\"",
+                    "options": [
+                        "I want you to help me",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "I want you to help me",
+                    "explanation": "I want you to help me."
+                },
+                {
+                    "q": "She hates ___ (get) up early.",
+                    "options": [
+                        "getting",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "getting",
+                    "explanation": "getting"
+                },
+                {
+                    "q": "They decided ___ (leave).",
+                    "options": [
+                        "to leave",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "to leave",
+                    "explanation": "to leave"
+                },
+                {
+                    "q": "Which is a polite offer? (a) Do you like a coffee? (b) Would you like a coffee?",
+                    "options": [
+                        "",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "",
+                    "explanation": "(b)"
+                },
+                {
+                    "q": "I want ___ (go) home.",
+                    "options": [
+                        "to go",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "to go",
+                    "explanation": "to go"
+                },
+                {
+                    "q": "She enjoys ___ (read).",
+                    "options": [
+                        "reading",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "reading",
+                    "explanation": "reading"
+                },
+                {
+                    "q": "Would you like ___ tea?",
+                    "options": [
+                        "a",
+                        "some",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "some",
+                    "explanation": "some"
+                },
+                {
+                    "q": "I'd like ___ (see) the menu.",
+                    "options": [
+                        "to see",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "to see",
+                    "explanation": "to see"
+                },
+                {
+                    "q": "Which is a wish NOW? (a) I like swimming. (b) I'd like to swim.",
+                    "options": [
+                        "",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "",
+                    "explanation": "(b). \"Would like\" = want now; \"like\" = general feeling."
+                },
+                {
+                    "q": "He finished ___ (do) his homework.",
+                    "options": [
+                        "doing",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "doing",
+                    "explanation": "doing. \"Finish\" is followed by -ing."
+                }
+            ],
+            "outcome": "I can talk about likes and wants and make polite offers."
+        },
+        {
+            "id": "class-18",
+            "title": "Class 18: Comparative and superlative adjectives",
+            "desc": "Short: -er / -est / Long: more / the most",
+            "type": "Lesson",
+            "learn": [
+                "Short: -er / -est",
+                "Long: more / the most",
+                "Irregular: good, better, best; bad, worse, worst",
+                "than"
+            ],
+            "questions": [
+                {
+                    "q": "Tom is ___ than Anna.",
+                    "options": [
+                        "taller",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "taller",
+                    "explanation": "taller"
+                },
+                {
+                    "q": "Comparative of \"big\"",
+                    "options": [
+                        "bigger",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "bigger",
+                    "explanation": "bigger"
+                },
+                {
+                    "q": "Comparative of \"happy\"",
+                    "options": [
+                        "happier",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "happier",
+                    "explanation": "happier"
+                },
+                {
+                    "q": "This is the ___ (bad) day of my life.",
+                    "options": [
+                        "worst",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "worst",
+                    "explanation": "worst"
+                },
+                {
+                    "q": "Which is correct? (a) more easy (b) easier (c) more easier",
+                    "options": [
+                        "",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "",
+                    "explanation": "(b). Two-syllable adjectives ending in -y add -er."
+                },
+                {
+                    "q": "Paris is ___ than London.",
+                    "options": [
+                        "more beautiful",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "more beautiful",
+                    "explanation": "more beautiful"
+                },
+                {
+                    "q": "He is the ___ (fast) runner in the school.",
+                    "options": [
+                        "fastest",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "fastest",
+                    "explanation": "fastest"
+                },
+                {
+                    "q": "Correct the sentence: \"She is taller that me.\"",
+                    "options": [
+                        "She is taller than me",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "She is taller than me",
+                    "explanation": "She is taller than me."
+                },
+                {
+                    "q": "Which is correct? (a) the more important (b) the most important (c) the importantest",
+                    "options": [
+                        "",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "",
+                    "explanation": "(b)"
+                },
+                {
+                    "q": "My new phone is ___ (good) than my old one.",
+                    "options": [
+                        "better",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "better",
+                    "explanation": "better"
+                },
+                {
+                    "q": "Tom is ___ than Anna.",
+                    "options": [
+                        "taller",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "taller",
+                    "explanation": "taller"
+                },
+                {
+                    "q": "Comparative of \"big\"",
+                    "options": [
+                        "bigger",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "bigger",
+                    "explanation": "bigger"
+                },
+                {
+                    "q": "Comparative of \"happy\"",
+                    "options": [
+                        "happier",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "happier",
+                    "explanation": "happier"
+                },
+                {
+                    "q": "This is the ___ (bad) day of my life.",
+                    "options": [
+                        "worst",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "worst",
+                    "explanation": "worst"
+                },
+                {
+                    "q": "Which is correct? (a) more easy (b) easier (c) more easier",
+                    "options": [
+                        "",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "",
+                    "explanation": "(b). Two-syllable adjectives ending in -y add -er."
+                },
+                {
+                    "q": "Paris is ___ than London.",
+                    "options": [
+                        "more beautiful",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "more beautiful",
+                    "explanation": "more beautiful"
+                }
+            ],
+            "outcome": "I can compare people and things and say which is the best."
+        },
+        {
+            "id": "class-19",
+            "title": "Class 19: Will/shall + be going to",
+            "desc": "will for quick decisions, promises, predictions / shall for offers/suggestions",
+            "type": "Lesson",
+            "learn": [
+                "will for quick decisions, promises, predictions",
+                "shall for offers/suggestions",
+                "be going to for plans and predictions based on evidence"
+            ],
+            "questions": [
+                {
+                    "q": "I ___ call you tomorrow.",
+                    "options": [
+                        "will",
+                        "shall",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "will",
+                    "explanation": "will"
+                },
+                {
+                    "q": "It's cold. I ___ close the window.",
+                    "options": [
+                        "will",
+                        "am going to",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "will",
+                    "explanation": "will. It is a quick decision made now."
+                },
+                {
+                    "q": "I ___ see my uncle tomorrow. (I made the plan last week.)",
+                    "options": [
+                        "am going to",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "am going to",
+                    "explanation": "am going to. It is a plan made before."
+                },
+                {
+                    "q": "Look at the sky! It ___ rain.",
+                    "options": [
+                        "will",
+                        "is going to",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "is going to",
+                    "explanation": "is going to. There is evidence now (the sky)."
+                },
+                {
+                    "q": "I ___ tell anyone. I promise.",
+                    "options": [
+                        "won't",
+                        "am not going to",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "won't",
+                    "explanation": "won't. It is a promise."
+                },
+                {
+                    "q": "___ I open the window?",
+                    "options": [
+                        "Shall",
+                        "Will",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "Shall",
+                    "explanation": "Shall. It is an offer with I/we."
+                },
+                {
+                    "q": "Correct the sentence: \"I will to go.\"",
+                    "options": [
+                        "I will go",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "I will go",
+                    "explanation": "I will go."
+                },
+                {
+                    "q": "The phone rings. \"I ___ answer it!\"",
+                    "options": [
+                        "will",
+                        "am going to",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "will",
+                    "explanation": "will. It is a decision made at that moment."
+                },
+                {
+                    "q": "She ___ be a doctor. (She has decided.)",
+                    "options": [
+                        "is going to",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "is going to",
+                    "explanation": "is going to"
+                },
+                {
+                    "q": "Which is correct? (a) Are you going visit? (b) Are you going to visit? (c) Do you going to visit?",
+                    "options": [
+                        "",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "",
+                    "explanation": "(b)"
+                },
+                {
+                    "q": "I ___ call you tomorrow.",
+                    "options": [
+                        "will",
+                        "shall",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "will",
+                    "explanation": "will"
+                },
+                {
+                    "q": "It's cold. I ___ close the window.",
+                    "options": [
+                        "will",
+                        "am going to",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "will",
+                    "explanation": "will. It is a quick decision made now."
+                },
+                {
+                    "q": "I ___ see my uncle tomorrow. (I made the plan last week.)",
+                    "options": [
+                        "am going to",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "am going to",
+                    "explanation": "am going to. It is a plan made before."
+                },
+                {
+                    "q": "Look at the sky! It ___ rain.",
+                    "options": [
+                        "will",
+                        "is going to",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "is going to",
+                    "explanation": "is going to. There is evidence now (the sky)."
+                },
+                {
+                    "q": "I ___ tell anyone. I promise.",
+                    "options": [
+                        "won't",
+                        "am not going to",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "won't",
+                    "explanation": "won't. It is a promise."
+                },
+                {
+                    "q": "___ I open the window?",
+                    "options": [
+                        "Shall",
+                        "Will",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "Shall",
+                    "explanation": "Shall. It is an offer with I/we."
+                }
+            ],
+            "outcome": "I can talk about plans, offers and predictions."
+        },
+        {
+            "id": "class-20",
+            "title": "Class 20: Conjunctions + final review",
+            "desc": "and (adds), but (contrast), or (choice), so (result), because (reason) / To join short sentences",
+            "type": "Lesson",
+            "learn": [
+                "and (adds), but (contrast), or (choice), so (result), because (reason)",
+                "To join short sentences",
+                "To review everything in short mixed sentences"
+            ],
+            "questions": [
+                {
+                    "q": "I like tea ___ coffee.",
+                    "options": [
+                        "and",
+                        "but",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "and",
+                    "explanation": "and"
+                },
+                {
+                    "q": "It was cold, ___ I wore a coat.",
+                    "options": [
+                        "so",
+                        "because",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "so",
+                    "explanation": "so. Cold is the reason; the coat is the result."
+                },
+                {
+                    "q": "I was late ___ the bus broke down.",
+                    "options": [
+                        "so",
+                        "because",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "because",
+                    "explanation": "because. The bus breaking down is the reason."
+                },
+                {
+                    "q": "I'm tired ___ I'm happy.",
+                    "options": [
+                        "and",
+                        "but",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "but",
+                    "explanation": "but. Two opposite ideas."
+                },
+                {
+                    "q": "I can't come ___ I'm busy.",
+                    "options": [
+                        "so",
+                        "because",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "because",
+                    "explanation": "because. \"Because\" introduces the reason (busy)."
+                },
+                {
+                    "q": "I'm busy, ___ I can't come.",
+                    "options": [
+                        "so",
+                        "because",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "so",
+                    "explanation": "so. \"So\" introduces the result (can't come)."
+                },
+                {
+                    "q": "I don't like tea ___ coffee.",
+                    "options": [
+                        "and",
+                        "or",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "or",
+                    "explanation": "or. After a negative, we use \"or\"."
+                },
+                {
+                    "q": "She is poor ___ she is happy.",
+                    "options": [
+                        "so",
+                        "but",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "but",
+                    "explanation": "but"
+                },
+                {
+                    "q": "Which is correct? (a) He go to school yesterday and see his friends. (b) He went to school yesterday and saw his friends.",
+                    "options": [
+                        "",
+                        "is",
+                        "are",
+                        "do"
+                    ],
+                    "answer": "",
+                    "explanation": "(b). Both verbs must be in the past."
+                },
+                {
+                    "q": "Yesterday I was tired, ___ I went to bed early.",
+                    "options": [
+                        "so",
+                        "because",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "so",
+                    "explanation": "so. Tired is the reason; going to bed is the result."
+                },
+                {
+                    "q": "I like tea ___ coffee.",
+                    "options": [
+                        "and",
+                        "but",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "and",
+                    "explanation": "and"
+                },
+                {
+                    "q": "It was cold, ___ I wore a coat.",
+                    "options": [
+                        "so",
+                        "because",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "so",
+                    "explanation": "so. Cold is the reason; the coat is the result."
+                },
+                {
+                    "q": "I was late ___ the bus broke down.",
+                    "options": [
+                        "so",
+                        "because",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "because",
+                    "explanation": "because. The bus breaking down is the reason."
+                },
+                {
+                    "q": "I'm tired ___ I'm happy.",
+                    "options": [
+                        "and",
+                        "but",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "but",
+                    "explanation": "but. Two opposite ideas."
+                },
+                {
+                    "q": "I can't come ___ I'm busy.",
+                    "options": [
+                        "so",
+                        "because",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "because",
+                    "explanation": "because. \"Because\" introduces the reason (busy)."
+                },
+                {
+                    "q": "I'm busy, ___ I can't come.",
+                    "options": [
+                        "so",
+                        "because",
+                        "is",
+                        "are"
+                    ],
+                    "answer": "so",
+                    "explanation": "so. \"So\" introduces the result (can't come)."
+                }
+            ],
+            "outcome": "I can link ideas and write a short, correct paragraph."
+        }
+    ]
+};

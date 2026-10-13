@@ -10,8 +10,8 @@
     border-radius: var(--radius-card);
     box-shadow: var(--shadow-sm);
     padding: 24px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    border: 1px solid rgba(0, 0, 0, 0.02);
+    transition: all 0.2s ease;
+    border: 1px solid rgba(0, 0, 0, 0.03);
 }
 
 .card:hover {
@@ -27,10 +27,16 @@
     padding: 6px 14px;
     border-radius: var(--radius-pill);
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 600;
+    font-family: var(--font-display);
     background: var(--pale-yellow-bg);
     color: #8A6D00;
     white-space: nowrap;
+    transition: all 0.2s ease;
+}
+
+.pill-chip:hover {
+    transform: translateY(-1px);
 }
 
 .pill-chip.green {
@@ -42,10 +48,11 @@
 .badge-green {
     background: #E8FAF1;
     color: #1FA76A;
+    font-family: var(--font-display);
     font-weight: 600;
     padding: 4px 12px;
     border-radius: 100px;
-    font-size: 14px;
+    font-size: 13.5px;
 }
 
 .topic-count {
@@ -54,38 +61,40 @@
     justify-content: center;
     background: var(--pale-green-bg);
     color: var(--secondary-deep);
+    font-family: var(--font-display);
     font-size: 12px;
     font-weight: 600;
     padding: 2px 10px;
     border-radius: 100px;
 }
 
-/* --- Primary Button --- */
+/* --- Primary Button: Clean, luminous, warm glow --- */
 .btn-primary {
     background: linear-gradient(135deg, #FFD43B 0%, #3ECF8E 100%);
     border: none;
     color: #1A1A1A;
     font-weight: 600;
-    font-size: 16px;
-    padding: 16px 28px;
+    font-size: 15px;
+    padding: 13px 26px;
     border-radius: var(--radius-pill);
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    box-shadow: 0 4px 12px rgba(255, 212, 59, 0.3);
+    box-shadow: 0 4px 14px rgba(255, 212, 59, 0.3);
     transition: all 0.2s ease;
     cursor: pointer;
-    font-family: var(--font);
+    font-family: var(--font-display);
 }
 
 .btn-primary:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(255, 212, 59, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 212, 59, 0.42);
 }
 
 .btn-primary:active {
-    transform: scale(0.98);
+    transform: translateY(1px);
+    box-shadow: 0 2px 8px rgba(255, 212, 59, 0.22);
 }
 
 /* --- Secondary Button --- */
@@ -94,8 +103,8 @@
     border: 1.5px solid #E5E7EB;
     color: var(--text-primary);
     font-weight: 500;
-    font-size: 15px;
-    padding: 12px 22px;
+    font-size: 14.5px;
+    padding: 11px 20px;
     border-radius: var(--radius-pill);
     display: inline-flex;
     align-items: center;
@@ -103,12 +112,46 @@
     gap: 8px;
     transition: all 0.2s ease;
     cursor: pointer;
-    font-family: var(--font);
+    font-family: var(--font-display);
 }
 
 .btn-secondary:hover {
     background: #F9FAFB;
     border-color: #D1D5DB;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-secondary:active {
+    transform: translateY(1px);
+}
+
+/* --- Fast Phrases Game Launcher Button --- */
+.game-launch-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: linear-gradient(135deg, #FFE44D 0%, #7BC67E 100%);
+    color: #1A3026;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 13px;
+    padding: 7px 16px;
+    border-radius: var(--radius-pill);
+    text-decoration: none;
+    box-shadow: 0 3px 10px rgba(62, 207, 142, 0.22);
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.game-launch-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 14px rgba(62, 207, 142, 0.32);
+}
+
+.game-launch-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 6px rgba(62, 207, 142, 0.18);
 }
 
 /* --- Icon Button --- */
@@ -179,6 +222,7 @@
     position: relative;
     font-size: 26px;
     font-weight: 700;
+    font-family: var(--font-display);
     font-variant-numeric: tabular-nums;
     color: #1A1A1A;
 }
@@ -207,7 +251,7 @@
 
 /* --- Diff View (Correction Markup) --- */
 .diff-view {
-    font-family: 'Inter', monospace;
+    font-family: var(--font-body), system-ui, sans-serif;
     font-size: 15px;
     padding: 6px 0;
     line-height: 1.6;

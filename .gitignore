@@ -10,14 +10,21 @@ __pycache__/
 
 # OS artifacts
 .DS_Store
-Thumbs.db
 
 # VS Code (local user workspace state)
 .vscode/*
 !.vscode/settings.json
 
-# Audio and transcript data (keep directories tracked via .gitkeep)
-input/*
-!input/.gitkeep
+# Environment variables
+.env
+.env.*
+
+# Local databases and logs
+*.db
+*.sqlite
+*.sqlite3
+*.log
+
+# Generated output media (keep .gitkeep)
 output/*
 !output/.gitkeep

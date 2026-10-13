@@ -1,0 +1,3109 @@
+{
+  "level": "C2",
+  "track": "grammar",
+  "title": "Mastery",
+  "desc": "Rhetorical inversions, archaic subjunctives, nuanced epistemic stance & stylistic flow.",
+  "emoji": "👑",
+  "classes": [
+    {
+      "id": "class-1",
+      "title": "Class 1: Archaic & Literary Inversion",
+      "desc": "Fronting with negative expressions, literary inversion, and poetic syntax.",
+      "type": "Lesson",
+      "learn": [
+        "Core structural rules and sentence patterns for Archaic & Literary Inversion",
+        "Distinguishing common traps, errors, and subtle register differences",
+        "Spoken fluency templates and IELTS/academic writing applications"
+      ],
+      "questions": [
+        {
+          "q": "Rarely ___ such incredible musical talent on stage.",
+          "options": [
+            "have I witnessed",
+            "I have witnessed",
+            "did I witnessed",
+            "I witnessed"
+          ],
+          "answer": "have I witnessed",
+          "explanation": "Negative adverbial 'Rarely' at the start of a clause triggers subject-auxiliary inversion."
+        },
+        {
+          "q": "No sooner had we arrived at the station ___ the train departed.",
+          "options": [
+            "than",
+            "when",
+            "that",
+            "then"
+          ],
+          "answer": "than",
+          "explanation": "'No sooner... than' is the required correlative conjunction pair."
+        },
+        {
+          "q": "Choose the grammatically sound option for this sentence (Archaic & Literary Inversion):",
+          "options": [
+            "Despite the sudden rain, the outdoor event proceeded successfully.",
+            "Despite of the sudden rain, the outdoor event proceeded successfully.",
+            "Although the sudden rain, the outdoor event proceeded successfully.",
+            "In spite the sudden rain, the outdoor event proceeded successfully."
+          ],
+          "answer": "Despite the sudden rain, the outdoor event proceeded successfully.",
+          "explanation": "'Despite' takes a noun phrase directly without 'of' (unlike 'in spite of')."
+        },
+        {
+          "q": "Which sentence correctly maintains subject-verb agreement under 'Archaic & Literary Inversion' rules?",
+          "options": [
+            "Neither the manager nor the assistants were available for comment.",
+            "Neither the manager nor the assistants was available for comment.",
+            "Neither the manager or the assistants were available for comment.",
+            "Neither the manager nor the assistants being available for comment."
+          ],
+          "answer": "Neither the manager nor the assistants were available for comment.",
+          "explanation": "With 'neither... nor...', the verb agrees with the closer subject ('assistants' -> 'were')."
+        },
+        {
+          "q": "Fill in the blank with the correct preposition/connector for 'Archaic & Literary Inversion':\n\"He succeeded in passing the exam ___ studying consistently every evening.\"",
+          "options": [
+            "by",
+            "with",
+            "throughout",
+            "at"
+          ],
+          "answer": "by",
+          "explanation": "Use 'by + gerund' to explain the method or manner through which something is achieved."
+        },
+        {
+          "q": "Select the sentence with accurate punctuation and clause structure:",
+          "options": [
+            "Although she was exhausted, she finished the entire assignment.",
+            "Although she was exhausted she finished, the entire assignment.",
+            "She finished the entire assignment, although, she was exhausted.",
+            "Although was exhausted, she finished the entire assignment."
+          ],
+          "answer": "Although she was exhausted, she finished the entire assignment.",
+          "explanation": "A subordinate clause at the start of a sentence is set off by a comma."
+        },
+        {
+          "q": "Which expression provides the most natural academic register?",
+          "options": [
+            "The findings indicate a substantial improvement in student retention.",
+            "The findings show a really big improvement in student retention.",
+            "The findings are saying that students stay more.",
+            "The findings tell that students get much better."
+          ],
+          "answer": "The findings indicate a substantial improvement in student retention.",
+          "explanation": "'Indicate a substantial improvement' provides precise academic vocabulary appropriate for advanced writing."
+        },
+        {
+          "q": "Identify the sentence that contains a grammatical error regarding 'Archaic & Literary Inversion':",
+          "options": [
+            "She suggested me to consult an academic advisor immediately.",
+            "She suggested that I consult an academic advisor immediately.",
+            "She recommended consulting an academic advisor immediately.",
+            "She advised me to consult an academic advisor immediately."
+          ],
+          "answer": "She suggested me to consult an academic advisor immediately.",
+          "explanation": "'Suggest' does not take object + infinitive (*suggest me to do*). Use 'suggest that...' or 'suggest + gerund'."
+        },
+        {
+          "q": "Choose the best alternative to replace the highlighted phrase for concise clarity:\n\"Owing to the fact that it was raining heavily...\"",
+          "options": [
+            "Because it was raining heavily",
+            "For reason that it rained",
+            "Due to because of the rain",
+            "Since that it was heavy rain"
+          ],
+          "answer": "Because it was raining heavily",
+          "explanation": "'Because' is more direct, natural, and avoids wordy redundant phrasing."
+        },
+        {
+          "q": "Which sentence demonstrates the correct position of adverbs of frequency?",
+          "options": [
+            "She has always been interested in linguistic anthropology.",
+            "She always has been interested in linguistic anthropology.",
+            "Always she has been interested in linguistic anthropology.",
+            "She has been always interested in linguistic anthropology."
+          ],
+          "answer": "She has always been interested in linguistic anthropology.",
+          "explanation": "Adverbs of frequency ('always') are placed after the first auxiliary verb ('has')."
+        },
+        {
+          "q": "Complete the sentence with the correct subjunctive / formal structure:\n\"It is imperative that every member ___ the code of conduct.\"",
+          "options": [
+            "follow",
+            "follows",
+            "followed",
+            "is following"
+          ],
+          "answer": "follow",
+          "explanation": "The present subjunctive with 'imperative that' uses the base form 'follow' regardless of the subject."
+        },
+        {
+          "q": "Choose the correct collocated preposition:\n\"The company is committed ___ reducing its carbon emissions by 2030.\"",
+          "options": [
+            "to",
+            "for",
+            "with",
+            "at"
+          ],
+          "answer": "to",
+          "explanation": "'Committed to' is followed by a gerund or noun phrase ('reducing')."
+        },
+        {
+          "q": "Which option transforms the active sentence into a natural passive form?\nActive: \"Authorities have closed the bridge for inspection.\"",
+          "options": [
+            "The bridge has been closed for inspection by authorities.",
+            "The bridge had been closed for inspection by authorities.",
+            "The bridge was being closed for inspection by authorities.",
+            "The bridge is closed for inspection since authorities."
+          ],
+          "answer": "The bridge has been closed for inspection by authorities.",
+          "explanation": "Present perfect passive uses 'has/have been + past participle' ('has been closed')."
+        }
+      ]
+    },
+    {
+      "id": "class-2",
+      "title": "Class 2: Subjunctive & Formulaic Expressions",
+      "desc": "Mandative and formulaic subjunctives (be that as it may, come what may).",
+      "type": "Lesson",
+      "learn": [
+        "Core structural rules and sentence patterns for Subjunctive & Formulaic Expressions",
+        "Distinguishing common traps, errors, and subtle register differences",
+        "Spoken fluency templates and IELTS/academic writing applications"
+      ],
+      "questions": [
+        {
+          "q": "Rarely ___ such incredible musical talent on stage.",
+          "options": [
+            "have I witnessed",
+            "I have witnessed",
+            "did I witnessed",
+            "I witnessed"
+          ],
+          "answer": "have I witnessed",
+          "explanation": "Negative adverbial 'Rarely' at the start of a clause triggers subject-auxiliary inversion."
+        },
+        {
+          "q": "No sooner had we arrived at the station ___ the train departed.",
+          "options": [
+            "than",
+            "when",
+            "that",
+            "then"
+          ],
+          "answer": "than",
+          "explanation": "'No sooner... than' is the required correlative conjunction pair."
+        },
+        {
+          "q": "Choose the grammatically sound option for this sentence (Subjunctive & Formulaic Expressions):",
+          "options": [
+            "Despite the sudden rain, the outdoor event proceeded successfully.",
+            "Despite of the sudden rain, the outdoor event proceeded successfully.",
+            "Although the sudden rain, the outdoor event proceeded successfully.",
+            "In spite the sudden rain, the outdoor event proceeded successfully."
+          ],
+          "answer": "Despite the sudden rain, the outdoor event proceeded successfully.",
+          "explanation": "'Despite' takes a noun phrase directly without 'of' (unlike 'in spite of')."
+        },
+        {
+          "q": "Which sentence correctly maintains subject-verb agreement under 'Subjunctive & Formulaic Expressions' rules?",
+          "options": [
+            "Neither the manager nor the assistants were available for comment.",
+            "Neither the manager nor the assistants was available for comment.",
+            "Neither the manager or the assistants were available for comment.",
+            "Neither the manager nor the assistants being available for comment."
+          ],
+          "answer": "Neither the manager nor the assistants were available for comment.",
+          "explanation": "With 'neither... nor...', the verb agrees with the closer subject ('assistants' -> 'were')."
+        },
+        {
+          "q": "Fill in the blank with the correct preposition/connector for 'Subjunctive & Formulaic Expressions':\n\"He succeeded in passing the exam ___ studying consistently every evening.\"",
+          "options": [
+            "by",
+            "with",
+            "throughout",
+            "at"
+          ],
+          "answer": "by",
+          "explanation": "Use 'by + gerund' to explain the method or manner through which something is achieved."
+        },
+        {
+          "q": "Select the sentence with accurate punctuation and clause structure:",
+          "options": [
+            "Although she was exhausted, she finished the entire assignment.",
+            "Although she was exhausted she finished, the entire assignment.",
+            "She finished the entire assignment, although, she was exhausted.",
+            "Although was exhausted, she finished the entire assignment."
+          ],
+          "answer": "Although she was exhausted, she finished the entire assignment.",
+          "explanation": "A subordinate clause at the start of a sentence is set off by a comma."
+        },
+        {
+          "q": "Which expression provides the most natural academic register?",
+          "options": [
+            "The findings indicate a substantial improvement in student retention.",
+            "The findings show a really big improvement in student retention.",
+            "The findings are saying that students stay more.",
+            "The findings tell that students get much better."
+          ],
+          "answer": "The findings indicate a substantial improvement in student retention.",
+          "explanation": "'Indicate a substantial improvement' provides precise academic vocabulary appropriate for advanced writing."
+        },
+        {
+          "q": "Identify the sentence that contains a grammatical error regarding 'Subjunctive & Formulaic Expressions':",
+          "options": [
+            "She suggested me to consult an academic advisor immediately.",
+            "She suggested that I consult an academic advisor immediately.",
+            "She recommended consulting an academic advisor immediately.",
+            "She advised me to consult an academic advisor immediately."
+          ],
+          "answer": "She suggested me to consult an academic advisor immediately.",
+          "explanation": "'Suggest' does not take object + infinitive (*suggest me to do*). Use 'suggest that...' or 'suggest + gerund'."
+        },
+        {
+          "q": "Choose the best alternative to replace the highlighted phrase for concise clarity:\n\"Owing to the fact that it was raining heavily...\"",
+          "options": [
+            "Because it was raining heavily",
+            "For reason that it rained",
+            "Due to because of the rain",
+            "Since that it was heavy rain"
+          ],
+          "answer": "Because it was raining heavily",
+          "explanation": "'Because' is more direct, natural, and avoids wordy redundant phrasing."
+        },
+        {
+          "q": "Which sentence demonstrates the correct position of adverbs of frequency?",
+          "options": [
+            "She has always been interested in linguistic anthropology.",
+            "She always has been interested in linguistic anthropology.",
+            "Always she has been interested in linguistic anthropology.",
+            "She has been always interested in linguistic anthropology."
+          ],
+          "answer": "She has always been interested in linguistic anthropology.",
+          "explanation": "Adverbs of frequency ('always') are placed after the first auxiliary verb ('has')."
+        },
+        {
+          "q": "Complete the sentence with the correct subjunctive / formal structure:\n\"It is imperative that every member ___ the code of conduct.\"",
+          "options": [
+            "follow",
+            "follows",
+            "followed",
+            "is following"
+          ],
+          "answer": "follow",
+          "explanation": "The present subjunctive with 'imperative that' uses the base form 'follow' regardless of the subject."
+        },
+        {
+          "q": "Choose the correct collocated preposition:\n\"The company is committed ___ reducing its carbon emissions by 2030.\"",
+          "options": [
+            "to",
+            "for",
+            "with",
+            "at"
+          ],
+          "answer": "to",
+          "explanation": "'Committed to' is followed by a gerund or noun phrase ('reducing')."
+        },
+        {
+          "q": "Which option transforms the active sentence into a natural passive form?\nActive: \"Authorities have closed the bridge for inspection.\"",
+          "options": [
+            "The bridge has been closed for inspection by authorities.",
+            "The bridge had been closed for inspection by authorities.",
+            "The bridge was being closed for inspection by authorities.",
+            "The bridge is closed for inspection since authorities."
+          ],
+          "answer": "The bridge has been closed for inspection by authorities.",
+          "explanation": "Present perfect passive uses 'has/have been + past participle' ('has been closed')."
+        }
+      ]
+    },
+    {
+      "id": "class-3",
+      "title": "Class 3: Cleft Sentences & Focus Framing",
+      "desc": "It-clefts, wh-clefts, all-clefts, and reversed cleft constructions for rhetorical emphasis.",
+      "type": "Lesson",
+      "learn": [
+        "Core structural rules and sentence patterns for Cleft Sentences & Focus Framing",
+        "Distinguishing common traps, errors, and subtle register differences",
+        "Spoken fluency templates and IELTS/academic writing applications"
+      ],
+      "questions": [
+        {
+          "q": "Rarely ___ such incredible musical talent on stage.",
+          "options": [
+            "have I witnessed",
+            "I have witnessed",
+            "did I witnessed",
+            "I witnessed"
+          ],
+          "answer": "have I witnessed",
+          "explanation": "Negative adverbial 'Rarely' at the start of a clause triggers subject-auxiliary inversion."
+        },
+        {
+          "q": "No sooner had we arrived at the station ___ the train departed.",
+          "options": [
+            "than",
+            "when",
+            "that",
+            "then"
+          ],
+          "answer": "than",
+          "explanation": "'No sooner... than' is the required correlative conjunction pair."
+        },
+        {
+          "q": "Choose the grammatically sound option for this sentence (Cleft Sentences & Focus Framing):",
+          "options": [
+            "Despite the sudden rain, the outdoor event proceeded successfully.",
+            "Despite of the sudden rain, the outdoor event proceeded successfully.",
+            "Although the sudden rain, the outdoor event proceeded successfully.",
+            "In spite the sudden rain, the outdoor event proceeded successfully."
+          ],
+          "answer": "Despite the sudden rain, the outdoor event proceeded successfully.",
+          "explanation": "'Despite' takes a noun phrase directly without 'of' (unlike 'in spite of')."
+        },
+        {
+          "q": "Which sentence correctly maintains subject-verb agreement under 'Cleft Sentences & Focus Framing' rules?",
+          "options": [
+            "Neither the manager nor the assistants were available for comment.",
+            "Neither the manager nor the assistants was available for comment.",
+            "Neither the manager or the assistants were available for comment.",
+            "Neither the manager nor the assistants being available for comment."
+          ],
+          "answer": "Neither the manager nor the assistants were available for comment.",
+          "explanation": "With 'neither... nor...', the verb agrees with the closer subject ('assistants' -> 'were')."
+        },
+        {
+          "q": "Fill in the blank with the correct preposition/connector for 'Cleft Sentences & Focus Framing':\n\"He succeeded in passing the exam ___ studying consistently every evening.\"",
+          "options": [
+            "by",
+            "with",
+            "throughout",
+            "at"
+          ],
+          "answer": "by",
+          "explanation": "Use 'by + gerund' to explain the method or manner through which something is achieved."
+        },
+        {
+          "q": "Select the sentence with accurate punctuation and clause structure:",
+          "options": [
+            "Although she was exhausted, she finished the entire assignment.",
+            "Although she was exhausted she finished, the entire assignment.",
+            "She finished the entire assignment, although, she was exhausted.",
+            "Although was exhausted, she finished the entire assignment."
+          ],
+          "answer": "Although she was exhausted, she finished the entire assignment.",
+          "explanation": "A subordinate clause at the start of a sentence is set off by a comma."
+        },
+        {
+          "q": "Which expression provides the most natural academic register?",
+          "options": [
+            "The findings indicate a substantial improvement in student retention.",
+            "The findings show a really big improvement in student retention.",
+            "The findings are saying that students stay more.",
+            "The findings tell that students get much better."
+          ],
+          "answer": "The findings indicate a substantial improvement in student retention.",
+          "explanation": "'Indicate a substantial improvement' provides precise academic vocabulary appropriate for advanced writing."
+        },
+        {
+          "q": "Identify the sentence that contains a grammatical error regarding 'Cleft Sentences & Focus Framing':",
+          "options": [
+            "She suggested me to consult an academic advisor immediately.",
+            "She suggested that I consult an academic advisor immediately.",
+            "She recommended consulting an academic advisor immediately.",
+            "She advised me to consult an academic advisor immediately."
+          ],
+          "answer": "She suggested me to consult an academic advisor immediately.",
+          "explanation": "'Suggest' does not take object + infinitive (*suggest me to do*). Use 'suggest that...' or 'suggest + gerund'."
+        },
+        {
+          "q": "Choose the best alternative to replace the highlighted phrase for concise clarity:\n\"Owing to the fact that it was raining heavily...\"",
+          "options": [
+            "Because it was raining heavily",
+            "For reason that it rained",
+            "Due to because of the rain",
+            "Since that it was heavy rain"
+          ],
+          "answer": "Because it was raining heavily",
+          "explanation": "'Because' is more direct, natural, and avoids wordy redundant phrasing."
+        },
+        {
+          "q": "Which sentence demonstrates the correct position of adverbs of frequency?",
+          "options": [
+            "She has always been interested in linguistic anthropology.",
+            "She always has been interested in linguistic anthropology.",
+            "Always she has been interested in linguistic anthropology.",
+            "She has been always interested in linguistic anthropology."
+          ],
+          "answer": "She has always been interested in linguistic anthropology.",
+          "explanation": "Adverbs of frequency ('always') are placed after the first auxiliary verb ('has')."
+        },
+        {
+          "q": "Complete the sentence with the correct subjunctive / formal structure:\n\"It is imperative that every member ___ the code of conduct.\"",
+          "options": [
+            "follow",
+            "follows",
+            "followed",
+            "is following"
+          ],
+          "answer": "follow",
+          "explanation": "The present subjunctive with 'imperative that' uses the base form 'follow' regardless of the subject."
+        },
+        {
+          "q": "Choose the correct collocated preposition:\n\"The company is committed ___ reducing its carbon emissions by 2030.\"",
+          "options": [
+            "to",
+            "for",
+            "with",
+            "at"
+          ],
+          "answer": "to",
+          "explanation": "'Committed to' is followed by a gerund or noun phrase ('reducing')."
+        },
+        {
+          "q": "Which option transforms the active sentence into a natural passive form?\nActive: \"Authorities have closed the bridge for inspection.\"",
+          "options": [
+            "The bridge has been closed for inspection by authorities.",
+            "The bridge had been closed for inspection by authorities.",
+            "The bridge was being closed for inspection by authorities.",
+            "The bridge is closed for inspection since authorities."
+          ],
+          "answer": "The bridge has been closed for inspection by authorities.",
+          "explanation": "Present perfect passive uses 'has/have been + past participle' ('has been closed')."
+        }
+      ]
+    },
+    {
+      "id": "class-4",
+      "title": "Class 4: Ellipsis & Substitution in Discourse",
+      "desc": "Gapping, pseudo-gapping, sluicing, and nuanced discourse cohesion.",
+      "type": "Lesson",
+      "learn": [
+        "Core structural rules and sentence patterns for Ellipsis & Substitution in Discourse",
+        "Distinguishing common traps, errors, and subtle register differences",
+        "Spoken fluency templates and IELTS/academic writing applications"
+      ],
+      "questions": [
+        {
+          "q": "Rarely ___ such incredible musical talent on stage.",
+          "options": [
+            "have I witnessed",
+            "I have witnessed",
+            "did I witnessed",
+            "I witnessed"
+          ],
+          "answer": "have I witnessed",
+          "explanation": "Negative adverbial 'Rarely' at the start of a clause triggers subject-auxiliary inversion."
+        },
+        {
+          "q": "No sooner had we arrived at the station ___ the train departed.",
+          "options": [
+            "than",
+            "when",
+            "that",
+            "then"
+          ],
+          "answer": "than",
+          "explanation": "'No sooner... than' is the required correlative conjunction pair."
+        },
+        {
+          "q": "Choose the grammatically sound option for this sentence (Ellipsis & Substitution in Discourse):",
+          "options": [
+            "Despite the sudden rain, the outdoor event proceeded successfully.",
+            "Despite of the sudden rain, the outdoor event proceeded successfully.",
+            "Although the sudden rain, the outdoor event proceeded successfully.",
+            "In spite the sudden rain, the outdoor event proceeded successfully."
+          ],
+          "answer": "Despite the sudden rain, the outdoor event proceeded successfully.",
+          "explanation": "'Despite' takes a noun phrase directly without 'of' (unlike 'in spite of')."
+        },
+        {
+          "q": "Which sentence correctly maintains subject-verb agreement under 'Ellipsis & Substitution in Discourse' rules?",
+          "options": [
+            "Neither the manager nor the assistants were available for comment.",
+            "Neither the manager nor the assistants was available for comment.",
+            "Neither the manager or the assistants were available for comment.",
+            "Neither the manager nor the assistants being available for comment."
+          ],
+          "answer": "Neither the manager nor the assistants were available for comment.",
+          "explanation": "With 'neither... nor...', the verb agrees with the closer subject ('assistants' -> 'were')."
+        },
+        {
+          "q": "Fill in the blank with the correct preposition/connector for 'Ellipsis & Substitution in Discourse':\n\"He succeeded in passing the exam ___ studying consistently every evening.\"",
+          "options": [
+            "by",
+            "with",
+            "throughout",
+            "at"
+          ],
+          "answer": "by",
+          "explanation": "Use 'by + gerund' to explain the method or manner through which something is achieved."
+        },
+        {
+          "q": "Select the sentence with accurate punctuation and clause structure:",
+          "options": [
+            "Although she was exhausted, she finished the entire assignment.",
+            "Although she was exhausted she finished, the entire assignment.",
+            "She finished the entire assignment, although, she was exhausted.",
+            "Although was exhausted, she finished the entire assignment."
+          ],
+          "answer": "Although she was exhausted, she finished the entire assignment.",
+          "explanation": "A subordinate clause at the start of a sentence is set off by a comma."
+        },
+        {
+          "q": "Which expression provides the most natural academic register?",
+          "options": [
+            "The findings indicate a substantial improvement in student retention.",
+            "The findings show a really big improvement in student retention.",
+            "The findings are saying that students stay more.",
+            "The findings tell that students get much better."
+          ],
+          "answer": "The findings indicate a substantial improvement in student retention.",
+          "explanation": "'Indicate a substantial improvement' provides precise academic vocabulary appropriate for advanced writing."
+        },
+        {
+          "q": "Identify the sentence that contains a grammatical error regarding 'Ellipsis & Substitution in Discourse':",
+          "options": [
+            "She suggested me to consult an academic advisor immediately.",
+            "She suggested that I consult an academic advisor immediately.",
+            "She recommended consulting an academic advisor immediately.",
+            "She advised me to consult an academic advisor immediately."
+          ],
+          "answer": "She suggested me to consult an academic advisor immediately.",
+          "explanation": "'Suggest' does not take object + infinitive (*suggest me to do*). Use 'suggest that...' or 'suggest + gerund'."
+        },
+        {
+          "q": "Choose the best alternative to replace the highlighted phrase for concise clarity:\n\"Owing to the fact that it was raining heavily...\"",
+          "options": [
+            "Because it was raining heavily",
+            "For reason that it rained",
+            "Due to because of the rain",
+            "Since that it was heavy rain"
+          ],
+          "answer": "Because it was raining heavily",
+          "explanation": "'Because' is more direct, natural, and avoids wordy redundant phrasing."
+        },
+        {
+          "q": "Which sentence demonstrates the correct position of adverbs of frequency?",
+          "options": [
+            "She has always been interested in linguistic anthropology.",
+            "She always has been interested in linguistic anthropology.",
+            "Always she has been interested in linguistic anthropology.",
+            "She has been always interested in linguistic anthropology."
+          ],
+          "answer": "She has always been interested in linguistic anthropology.",
+          "explanation": "Adverbs of frequency ('always') are placed after the first auxiliary verb ('has')."
+        },
+        {
+          "q": "Complete the sentence with the correct subjunctive / formal structure:\n\"It is imperative that every member ___ the code of conduct.\"",
+          "options": [
+            "follow",
+            "follows",
+            "followed",
+            "is following"
+          ],
+          "answer": "follow",
+          "explanation": "The present subjunctive with 'imperative that' uses the base form 'follow' regardless of the subject."
+        },
+        {
+          "q": "Choose the correct collocated preposition:\n\"The company is committed ___ reducing its carbon emissions by 2030.\"",
+          "options": [
+            "to",
+            "for",
+            "with",
+            "at"
+          ],
+          "answer": "to",
+          "explanation": "'Committed to' is followed by a gerund or noun phrase ('reducing')."
+        },
+        {
+          "q": "Which option transforms the active sentence into a natural passive form?\nActive: \"Authorities have closed the bridge for inspection.\"",
+          "options": [
+            "The bridge has been closed for inspection by authorities.",
+            "The bridge had been closed for inspection by authorities.",
+            "The bridge was being closed for inspection by authorities.",
+            "The bridge is closed for inspection since authorities."
+          ],
+          "answer": "The bridge has been closed for inspection by authorities.",
+          "explanation": "Present perfect passive uses 'has/have been + past participle' ('has been closed')."
+        }
+      ]
+    },
+    {
+      "id": "class-5",
+      "title": "Class 5: Participle Clauses & Dangling Modifiers",
+      "desc": "Advanced dangling modifier avoidance, non-finite clauses, and adverbial nuances.",
+      "type": "Lesson",
+      "learn": [
+        "Core structural rules and sentence patterns for Participle Clauses & Dangling Modifiers",
+        "Distinguishing common traps, errors, and subtle register differences",
+        "Spoken fluency templates and IELTS/academic writing applications"
+      ],
+      "questions": [
+        {
+          "q": "Rarely ___ such incredible musical talent on stage.",
+          "options": [
+            "have I witnessed",
+            "I have witnessed",
+            "did I witnessed",
+            "I witnessed"
+          ],
+          "answer": "have I witnessed",
+          "explanation": "Negative adverbial 'Rarely' at the start of a clause triggers subject-auxiliary inversion."
+        },
+        {
+          "q": "No sooner had we arrived at the station ___ the train departed.",
+          "options": [
+            "than",
+            "when",
+            "that",
+            "then"
+          ],
+          "answer": "than",
+          "explanation": "'No sooner... than' is the required correlative conjunction pair."
+        },
+        {
+          "q": "Choose the grammatically sound option for this sentence (Participle Clauses & Dangling Modifiers):",
+          "options": [
+            "Despite the sudden rain, the outdoor event proceeded successfully.",
+            "Despite of the sudden rain, the outdoor event proceeded successfully.",
+            "Although the sudden rain, the outdoor event proceeded successfully.",
+            "In spite the sudden rain, the outdoor event proceeded successfully."
+          ],
+          "answer": "Despite the sudden rain, the outdoor event proceeded successfully.",
+          "explanation": "'Despite' takes a noun phrase directly without 'of' (unlike 'in spite of')."
+        },
+        {
+          "q": "Which sentence correctly maintains subject-verb agreement under 'Participle Clauses & Dangling Modifiers' rules?",
+          "options": [
+            "Neither the manager nor the assistants were available for comment.",
+            "Neither the manager nor the assistants was available for comment.",
+            "Neither the manager or the assistants were available for comment.",
+            "Neither the manager nor the assistants being available for comment."
+          ],
+          "answer": "Neither the manager nor the assistants were available for comment.",
+          "explanation": "With 'neither... nor...', the verb agrees with the closer subject ('assistants' -> 'were')."
+        },
+        {
+          "q": "Fill in the blank with the correct preposition/connector for 'Participle Clauses & Dangling Modifiers':\n\"He succeeded in passing the exam ___ studying consistently every evening.\"",
+          "options": [
+            "by",
+            "with",
+            "throughout",
+            "at"
+          ],
+          "answer": "by",
+          "explanation": "Use 'by + gerund' to explain the method or manner through which something is achieved."
+        },
+        {
+          "q": "Select the sentence with accurate punctuation and clause structure:",
+          "options": [
+            "Although she was exhausted, she finished the entire assignment.",
+            "Although she was exhausted she finished, the entire assignment.",
+            "She finished the entire assignment, although, she was exhausted.",
+            "Although was exhausted, she finished the entire assignment."
+          ],
+          "answer": "Although she was exhausted, she finished the entire assignment.",
+          "explanation": "A subordinate clause at the start of a sentence is set off by a comma."
+        },
+        {
+          "q": "Which expression provides the most natural academic register?",
+          "options": [
+            "The findings indicate a substantial improvement in student retention.",
+            "The findings show a really big improvement in student retention.",
+            "The findings are saying that students stay more.",
+            "The findings tell that students get much better."
+          ],
+          "answer": "The findings indicate a substantial improvement in student retention.",
+          "explanation": "'Indicate a substantial improvement' provides precise academic vocabulary appropriate for advanced writing."
+        },
+        {
+          "q": "Identify the sentence that contains a grammatical error regarding 'Participle Clauses & Dangling Modifiers':",
+          "options": [
+            "She suggested me to consult an academic advisor immediately.",
+            "She suggested that I consult an academic advisor immediately.",
+            "She recommended consulting an academic advisor immediately.",
+            "She advised me to consult an academic advisor immediately."
+          ],
+          "answer": "She suggested me to consult an academic advisor immediately.",
+          "explanation": "'Suggest' does not take object + infinitive (*suggest me to do*). Use 'suggest that...' or 'suggest + gerund'."
+        },
+        {
+          "q": "Choose the best alternative to replace the highlighted phrase for concise clarity:\n\"Owing to the fact that it was raining heavily...\"",
+          "options": [
+            "Because it was raining heavily",
+            "For reason that it rained",
+            "Due to because of the rain",
+            "Since that it was heavy rain"
+          ],
+          "answer": "Because it was raining heavily",
+          "explanation": "'Because' is more direct, natural, and avoids wordy redundant phrasing."
+        },
+        {
+          "q": "Which sentence demonstrates the correct position of adverbs of frequency?",
+          "options": [
+            "She has always been interested in linguistic anthropology.",
+            "She always has been interested in linguistic anthropology.",
+            "Always she has been interested in linguistic anthropology.",
+            "She has been always interested in linguistic anthropology."
+          ],
+          "answer": "She has always been interested in linguistic anthropology.",
+          "explanation": "Adverbs of frequency ('always') are placed after the first auxiliary verb ('has')."
+        },
+        {
+          "q": "Complete the sentence with the correct subjunctive / formal structure:\n\"It is imperative that every member ___ the code of conduct.\"",
+          "options": [
+            "follow",
+            "follows",
+            "followed",
+            "is following"
+          ],
+          "answer": "follow",
+          "explanation": "The present subjunctive with 'imperative that' uses the base form 'follow' regardless of the subject."
+        },
+        {
+          "q": "Choose the correct collocated preposition:\n\"The company is committed ___ reducing its carbon emissions by 2030.\"",
+          "options": [
+            "to",
+            "for",
+            "with",
+            "at"
+          ],
+          "answer": "to",
+          "explanation": "'Committed to' is followed by a gerund or noun phrase ('reducing')."
+        },
+        {
+          "q": "Which option transforms the active sentence into a natural passive form?\nActive: \"Authorities have closed the bridge for inspection.\"",
+          "options": [
+            "The bridge has been closed for inspection by authorities.",
+            "The bridge had been closed for inspection by authorities.",
+            "The bridge was being closed for inspection by authorities.",
+            "The bridge is closed for inspection since authorities."
+          ],
+          "answer": "The bridge has been closed for inspection by authorities.",
+          "explanation": "Present perfect passive uses 'has/have been + past participle' ('has been closed')."
+        }
+      ]
+    },
+    {
+      "id": "class-6",
+      "title": "Class 6: Mixed & Unexpressed Conditionals",
+      "desc": "Inverted conditionals without 'if' (Had we known, Were he to ask, Should you require).",
+      "type": "Lesson",
+      "learn": [
+        "Core structural rules and sentence patterns for Mixed & Unexpressed Conditionals",
+        "Distinguishing common traps, errors, and subtle register differences",
+        "Spoken fluency templates and IELTS/academic writing applications"
+      ],
+      "questions": [
+        {
+          "q": "If it rains tomorrow, we ___ our trip to the beach.",
+          "options": [
+            "will cancel",
+            "canceled",
+            "would cancel",
+            "cancel"
+          ],
+          "answer": "will cancel",
+          "explanation": "First conditional uses present simple in if-clause and 'will + verb' in result clause."
+        },
+        {
+          "q": "Choose the grammatically sound option for this sentence (Mixed & Unexpressed Conditionals):",
+          "options": [
+            "Despite the sudden rain, the outdoor event proceeded successfully.",
+            "Despite of the sudden rain, the outdoor event proceeded successfully.",
+            "Although the sudden rain, the outdoor event proceeded successfully.",
+            "In spite the sudden rain, the outdoor event proceeded successfully."
+          ],
+          "answer": "Despite the sudden rain, the outdoor event proceeded successfully.",
+          "explanation": "'Despite' takes a noun phrase directly without 'of' (unlike 'in spite of')."
+        },
+        {
+          "q": "Which sentence correctly maintains subject-verb agreement under 'Mixed & Unexpressed Conditionals' rules?",
+          "options": [
+            "Neither the manager nor the assistants were available for comment.",
+            "Neither the manager nor the assistants was available for comment.",
+            "Neither the manager or the assistants were available for comment.",
+            "Neither the manager nor the assistants being available for comment."
+          ],
+          "answer": "Neither the manager nor the assistants were available for comment.",
+          "explanation": "With 'neither... nor...', the verb agrees with the closer subject ('assistants' -> 'were')."
+        },
+        {
+          "q": "Fill in the blank with the correct preposition/connector for 'Mixed & Unexpressed Conditionals':\n\"He succeeded in passing the exam ___ studying consistently every evening.\"",
+          "options": [
+            "by",
+            "with",
+            "throughout",
+            "at"
+          ],
+          "answer": "by",
+          "explanation": "Use 'by + gerund' to explain the method or manner through which something is achieved."
+        },
+        {
+          "q": "Select the sentence with accurate punctuation and clause structure:",
+          "options": [
+            "Although she was exhausted, she finished the entire assignment.",
+            "Although she was exhausted she finished, the entire assignment.",
+            "She finished the entire assignment, although, she was exhausted.",
+            "Although was exhausted, she finished the entire assignment."
+          ],
+          "answer": "Although she was exhausted, she finished the entire assignment.",
+          "explanation": "A subordinate clause at the start of a sentence is set off by a comma."
+        },
+        {
+          "q": "Which expression provides the most natural academic register?",
+          "options": [
+            "The findings indicate a substantial improvement in student retention.",
+            "The findings show a really big improvement in student retention.",
+            "The findings are saying that students stay more.",
+            "The findings tell that students get much better."
+          ],
+          "answer": "The findings indicate a substantial improvement in student retention.",
+          "explanation": "'Indicate a substantial improvement' provides precise academic vocabulary appropriate for advanced writing."
+        },
+        {
+          "q": "Identify the sentence that contains a grammatical error regarding 'Mixed & Unexpressed Conditionals':",
+          "options": [
+            "She suggested me to consult an academic advisor immediately.",
+            "She suggested that I consult an academic advisor immediately.",
+            "She recommended consulting an academic advisor immediately.",
+            "She advised me to consult an academic advisor immediately."
+          ],
+          "answer": "She suggested me to consult an academic advisor immediately.",
+          "explanation": "'Suggest' does not take object + infinitive (*suggest me to do*). Use 'suggest that...' or 'suggest + gerund'."
+        },
+        {
+          "q": "Choose the best alternative to replace the highlighted phrase for concise clarity:\n\"Owing to the fact that it was raining heavily...\"",
+          "options": [
+            "Because it was raining heavily",
+            "For reason that it rained",
+            "Due to because of the rain",
+            "Since that it was heavy rain"
+          ],
+          "answer": "Because it was raining heavily",
+          "explanation": "'Because' is more direct, natural, and avoids wordy redundant phrasing."
+        },
+        {
+          "q": "Which sentence demonstrates the correct position of adverbs of frequency?",
+          "options": [
+            "She has always been interested in linguistic anthropology.",
+            "She always has been interested in linguistic anthropology.",
+            "Always she has been interested in linguistic anthropology.",
+            "She has been always interested in linguistic anthropology."
+          ],
+          "answer": "She has always been interested in linguistic anthropology.",
+          "explanation": "Adverbs of frequency ('always') are placed after the first auxiliary verb ('has')."
+        },
+        {
+          "q": "Complete the sentence with the correct subjunctive / formal structure:\n\"It is imperative that every member ___ the code of conduct.\"",
+          "options": [
+            "follow",
+            "follows",
+            "followed",
+            "is following"
+          ],
+          "answer": "follow",
+          "explanation": "The present subjunctive with 'imperative that' uses the base form 'follow' regardless of the subject."
+        },
+        {
+          "q": "Choose the correct collocated preposition:\n\"The company is committed ___ reducing its carbon emissions by 2030.\"",
+          "options": [
+            "to",
+            "for",
+            "with",
+            "at"
+          ],
+          "answer": "to",
+          "explanation": "'Committed to' is followed by a gerund or noun phrase ('reducing')."
+        },
+        {
+          "q": "Which option transforms the active sentence into a natural passive form?\nActive: \"Authorities have closed the bridge for inspection.\"",
+          "options": [
+            "The bridge has been closed for inspection by authorities.",
+            "The bridge had been closed for inspection by authorities.",
+            "The bridge was being closed for inspection by authorities.",
+            "The bridge is closed for inspection since authorities."
+          ],
+          "answer": "The bridge has been closed for inspection by authorities.",
+          "explanation": "Present perfect passive uses 'has/have been + past participle' ('has been closed')."
+        }
+      ]
+    },
+    {
+      "id": "class-7",
+      "title": "Class 7: Nuanced Modality & Epistemic Stance",
+      "desc": "Subtle degrees of certainty, hedging, epistemic must vs bound to vs destined to.",
+      "type": "Lesson",
+      "learn": [
+        "Core structural rules and sentence patterns for Nuanced Modality & Epistemic Stance",
+        "Distinguishing common traps, errors, and subtle register differences",
+        "Spoken fluency templates and IELTS/academic writing applications"
+      ],
+      "questions": [
+        {
+          "q": "You ___ wear a seatbelt when driving; it is mandatory by law.",
+          "options": [
+            "must",
+            "might",
+            "could",
+            "would"
+          ],
+          "answer": "must",
+          "explanation": "'Must' expresses strict obligation or official law."
+        },
+        {
+          "q": "You ___ not eat in the library; it is strictly prohibited.",
+          "options": [
+            "must",
+            "don't have to",
+            "might",
+            "should"
+          ],
+          "answer": "must",
+          "explanation": "'Must not' expresses prohibition, whereas 'don't have to' means lack of obligation."
+        },
+        {
+          "q": "Choose the grammatically sound option for this sentence (Nuanced Modality & Epistemic Stance):",
+          "options": [
+            "Despite the sudden rain, the outdoor event proceeded successfully.",
+            "Despite of the sudden rain, the outdoor event proceeded successfully.",
+            "Although the sudden rain, the outdoor event proceeded successfully.",
+            "In spite the sudden rain, the outdoor event proceeded successfully."
+          ],
+          "answer": "Despite the sudden rain, the outdoor event proceeded successfully.",
+          "explanation": "'Despite' takes a noun phrase directly without 'of' (unlike 'in spite of')."
+        },
+        {
+          "q": "Which sentence correctly maintains subject-verb agreement under 'Nuanced Modality & Epistemic Stance' rules?",
+          "options": [
+            "Neither the manager nor the assistants were available for comment.",
+            "Neither the manager nor the assistants was available for comment.",
+            "Neither the manager or the assistants were available for comment.",
+            "Neither the manager nor the assistants being available for comment."
+          ],
+          "answer": "Neither the manager nor the assistants were available for comment.",
+          "explanation": "With 'neither... nor...', the verb agrees with the closer subject ('assistants' -> 'were')."
+        },
+        {
+          "q": "Fill in the blank with the correct preposition/connector for 'Nuanced Modality & Epistemic Stance':\n\"He succeeded in passing the exam ___ studying consistently every evening.\"",
+          "options": [
+            "by",
+            "with",
+            "throughout",
+            "at"
+          ],
+          "answer": "by",
+          "explanation": "Use 'by + gerund' to explain the method or manner through which something is achieved."
+        },
+        {
+          "q": "Select the sentence with accurate punctuation and clause structure:",
+          "options": [
+            "Although she was exhausted, she finished the entire assignment.",
+            "Although she was exhausted she finished, the entire assignment.",
+            "She finished the entire assignment, although, she was exhausted.",
+            "Although was exhausted, she finished the entire assignment."
+          ],
+          "answer": "Although she was exhausted, she finished the entire assignment.",
+          "explanation": "A subordinate clause at the start of a sentence is set off by a comma."
+        },
+        {
+          "q": "Which expression provides the most natural academic register?",
+          "options": [
+            "The findings indicate a substantial improvement in student retention.",
+            "The findings show a really big improvement in student retention.",
+            "The findings are saying that students stay more.",
+            "The findings tell that students get much better."
+          ],
+          "answer": "The findings indicate a substantial improvement in student retention.",
+          "explanation": "'Indicate a substantial improvement' provides precise academic vocabulary appropriate for advanced writing."
+        },
+        {
+          "q": "Identify the sentence that contains a grammatical error regarding 'Nuanced Modality & Epistemic Stance':",
+          "options": [
+            "She suggested me to consult an academic advisor immediately.",
+            "She suggested that I consult an academic advisor immediately.",
+            "She recommended consulting an academic advisor immediately.",
+            "She advised me to consult an academic advisor immediately."
+          ],
+          "answer": "She suggested me to consult an academic advisor immediately.",
+          "explanation": "'Suggest' does not take object + infinitive (*suggest me to do*). Use 'suggest that...' or 'suggest + gerund'."
+        },
+        {
+          "q": "Choose the best alternative to replace the highlighted phrase for concise clarity:\n\"Owing to the fact that it was raining heavily...\"",
+          "options": [
+            "Because it was raining heavily",
+            "For reason that it rained",
+            "Due to because of the rain",
+            "Since that it was heavy rain"
+          ],
+          "answer": "Because it was raining heavily",
+          "explanation": "'Because' is more direct, natural, and avoids wordy redundant phrasing."
+        },
+        {
+          "q": "Which sentence demonstrates the correct position of adverbs of frequency?",
+          "options": [
+            "She has always been interested in linguistic anthropology.",
+            "She always has been interested in linguistic anthropology.",
+            "Always she has been interested in linguistic anthropology.",
+            "She has been always interested in linguistic anthropology."
+          ],
+          "answer": "She has always been interested in linguistic anthropology.",
+          "explanation": "Adverbs of frequency ('always') are placed after the first auxiliary verb ('has')."
+        },
+        {
+          "q": "Complete the sentence with the correct subjunctive / formal structure:\n\"It is imperative that every member ___ the code of conduct.\"",
+          "options": [
+            "follow",
+            "follows",
+            "followed",
+            "is following"
+          ],
+          "answer": "follow",
+          "explanation": "The present subjunctive with 'imperative that' uses the base form 'follow' regardless of the subject."
+        },
+        {
+          "q": "Choose the correct collocated preposition:\n\"The company is committed ___ reducing its carbon emissions by 2030.\"",
+          "options": [
+            "to",
+            "for",
+            "with",
+            "at"
+          ],
+          "answer": "to",
+          "explanation": "'Committed to' is followed by a gerund or noun phrase ('reducing')."
+        },
+        {
+          "q": "Which option transforms the active sentence into a natural passive form?\nActive: \"Authorities have closed the bridge for inspection.\"",
+          "options": [
+            "The bridge has been closed for inspection by authorities.",
+            "The bridge had been closed for inspection by authorities.",
+            "The bridge was being closed for inspection by authorities.",
+            "The bridge is closed for inspection since authorities."
+          ],
+          "answer": "The bridge has been closed for inspection by authorities.",
+          "explanation": "Present perfect passive uses 'has/have been + past participle' ('has been closed')."
+        }
+      ]
+    },
+    {
+      "id": "class-8",
+      "title": "Class 8: Complex Prepositional Idioms",
+      "desc": "Prepositional phrases functioning as discourse stance markers and concessive hedges.",
+      "type": "Lesson",
+      "learn": [
+        "Core structural rules and sentence patterns for Complex Prepositional Idioms",
+        "Distinguishing common traps, errors, and subtle register differences",
+        "Spoken fluency templates and IELTS/academic writing applications"
+      ],
+      "questions": [
+        {
+          "q": "Rarely ___ such incredible musical talent on stage.",
+          "options": [
+            "have I witnessed",
+            "I have witnessed",
+            "did I witnessed",
+            "I witnessed"
+          ],
+          "answer": "have I witnessed",
+          "explanation": "Negative adverbial 'Rarely' at the start of a clause triggers subject-auxiliary inversion."
+        },
+        {
+          "q": "No sooner had we arrived at the station ___ the train departed.",
+          "options": [
+            "than",
+            "when",
+            "that",
+            "then"
+          ],
+          "answer": "than",
+          "explanation": "'No sooner... than' is the required correlative conjunction pair."
+        },
+        {
+          "q": "Choose the grammatically sound option for this sentence (Complex Prepositional Idioms):",
+          "options": [
+            "Despite the sudden rain, the outdoor event proceeded successfully.",
+            "Despite of the sudden rain, the outdoor event proceeded successfully.",
+            "Although the sudden rain, the outdoor event proceeded successfully.",
+            "In spite the sudden rain, the outdoor event proceeded successfully."
+          ],
+          "answer": "Despite the sudden rain, the outdoor event proceeded successfully.",
+          "explanation": "'Despite' takes a noun phrase directly without 'of' (unlike 'in spite of')."
+        },
+        {
+          "q": "Which sentence correctly maintains subject-verb agreement under 'Complex Prepositional Idioms' rules?",
+          "options": [
+            "Neither the manager nor the assistants were available for comment.",
+            "Neither the manager nor the assistants was available for comment.",
+            "Neither the manager or the assistants were available for comment.",
+            "Neither the manager nor the assistants being available for comment."
+          ],
+          "answer": "Neither the manager nor the assistants were available for comment.",
+          "explanation": "With 'neither... nor...', the verb agrees with the closer subject ('assistants' -> 'were')."
+        },
+        {
+          "q": "Fill in the blank with the correct preposition/connector for 'Complex Prepositional Idioms':\n\"He succeeded in passing the exam ___ studying consistently every evening.\"",
+          "options": [
+            "by",
+            "with",
+            "throughout",
+            "at"
+          ],
+          "answer": "by",
+          "explanation": "Use 'by + gerund' to explain the method or manner through which something is achieved."
+        },
+        {
+          "q": "Select the sentence with accurate punctuation and clause structure:",
+          "options": [
+            "Although she was exhausted, she finished the entire assignment.",
+            "Although she was exhausted she finished, the entire assignment.",
+            "She finished the entire assignment, although, she was exhausted.",
+            "Although was exhausted, she finished the entire assignment."
+          ],
+          "answer": "Although she was exhausted, she finished the entire assignment.",
+          "explanation": "A subordinate clause at the start of a sentence is set off by a comma."
+        },
+        {
+          "q": "Which expression provides the most natural academic register?",
+          "options": [
+            "The findings indicate a substantial improvement in student retention.",
+            "The findings show a really big improvement in student retention.",
+            "The findings are saying that students stay more.",
+            "The findings tell that students get much better."
+          ],
+          "answer": "The findings indicate a substantial improvement in student retention.",
+          "explanation": "'Indicate a substantial improvement' provides precise academic vocabulary appropriate for advanced writing."
+        },
+        {
+          "q": "Identify the sentence that contains a grammatical error regarding 'Complex Prepositional Idioms':",
+          "options": [
+            "She suggested me to consult an academic advisor immediately.",
+            "She suggested that I consult an academic advisor immediately.",
+            "She recommended consulting an academic advisor immediately.",
+            "She advised me to consult an academic advisor immediately."
+          ],
+          "answer": "She suggested me to consult an academic advisor immediately.",
+          "explanation": "'Suggest' does not take object + infinitive (*suggest me to do*). Use 'suggest that...' or 'suggest + gerund'."
+        },
+        {
+          "q": "Choose the best alternative to replace the highlighted phrase for concise clarity:\n\"Owing to the fact that it was raining heavily...\"",
+          "options": [
+            "Because it was raining heavily",
+            "For reason that it rained",
+            "Due to because of the rain",
+            "Since that it was heavy rain"
+          ],
+          "answer": "Because it was raining heavily",
+          "explanation": "'Because' is more direct, natural, and avoids wordy redundant phrasing."
+        },
+        {
+          "q": "Which sentence demonstrates the correct position of adverbs of frequency?",
+          "options": [
+            "She has always been interested in linguistic anthropology.",
+            "She always has been interested in linguistic anthropology.",
+            "Always she has been interested in linguistic anthropology.",
+            "She has been always interested in linguistic anthropology."
+          ],
+          "answer": "She has always been interested in linguistic anthropology.",
+          "explanation": "Adverbs of frequency ('always') are placed after the first auxiliary verb ('has')."
+        },
+        {
+          "q": "Complete the sentence with the correct subjunctive / formal structure:\n\"It is imperative that every member ___ the code of conduct.\"",
+          "options": [
+            "follow",
+            "follows",
+            "followed",
+            "is following"
+          ],
+          "answer": "follow",
+          "explanation": "The present subjunctive with 'imperative that' uses the base form 'follow' regardless of the subject."
+        },
+        {
+          "q": "Choose the correct collocated preposition:\n\"The company is committed ___ reducing its carbon emissions by 2030.\"",
+          "options": [
+            "to",
+            "for",
+            "with",
+            "at"
+          ],
+          "answer": "to",
+          "explanation": "'Committed to' is followed by a gerund or noun phrase ('reducing')."
+        },
+        {
+          "q": "Which option transforms the active sentence into a natural passive form?\nActive: \"Authorities have closed the bridge for inspection.\"",
+          "options": [
+            "The bridge has been closed for inspection by authorities.",
+            "The bridge had been closed for inspection by authorities.",
+            "The bridge was being closed for inspection by authorities.",
+            "The bridge is closed for inspection since authorities."
+          ],
+          "answer": "The bridge has been closed for inspection by authorities.",
+          "explanation": "Present perfect passive uses 'has/have been + past participle' ('has been closed')."
+        }
+      ]
+    },
+    {
+      "id": "class-9",
+      "title": "Class 9: Information Packaging & End-Weight Principle",
+      "desc": "Balancing complex subjects, extraposition, and cognitive processing ease.",
+      "type": "Lesson",
+      "learn": [
+        "Core structural rules and sentence patterns for Information Packaging & End-Weight Principle",
+        "Distinguishing common traps, errors, and subtle register differences",
+        "Spoken fluency templates and IELTS/academic writing applications"
+      ],
+      "questions": [
+        {
+          "q": "Rarely ___ such incredible musical talent on stage.",
+          "options": [
+            "have I witnessed",
+            "I have witnessed",
+            "did I witnessed",
+            "I witnessed"
+          ],
+          "answer": "have I witnessed",
+          "explanation": "Negative adverbial 'Rarely' at the start of a clause triggers subject-auxiliary inversion."
+        },
+        {
+          "q": "No sooner had we arrived at the station ___ the train departed.",
+          "options": [
+            "than",
+            "when",
+            "that",
+            "then"
+          ],
+          "answer": "than",
+          "explanation": "'No sooner... than' is the required correlative conjunction pair."
+        },
+        {
+          "q": "Choose the grammatically sound option for this sentence (Information Packaging & End-Weight Principle):",
+          "options": [
+            "Despite the sudden rain, the outdoor event proceeded successfully.",
+            "Despite of the sudden rain, the outdoor event proceeded successfully.",
+            "Although the sudden rain, the outdoor event proceeded successfully.",
+            "In spite the sudden rain, the outdoor event proceeded successfully."
+          ],
+          "answer": "Despite the sudden rain, the outdoor event proceeded successfully.",
+          "explanation": "'Despite' takes a noun phrase directly without 'of' (unlike 'in spite of')."
+        },
+        {
+          "q": "Which sentence correctly maintains subject-verb agreement under 'Information Packaging & End-Weight Principle' rules?",
+          "options": [
+            "Neither the manager nor the assistants were available for comment.",
+            "Neither the manager nor the assistants was available for comment.",
+            "Neither the manager or the assistants were available for comment.",
+            "Neither the manager nor the assistants being available for comment."
+          ],
+          "answer": "Neither the manager nor the assistants were available for comment.",
+          "explanation": "With 'neither... nor...', the verb agrees with the closer subject ('assistants' -> 'were')."
+        },
+        {
+          "q": "Fill in the blank with the correct preposition/connector for 'Information Packaging & End-Weight Principle':\n\"He succeeded in passing the exam ___ studying consistently every evening.\"",
+          "options": [
+            "by",
+            "with",
+            "throughout",
+            "at"
+          ],
+          "answer": "by",
+          "explanation": "Use 'by + gerund' to explain the method or manner through which something is achieved."
+        },
+        {
+          "q": "Select the sentence with accurate punctuation and clause structure:",
+          "options": [
+            "Although she was exhausted, she finished the entire assignment.",
+            "Although she was exhausted she finished, the entire assignment.",
+            "She finished the entire assignment, although, she was exhausted.",
+            "Although was exhausted, she finished the entire assignment."
+          ],
+          "answer": "Although she was exhausted, she finished the entire assignment.",
+          "explanation": "A subordinate clause at the start of a sentence is set off by a comma."
+        },
+        {
+          "q": "Which expression provides the most natural academic register?",
+          "options": [
+            "The findings indicate a substantial improvement in student retention.",
+            "The findings show a really big improvement in student retention.",
+            "The findings are saying that students stay more.",
+            "The findings tell that students get much better."
+          ],
+          "answer": "The findings indicate a substantial improvement in student retention.",
+          "explanation": "'Indicate a substantial improvement' provides precise academic vocabulary appropriate for advanced writing."
+        },
+        {
+          "q": "Identify the sentence that contains a grammatical error regarding 'Information Packaging & End-Weight Principle':",
+          "options": [
+            "She suggested me to consult an academic advisor immediately.",
+            "She suggested that I consult an academic advisor immediately.",
+            "She recommended consulting an academic advisor immediately.",
+            "She advised me to consult an academic advisor immediately."
+          ],
+          "answer": "She suggested me to consult an academic advisor immediately.",
+          "explanation": "'Suggest' does not take object + infinitive (*suggest me to do*). Use 'suggest that...' or 'suggest + gerund'."
+        },
+        {
+          "q": "Choose the best alternative to replace the highlighted phrase for concise clarity:\n\"Owing to the fact that it was raining heavily...\"",
+          "options": [
+            "Because it was raining heavily",
+            "For reason that it rained",
+            "Due to because of the rain",
+            "Since that it was heavy rain"
+          ],
+          "answer": "Because it was raining heavily",
+          "explanation": "'Because' is more direct, natural, and avoids wordy redundant phrasing."
+        },
+        {
+          "q": "Which sentence demonstrates the correct position of adverbs of frequency?",
+          "options": [
+            "She has always been interested in linguistic anthropology.",
+            "She always has been interested in linguistic anthropology.",
+            "Always she has been interested in linguistic anthropology.",
+            "She has been always interested in linguistic anthropology."
+          ],
+          "answer": "She has always been interested in linguistic anthropology.",
+          "explanation": "Adverbs of frequency ('always') are placed after the first auxiliary verb ('has')."
+        },
+        {
+          "q": "Complete the sentence with the correct subjunctive / formal structure:\n\"It is imperative that every member ___ the code of conduct.\"",
+          "options": [
+            "follow",
+            "follows",
+            "followed",
+            "is following"
+          ],
+          "answer": "follow",
+          "explanation": "The present subjunctive with 'imperative that' uses the base form 'follow' regardless of the subject."
+        },
+        {
+          "q": "Choose the correct collocated preposition:\n\"The company is committed ___ reducing its carbon emissions by 2030.\"",
+          "options": [
+            "to",
+            "for",
+            "with",
+            "at"
+          ],
+          "answer": "to",
+          "explanation": "'Committed to' is followed by a gerund or noun phrase ('reducing')."
+        },
+        {
+          "q": "Which option transforms the active sentence into a natural passive form?\nActive: \"Authorities have closed the bridge for inspection.\"",
+          "options": [
+            "The bridge has been closed for inspection by authorities.",
+            "The bridge had been closed for inspection by authorities.",
+            "The bridge was being closed for inspection by authorities.",
+            "The bridge is closed for inspection since authorities."
+          ],
+          "answer": "The bridge has been closed for inspection by authorities.",
+          "explanation": "Present perfect passive uses 'has/have been + past participle' ('has been closed')."
+        }
+      ]
+    },
+    {
+      "id": "class-10",
+      "title": "Class 10: Rhetorical Stylistics & Register Shifts",
+      "desc": "Register switching between high academic, legalistic, diplomatic, and conversational English.",
+      "type": "Lesson",
+      "learn": [
+        "Core structural rules and sentence patterns for Rhetorical Stylistics & Register Shifts",
+        "Distinguishing common traps, errors, and subtle register differences",
+        "Spoken fluency templates and IELTS/academic writing applications"
+      ],
+      "questions": [
+        {
+          "q": "Rarely ___ such incredible musical talent on stage.",
+          "options": [
+            "have I witnessed",
+            "I have witnessed",
+            "did I witnessed",
+            "I witnessed"
+          ],
+          "answer": "have I witnessed",
+          "explanation": "Negative adverbial 'Rarely' at the start of a clause triggers subject-auxiliary inversion."
+        },
+        {
+          "q": "No sooner had we arrived at the station ___ the train departed.",
+          "options": [
+            "than",
+            "when",
+            "that",
+            "then"
+          ],
+          "answer": "than",
+          "explanation": "'No sooner... than' is the required correlative conjunction pair."
+        },
+        {
+          "q": "Choose the grammatically sound option for this sentence (Rhetorical Stylistics & Register Shifts):",
+          "options": [
+            "Despite the sudden rain, the outdoor event proceeded successfully.",
+            "Despite of the sudden rain, the outdoor event proceeded successfully.",
+            "Although the sudden rain, the outdoor event proceeded successfully.",
+            "In spite the sudden rain, the outdoor event proceeded successfully."
+          ],
+          "answer": "Despite the sudden rain, the outdoor event proceeded successfully.",
+          "explanation": "'Despite' takes a noun phrase directly without 'of' (unlike 'in spite of')."
+        },
+        {
+          "q": "Which sentence correctly maintains subject-verb agreement under 'Rhetorical Stylistics & Register Shifts' rules?",
+          "options": [
+            "Neither the manager nor the assistants were available for comment.",
+            "Neither the manager nor the assistants was available for comment.",
+            "Neither the manager or the assistants were available for comment.",
+            "Neither the manager nor the assistants being available for comment."
+          ],
+          "answer": "Neither the manager nor the assistants were available for comment.",
+          "explanation": "With 'neither... nor...', the verb agrees with the closer subject ('assistants' -> 'were')."
+        },
+        {
+          "q": "Fill in the blank with the correct preposition/connector for 'Rhetorical Stylistics & Register Shifts':\n\"He succeeded in passing the exam ___ studying consistently every evening.\"",
+          "options": [
+            "by",
+            "with",
+            "throughout",
+            "at"
+          ],
+          "answer": "by",
+          "explanation": "Use 'by + gerund' to explain the method or manner through which something is achieved."
+        },
+        {
+          "q": "Select the sentence with accurate punctuation and clause structure:",
+          "options": [
+            "Although she was exhausted, she finished the entire assignment.",
+            "Although she was exhausted she finished, the entire assignment.",
+            "She finished the entire assignment, although, she was exhausted.",
+            "Although was exhausted, she finished the entire assignment."
+          ],
+          "answer": "Although she was exhausted, she finished the entire assignment.",
+          "explanation": "A subordinate clause at the start of a sentence is set off by a comma."
+        },
+        {
+          "q": "Which expression provides the most natural academic register?",
+          "options": [
+            "The findings indicate a substantial improvement in student retention.",
+            "The findings show a really big improvement in student retention.",
+            "The findings are saying that students stay more.",
+            "The findings tell that students get much better."
+          ],
+          "answer": "The findings indicate a substantial improvement in student retention.",
+          "explanation": "'Indicate a substantial improvement' provides precise academic vocabulary appropriate for advanced writing."
+        },
+        {
+          "q": "Identify the sentence that contains a grammatical error regarding 'Rhetorical Stylistics & Register Shifts':",
+          "options": [
+            "She suggested me to consult an academic advisor immediately.",
+            "She suggested that I consult an academic advisor immediately.",
+            "She recommended consulting an academic advisor immediately.",
+            "She advised me to consult an academic advisor immediately."
+          ],
+          "answer": "She suggested me to consult an academic advisor immediately.",
+          "explanation": "'Suggest' does not take object + infinitive (*suggest me to do*). Use 'suggest that...' or 'suggest + gerund'."
+        },
+        {
+          "q": "Choose the best alternative to replace the highlighted phrase for concise clarity:\n\"Owing to the fact that it was raining heavily...\"",
+          "options": [
+            "Because it was raining heavily",
+            "For reason that it rained",
+            "Due to because of the rain",
+            "Since that it was heavy rain"
+          ],
+          "answer": "Because it was raining heavily",
+          "explanation": "'Because' is more direct, natural, and avoids wordy redundant phrasing."
+        },
+        {
+          "q": "Which sentence demonstrates the correct position of adverbs of frequency?",
+          "options": [
+            "She has always been interested in linguistic anthropology.",
+            "She always has been interested in linguistic anthropology.",
+            "Always she has been interested in linguistic anthropology.",
+            "She has been always interested in linguistic anthropology."
+          ],
+          "answer": "She has always been interested in linguistic anthropology.",
+          "explanation": "Adverbs of frequency ('always') are placed after the first auxiliary verb ('has')."
+        },
+        {
+          "q": "Complete the sentence with the correct subjunctive / formal structure:\n\"It is imperative that every member ___ the code of conduct.\"",
+          "options": [
+            "follow",
+            "follows",
+            "followed",
+            "is following"
+          ],
+          "answer": "follow",
+          "explanation": "The present subjunctive with 'imperative that' uses the base form 'follow' regardless of the subject."
+        },
+        {
+          "q": "Choose the correct collocated preposition:\n\"The company is committed ___ reducing its carbon emissions by 2030.\"",
+          "options": [
+            "to",
+            "for",
+            "with",
+            "at"
+          ],
+          "answer": "to",
+          "explanation": "'Committed to' is followed by a gerund or noun phrase ('reducing')."
+        },
+        {
+          "q": "Which option transforms the active sentence into a natural passive form?\nActive: \"Authorities have closed the bridge for inspection.\"",
+          "options": [
+            "The bridge has been closed for inspection by authorities.",
+            "The bridge had been closed for inspection by authorities.",
+            "The bridge was being closed for inspection by authorities.",
+            "The bridge is closed for inspection since authorities."
+          ],
+          "answer": "The bridge has been closed for inspection by authorities.",
+          "explanation": "Present perfect passive uses 'has/have been + past participle' ('has been closed')."
+        }
+      ]
+    }
+  ],
+  "items": [
+    {
+      "id": "class-1",
+      "title": "Class 1: Archaic & Literary Inversion",
+      "desc": "Fronting with negative expressions, literary inversion, and poetic syntax.",
+      "type": "Lesson",
+      "learn": [
+        "Core structural rules and sentence patterns for Archaic & Literary Inversion",
+        "Distinguishing common traps, errors, and subtle register differences",
+        "Spoken fluency templates and IELTS/academic writing applications"
+      ],
+      "questions": [
+        {
+          "q": "Rarely ___ such incredible musical talent on stage.",
+          "options": [
+            "have I witnessed",
+            "I have witnessed",
+            "did I witnessed",
+            "I witnessed"
+          ],
+          "answer": "have I witnessed",
+          "explanation": "Negative adverbial 'Rarely' at the start of a clause triggers subject-auxiliary inversion."
+        },
+        {
+          "q": "No sooner had we arrived at the station ___ the train departed.",
+          "options": [
+            "than",
+            "when",
+            "that",
+            "then"
+          ],
+          "answer": "than",
+          "explanation": "'No sooner... than' is the required correlative conjunction pair."
+        },
+        {
+          "q": "Choose the grammatically sound option for this sentence (Archaic & Literary Inversion):",
+          "options": [
+            "Despite the sudden rain, the outdoor event proceeded successfully.",
+            "Despite of the sudden rain, the outdoor event proceeded successfully.",
+            "Although the sudden rain, the outdoor event proceeded successfully.",
+            "In spite the sudden rain, the outdoor event proceeded successfully."
+          ],
+          "answer": "Despite the sudden rain, the outdoor event proceeded successfully.",
+          "explanation": "'Despite' takes a noun phrase directly without 'of' (unlike 'in spite of')."
+        },
+        {
+          "q": "Which sentence correctly maintains subject-verb agreement under 'Archaic & Literary Inversion' rules?",
+          "options": [
+            "Neither the manager nor the assistants were available for comment.",
+            "Neither the manager nor the assistants was available for comment.",
+            "Neither the manager or the assistants were available for comment.",
+            "Neither the manager nor the assistants being available for comment."
+          ],
+          "answer": "Neither the manager nor the assistants were available for comment.",
+          "explanation": "With 'neither... nor...', the verb agrees with the closer subject ('assistants' -> 'were')."
+        },
+        {
+          "q": "Fill in the blank with the correct preposition/connector for 'Archaic & Literary Inversion':\n\"He succeeded in passing the exam ___ studying consistently every evening.\"",
+          "options": [
+            "by",
+            "with",
+            "throughout",
+            "at"
+          ],
+          "answer": "by",
+          "explanation": "Use 'by + gerund' to explain the method or manner through which something is achieved."
+        },
+        {
+          "q": "Select the sentence with accurate punctuation and clause structure:",
+          "options": [
+            "Although she was exhausted, she finished the entire assignment.",
+            "Although she was exhausted she finished, the entire assignment.",
+            "She finished the entire assignment, although, she was exhausted.",
+            "Although was exhausted, she finished the entire assignment."
+          ],
+          "answer": "Although she was exhausted, she finished the entire assignment.",
+          "explanation": "A subordinate clause at the start of a sentence is set off by a comma."
+        },
+        {
+          "q": "Which expression provides the most natural academic register?",
+          "options": [
+            "The findings indicate a substantial improvement in student retention.",
+            "The findings show a really big improvement in student retention.",
+            "The findings are saying that students stay more.",
+            "The findings tell that students get much better."
+          ],
+          "answer": "The findings indicate a substantial improvement in student retention.",
+          "explanation": "'Indicate a substantial improvement' provides precise academic vocabulary appropriate for advanced writing."
+        },
+        {
+          "q": "Identify the sentence that contains a grammatical error regarding 'Archaic & Literary Inversion':",
+          "options": [
+            "She suggested me to consult an academic advisor immediately.",
+            "She suggested that I consult an academic advisor immediately.",
+            "She recommended consulting an academic advisor immediately.",
+            "She advised me to consult an academic advisor immediately."
+          ],
+          "answer": "She suggested me to consult an academic advisor immediately.",
+          "explanation": "'Suggest' does not take object + infinitive (*suggest me to do*). Use 'suggest that...' or 'suggest + gerund'."
+        },
+        {
+          "q": "Choose the best alternative to replace the highlighted phrase for concise clarity:\n\"Owing to the fact that it was raining heavily...\"",
+          "options": [
+            "Because it was raining heavily",
+            "For reason that it rained",
+            "Due to because of the rain",
+            "Since that it was heavy rain"
+          ],
+          "answer": "Because it was raining heavily",
+          "explanation": "'Because' is more direct, natural, and avoids wordy redundant phrasing."
+        },
+        {
+          "q": "Which sentence demonstrates the correct position of adverbs of frequency?",
+          "options": [
+            "She has always been interested in linguistic anthropology.",
+            "She always has been interested in linguistic anthropology.",
+            "Always she has been interested in linguistic anthropology.",
+            "She has been always interested in linguistic anthropology."
+          ],
+          "answer": "She has always been interested in linguistic anthropology.",
+          "explanation": "Adverbs of frequency ('always') are placed after the first auxiliary verb ('has')."
+        },
+        {
+          "q": "Complete the sentence with the correct subjunctive / formal structure:\n\"It is imperative that every member ___ the code of conduct.\"",
+          "options": [
+            "follow",
+            "follows",
+            "followed",
+            "is following"
+          ],
+          "answer": "follow",
+          "explanation": "The present subjunctive with 'imperative that' uses the base form 'follow' regardless of the subject."
+        },
+        {
+          "q": "Choose the correct collocated preposition:\n\"The company is committed ___ reducing its carbon emissions by 2030.\"",
+          "options": [
+            "to",
+            "for",
+            "with",
+            "at"
+          ],
+          "answer": "to",
+          "explanation": "'Committed to' is followed by a gerund or noun phrase ('reducing')."
+        },
+        {
+          "q": "Which option transforms the active sentence into a natural passive form?\nActive: \"Authorities have closed the bridge for inspection.\"",
+          "options": [
+            "The bridge has been closed for inspection by authorities.",
+            "The bridge had been closed for inspection by authorities.",
+            "The bridge was being closed for inspection by authorities.",
+            "The bridge is closed for inspection since authorities."
+          ],
+          "answer": "The bridge has been closed for inspection by authorities.",
+          "explanation": "Present perfect passive uses 'has/have been + past participle' ('has been closed')."
+        }
+      ]
+    },
+    {
+      "id": "class-2",
+      "title": "Class 2: Subjunctive & Formulaic Expressions",
+      "desc": "Mandative and formulaic subjunctives (be that as it may, come what may).",
+      "type": "Lesson",
+      "learn": [
+        "Core structural rules and sentence patterns for Subjunctive & Formulaic Expressions",
+        "Distinguishing common traps, errors, and subtle register differences",
+        "Spoken fluency templates and IELTS/academic writing applications"
+      ],
+      "questions": [
+        {
+          "q": "Rarely ___ such incredible musical talent on stage.",
+          "options": [
+            "have I witnessed",
+            "I have witnessed",
+            "did I witnessed",
+            "I witnessed"
+          ],
+          "answer": "have I witnessed",
+          "explanation": "Negative adverbial 'Rarely' at the start of a clause triggers subject-auxiliary inversion."
+        },
+        {
+          "q": "No sooner had we arrived at the station ___ the train departed.",
+          "options": [
+            "than",
+            "when",
+            "that",
+            "then"
+          ],
+          "answer": "than",
+          "explanation": "'No sooner... than' is the required correlative conjunction pair."
+        },
+        {
+          "q": "Choose the grammatically sound option for this sentence (Subjunctive & Formulaic Expressions):",
+          "options": [
+            "Despite the sudden rain, the outdoor event proceeded successfully.",
+            "Despite of the sudden rain, the outdoor event proceeded successfully.",
+            "Although the sudden rain, the outdoor event proceeded successfully.",
+            "In spite the sudden rain, the outdoor event proceeded successfully."
+          ],
+          "answer": "Despite the sudden rain, the outdoor event proceeded successfully.",
+          "explanation": "'Despite' takes a noun phrase directly without 'of' (unlike 'in spite of')."
+        },
+        {
+          "q": "Which sentence correctly maintains subject-verb agreement under 'Subjunctive & Formulaic Expressions' rules?",
+          "options": [
+            "Neither the manager nor the assistants were available for comment.",
+            "Neither the manager nor the assistants was available for comment.",
+            "Neither the manager or the assistants were available for comment.",
+            "Neither the manager nor the assistants being available for comment."
+          ],
+          "answer": "Neither the manager nor the assistants were available for comment.",
+          "explanation": "With 'neither... nor...', the verb agrees with the closer subject ('assistants' -> 'were')."
+        },
+        {
+          "q": "Fill in the blank with the correct preposition/connector for 'Subjunctive & Formulaic Expressions':\n\"He succeeded in passing the exam ___ studying consistently every evening.\"",
+          "options": [
+            "by",
+            "with",
+            "throughout",
+            "at"
+          ],
+          "answer": "by",
+          "explanation": "Use 'by + gerund' to explain the method or manner through which something is achieved."
+        },
+        {
+          "q": "Select the sentence with accurate punctuation and clause structure:",
+          "options": [
+            "Although she was exhausted, she finished the entire assignment.",
+            "Although she was exhausted she finished, the entire assignment.",
+            "She finished the entire assignment, although, she was exhausted.",
+            "Although was exhausted, she finished the entire assignment."
+          ],
+          "answer": "Although she was exhausted, she finished the entire assignment.",
+          "explanation": "A subordinate clause at the start of a sentence is set off by a comma."
+        },
+        {
+          "q": "Which expression provides the most natural academic register?",
+          "options": [
+            "The findings indicate a substantial improvement in student retention.",
+            "The findings show a really big improvement in student retention.",
+            "The findings are saying that students stay more.",
+            "The findings tell that students get much better."
+          ],
+          "answer": "The findings indicate a substantial improvement in student retention.",
+          "explanation": "'Indicate a substantial improvement' provides precise academic vocabulary appropriate for advanced writing."
+        },
+        {
+          "q": "Identify the sentence that contains a grammatical error regarding 'Subjunctive & Formulaic Expressions':",
+          "options": [
+            "She suggested me to consult an academic advisor immediately.",
+            "She suggested that I consult an academic advisor immediately.",
+            "She recommended consulting an academic advisor immediately.",
+            "She advised me to consult an academic advisor immediately."
+          ],
+          "answer": "She suggested me to consult an academic advisor immediately.",
+          "explanation": "'Suggest' does not take object + infinitive (*suggest me to do*). Use 'suggest that...' or 'suggest + gerund'."
+        },
+        {
+          "q": "Choose the best alternative to replace the highlighted phrase for concise clarity:\n\"Owing to the fact that it was raining heavily...\"",
+          "options": [
+            "Because it was raining heavily",
+            "For reason that it rained",
+            "Due to because of the rain",
+            "Since that it was heavy rain"
+          ],
+          "answer": "Because it was raining heavily",
+          "explanation": "'Because' is more direct, natural, and avoids wordy redundant phrasing."
+        },
+        {
+          "q": "Which sentence demonstrates the correct position of adverbs of frequency?",
+          "options": [
+            "She has always been interested in linguistic anthropology.",
+            "She always has been interested in linguistic anthropology.",
+            "Always she has been interested in linguistic anthropology.",
+            "She has been always interested in linguistic anthropology."
+          ],
+          "answer": "She has always been interested in linguistic anthropology.",
+          "explanation": "Adverbs of frequency ('always') are placed after the first auxiliary verb ('has')."
+        },
+        {
+          "q": "Complete the sentence with the correct subjunctive / formal structure:\n\"It is imperative that every member ___ the code of conduct.\"",
+          "options": [
+            "follow",
+            "follows",
+            "followed",
+            "is following"
+          ],
+          "answer": "follow",
+          "explanation": "The present subjunctive with 'imperative that' uses the base form 'follow' regardless of the subject."
+        },
+        {
+          "q": "Choose the correct collocated preposition:\n\"The company is committed ___ reducing its carbon emissions by 2030.\"",
+          "options": [
+            "to",
+            "for",
+            "with",
+            "at"
+          ],
+          "answer": "to",
+          "explanation": "'Committed to' is followed by a gerund or noun phrase ('reducing')."
+        },
+        {
+          "q": "Which option transforms the active sentence into a natural passive form?\nActive: \"Authorities have closed the bridge for inspection.\"",
+          "options": [
+            "The bridge has been closed for inspection by authorities.",
+            "The bridge had been closed for inspection by authorities.",
+            "The bridge was being closed for inspection by authorities.",
+            "The bridge is closed for inspection since authorities."
+          ],
+          "answer": "The bridge has been closed for inspection by authorities.",
+          "explanation": "Present perfect passive uses 'has/have been + past participle' ('has been closed')."
+        }
+      ]
+    },
+    {
+      "id": "class-3",
+      "title": "Class 3: Cleft Sentences & Focus Framing",
+      "desc": "It-clefts, wh-clefts, all-clefts, and reversed cleft constructions for rhetorical emphasis.",
+      "type": "Lesson",
+      "learn": [
+        "Core structural rules and sentence patterns for Cleft Sentences & Focus Framing",
+        "Distinguishing common traps, errors, and subtle register differences",
+        "Spoken fluency templates and IELTS/academic writing applications"
+      ],
+      "questions": [
+        {
+          "q": "Rarely ___ such incredible musical talent on stage.",
+          "options": [
+            "have I witnessed",
+            "I have witnessed",
+            "did I witnessed",
+            "I witnessed"
+          ],
+          "answer": "have I witnessed",
+          "explanation": "Negative adverbial 'Rarely' at the start of a clause triggers subject-auxiliary inversion."
+        },
+        {
+          "q": "No sooner had we arrived at the station ___ the train departed.",
+          "options": [
+            "than",
+            "when",
+            "that",
+            "then"
+          ],
+          "answer": "than",
+          "explanation": "'No sooner... than' is the required correlative conjunction pair."
+        },
+        {
+          "q": "Choose the grammatically sound option for this sentence (Cleft Sentences & Focus Framing):",
+          "options": [
+            "Despite the sudden rain, the outdoor event proceeded successfully.",
+            "Despite of the sudden rain, the outdoor event proceeded successfully.",
+            "Although the sudden rain, the outdoor event proceeded successfully.",
+            "In spite the sudden rain, the outdoor event proceeded successfully."
+          ],
+          "answer": "Despite the sudden rain, the outdoor event proceeded successfully.",
+          "explanation": "'Despite' takes a noun phrase directly without 'of' (unlike 'in spite of')."
+        },
+        {
+          "q": "Which sentence correctly maintains subject-verb agreement under 'Cleft Sentences & Focus Framing' rules?",
+          "options": [
+            "Neither the manager nor the assistants were available for comment.",
+            "Neither the manager nor the assistants was available for comment.",
+            "Neither the manager or the assistants were available for comment.",
+            "Neither the manager nor the assistants being available for comment."
+          ],
+          "answer": "Neither the manager nor the assistants were available for comment.",
+          "explanation": "With 'neither... nor...', the verb agrees with the closer subject ('assistants' -> 'were')."
+        },
+        {
+          "q": "Fill in the blank with the correct preposition/connector for 'Cleft Sentences & Focus Framing':\n\"He succeeded in passing the exam ___ studying consistently every evening.\"",
+          "options": [
+            "by",
+            "with",
+            "throughout",
+            "at"
+          ],
+          "answer": "by",
+          "explanation": "Use 'by + gerund' to explain the method or manner through which something is achieved."
+        },
+        {
+          "q": "Select the sentence with accurate punctuation and clause structure:",
+          "options": [
+            "Although she was exhausted, she finished the entire assignment.",
+            "Although she was exhausted she finished, the entire assignment.",
+            "She finished the entire assignment, although, she was exhausted.",
+            "Although was exhausted, she finished the entire assignment."
+          ],
+          "answer": "Although she was exhausted, she finished the entire assignment.",
+          "explanation": "A subordinate clause at the start of a sentence is set off by a comma."
+        },
+        {
+          "q": "Which expression provides the most natural academic register?",
+          "options": [
+            "The findings indicate a substantial improvement in student retention.",
+            "The findings show a really big improvement in student retention.",
+            "The findings are saying that students stay more.",
+            "The findings tell that students get much better."
+          ],
+          "answer": "The findings indicate a substantial improvement in student retention.",
+          "explanation": "'Indicate a substantial improvement' provides precise academic vocabulary appropriate for advanced writing."
+        },
+        {
+          "q": "Identify the sentence that contains a grammatical error regarding 'Cleft Sentences & Focus Framing':",
+          "options": [
+            "She suggested me to consult an academic advisor immediately.",
+            "She suggested that I consult an academic advisor immediately.",
+            "She recommended consulting an academic advisor immediately.",
+            "She advised me to consult an academic advisor immediately."
+          ],
+          "answer": "She suggested me to consult an academic advisor immediately.",
+          "explanation": "'Suggest' does not take object + infinitive (*suggest me to do*). Use 'suggest that...' or 'suggest + gerund'."
+        },
+        {
+          "q": "Choose the best alternative to replace the highlighted phrase for concise clarity:\n\"Owing to the fact that it was raining heavily...\"",
+          "options": [
+            "Because it was raining heavily",
+            "For reason that it rained",
+            "Due to because of the rain",
+            "Since that it was heavy rain"
+          ],
+          "answer": "Because it was raining heavily",
+          "explanation": "'Because' is more direct, natural, and avoids wordy redundant phrasing."
+        },
+        {
+          "q": "Which sentence demonstrates the correct position of adverbs of frequency?",
+          "options": [
+            "She has always been interested in linguistic anthropology.",
+            "She always has been interested in linguistic anthropology.",
+            "Always she has been interested in linguistic anthropology.",
+            "She has been always interested in linguistic anthropology."
+          ],
+          "answer": "She has always been interested in linguistic anthropology.",
+          "explanation": "Adverbs of frequency ('always') are placed after the first auxiliary verb ('has')."
+        },
+        {
+          "q": "Complete the sentence with the correct subjunctive / formal structure:\n\"It is imperative that every member ___ the code of conduct.\"",
+          "options": [
+            "follow",
+            "follows",
+            "followed",
+            "is following"
+          ],
+          "answer": "follow",
+          "explanation": "The present subjunctive with 'imperative that' uses the base form 'follow' regardless of the subject."
+        },
+        {
+          "q": "Choose the correct collocated preposition:\n\"The company is committed ___ reducing its carbon emissions by 2030.\"",
+          "options": [
+            "to",
+            "for",
+            "with",
+            "at"
+          ],
+          "answer": "to",
+          "explanation": "'Committed to' is followed by a gerund or noun phrase ('reducing')."
+        },
+        {
+          "q": "Which option transforms the active sentence into a natural passive form?\nActive: \"Authorities have closed the bridge for inspection.\"",
+          "options": [
+            "The bridge has been closed for inspection by authorities.",
+            "The bridge had been closed for inspection by authorities.",
+            "The bridge was being closed for inspection by authorities.",
+            "The bridge is closed for inspection since authorities."
+          ],
+          "answer": "The bridge has been closed for inspection by authorities.",
+          "explanation": "Present perfect passive uses 'has/have been + past participle' ('has been closed')."
+        }
+      ]
+    },
+    {
+      "id": "class-4",
+      "title": "Class 4: Ellipsis & Substitution in Discourse",
+      "desc": "Gapping, pseudo-gapping, sluicing, and nuanced discourse cohesion.",
+      "type": "Lesson",
+      "learn": [
+        "Core structural rules and sentence patterns for Ellipsis & Substitution in Discourse",
+        "Distinguishing common traps, errors, and subtle register differences",
+        "Spoken fluency templates and IELTS/academic writing applications"
+      ],
+      "questions": [
+        {
+          "q": "Rarely ___ such incredible musical talent on stage.",
+          "options": [
+            "have I witnessed",
+            "I have witnessed",
+            "did I witnessed",
+            "I witnessed"
+          ],
+          "answer": "have I witnessed",
+          "explanation": "Negative adverbial 'Rarely' at the start of a clause triggers subject-auxiliary inversion."
+        },
+        {
+          "q": "No sooner had we arrived at the station ___ the train departed.",
+          "options": [
+            "than",
+            "when",
+            "that",
+            "then"
+          ],
+          "answer": "than",
+          "explanation": "'No sooner... than' is the required correlative conjunction pair."
+        },
+        {
+          "q": "Choose the grammatically sound option for this sentence (Ellipsis & Substitution in Discourse):",
+          "options": [
+            "Despite the sudden rain, the outdoor event proceeded successfully.",
+            "Despite of the sudden rain, the outdoor event proceeded successfully.",
+            "Although the sudden rain, the outdoor event proceeded successfully.",
+            "In spite the sudden rain, the outdoor event proceeded successfully."
+          ],
+          "answer": "Despite the sudden rain, the outdoor event proceeded successfully.",
+          "explanation": "'Despite' takes a noun phrase directly without 'of' (unlike 'in spite of')."
+        },
+        {
+          "q": "Which sentence correctly maintains subject-verb agreement under 'Ellipsis & Substitution in Discourse' rules?",
+          "options": [
+            "Neither the manager nor the assistants were available for comment.",
+            "Neither the manager nor the assistants was available for comment.",
+            "Neither the manager or the assistants were available for comment.",
+            "Neither the manager nor the assistants being available for comment."
+          ],
+          "answer": "Neither the manager nor the assistants were available for comment.",
+          "explanation": "With 'neither... nor...', the verb agrees with the closer subject ('assistants' -> 'were')."
+        },
+        {
+          "q": "Fill in the blank with the correct preposition/connector for 'Ellipsis & Substitution in Discourse':\n\"He succeeded in passing the exam ___ studying consistently every evening.\"",
+          "options": [
+            "by",
+            "with",
+            "throughout",
+            "at"
+          ],
+          "answer": "by",
+          "explanation": "Use 'by + gerund' to explain the method or manner through which something is achieved."
+        },
+        {
+          "q": "Select the sentence with accurate punctuation and clause structure:",
+          "options": [
+            "Although she was exhausted, she finished the entire assignment.",
+            "Although she was exhausted she finished, the entire assignment.",
+            "She finished the entire assignment, although, she was exhausted.",
+            "Although was exhausted, she finished the entire assignment."
+          ],
+          "answer": "Although she was exhausted, she finished the entire assignment.",
+          "explanation": "A subordinate clause at the start of a sentence is set off by a comma."
+        },
+        {
+          "q": "Which expression provides the most natural academic register?",
+          "options": [
+            "The findings indicate a substantial improvement in student retention.",
+            "The findings show a really big improvement in student retention.",
+            "The findings are saying that students stay more.",
+            "The findings tell that students get much better."
+          ],
+          "answer": "The findings indicate a substantial improvement in student retention.",
+          "explanation": "'Indicate a substantial improvement' provides precise academic vocabulary appropriate for advanced writing."
+        },
+        {
+          "q": "Identify the sentence that contains a grammatical error regarding 'Ellipsis & Substitution in Discourse':",
+          "options": [
+            "She suggested me to consult an academic advisor immediately.",
+            "She suggested that I consult an academic advisor immediately.",
+            "She recommended consulting an academic advisor immediately.",
+            "She advised me to consult an academic advisor immediately."
+          ],
+          "answer": "She suggested me to consult an academic advisor immediately.",
+          "explanation": "'Suggest' does not take object + infinitive (*suggest me to do*). Use 'suggest that...' or 'suggest + gerund'."
+        },
+        {
+          "q": "Choose the best alternative to replace the highlighted phrase for concise clarity:\n\"Owing to the fact that it was raining heavily...\"",
+          "options": [
+            "Because it was raining heavily",
+            "For reason that it rained",
+            "Due to because of the rain",
+            "Since that it was heavy rain"
+          ],
+          "answer": "Because it was raining heavily",
+          "explanation": "'Because' is more direct, natural, and avoids wordy redundant phrasing."
+        },
+        {
+          "q": "Which sentence demonstrates the correct position of adverbs of frequency?",
+          "options": [
+            "She has always been interested in linguistic anthropology.",
+            "She always has been interested in linguistic anthropology.",
+            "Always she has been interested in linguistic anthropology.",
+            "She has been always interested in linguistic anthropology."
+          ],
+          "answer": "She has always been interested in linguistic anthropology.",
+          "explanation": "Adverbs of frequency ('always') are placed after the first auxiliary verb ('has')."
+        },
+        {
+          "q": "Complete the sentence with the correct subjunctive / formal structure:\n\"It is imperative that every member ___ the code of conduct.\"",
+          "options": [
+            "follow",
+            "follows",
+            "followed",
+            "is following"
+          ],
+          "answer": "follow",
+          "explanation": "The present subjunctive with 'imperative that' uses the base form 'follow' regardless of the subject."
+        },
+        {
+          "q": "Choose the correct collocated preposition:\n\"The company is committed ___ reducing its carbon emissions by 2030.\"",
+          "options": [
+            "to",
+            "for",
+            "with",
+            "at"
+          ],
+          "answer": "to",
+          "explanation": "'Committed to' is followed by a gerund or noun phrase ('reducing')."
+        },
+        {
+          "q": "Which option transforms the active sentence into a natural passive form?\nActive: \"Authorities have closed the bridge for inspection.\"",
+          "options": [
+            "The bridge has been closed for inspection by authorities.",
+            "The bridge had been closed for inspection by authorities.",
+            "The bridge was being closed for inspection by authorities.",
+            "The bridge is closed for inspection since authorities."
+          ],
+          "answer": "The bridge has been closed for inspection by authorities.",
+          "explanation": "Present perfect passive uses 'has/have been + past participle' ('has been closed')."
+        }
+      ]
+    },
+    {
+      "id": "class-5",
+      "title": "Class 5: Participle Clauses & Dangling Modifiers",
+      "desc": "Advanced dangling modifier avoidance, non-finite clauses, and adverbial nuances.",
+      "type": "Lesson",
+      "learn": [
+        "Core structural rules and sentence patterns for Participle Clauses & Dangling Modifiers",
+        "Distinguishing common traps, errors, and subtle register differences",
+        "Spoken fluency templates and IELTS/academic writing applications"
+      ],
+      "questions": [
+        {
+          "q": "Rarely ___ such incredible musical talent on stage.",
+          "options": [
+            "have I witnessed",
+            "I have witnessed",
+            "did I witnessed",
+            "I witnessed"
+          ],
+          "answer": "have I witnessed",
+          "explanation": "Negative adverbial 'Rarely' at the start of a clause triggers subject-auxiliary inversion."
+        },
+        {
+          "q": "No sooner had we arrived at the station ___ the train departed.",
+          "options": [
+            "than",
+            "when",
+            "that",
+            "then"
+          ],
+          "answer": "than",
+          "explanation": "'No sooner... than' is the required correlative conjunction pair."
+        },
+        {
+          "q": "Choose the grammatically sound option for this sentence (Participle Clauses & Dangling Modifiers):",
+          "options": [
+            "Despite the sudden rain, the outdoor event proceeded successfully.",
+            "Despite of the sudden rain, the outdoor event proceeded successfully.",
+            "Although the sudden rain, the outdoor event proceeded successfully.",
+            "In spite the sudden rain, the outdoor event proceeded successfully."
+          ],
+          "answer": "Despite the sudden rain, the outdoor event proceeded successfully.",
+          "explanation": "'Despite' takes a noun phrase directly without 'of' (unlike 'in spite of')."
+        },
+        {
+          "q": "Which sentence correctly maintains subject-verb agreement under 'Participle Clauses & Dangling Modifiers' rules?",
+          "options": [
+            "Neither the manager nor the assistants were available for comment.",
+            "Neither the manager nor the assistants was available for comment.",
+            "Neither the manager or the assistants were available for comment.",
+            "Neither the manager nor the assistants being available for comment."
+          ],
+          "answer": "Neither the manager nor the assistants were available for comment.",
+          "explanation": "With 'neither... nor...', the verb agrees with the closer subject ('assistants' -> 'were')."
+        },
+        {
+          "q": "Fill in the blank with the correct preposition/connector for 'Participle Clauses & Dangling Modifiers':\n\"He succeeded in passing the exam ___ studying consistently every evening.\"",
+          "options": [
+            "by",
+            "with",
+            "throughout",
+            "at"
+          ],
+          "answer": "by",
+          "explanation": "Use 'by + gerund' to explain the method or manner through which something is achieved."
+        },
+        {
+          "q": "Select the sentence with accurate punctuation and clause structure:",
+          "options": [
+            "Although she was exhausted, she finished the entire assignment.",
+            "Although she was exhausted she finished, the entire assignment.",
+            "She finished the entire assignment, although, she was exhausted.",
+            "Although was exhausted, she finished the entire assignment."
+          ],
+          "answer": "Although she was exhausted, she finished the entire assignment.",
+          "explanation": "A subordinate clause at the start of a sentence is set off by a comma."
+        },
+        {
+          "q": "Which expression provides the most natural academic register?",
+          "options": [
+            "The findings indicate a substantial improvement in student retention.",
+            "The findings show a really big improvement in student retention.",
+            "The findings are saying that students stay more.",
+            "The findings tell that students get much better."
+          ],
+          "answer": "The findings indicate a substantial improvement in student retention.",
+          "explanation": "'Indicate a substantial improvement' provides precise academic vocabulary appropriate for advanced writing."
+        },
+        {
+          "q": "Identify the sentence that contains a grammatical error regarding 'Participle Clauses & Dangling Modifiers':",
+          "options": [
+            "She suggested me to consult an academic advisor immediately.",
+            "She suggested that I consult an academic advisor immediately.",
+            "She recommended consulting an academic advisor immediately.",
+            "She advised me to consult an academic advisor immediately."
+          ],
+          "answer": "She suggested me to consult an academic advisor immediately.",
+          "explanation": "'Suggest' does not take object + infinitive (*suggest me to do*). Use 'suggest that...' or 'suggest + gerund'."
+        },
+        {
+          "q": "Choose the best alternative to replace the highlighted phrase for concise clarity:\n\"Owing to the fact that it was raining heavily...\"",
+          "options": [
+            "Because it was raining heavily",
+            "For reason that it rained",
+            "Due to because of the rain",
+            "Since that it was heavy rain"
+          ],
+          "answer": "Because it was raining heavily",
+          "explanation": "'Because' is more direct, natural, and avoids wordy redundant phrasing."
+        },
+        {
+          "q": "Which sentence demonstrates the correct position of adverbs of frequency?",
+          "options": [
+            "She has always been interested in linguistic anthropology.",
+            "She always has been interested in linguistic anthropology.",
+            "Always she has been interested in linguistic anthropology.",
+            "She has been always interested in linguistic anthropology."
+          ],
+          "answer": "She has always been interested in linguistic anthropology.",
+          "explanation": "Adverbs of frequency ('always') are placed after the first auxiliary verb ('has')."
+        },
+        {
+          "q": "Complete the sentence with the correct subjunctive / formal structure:\n\"It is imperative that every member ___ the code of conduct.\"",
+          "options": [
+            "follow",
+            "follows",
+            "followed",
+            "is following"
+          ],
+          "answer": "follow",
+          "explanation": "The present subjunctive with 'imperative that' uses the base form 'follow' regardless of the subject."
+        },
+        {
+          "q": "Choose the correct collocated preposition:\n\"The company is committed ___ reducing its carbon emissions by 2030.\"",
+          "options": [
+            "to",
+            "for",
+            "with",
+            "at"
+          ],
+          "answer": "to",
+          "explanation": "'Committed to' is followed by a gerund or noun phrase ('reducing')."
+        },
+        {
+          "q": "Which option transforms the active sentence into a natural passive form?\nActive: \"Authorities have closed the bridge for inspection.\"",
+          "options": [
+            "The bridge has been closed for inspection by authorities.",
+            "The bridge had been closed for inspection by authorities.",
+            "The bridge was being closed for inspection by authorities.",
+            "The bridge is closed for inspection since authorities."
+          ],
+          "answer": "The bridge has been closed for inspection by authorities.",
+          "explanation": "Present perfect passive uses 'has/have been + past participle' ('has been closed')."
+        }
+      ]
+    },
+    {
+      "id": "class-6",
+      "title": "Class 6: Mixed & Unexpressed Conditionals",
+      "desc": "Inverted conditionals without 'if' (Had we known, Were he to ask, Should you require).",
+      "type": "Lesson",
+      "learn": [
+        "Core structural rules and sentence patterns for Mixed & Unexpressed Conditionals",
+        "Distinguishing common traps, errors, and subtle register differences",
+        "Spoken fluency templates and IELTS/academic writing applications"
+      ],
+      "questions": [
+        {
+          "q": "If it rains tomorrow, we ___ our trip to the beach.",
+          "options": [
+            "will cancel",
+            "canceled",
+            "would cancel",
+            "cancel"
+          ],
+          "answer": "will cancel",
+          "explanation": "First conditional uses present simple in if-clause and 'will + verb' in result clause."
+        },
+        {
+          "q": "Choose the grammatically sound option for this sentence (Mixed & Unexpressed Conditionals):",
+          "options": [
+            "Despite the sudden rain, the outdoor event proceeded successfully.",
+            "Despite of the sudden rain, the outdoor event proceeded successfully.",
+            "Although the sudden rain, the outdoor event proceeded successfully.",
+            "In spite the sudden rain, the outdoor event proceeded successfully."
+          ],
+          "answer": "Despite the sudden rain, the outdoor event proceeded successfully.",
+          "explanation": "'Despite' takes a noun phrase directly without 'of' (unlike 'in spite of')."
+        },
+        {
+          "q": "Which sentence correctly maintains subject-verb agreement under 'Mixed & Unexpressed Conditionals' rules?",
+          "options": [
+            "Neither the manager nor the assistants were available for comment.",
+            "Neither the manager nor the assistants was available for comment.",
+            "Neither the manager or the assistants were available for comment.",
+            "Neither the manager nor the assistants being available for comment."
+          ],
+          "answer": "Neither the manager nor the assistants were available for comment.",
+          "explanation": "With 'neither... nor...', the verb agrees with the closer subject ('assistants' -> 'were')."
+        },
+        {
+          "q": "Fill in the blank with the correct preposition/connector for 'Mixed & Unexpressed Conditionals':\n\"He succeeded in passing the exam ___ studying consistently every evening.\"",
+          "options": [
+            "by",
+            "with",
+            "throughout",
+            "at"
+          ],
+          "answer": "by",
+          "explanation": "Use 'by + gerund' to explain the method or manner through which something is achieved."
+        },
+        {
+          "q": "Select the sentence with accurate punctuation and clause structure:",
+          "options": [
+            "Although she was exhausted, she finished the entire assignment.",
+            "Although she was exhausted she finished, the entire assignment.",
+            "She finished the entire assignment, although, she was exhausted.",
+            "Although was exhausted, she finished the entire assignment."
+          ],
+          "answer": "Although she was exhausted, she finished the entire assignment.",
+          "explanation": "A subordinate clause at the start of a sentence is set off by a comma."
+        },
+        {
+          "q": "Which expression provides the most natural academic register?",
+          "options": [
+            "The findings indicate a substantial improvement in student retention.",
+            "The findings show a really big improvement in student retention.",
+            "The findings are saying that students stay more.",
+            "The findings tell that students get much better."
+          ],
+          "answer": "The findings indicate a substantial improvement in student retention.",
+          "explanation": "'Indicate a substantial improvement' provides precise academic vocabulary appropriate for advanced writing."
+        },
+        {
+          "q": "Identify the sentence that contains a grammatical error regarding 'Mixed & Unexpressed Conditionals':",
+          "options": [
+            "She suggested me to consult an academic advisor immediately.",
+            "She suggested that I consult an academic advisor immediately.",
+            "She recommended consulting an academic advisor immediately.",
+            "She advised me to consult an academic advisor immediately."
+          ],
+          "answer": "She suggested me to consult an academic advisor immediately.",
+          "explanation": "'Suggest' does not take object + infinitive (*suggest me to do*). Use 'suggest that...' or 'suggest + gerund'."
+        },
+        {
+          "q": "Choose the best alternative to replace the highlighted phrase for concise clarity:\n\"Owing to the fact that it was raining heavily...\"",
+          "options": [
+            "Because it was raining heavily",
+            "For reason that it rained",
+            "Due to because of the rain",
+            "Since that it was heavy rain"
+          ],
+          "answer": "Because it was raining heavily",
+          "explanation": "'Because' is more direct, natural, and avoids wordy redundant phrasing."
+        },
+        {
+          "q": "Which sentence demonstrates the correct position of adverbs of frequency?",
+          "options": [
+            "She has always been interested in linguistic anthropology.",
+            "She always has been interested in linguistic anthropology.",
+            "Always she has been interested in linguistic anthropology.",
+            "She has been always interested in linguistic anthropology."
+          ],
+          "answer": "She has always been interested in linguistic anthropology.",
+          "explanation": "Adverbs of frequency ('always') are placed after the first auxiliary verb ('has')."
+        },
+        {
+          "q": "Complete the sentence with the correct subjunctive / formal structure:\n\"It is imperative that every member ___ the code of conduct.\"",
+          "options": [
+            "follow",
+            "follows",
+            "followed",
+            "is following"
+          ],
+          "answer": "follow",
+          "explanation": "The present subjunctive with 'imperative that' uses the base form 'follow' regardless of the subject."
+        },
+        {
+          "q": "Choose the correct collocated preposition:\n\"The company is committed ___ reducing its carbon emissions by 2030.\"",
+          "options": [
+            "to",
+            "for",
+            "with",
+            "at"
+          ],
+          "answer": "to",
+          "explanation": "'Committed to' is followed by a gerund or noun phrase ('reducing')."
+        },
+        {
+          "q": "Which option transforms the active sentence into a natural passive form?\nActive: \"Authorities have closed the bridge for inspection.\"",
+          "options": [
+            "The bridge has been closed for inspection by authorities.",
+            "The bridge had been closed for inspection by authorities.",
+            "The bridge was being closed for inspection by authorities.",
+            "The bridge is closed for inspection since authorities."
+          ],
+          "answer": "The bridge has been closed for inspection by authorities.",
+          "explanation": "Present perfect passive uses 'has/have been + past participle' ('has been closed')."
+        }
+      ]
+    },
+    {
+      "id": "class-7",
+      "title": "Class 7: Nuanced Modality & Epistemic Stance",
+      "desc": "Subtle degrees of certainty, hedging, epistemic must vs bound to vs destined to.",
+      "type": "Lesson",
+      "learn": [
+        "Core structural rules and sentence patterns for Nuanced Modality & Epistemic Stance",
+        "Distinguishing common traps, errors, and subtle register differences",
+        "Spoken fluency templates and IELTS/academic writing applications"
+      ],
+      "questions": [
+        {
+          "q": "You ___ wear a seatbelt when driving; it is mandatory by law.",
+          "options": [
+            "must",
+            "might",
+            "could",
+            "would"
+          ],
+          "answer": "must",
+          "explanation": "'Must' expresses strict obligation or official law."
+        },
+        {
+          "q": "You ___ not eat in the library; it is strictly prohibited.",
+          "options": [
+            "must",
+            "don't have to",
+            "might",
+            "should"
+          ],
+          "answer": "must",
+          "explanation": "'Must not' expresses prohibition, whereas 'don't have to' means lack of obligation."
+        },
+        {
+          "q": "Choose the grammatically sound option for this sentence (Nuanced Modality & Epistemic Stance):",
+          "options": [
+            "Despite the sudden rain, the outdoor event proceeded successfully.",
+            "Despite of the sudden rain, the outdoor event proceeded successfully.",
+            "Although the sudden rain, the outdoor event proceeded successfully.",
+            "In spite the sudden rain, the outdoor event proceeded successfully."
+          ],
+          "answer": "Despite the sudden rain, the outdoor event proceeded successfully.",
+          "explanation": "'Despite' takes a noun phrase directly without 'of' (unlike 'in spite of')."
+        },
+        {
+          "q": "Which sentence correctly maintains subject-verb agreement under 'Nuanced Modality & Epistemic Stance' rules?",
+          "options": [
+            "Neither the manager nor the assistants were available for comment.",
+            "Neither the manager nor the assistants was available for comment.",
+            "Neither the manager or the assistants were available for comment.",
+            "Neither the manager nor the assistants being available for comment."
+          ],
+          "answer": "Neither the manager nor the assistants were available for comment.",
+          "explanation": "With 'neither... nor...', the verb agrees with the closer subject ('assistants' -> 'were')."
+        },
+        {
+          "q": "Fill in the blank with the correct preposition/connector for 'Nuanced Modality & Epistemic Stance':\n\"He succeeded in passing the exam ___ studying consistently every evening.\"",
+          "options": [
+            "by",
+            "with",
+            "throughout",
+            "at"
+          ],
+          "answer": "by",
+          "explanation": "Use 'by + gerund' to explain the method or manner through which something is achieved."
+        },
+        {
+          "q": "Select the sentence with accurate punctuation and clause structure:",
+          "options": [
+            "Although she was exhausted, she finished the entire assignment.",
+            "Although she was exhausted she finished, the entire assignment.",
+            "She finished the entire assignment, although, she was exhausted.",
+            "Although was exhausted, she finished the entire assignment."
+          ],
+          "answer": "Although she was exhausted, she finished the entire assignment.",
+          "explanation": "A subordinate clause at the start of a sentence is set off by a comma."
+        },
+        {
+          "q": "Which expression provides the most natural academic register?",
+          "options": [
+            "The findings indicate a substantial improvement in student retention.",
+            "The findings show a really big improvement in student retention.",
+            "The findings are saying that students stay more.",
+            "The findings tell that students get much better."
+          ],
+          "answer": "The findings indicate a substantial improvement in student retention.",
+          "explanation": "'Indicate a substantial improvement' provides precise academic vocabulary appropriate for advanced writing."
+        },
+        {
+          "q": "Identify the sentence that contains a grammatical error regarding 'Nuanced Modality & Epistemic Stance':",
+          "options": [
+            "She suggested me to consult an academic advisor immediately.",
+            "She suggested that I consult an academic advisor immediately.",
+            "She recommended consulting an academic advisor immediately.",
+            "She advised me to consult an academic advisor immediately."
+          ],
+          "answer": "She suggested me to consult an academic advisor immediately.",
+          "explanation": "'Suggest' does not take object + infinitive (*suggest me to do*). Use 'suggest that...' or 'suggest + gerund'."
+        },
+        {
+          "q": "Choose the best alternative to replace the highlighted phrase for concise clarity:\n\"Owing to the fact that it was raining heavily...\"",
+          "options": [
+            "Because it was raining heavily",
+            "For reason that it rained",
+            "Due to because of the rain",
+            "Since that it was heavy rain"
+          ],
+          "answer": "Because it was raining heavily",
+          "explanation": "'Because' is more direct, natural, and avoids wordy redundant phrasing."
+        },
+        {
+          "q": "Which sentence demonstrates the correct position of adverbs of frequency?",
+          "options": [
+            "She has always been interested in linguistic anthropology.",
+            "She always has been interested in linguistic anthropology.",
+            "Always she has been interested in linguistic anthropology.",
+            "She has been always interested in linguistic anthropology."
+          ],
+          "answer": "She has always been interested in linguistic anthropology.",
+          "explanation": "Adverbs of frequency ('always') are placed after the first auxiliary verb ('has')."
+        },
+        {
+          "q": "Complete the sentence with the correct subjunctive / formal structure:\n\"It is imperative that every member ___ the code of conduct.\"",
+          "options": [
+            "follow",
+            "follows",
+            "followed",
+            "is following"
+          ],
+          "answer": "follow",
+          "explanation": "The present subjunctive with 'imperative that' uses the base form 'follow' regardless of the subject."
+        },
+        {
+          "q": "Choose the correct collocated preposition:\n\"The company is committed ___ reducing its carbon emissions by 2030.\"",
+          "options": [
+            "to",
+            "for",
+            "with",
+            "at"
+          ],
+          "answer": "to",
+          "explanation": "'Committed to' is followed by a gerund or noun phrase ('reducing')."
+        },
+        {
+          "q": "Which option transforms the active sentence into a natural passive form?\nActive: \"Authorities have closed the bridge for inspection.\"",
+          "options": [
+            "The bridge has been closed for inspection by authorities.",
+            "The bridge had been closed for inspection by authorities.",
+            "The bridge was being closed for inspection by authorities.",
+            "The bridge is closed for inspection since authorities."
+          ],
+          "answer": "The bridge has been closed for inspection by authorities.",
+          "explanation": "Present perfect passive uses 'has/have been + past participle' ('has been closed')."
+        }
+      ]
+    },
+    {
+      "id": "class-8",
+      "title": "Class 8: Complex Prepositional Idioms",
+      "desc": "Prepositional phrases functioning as discourse stance markers and concessive hedges.",
+      "type": "Lesson",
+      "learn": [
+        "Core structural rules and sentence patterns for Complex Prepositional Idioms",
+        "Distinguishing common traps, errors, and subtle register differences",
+        "Spoken fluency templates and IELTS/academic writing applications"
+      ],
+      "questions": [
+        {
+          "q": "Rarely ___ such incredible musical talent on stage.",
+          "options": [
+            "have I witnessed",
+            "I have witnessed",
+            "did I witnessed",
+            "I witnessed"
+          ],
+          "answer": "have I witnessed",
+          "explanation": "Negative adverbial 'Rarely' at the start of a clause triggers subject-auxiliary inversion."
+        },
+        {
+          "q": "No sooner had we arrived at the station ___ the train departed.",
+          "options": [
+            "than",
+            "when",
+            "that",
+            "then"
+          ],
+          "answer": "than",
+          "explanation": "'No sooner... than' is the required correlative conjunction pair."
+        },
+        {
+          "q": "Choose the grammatically sound option for this sentence (Complex Prepositional Idioms):",
+          "options": [
+            "Despite the sudden rain, the outdoor event proceeded successfully.",
+            "Despite of the sudden rain, the outdoor event proceeded successfully.",
+            "Although the sudden rain, the outdoor event proceeded successfully.",
+            "In spite the sudden rain, the outdoor event proceeded successfully."
+          ],
+          "answer": "Despite the sudden rain, the outdoor event proceeded successfully.",
+          "explanation": "'Despite' takes a noun phrase directly without 'of' (unlike 'in spite of')."
+        },
+        {
+          "q": "Which sentence correctly maintains subject-verb agreement under 'Complex Prepositional Idioms' rules?",
+          "options": [
+            "Neither the manager nor the assistants were available for comment.",
+            "Neither the manager nor the assistants was available for comment.",
+            "Neither the manager or the assistants were available for comment.",
+            "Neither the manager nor the assistants being available for comment."
+          ],
+          "answer": "Neither the manager nor the assistants were available for comment.",
+          "explanation": "With 'neither... nor...', the verb agrees with the closer subject ('assistants' -> 'were')."
+        },
+        {
+          "q": "Fill in the blank with the correct preposition/connector for 'Complex Prepositional Idioms':\n\"He succeeded in passing the exam ___ studying consistently every evening.\"",
+          "options": [
+            "by",
+            "with",
+            "throughout",
+            "at"
+          ],
+          "answer": "by",
+          "explanation": "Use 'by + gerund' to explain the method or manner through which something is achieved."
+        },
+        {
+          "q": "Select the sentence with accurate punctuation and clause structure:",
+          "options": [
+            "Although she was exhausted, she finished the entire assignment.",
+            "Although she was exhausted she finished, the entire assignment.",
+            "She finished the entire assignment, although, she was exhausted.",
+            "Although was exhausted, she finished the entire assignment."
+          ],
+          "answer": "Although she was exhausted, she finished the entire assignment.",
+          "explanation": "A subordinate clause at the start of a sentence is set off by a comma."
+        },
+        {
+          "q": "Which expression provides the most natural academic register?",
+          "options": [
+            "The findings indicate a substantial improvement in student retention.",
+            "The findings show a really big improvement in student retention.",
+            "The findings are saying that students stay more.",
+            "The findings tell that students get much better."
+          ],
+          "answer": "The findings indicate a substantial improvement in student retention.",
+          "explanation": "'Indicate a substantial improvement' provides precise academic vocabulary appropriate for advanced writing."
+        },
+        {
+          "q": "Identify the sentence that contains a grammatical error regarding 'Complex Prepositional Idioms':",
+          "options": [
+            "She suggested me to consult an academic advisor immediately.",
+            "She suggested that I consult an academic advisor immediately.",
+            "She recommended consulting an academic advisor immediately.",
+            "She advised me to consult an academic advisor immediately."
+          ],
+          "answer": "She suggested me to consult an academic advisor immediately.",
+          "explanation": "'Suggest' does not take object + infinitive (*suggest me to do*). Use 'suggest that...' or 'suggest + gerund'."
+        },
+        {
+          "q": "Choose the best alternative to replace the highlighted phrase for concise clarity:\n\"Owing to the fact that it was raining heavily...\"",
+          "options": [
+            "Because it was raining heavily",
+            "For reason that it rained",
+            "Due to because of the rain",
+            "Since that it was heavy rain"
+          ],
+          "answer": "Because it was raining heavily",
+          "explanation": "'Because' is more direct, natural, and avoids wordy redundant phrasing."
+        },
+        {
+          "q": "Which sentence demonstrates the correct position of adverbs of frequency?",
+          "options": [
+            "She has always been interested in linguistic anthropology.",
+            "She always has been interested in linguistic anthropology.",
+            "Always she has been interested in linguistic anthropology.",
+            "She has been always interested in linguistic anthropology."
+          ],
+          "answer": "She has always been interested in linguistic anthropology.",
+          "explanation": "Adverbs of frequency ('always') are placed after the first auxiliary verb ('has')."
+        },
+        {
+          "q": "Complete the sentence with the correct subjunctive / formal structure:\n\"It is imperative that every member ___ the code of conduct.\"",
+          "options": [
+            "follow",
+            "follows",
+            "followed",
+            "is following"
+          ],
+          "answer": "follow",
+          "explanation": "The present subjunctive with 'imperative that' uses the base form 'follow' regardless of the subject."
+        },
+        {
+          "q": "Choose the correct collocated preposition:\n\"The company is committed ___ reducing its carbon emissions by 2030.\"",
+          "options": [
+            "to",
+            "for",
+            "with",
+            "at"
+          ],
+          "answer": "to",
+          "explanation": "'Committed to' is followed by a gerund or noun phrase ('reducing')."
+        },
+        {
+          "q": "Which option transforms the active sentence into a natural passive form?\nActive: \"Authorities have closed the bridge for inspection.\"",
+          "options": [
+            "The bridge has been closed for inspection by authorities.",
+            "The bridge had been closed for inspection by authorities.",
+            "The bridge was being closed for inspection by authorities.",
+            "The bridge is closed for inspection since authorities."
+          ],
+          "answer": "The bridge has been closed for inspection by authorities.",
+          "explanation": "Present perfect passive uses 'has/have been + past participle' ('has been closed')."
+        }
+      ]
+    },
+    {
+      "id": "class-9",
+      "title": "Class 9: Information Packaging & End-Weight Principle",
+      "desc": "Balancing complex subjects, extraposition, and cognitive processing ease.",
+      "type": "Lesson",
+      "learn": [
+        "Core structural rules and sentence patterns for Information Packaging & End-Weight Principle",
+        "Distinguishing common traps, errors, and subtle register differences",
+        "Spoken fluency templates and IELTS/academic writing applications"
+      ],
+      "questions": [
+        {
+          "q": "Rarely ___ such incredible musical talent on stage.",
+          "options": [
+            "have I witnessed",
+            "I have witnessed",
+            "did I witnessed",
+            "I witnessed"
+          ],
+          "answer": "have I witnessed",
+          "explanation": "Negative adverbial 'Rarely' at the start of a clause triggers subject-auxiliary inversion."
+        },
+        {
+          "q": "No sooner had we arrived at the station ___ the train departed.",
+          "options": [
+            "than",
+            "when",
+            "that",
+            "then"
+          ],
+          "answer": "than",
+          "explanation": "'No sooner... than' is the required correlative conjunction pair."
+        },
+        {
+          "q": "Choose the grammatically sound option for this sentence (Information Packaging & End-Weight Principle):",
+          "options": [
+            "Despite the sudden rain, the outdoor event proceeded successfully.",
+            "Despite of the sudden rain, the outdoor event proceeded successfully.",
+            "Although the sudden rain, the outdoor event proceeded successfully.",
+            "In spite the sudden rain, the outdoor event proceeded successfully."
+          ],
+          "answer": "Despite the sudden rain, the outdoor event proceeded successfully.",
+          "explanation": "'Despite' takes a noun phrase directly without 'of' (unlike 'in spite of')."
+        },
+        {
+          "q": "Which sentence correctly maintains subject-verb agreement under 'Information Packaging & End-Weight Principle' rules?",
+          "options": [
+            "Neither the manager nor the assistants were available for comment.",
+            "Neither the manager nor the assistants was available for comment.",
+            "Neither the manager or the assistants were available for comment.",
+            "Neither the manager nor the assistants being available for comment."
+          ],
+          "answer": "Neither the manager nor the assistants were available for comment.",
+          "explanation": "With 'neither... nor...', the verb agrees with the closer subject ('assistants' -> 'were')."
+        },
+        {
+          "q": "Fill in the blank with the correct preposition/connector for 'Information Packaging & End-Weight Principle':\n\"He succeeded in passing the exam ___ studying consistently every evening.\"",
+          "options": [
+            "by",
+            "with",
+            "throughout",
+            "at"
+          ],
+          "answer": "by",
+          "explanation": "Use 'by + gerund' to explain the method or manner through which something is achieved."
+        },
+        {
+          "q": "Select the sentence with accurate punctuation and clause structure:",
+          "options": [
+            "Although she was exhausted, she finished the entire assignment.",
+            "Although she was exhausted she finished, the entire assignment.",
+            "She finished the entire assignment, although, she was exhausted.",
+            "Although was exhausted, she finished the entire assignment."
+          ],
+          "answer": "Although she was exhausted, she finished the entire assignment.",
+          "explanation": "A subordinate clause at the start of a sentence is set off by a comma."
+        },
+        {
+          "q": "Which expression provides the most natural academic register?",
+          "options": [
+            "The findings indicate a substantial improvement in student retention.",
+            "The findings show a really big improvement in student retention.",
+            "The findings are saying that students stay more.",
+            "The findings tell that students get much better."
+          ],
+          "answer": "The findings indicate a substantial improvement in student retention.",
+          "explanation": "'Indicate a substantial improvement' provides precise academic vocabulary appropriate for advanced writing."
+        },
+        {
+          "q": "Identify the sentence that contains a grammatical error regarding 'Information Packaging & End-Weight Principle':",
+          "options": [
+            "She suggested me to consult an academic advisor immediately.",
+            "She suggested that I consult an academic advisor immediately.",
+            "She recommended consulting an academic advisor immediately.",
+            "She advised me to consult an academic advisor immediately."
+          ],
+          "answer": "She suggested me to consult an academic advisor immediately.",
+          "explanation": "'Suggest' does not take object + infinitive (*suggest me to do*). Use 'suggest that...' or 'suggest + gerund'."
+        },
+        {
+          "q": "Choose the best alternative to replace the highlighted phrase for concise clarity:\n\"Owing to the fact that it was raining heavily...\"",
+          "options": [
+            "Because it was raining heavily",
+            "For reason that it rained",
+            "Due to because of the rain",
+            "Since that it was heavy rain"
+          ],
+          "answer": "Because it was raining heavily",
+          "explanation": "'Because' is more direct, natural, and avoids wordy redundant phrasing."
+        },
+        {
+          "q": "Which sentence demonstrates the correct position of adverbs of frequency?",
+          "options": [
+            "She has always been interested in linguistic anthropology.",
+            "She always has been interested in linguistic anthropology.",
+            "Always she has been interested in linguistic anthropology.",
+            "She has been always interested in linguistic anthropology."
+          ],
+          "answer": "She has always been interested in linguistic anthropology.",
+          "explanation": "Adverbs of frequency ('always') are placed after the first auxiliary verb ('has')."
+        },
+        {
+          "q": "Complete the sentence with the correct subjunctive / formal structure:\n\"It is imperative that every member ___ the code of conduct.\"",
+          "options": [
+            "follow",
+            "follows",
+            "followed",
+            "is following"
+          ],
+          "answer": "follow",
+          "explanation": "The present subjunctive with 'imperative that' uses the base form 'follow' regardless of the subject."
+        },
+        {
+          "q": "Choose the correct collocated preposition:\n\"The company is committed ___ reducing its carbon emissions by 2030.\"",
+          "options": [
+            "to",
+            "for",
+            "with",
+            "at"
+          ],
+          "answer": "to",
+          "explanation": "'Committed to' is followed by a gerund or noun phrase ('reducing')."
+        },
+        {
+          "q": "Which option transforms the active sentence into a natural passive form?\nActive: \"Authorities have closed the bridge for inspection.\"",
+          "options": [
+            "The bridge has been closed for inspection by authorities.",
+            "The bridge had been closed for inspection by authorities.",
+            "The bridge was being closed for inspection by authorities.",
+            "The bridge is closed for inspection since authorities."
+          ],
+          "answer": "The bridge has been closed for inspection by authorities.",
+          "explanation": "Present perfect passive uses 'has/have been + past participle' ('has been closed')."
+        }
+      ]
+    },
+    {
+      "id": "class-10",
+      "title": "Class 10: Rhetorical Stylistics & Register Shifts",
+      "desc": "Register switching between high academic, legalistic, diplomatic, and conversational English.",
+      "type": "Lesson",
+      "learn": [
+        "Core structural rules and sentence patterns for Rhetorical Stylistics & Register Shifts",
+        "Distinguishing common traps, errors, and subtle register differences",
+        "Spoken fluency templates and IELTS/academic writing applications"
+      ],
+      "questions": [
+        {
+          "q": "Rarely ___ such incredible musical talent on stage.",
+          "options": [
+            "have I witnessed",
+            "I have witnessed",
+            "did I witnessed",
+            "I witnessed"
+          ],
+          "answer": "have I witnessed",
+          "explanation": "Negative adverbial 'Rarely' at the start of a clause triggers subject-auxiliary inversion."
+        },
+        {
+          "q": "No sooner had we arrived at the station ___ the train departed.",
+          "options": [
+            "than",
+            "when",
+            "that",
+            "then"
+          ],
+          "answer": "than",
+          "explanation": "'No sooner... than' is the required correlative conjunction pair."
+        },
+        {
+          "q": "Choose the grammatically sound option for this sentence (Rhetorical Stylistics & Register Shifts):",
+          "options": [
+            "Despite the sudden rain, the outdoor event proceeded successfully.",
+            "Despite of the sudden rain, the outdoor event proceeded successfully.",
+            "Although the sudden rain, the outdoor event proceeded successfully.",
+            "In spite the sudden rain, the outdoor event proceeded successfully."
+          ],
+          "answer": "Despite the sudden rain, the outdoor event proceeded successfully.",
+          "explanation": "'Despite' takes a noun phrase directly without 'of' (unlike 'in spite of')."
+        },
+        {
+          "q": "Which sentence correctly maintains subject-verb agreement under 'Rhetorical Stylistics & Register Shifts' rules?",
+          "options": [
+            "Neither the manager nor the assistants were available for comment.",
+            "Neither the manager nor the assistants was available for comment.",
+            "Neither the manager or the assistants were available for comment.",
+            "Neither the manager nor the assistants being available for comment."
+          ],
+          "answer": "Neither the manager nor the assistants were available for comment.",
+          "explanation": "With 'neither... nor...', the verb agrees with the closer subject ('assistants' -> 'were')."
+        },
+        {
+          "q": "Fill in the blank with the correct preposition/connector for 'Rhetorical Stylistics & Register Shifts':\n\"He succeeded in passing the exam ___ studying consistently every evening.\"",
+          "options": [
+            "by",
+            "with",
+            "throughout",
+            "at"
+          ],
+          "answer": "by",
+          "explanation": "Use 'by + gerund' to explain the method or manner through which something is achieved."
+        },
+        {
+          "q": "Select the sentence with accurate punctuation and clause structure:",
+          "options": [
+            "Although she was exhausted, she finished the entire assignment.",
+            "Although she was exhausted she finished, the entire assignment.",
+            "She finished the entire assignment, although, she was exhausted.",
+            "Although was exhausted, she finished the entire assignment."
+          ],
+          "answer": "Although she was exhausted, she finished the entire assignment.",
+          "explanation": "A subordinate clause at the start of a sentence is set off by a comma."
+        },
+        {
+          "q": "Which expression provides the most natural academic register?",
+          "options": [
+            "The findings indicate a substantial improvement in student retention.",
+            "The findings show a really big improvement in student retention.",
+            "The findings are saying that students stay more.",
+            "The findings tell that students get much better."
+          ],
+          "answer": "The findings indicate a substantial improvement in student retention.",
+          "explanation": "'Indicate a substantial improvement' provides precise academic vocabulary appropriate for advanced writing."
+        },
+        {
+          "q": "Identify the sentence that contains a grammatical error regarding 'Rhetorical Stylistics & Register Shifts':",
+          "options": [
+            "She suggested me to consult an academic advisor immediately.",
+            "She suggested that I consult an academic advisor immediately.",
+            "She recommended consulting an academic advisor immediately.",
+            "She advised me to consult an academic advisor immediately."
+          ],
+          "answer": "She suggested me to consult an academic advisor immediately.",
+          "explanation": "'Suggest' does not take object + infinitive (*suggest me to do*). Use 'suggest that...' or 'suggest + gerund'."
+        },
+        {
+          "q": "Choose the best alternative to replace the highlighted phrase for concise clarity:\n\"Owing to the fact that it was raining heavily...\"",
+          "options": [
+            "Because it was raining heavily",
+            "For reason that it rained",
+            "Due to because of the rain",
+            "Since that it was heavy rain"
+          ],
+          "answer": "Because it was raining heavily",
+          "explanation": "'Because' is more direct, natural, and avoids wordy redundant phrasing."
+        },
+        {
+          "q": "Which sentence demonstrates the correct position of adverbs of frequency?",
+          "options": [
+            "She has always been interested in linguistic anthropology.",
+            "She always has been interested in linguistic anthropology.",
+            "Always she has been interested in linguistic anthropology.",
+            "She has been always interested in linguistic anthropology."
+          ],
+          "answer": "She has always been interested in linguistic anthropology.",
+          "explanation": "Adverbs of frequency ('always') are placed after the first auxiliary verb ('has')."
+        },
+        {
+          "q": "Complete the sentence with the correct subjunctive / formal structure:\n\"It is imperative that every member ___ the code of conduct.\"",
+          "options": [
+            "follow",
+            "follows",
+            "followed",
+            "is following"
+          ],
+          "answer": "follow",
+          "explanation": "The present subjunctive with 'imperative that' uses the base form 'follow' regardless of the subject."
+        },
+        {
+          "q": "Choose the correct collocated preposition:\n\"The company is committed ___ reducing its carbon emissions by 2030.\"",
+          "options": [
+            "to",
+            "for",
+            "with",
+            "at"
+          ],
+          "answer": "to",
+          "explanation": "'Committed to' is followed by a gerund or noun phrase ('reducing')."
+        },
+        {
+          "q": "Which option transforms the active sentence into a natural passive form?\nActive: \"Authorities have closed the bridge for inspection.\"",
+          "options": [
+            "The bridge has been closed for inspection by authorities.",
+            "The bridge had been closed for inspection by authorities.",
+            "The bridge was being closed for inspection by authorities.",
+            "The bridge is closed for inspection since authorities."
+          ],
+          "answer": "The bridge has been closed for inspection by authorities.",
+          "explanation": "Present perfect passive uses 'has/have been + past participle' ('has been closed')."
+        }
+      ]
+    }
+  ]
+}

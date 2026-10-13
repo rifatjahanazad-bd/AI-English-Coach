@@ -27,16 +27,91 @@ It features an interactive frontend with an **AI Chat Coach**, a **4-Track Pract
 
 ---
 
-## 🚀 Running the Web App
+---
 
-Start a local server from the repository root:
+## 🏗️ System Architecture & Data Flow
+
+![AI English Coach System Architecture](docs/architecture_diagram.jpg)
+
+### High-Level Component & Processing Flow
+
+```mermaid
+graph TD
+    subgraph UI ["1. Frontend Web Client (Vanilla JS / CSS SPA)"]
+        ChatUI["💬 AI Chat Coach<br/>(chat.js)"]
+        PracticeUI["📚 Practice Arena (A1-C2)<br/>(4 Tracks: Grammar, Vocab, Listen, Write)"]
+        MemeUI["⚡ Meme Break<br/>(3 Memes Batch & 30m Cooldown)"]
+        SpeakingUI["🎙️ Speaking Test Simulator<br/>(Mic Recording & Band Score Ring)"]
+    end
+
+    subgraph API ["2. Backend FastAPI Server (backend/server.py)"]
+        ChatEndpoint["POST /api/chat"]
+        ModuleEndpoint["GET /api/modules/{track}/{level}"]
+        ProgressEndpoint["GET/POST /api/progress & /api/scores"]
+        MemeEndpoint["GET/POST /api/meme/status & /generate"]
+        SpeakingEndpoint["POST /api/speaking/evaluate"]
+    end
+
+    subgraph ENGINES ["3. Processing & AI Evaluation Engines"]
+        VocalPrep["🎙️ Speech-to-Text Pipeline<br/>(ffmpeg audio conversion + Google Web Speech)"]
+        LLMs["🤖 Token Harbor Free Models<br/>(deepseek-v4.1-flash & mimo-v2.6-flash)"]
+        Heuristics["⚙️ Fallback Offline Heuristics<br/>(Lexical diversity, connectors, pace)"]
+    end
+
+    subgraph DB ["4. Persistence Layer (SQLite: backend/database/app.db)"]
+        UsersTable[("users")]
+        ProgressTable[("user_progress")]
+        ScoresTable[("user_scores")]
+        MemeLimitsTable[("meme_rate_limits<br/>(15/day quota + 30m cooldown)")]
+        MemeHistTable[("meme_history")]
+    end
+
+    %% Client to API
+    ChatUI -->|User prompt + context| ChatEndpoint
+    PracticeUI -->|Fetch curriculum JSON| ModuleEndpoint
+    PracticeUI -->|Save quiz score| ProgressEndpoint
+    MemeUI -->|Request 3 memes batch| MemeEndpoint
+    SpeakingUI -->|Audio WAV/MP3 or Transcript| SpeakingEndpoint
+
+    %% API to Engines & DB
+    ChatEndpoint -->|Coaching prompt| LLMs
+    ModuleEndpoint -->|Reads modules/grammar/*.json| PracticeUI
+    ProgressEndpoint --> ProgressTable
+    ProgressEndpoint --> ScoresTable
+    MemeEndpoint --> MemeLimitsTable
+    MemeEndpoint --> MemeHistTable
+    MemeEndpoint -->|Generate humor concepts| LLMs
+
+    SpeakingEndpoint --> VocalPrep
+    VocalPrep -->|Transcript + WPM metrics| LLMs
+    LLMs -.->|On network issue| Heuristics
+    LLMs -->|Official IELTS Scores: FC, LR, GRA, Pron| SpeakingUI
+
+    classDef client fill:#1E293B,stroke:#38BDF8,stroke-width:2px,color:#F8FAFC;
+    classDef server fill:#0F172A,stroke:#A855F7,stroke-width:2px,color:#F8FAFC;
+    classDef engine fill:#111827,stroke:#10B981,stroke-width:2px,color:#F8FAFC;
+    classDef data fill:#18181B,stroke:#F59E0B,stroke-width:2px,color:#F8FAFC;
+
+    class ChatUI,PracticeUI,MemeUI,SpeakingUI client;
+    class ChatEndpoint,ModuleEndpoint,ProgressEndpoint,MemeEndpoint,SpeakingEndpoint server;
+    class VocalPrep,LLMs,Heuristics engine;
+    class UsersTable,ProgressTable,ScoresTable,MemeLimitsTable,MemeHistTable data;
+```
+
+---
+
+## 🚀 Running the Web App & Server
+
+Start the full backend server with auto-reload (serves both API endpoints and the UI):
 
 ```bash
-python3 -m http.server 3000
+# Start FastAPI backend server on port 3000
+python3 -m uvicorn backend.server:app --host 0.0.0.0 --port 3000 --reload
 ```
 
 Open your browser to:
-- **`http://localhost:3000/UI/`** (or `http://localhost:3000/`)
+- **`http://localhost:3000/UI/`** (Interactive Learning Platform)
+- **`http://localhost:3000/docs`** (Interactive Swagger API documentation)
 
 ---
 
@@ -93,6 +168,22 @@ python audio_to_txt.py --duration 60
 # Transcribe an existing .wav audio file
 python audio_to_txt.py --file input/my_practice_session.wav
 ```
+
+---
+
+## 🎭 AI English & IELTS Meme Generator
+
+Generate humorous, relatable memes for IELTS & English learners using the MIMO model (`mimo-v2.6-flash:free`):
+
+```bash
+# Interactive mode (Press ENTER to generate memes, or type a custom topic)
+python backend/meme_generator/meme_generator.py
+
+# Generate a single meme on a specific topic
+python backend/meme_generator/meme_generator.py --topic "IELTS Speaking"
+```
+
+All generated memes are automatically saved to `output/memes/`.
 
 ---
 
