@@ -10,6 +10,8 @@ __pycache__/
 
 # OS artifacts
 .DS_Store
+~$*
+*.tmp
 
 # VS Code (local user workspace state)
 .vscode/*
