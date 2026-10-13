@@ -20,6 +20,11 @@ document.addEventListener('DOMContentLoaded', () => {
     initChat();
     initPractice();
     initSpeakingTest();
+
+    // Boot router after components have initialized
+    if (window.AIEC_Router) {
+        window.AIEC_Router.init();
+    }
 });
 
 function initIcons() {
@@ -38,6 +43,7 @@ function initNavigation() {
 
     const sideTabs = document.querySelectorAll('.side-tab');
     const bottomNavItems = document.querySelectorAll('.bottom-nav-item');
+    const logoHomeBtn = document.getElementById('logoHomeBtn');
 
     function switchPage(pageName) {
         if (!pages[pageName]) return;
@@ -63,11 +69,32 @@ function initNavigation() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    function handleTabClick(tab) {
+        const route = tab.dataset.route || (tab.dataset.page === 'chat' ? '/personalmentor' : (tab.dataset.page === 'practice' ? '/practice' : '/goal'));
+        if (window.AIEC_Router) {
+            window.AIEC_Router.navigate(route);
+        } else {
+            switchPage(tab.dataset.page);
+        }
+    }
+
     sideTabs.forEach(tab => {
-        tab.addEventListener('click', () => switchPage(tab.dataset.page));
+        tab.addEventListener('click', () => handleTabClick(tab));
     });
 
     bottomNavItems.forEach(tab => {
-        tab.addEventListener('click', () => switchPage(tab.dataset.page));
+        tab.addEventListener('click', () => handleTabClick(tab));
     });
+
+    if (logoHomeBtn) {
+        logoHomeBtn.addEventListener('click', () => {
+            if (window.AIEC_Router) {
+                window.AIEC_Router.navigate('/home');
+            } else {
+                switchPage('chat');
+            }
+        });
+    }
+
+    window.switchAppPage = switchPage;
 }

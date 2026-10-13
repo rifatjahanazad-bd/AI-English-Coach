@@ -422,10 +422,13 @@
             mainArea.classList.remove('is-quiz-active');
             quizSideEl.style.display = 'none';
             paintCollage();
+            if (window.AIEC_Router) {
+                window.AIEC_Router.navigate(`/practice/${track.toLowerCase()}/${level.toLowerCase()}`);
+            }
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function selectClassAndStart(item, idx) {
+        function selectClassAndStart(item, idx, skipNavigate = false) {
             currentSelectedIdx = idx;
             currentQuestionIdx = 0;
             correctCount = 0;
@@ -434,8 +437,32 @@
             quizSideEl.style.display = 'block';
             paintCollage();
             renderQuizPlayer(item, idx);
+            if (!skipNavigate && window.AIEC_Router) {
+                const classSlug = (item.id || ('class' + String(idx + 1).padStart(2, '0'))).toLowerCase();
+                window.AIEC_Router.navigate(`/practice/${track.toLowerCase()}/${level.toLowerCase()}/${classSlug}`);
+            }
             quizSideEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
+
+        // Active layout controller for direct router deep-linking
+        window.AIEC_ActiveLevelController = {
+            selectClassById: function(targetClassId) {
+                const norm = String(targetClassId || '').toLowerCase().replace(/[-_]/g, '');
+                for (let i = 0; i < items.length; i++) {
+                    const cid = String(items[i].id || ('class' + String(i + 1).padStart(2, '0'))).toLowerCase().replace(/[-_]/g, '');
+                    const titleSlug = String(items[i].title || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+                    if (cid === norm || titleSlug === norm || String(i + 1) === norm || ('class' + (i + 1)) === norm || ('class0' + (i + 1)) === norm) {
+                        selectClassAndStart(items[i], i, true);
+                        return true;
+                    }
+                }
+                if (items.length > 0) {
+                    selectClassAndStart(items[0], 0, true);
+                    return true;
+                }
+                return false;
+            }
+        };
 
         // Paint the classes cards (renders as 4-column collage or 1-column side list)
         const paintCollage = () => {
@@ -463,6 +490,11 @@
 
         // Initial paint of collage grid (full 4-in-a-row)
         paintCollage();
+
+        // If an initial classId was requested from route:
+        if (o.initialClassId) {
+            window.AIEC_ActiveLevelController.selectClassById(o.initialClassId);
+        }
 
         // 3. Vibrant Meme Generator Banner ("Tired? Want some fun?" -> Generate 3 Memes)
         const memeBanner = el('div', 'meme-fun-banner');

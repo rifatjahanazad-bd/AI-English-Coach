@@ -78,15 +78,18 @@ function initPractice() {
     });
 
     // 2. Next Button -> Transition to Step 2
-    function goToStep2() {
+    function goToStep2(skipNavigate = false) {
         loadCategoryExercise(selectedCategory);
         if (practiceStep1) practiceStep1.classList.add('hidden');
         if (practiceStep2) practiceStep2.classList.remove('hidden');
+        if (!skipNavigate && window.AIEC_Router) {
+            window.AIEC_Router.navigate('/practice/' + selectedCategory);
+        }
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     if (practiceNextBtn) {
-        practiceNextBtn.addEventListener('click', goToStep2);
+        practiceNextBtn.addEventListener('click', () => goToStep2());
         updateNextButtonLabel();
     }
 
@@ -99,6 +102,9 @@ function initPractice() {
             selectedGrammarLevel = null;
             if (modulePracticeCard) modulePracticeCard.classList.add('hidden');
             if (modulePracticeView) modulePracticeView.innerHTML = '';
+            if (window.AIEC_Router) {
+                window.AIEC_Router.navigate('/practice');
+            }
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
@@ -192,13 +198,17 @@ function initPractice() {
         });
     }
 
-    function selectGrammarLevel(mod, lv, sec) {
+    function selectGrammarLevel(mod, lv, sec, options = {}) {
         selectedGrammarLevel = lv.level;
         document.querySelectorAll('.grammar-level-card').forEach(c => {
             c.classList.toggle('selected', c.dataset.level === lv.level);
         });
         if (practiceSelectedCategoryPill) {
             practiceSelectedCategoryPill.textContent = `${mod.emoji} Grammar · ${lv.level}`;
+        }
+        if (!options.skipNavigate && window.AIEC_Router) {
+            const trackKey = (mod.id || selectedCategory || 'grammar').toLowerCase();
+            window.AIEC_Router.navigate(`/practice/${trackKey}/${lv.level.toLowerCase()}`);
         }
         // Level detail panel (module pages with topics/games land next step).
         const count = (sec.count != null ? sec.count : lv.count) || 0;
@@ -224,7 +234,9 @@ function initPractice() {
                 count: (sec.count != null ? sec.count : lv.count) || 0,
                 status: sec.status || lv.status || 'ready',
                 items,
+                initialClassId: options.initialClassId,
                 game: window.grammarGame || { type: 'quiz' },
+                onBackLevels: () => backToGrammarLevels(),
                 onSelectModule: (item, idx) => {
                     // 2-pane layout keeps module list and topic learning together seamlessly
                 },
@@ -257,8 +269,55 @@ function initPractice() {
         if (practiceSelectedCategoryPill && mod) {
             practiceSelectedCategoryPill.textContent = `${mod.emoji} ${mod.title}`;
         }
+        if (window.AIEC_Router) {
+            window.AIEC_Router.navigate('/practice/' + selectedCategory);
+        }
         if (grammarLevelsCard) grammarLevelsCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+
+    // Expose route openers for router.js integration
+    window.openTrackFromRoute = function(trackName) {
+        const catKey = (trackName || 'grammar').toLowerCase();
+        selectedCategory = catKey;
+        categoryCards.forEach(c => c.classList.toggle('selected', (c.dataset.category || '').toLowerCase() === catKey));
+        goToStep2(true);
+    };
+
+    window.openLevelFromRoute = function(trackName, levelCode) {
+        window.openTrackFromRoute(trackName);
+        const mod = getModule(trackName);
+        if (mod && Array.isArray(mod.levels)) {
+            const normLevel = (levelCode || '').toUpperCase().replace('PLUS', '+');
+            const targetLv = mod.levels.find(l => l.level.toUpperCase() === normLevel || l.level.toUpperCase().replace('+', 'PLUS') === normLevel);
+            if (targetLv) {
+                const sec = (window.grammarSections && window.grammarSections[targetLv.level]) || {};
+                selectGrammarLevel(mod, targetLv, sec, { skipNavigate: true });
+            }
+        }
+    };
+
+    window.openClassFromRoute = async function(trackName, levelCode, classId) {
+        window.openLevelFromRoute(trackName, levelCode);
+        const normClass = (classId || '').toLowerCase();
+
+        // 1. Try immediate select if level controller is mounted
+        if (window.AIEC_ActiveLevelController && typeof window.AIEC_ActiveLevelController.selectClassById === 'function') {
+            const ok = window.AIEC_ActiveLevelController.selectClassById(normClass);
+            if (ok) return;
+        }
+
+        // 2. Fetch via path parameter API endpoint to ensure class data is populated
+        if (window.AIEC_API && typeof window.AIEC_API.fetchModuleClass === 'function') {
+            try {
+                const res = await window.AIEC_API.fetchModuleClass(trackName, levelCode, classId);
+                if (res && res.class && window.AIEC_ActiveLevelController) {
+                    window.AIEC_ActiveLevelController.selectClassById(res.class.id || normClass);
+                }
+            } catch (err) {
+                console.warn('[Router] Error loading class via API path parameter:', err);
+            }
+        }
+    };
 
     // Single module page under level/topic/ — back returns to this level's modules
     function showModuleSingle(mod, lv, sec, item, idx, items, showModules) {

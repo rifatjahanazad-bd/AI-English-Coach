@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IELTS Speaking Coach · AI Web App</title>
 
@@ -24,7 +25,7 @@
         <!-- GLOBAL APP HEADER                                              -->
         <!-- ============================================================== -->
         <header class="app-header">
-            <div class="logo-area">
+            <div class="logo-area" style="cursor: pointer;" id="logoHomeBtn" title="Go to Home">
                 <div class="logo-mark">☀️</div>
                 <div class="logo-text">
                     <h1>IELTS Coach</h1>
@@ -49,17 +50,17 @@
         <div class="app-body">
             <!-- DESKTOP NAVIGATION TABS -->
             <nav class="side-tabs" id="sideTabs">
-                <button class="side-tab active" data-page="chat">
+                <button class="side-tab active" data-page="chat" data-route="/personalmentor">
                     <i data-lucide="message-circle"></i>
-                    <span>Chat Coach</span>
+                    <span>Personal Mentor</span>
                 </button>
-                <button class="side-tab" data-page="practice">
+                <button class="side-tab" data-page="practice" data-route="/practice">
                     <i data-lucide="edit-3"></i>
-                    <span>Practice</span>
+                    <span>Practice Arena</span>
                 </button>
-                <button class="side-tab" data-page="test">
+                <button class="side-tab" data-page="test" data-route="/goal">
                     <i data-lucide="mic"></i>
-                    <span>Speaking Test</span>
+                    <span>Goal & Speaking</span>
                 </button>
             </nav>
 
@@ -305,7 +306,71 @@
                 <!-- Style: css/test.css | Logic: js/test.js                -->
                 <!-- ###################################################### -->
                 <section id="pageTest" class="page">
-                    <h2>Full Speaking Test</h2>
+                    <div class="space-between mb-8">
+                        <div>
+                            <h2>Speaking Arena & IELTS Goals</h2>
+                            <p class="caption">Real microphone testing, AI IELTS scoring, and personalized study targets</p>
+                        </div>
+                    </div>
+
+                    <!-- GOAL & STUDY OBJECTIVE BAR (Syncs with /api/goal/{user_id}) -->
+                    <div class="card mb-12" id="goalTargetCard" style="padding: 16px 20px; background: linear-gradient(135deg, #F8FAFC 0%, #EEF2FF 100%); border: 1px solid #E0E7FF;">
+                        <div class="space-between" style="align-items: center; flex-wrap: wrap; gap: 12px;">
+                            <div class="flex-row gap-12" style="align-items: center;">
+                                <span style="font-size: 28px;">🎯</span>
+                                <div>
+                                    <h3 style="font-size: 16px; margin: 0; font-weight: 700;">IELTS Target Goal: <span id="goalTargetBandText" style="color: #4F46E5;">Band 7.5</span></h3>
+                                    <p class="caption" id="goalTargetFocusText" style="margin: 2px 0 0;">Focus: Fluency & Coherence · 30 min/day</p>
+                                </div>
+                            </div>
+                            <div class="flex-row gap-8">
+                                <button type="button" class="btn-secondary" id="editGoalBtn" style="padding: 6px 14px; font-size: 13px;">
+                                    ⚙️ Edit Goal
+                                </button>
+                                <span class="pill-chip green" id="goalStatusBadge">On Track</span>
+                            </div>
+                        </div>
+
+                        <!-- Expandable Goal Editor Form -->
+                        <div id="goalEditPanel" class="hidden" style="margin-top: 14px; padding-top: 14px; border-top: 1px dashed #CBD5E1;">
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px;">
+                                <div>
+                                    <label class="caption" style="font-weight: 600;">Target Band Score</label>
+                                    <select id="goalBandSelect" class="form-select" style="width: 100%; padding: 8px 10px; border-radius: 8px; border: 1px solid #CBD5E1; margin-top: 4px;">
+                                        <option value="6.0">Band 6.0 (Competent)</option>
+                                        <option value="6.5">Band 6.5 (Good)</option>
+                                        <option value="7.0">Band 7.0 (Good User)</option>
+                                        <option value="7.5" selected>Band 7.5 (Very Good)</option>
+                                        <option value="8.0">Band 8.0 (Expert)</option>
+                                        <option value="8.5">Band 8.5 (Mastery)</option>
+                                        <option value="9.0">Band 9.0 (Expert Native)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="caption" style="font-weight: 600;">Current Primary Focus</label>
+                                    <select id="goalFocusSelect" class="form-select" style="width: 100%; padding: 8px 10px; border-radius: 8px; border: 1px solid #CBD5E1; margin-top: 4px;">
+                                        <option value="Fluency & Coherence" selected>Fluency & Coherence</option>
+                                        <option value="Lexical Resource">Lexical Resource</option>
+                                        <option value="Grammatical Range">Grammatical Range</option>
+                                        <option value="Pronunciation">Pronunciation</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="caption" style="font-weight: 600;">Daily Study Time</label>
+                                    <select id="goalMinutesSelect" class="form-select" style="width: 100%; padding: 8px 10px; border-radius: 8px; border: 1px solid #CBD5E1; margin-top: 4px;">
+                                        <option value="15">15 minutes / day</option>
+                                        <option value="30" selected>30 minutes / day</option>
+                                        <option value="45">45 minutes / day</option>
+                                        <option value="60">60 minutes / day</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="flex-row gap-8 mt-12" style="justify-content: flex-end;">
+                                <button type="button" class="btn-secondary" id="cancelGoalBtn" style="padding: 6px 14px; font-size: 13px;">Cancel</button>
+                                <button type="button" class="btn-primary" id="saveGoalBtn" style="padding: 6px 16px; font-size: 13px;">Save Goal</button>
+                            </div>
+                        </div>
+                    </div>
 
                     <!-- STEP 1: CHOOSE TOPIC (24 AVAILABLE) -->
                     <div id="testStep1">
@@ -438,17 +503,17 @@
         <!-- MOBILE BOTTOM NAVIGATION                                       -->
         <!-- ============================================================== -->
         <nav class="bottom-nav" id="bottomNav">
-            <button class="bottom-nav-item active" data-page="chat">
+            <button class="bottom-nav-item active" data-page="chat" data-route="/personalmentor">
                 <i data-lucide="message-circle"></i>
-                <span>Chat</span>
+                <span>Mentor</span>
             </button>
-            <button class="bottom-nav-item" data-page="practice">
+            <button class="bottom-nav-item" data-page="practice" data-route="/practice">
                 <i data-lucide="edit-3"></i>
                 <span>Practice</span>
             </button>
-            <button class="bottom-nav-item" data-page="test">
+            <button class="bottom-nav-item" data-page="test" data-route="/goal">
                 <i data-lucide="mic"></i>
-                <span>Test</span>
+                <span>Goal</span>
             </button>
         </nav>
     </div>
@@ -467,7 +532,8 @@
     <!--    practice/writing/A1-C2.js + game.js                         -->
     <!-- 7. practice/practiceUI.js: Practice UI orchestrator itself     -->
     <!-- 8. test.js               : Speaking test simulation            -->
-    <!-- 9. app.js                : Master controller & router          -->
+    <!-- 9. router.js             : URL routing & path parameter sync   -->
+    <!-- 10. app.js               : Master controller & bootstrapper    -->
     <!-- Order per track: registry first, then A1-C2, then game.        -->
     <!-- Section/game files are scaffold-only until screens are built.  -->
     <script src="js/auth.js"></script>
@@ -514,6 +580,7 @@
     <script src="js/practice/modulepractice.js?v=2"></script>
     <script src="js/practice/practiceUI.js?v=2"></script>
     <script src="js/test.js"></script>
+    <script src="js/router.js"></script>
     <script src="js/app.js"></script>
 </body>
 

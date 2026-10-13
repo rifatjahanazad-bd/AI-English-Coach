@@ -39,6 +39,18 @@
         return null;
     }
 
+    async function fetchModuleClass(track, level, classId) {
+        try {
+            const res = await fetch(`${API_BASE}/api/modules/${encodeURIComponent(track)}/${encodeURIComponent(level)}/${encodeURIComponent(classId)}`);
+            if (res.ok) {
+                return await res.json();
+            }
+        } catch (e) {
+            console.warn('[API Client] Server single class fetch failed:', e);
+        }
+        return null;
+    }
+
     async function getProgress(track, level) {
         const uid = getUserId();
         try {
@@ -273,8 +285,77 @@
         return null;
     }
 
+    async function getGoal(userId) {
+        const uid = userId || getUserId();
+        try {
+            const res = await fetch(`${API_BASE}/api/goal/${encodeURIComponent(uid)}`);
+            if (res.ok) return await res.json();
+        } catch (e) {
+            console.warn('[API Client] Goal fetch failed:', e);
+        }
+        return {
+            user_id: uid,
+            target_band: 7.5,
+            target_exam_date: '',
+            daily_minutes: 30,
+            current_focus: 'Fluency & Coherence',
+            target_level: 'B2',
+            notes: ''
+        };
+    }
+
+    async function saveGoal(goalData) {
+        const uid = getUserId();
+        const payload = Object.assign({ user_id: uid }, goalData);
+        try {
+            const res = await fetch(`${API_BASE}/api/goal`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            if (res.ok) return await res.json();
+        } catch (e) {
+            console.warn('[API Client] Goal save failed:', e);
+        }
+        return payload;
+    }
+
+    async function getSpeakingTopics() {
+        try {
+            const res = await fetch(`${API_BASE}/api/speaking/topics`);
+            if (res.ok) {
+                const data = await res.json();
+                return data.topics || [];
+            }
+        } catch (e) {
+            console.warn('[API Client] Speaking topics fetch failed:', e);
+        }
+        return (typeof window.topics !== 'undefined' && Array.isArray(window.topics)) ? window.topics : [];
+    }
+
+    async function getSpeakingTopic(topicId) {
+        try {
+            const res = await fetch(`${API_BASE}/api/speaking/topic/${encodeURIComponent(topicId)}`);
+            if (res.ok) return await res.json();
+        } catch (e) {
+            console.warn('[API Client] Speaking topic fetch failed:', e);
+        }
+        return null;
+    }
+
+    async function getRoutes() {
+        try {
+            const res = await fetch(`${API_BASE}/api/routes`);
+            if (res.ok) return await res.json();
+        } catch (e) {
+            console.warn('[API Client] Routes fetch failed:', e);
+        }
+        return null;
+    }
+
     window.AIEC_API = {
         fetchModule,
+        fetchModuleClass,
         getProgress,
         saveProgress,
         getScores,
@@ -283,6 +364,11 @@
         getMemeStatus,
         sendChatMessage,
         evaluateSpeakingAudio,
-        evaluateSpeakingText
+        evaluateSpeakingText,
+        getGoal,
+        saveGoal,
+        getSpeakingTopics,
+        getSpeakingTopic,
+        getRoutes
     };
 })();

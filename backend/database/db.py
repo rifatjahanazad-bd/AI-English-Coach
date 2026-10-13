@@ -98,6 +98,20 @@ def init_db():
         except Exception:
             pass
 
+        # 6. User Goal & Study Objectives Table
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS user_goals (
+                user_id TEXT PRIMARY KEY,
+                target_band REAL DEFAULT 7.5,
+                target_exam_date TEXT,
+                daily_minutes INTEGER DEFAULT 30,
+                current_focus TEXT DEFAULT 'Fluency & Coherence',
+                target_level TEXT DEFAULT 'B2',
+                notes TEXT DEFAULT '',
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
+
         conn.commit()
 
 
@@ -314,6 +328,52 @@ def get_latest_scores(user_id: str, track: str, level: str) -> Dict[str, Any]:
                     "created_at": r["created_at"]
                 }
         return scores
+
+
+def get_user_goal(user_id: str) -> Dict[str, Any]:
+    """Retrieves target IELTS band and learning goal settings for user."""
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT user_id, target_band, target_exam_date, daily_minutes, current_focus, target_level, notes, updated_at
+            FROM user_goals
+            WHERE user_id = ?
+        """, (user_id,))
+        row = cursor.fetchone()
+        if not row:
+            return {
+                "user_id": user_id,
+                "target_band": 7.5,
+                "target_exam_date": "",
+                "daily_minutes": 30,
+                "current_focus": "Fluency & Coherence",
+                "target_level": "B2",
+                "notes": "Aim for cohesive fluency and rich lexical resource.",
+                "updated_at": None
+            }
+        return dict(row)
+
+
+def save_user_goal(user_id: str, target_band: float = 7.5, target_exam_date: str = "",
+                   daily_minutes: int = 30, current_focus: str = "Fluency & Coherence",
+                   target_level: str = "B2", notes: str = "") -> Dict[str, Any]:
+    """Saves or updates the user study target goal."""
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO user_goals (user_id, target_band, target_exam_date, daily_minutes, current_focus, target_level, notes, updated_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+            ON CONFLICT(user_id) DO UPDATE SET
+                target_band = excluded.target_band,
+                target_exam_date = excluded.target_exam_date,
+                daily_minutes = excluded.daily_minutes,
+                current_focus = excluded.current_focus,
+                target_level = excluded.target_level,
+                notes = excluded.notes,
+                updated_at = CURRENT_TIMESTAMP
+        """, (user_id, float(target_band), target_exam_date, int(daily_minutes), current_focus, target_level, notes))
+        conn.commit()
+    return get_user_goal(user_id)
 
 
 # Initialize on import
