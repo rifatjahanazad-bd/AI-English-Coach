@@ -482,9 +482,21 @@ def create_local_fallback_image(meme_data: Dict[str, str], filepath: Path) -> Pa
     return filepath
 
 
-def download_or_render_meme(meme_data: Dict[str, str]) -> Path:
-    """Fetches the meme image from memegen API or renders locally with Pillow."""
-    template = meme_data.get("template", "drake")
+def download_or_render_meme(
+    meme_data: Dict[str, str],
+    crop_bottom_px: int = 14,
+    crop_top_px: int = 0,
+    crop_left_px: int = 0,
+    crop_right_px: int = 0,
+) -> Path:
+    """
+    Fetches the meme image from memegen API, validates that it is NOT a striped placeholder,
+    regenerates if defective, crops external watermarks by pixel offsets, and saves locally.
+    """
+    from backend.meme_generator.meme_validator import validate_meme_image
+    from backend.meme_generator.meme_crop import crop_meme_image
+
+    template = sanitize_template(meme_data.get("template", "drake"))
     top_enc = sanitize_memegen_text(meme_data.get("top_text", ""))
     bottom_enc = sanitize_memegen_text(meme_data.get("bottom_text", ""))
 
@@ -492,18 +504,42 @@ def download_or_render_meme(meme_data: Dict[str, str]) -> Path:
     filename = f"meme_{template}_{timestamp}.png"
     filepath = OUTPUT_DIR / filename
 
-    api_url = f"https://api.memegen.link/images/{template}/{top_enc}/{bottom_enc}.png"
+    # Attempt fetching with validation and automatic fallback
+    candidate_templates = [template] + [t for t in ["drake", "fry", "spongebob", "fine", "doge"] if t != template]
+    image_bytes = None
 
-    try:
-        response = requests.get(api_url, timeout=4)
-        if response.status_code == 200 and len(response.content) > 1000:
-            with open(filepath, "wb") as f:
-                f.write(response.content)
-            return filepath
-        else:
-            return create_local_fallback_image(meme_data, filepath)
-    except Exception:
-        return create_local_fallback_image(meme_data, filepath)
+    for cand in candidate_templates:
+        cand_url = f"https://api.memegen.link/images/{cand}/{top_enc}/{bottom_enc}.png"
+        try:
+            resp = requests.get(cand_url, timeout=4)
+            if resp.status_code == 200 and len(resp.content) > 1000:
+                is_valid, reason = validate_meme_image(resp.content)
+                if is_valid:
+                    image_bytes = resp.content
+                    meme_data["template"] = cand
+                    break
+                else:
+                    print(f"  ⚠️  [Meme Validator Rejected {cand}]: {reason}. Retrying next template...")
+        except Exception:
+            continue
+
+    if image_bytes:
+        with open(filepath, "wb") as f:
+            f.write(image_bytes)
+    else:
+        create_local_fallback_image(meme_data, filepath)
+
+    # Pixel-based crop to eliminate external watermarks & production labels
+    crop_meme_image(
+        image_input=filepath,
+        top_px=crop_top_px,
+        bottom_px=crop_bottom_px,
+        left_px=crop_left_px,
+        right_px=crop_right_px,
+        output_path=filepath,
+    )
+
+    return filepath
 
 
 # -------------------------------------------------------------------------

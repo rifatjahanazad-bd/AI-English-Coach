@@ -112,6 +112,47 @@ def init_db():
             )
         """)
 
+        # 7. Curriculum Modules Table (Stored in database as requested)
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS curriculum_modules (
+                track TEXT NOT NULL,
+                level TEXT NOT NULL,
+                title TEXT,
+                emoji TEXT,
+                topic_count INTEGER DEFAULT 0,
+                data_json TEXT NOT NULL,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                PRIMARY KEY (track, level)
+            )
+        """)
+
+        # 8. Curriculum Classes Table (Fast indexable class & drill lookup)
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS curriculum_classes (
+                track TEXT NOT NULL,
+                level TEXT NOT NULL,
+                class_id TEXT NOT NULL,
+                class_index INTEGER NOT NULL,
+                title TEXT,
+                class_json TEXT NOT NULL,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                PRIMARY KEY (track, level, class_id)
+            )
+        """)
+
+        # 9. Users & Preferences Table (For user data and future profile options)
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS users (
+                user_id TEXT PRIMARY KEY,
+                display_name TEXT DEFAULT 'Learner',
+                email TEXT,
+                role TEXT DEFAULT 'learner',
+                preferences_json TEXT DEFAULT '{}',
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
+
         conn.commit()
 
 
@@ -376,5 +417,229 @@ def save_user_goal(user_id: str, target_band: float = 7.5, target_exam_date: str
     return get_user_goal(user_id)
 
 
-# Initialize on import
+# -------------------------------------------------------------------------
+# Curriculum Modules & Classes Database Management
+# -------------------------------------------------------------------------
+REPO_ROOT = DATABASE_DIR.parents[1] if len(DATABASE_DIR.parents) >= 2 else DATABASE_DIR.parent
+MODULES_DIR = REPO_ROOT / "UI" / "modules"
+
+
+def seed_curriculum_modules(force: bool = False) -> int:
+    """
+    Seeds curriculum modules and classes from UI/modules/ JSON files
+    into SQLite database if empty or if force=True.
+    """
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT COUNT(*) as count FROM curriculum_modules")
+        count = cursor.fetchone()["count"]
+
+        if count > 0 and not force:
+            return count
+
+        if not MODULES_DIR.exists():
+            return 0
+
+        total_seeded = 0
+        for track_dir in MODULES_DIR.iterdir():
+            if not track_dir.is_dir():
+                continue
+            track_name = track_dir.name.lower()
+
+            for json_file in track_dir.glob("*.json"):
+                level_name = json_file.stem.upper()
+                try:
+                    with open(json_file, "r", encoding="utf-8") as f:
+                        mod_data = json.load(f)
+
+                    title = mod_data.get("title", f"{level_name} Curriculum")
+                    emoji = mod_data.get("emoji", "📐")
+                    classes = mod_data.get("classes") or mod_data.get("items") or []
+                    topic_count = len(classes)
+                    data_json = json.dumps(mod_data, ensure_ascii=False)
+
+                    # Store full module document
+                    cursor.execute("""
+                        INSERT INTO curriculum_modules (track, level, title, emoji, topic_count, data_json, updated_at)
+                        VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+                        ON CONFLICT(track, level) DO UPDATE SET
+                            title = excluded.title,
+                            emoji = excluded.emoji,
+                            topic_count = excluded.topic_count,
+                            data_json = excluded.data_json,
+                            updated_at = CURRENT_TIMESTAMP
+                    """, (track_name, level_name, title, emoji, topic_count, data_json))
+
+                    # Index each class individually for sub-millisecond retrieval
+                    for idx, c in enumerate(classes):
+                        cid = str(c.get("id", f"class{idx+1:02d}")).strip()
+                        c_title = c.get("title", f"Class {idx+1}")
+                        class_json = json.dumps(c, ensure_ascii=False)
+                        cursor.execute("""
+                            INSERT INTO curriculum_classes (track, level, class_id, class_index, title, class_json, updated_at)
+                            VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+                            ON CONFLICT(track, level, class_id) DO UPDATE SET
+                                class_index = excluded.class_index,
+                                title = excluded.title,
+                                class_json = excluded.class_json,
+                                updated_at = CURRENT_TIMESTAMP
+                        """, (track_name, level_name, cid, idx, c_title, class_json))
+
+                    total_seeded += 1
+                except Exception as e:
+                    print(f"  ⚠️ Error seeding module {json_file}: {e}")
+
+        conn.commit()
+        return total_seeded
+
+
+def get_module_from_db(track: str, level: str) -> Optional[Dict[str, Any]]:
+    """Retrieves full curriculum module directly from SQLite database."""
+    track_norm = track.strip().lower()
+    level_norm = level.strip().upper()
+
+    # Normalize B1+ / B1PLUS
+    level_variants = [level_norm, level_norm.replace("+", "PLUS"), level_norm.replace("PLUS", "+")]
+
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        for lvl in level_variants:
+            cursor.execute("""
+                SELECT data_json FROM curriculum_modules
+                WHERE track = ? AND (level = ? OR UPPER(level) = ?)
+            """, (track_norm, lvl, lvl))
+            row = cursor.fetchone()
+            if row and row["data_json"]:
+                return json.loads(row["data_json"])
+    return None
+
+
+def get_class_from_db(track: str, level: str, class_id: str) -> Optional[Dict[str, Any]]:
+    """
+    Retrieves a specific class from the database using direct class_id,
+    index (e.g. 1 or class02), or slug.
+    """
+    track_norm = track.strip().lower()
+    level_norm = level.strip().upper()
+    cid_norm = class_id.strip()
+
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        # 1. Exact class_id match
+        cursor.execute("""
+            SELECT track, level, class_id, class_index, title, class_json
+            FROM curriculum_classes
+            WHERE track = ? AND (level = ? OR level = ?) AND class_id = ?
+        """, (track_norm, level_norm, level_norm.replace("+", "PLUS"), cid_norm))
+        row = cursor.fetchone()
+        if row:
+            mod_meta = get_module_from_db(track_norm, level_norm)
+            total = len(mod_meta.get("classes", [])) if mod_meta else 0
+            return {
+                "track": row["track"],
+                "level": row["level"],
+                "class_id": row["class_id"],
+                "class_index": row["class_index"],
+                "class": json.loads(row["class_json"]),
+                "total_classes": total,
+                "level_meta": {
+                    "title": mod_meta.get("title", f"{level_norm} Curriculum") if mod_meta else "",
+                    "emoji": mod_meta.get("emoji", "📐") if mod_meta else "📐",
+                    "count": total
+                }
+            }
+
+        # 2. Number extraction match (e.g. "class02" -> 2 -> idx 1)
+        import re
+        digits = re.findall(r"\d+", cid_norm)
+        if digits:
+            num = int(digits[0])
+            # Check 1-based index
+            cursor.execute("""
+                SELECT track, level, class_id, class_index, title, class_json
+                FROM curriculum_classes
+                WHERE track = ? AND (level = ? OR level = ?) AND (class_index = ? OR class_index = ?)
+                ORDER BY class_index ASC
+            """, (track_norm, level_norm, level_norm.replace("+", "PLUS"), num - 1, num))
+            num_row = cursor.fetchone()
+            if num_row:
+                mod_meta = get_module_from_db(track_norm, level_norm)
+                total = len(mod_meta.get("classes", [])) if mod_meta else 0
+                return {
+                    "track": num_row["track"],
+                    "level": num_row["level"],
+                    "class_id": num_row["class_id"],
+                    "class_index": num_row["class_index"],
+                    "class": json.loads(num_row["class_json"]),
+                    "total_classes": total,
+                    "level_meta": {
+                        "title": mod_meta.get("title", f"{level_norm} Curriculum") if mod_meta else "",
+                        "emoji": mod_meta.get("emoji", "📐") if mod_meta else "📐",
+                        "count": total
+                    }
+                }
+
+    return None
+
+
+def list_curriculum_modules_from_db() -> List[Dict[str, Any]]:
+    """Returns list of all available curriculum tracks and levels in DB."""
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT track, level, title, emoji, topic_count, updated_at
+            FROM curriculum_modules
+            ORDER BY track ASC, level ASC
+        """)
+        rows = cursor.fetchall()
+        return [dict(r) for r in rows]
+
+
+# -------------------------------------------------------------------------
+# User Profiles & Options Management
+# -------------------------------------------------------------------------
+def get_or_create_user(user_id: str = "guest", display_name: str = "Learner") -> Dict[str, Any]:
+    """Retrieves or registers user in database with default preferences."""
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM users WHERE user_id = ?", (user_id,))
+        row = cursor.fetchone()
+        if not row:
+            cursor.execute("""
+                INSERT INTO users (user_id, display_name, email, role, preferences_json)
+                VALUES (?, ?, ?, 'learner', '{}')
+            """, (user_id, display_name, f"{user_id}@example.com" if user_id != "guest" else ""))
+            conn.commit()
+            return {
+                "user_id": user_id,
+                "display_name": display_name,
+                "email": "",
+                "role": "learner",
+                "preferences": {}
+            }
+        data = dict(row)
+        try:
+            data["preferences"] = json.loads(data.get("preferences_json") or "{}")
+        except Exception:
+            data["preferences"] = {}
+        return data
+
+
+def update_user_preferences(user_id: str, preferences: Dict[str, Any]) -> Dict[str, Any]:
+    """Updates user options and preferences in database."""
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO users (user_id, preferences_json, updated_at)
+            VALUES (?, ?, CURRENT_TIMESTAMP)
+            ON CONFLICT(user_id) DO UPDATE SET
+                preferences_json = excluded.preferences_json,
+                updated_at = CURRENT_TIMESTAMP
+        """, (user_id, json.dumps(preferences, ensure_ascii=False)))
+        conn.commit()
+    return get_or_create_user(user_id)
+
+
+# Initialize DB and seed modules on load
 init_db()
+seed_curriculum_modules(force=False)
