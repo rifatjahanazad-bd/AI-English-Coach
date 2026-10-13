@@ -43,20 +43,24 @@ def create_app() -> FastAPI:
     # 2. Register all structured API domain routers
     register_routes(application)
 
-    # 3. SPA Frontend Page Handlers (Supports direct browser load of any route)
-    @application.get("/")
-    @application.get("/home")
-    @application.get("/personalmentor")
-    @application.get("/goal")
-    @application.get("/test")
-    @application.get("/test/{full_path:path}")
-    @application.get("/practice")
-    @application.get("/practice/{full_path:path}")
     def serve_spa(full_path: Optional[str] = None):
         """Serves the single-page application index.html for all client-side navigation paths."""
         if INDEX_HTML.exists():
             return FileResponse(str(INDEX_HTML))
         raise HTTPException(status_code=404, detail="UI index.html not found")
+
+    spa_paths = [
+        "/",
+        "/home",
+        "/personalmentor",
+        "/goal",
+        "/test",
+        "/test/{full_path:path}",
+        "/practice",
+        "/practice/{full_path:path}",
+    ]
+    for path in spa_paths:
+        application.add_api_route(path, serve_spa, methods=["GET", "HEAD"])
 
     # 4. Mount Static Directories for web client assets
     ui_dir = REPO_ROOT / "UI"
