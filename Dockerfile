@@ -32,7 +32,6 @@ RUN pip install --no-cache-dir --upgrade pip && \
 COPY backend/ ./backend/
 COPY UI/ ./UI/
 COPY lessons/ ./lessons/
-COPY chatbot.py audio_to_txt.py prompts.py ./
 
 # Ensure write permissions for database and generated media
 RUN mkdir -p /app/output/memes /app/backend/database && \

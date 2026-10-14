@@ -73,7 +73,7 @@ The application features a client-side URL router (`router.js`) integrated with 
 
 ## 🏗️ System Architecture & Data Flow
 
-Detailed visual architecture and complete sequence diagrams are documented in [`ARCHITECTURE_AND_USER_FLOW.md`](ARCHITECTURE_AND_USER_FLOW.md) and [`docs/ARCHITECTURE_AND_USER_FLOW.md`](docs/ARCHITECTURE_AND_USER_FLOW.md).
+Detailed visual architecture and complete sequence diagrams are documented in [`docs/ARCHITECTURE_AND_USER_FLOW.md`](docs/ARCHITECTURE_AND_USER_FLOW.md).
 
 ```mermaid
 graph TD

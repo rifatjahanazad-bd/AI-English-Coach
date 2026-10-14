@@ -155,7 +155,10 @@ async def verify_audio_compression(audio: UploadFile = File(...)):
             verify_with_audiototxt=True
         )
 
-        import audio_to_txt
+        try:
+            from backend import audio_to_txt
+        except ImportError:
+            import audio_to_txt
         orig_txt = audio_to_txt.transcribe_audio(temp_path)
         comp_txt = audio_to_txt.transcribe_audio(comp_path)
 

@@ -195,8 +195,10 @@ def compress_and_process_audio(
 
     if verify_with_audiototxt and orig_size > 0:
         try:
-            sys.path.insert(0, str(REPO_ROOT))
-            import audio_to_txt
+            try:
+                from backend import audio_to_txt
+            except ImportError:
+                import audio_to_txt
             orig_txt = audio_to_txt.transcribe_audio(str(input_p))
             comp_txt = audio_to_txt.transcribe_audio(comp_path)
             if orig_txt and comp_txt:
@@ -990,7 +992,10 @@ def main():
     # Handle recording mode if requested
     if args.record:
         try:
-            from audio_to_txt import record_audio, save_audio
+            try:
+                from backend.audio_to_txt import record_audio, save_audio
+            except ImportError:
+                from audio_to_txt import record_audio, save_audio
             print(f"🎙️ Recording {args.duration}s speaking sample...")
             audio_data = record_audio(duration=args.duration)
             recorded_path = save_audio(audio_data, output_dir="input")
