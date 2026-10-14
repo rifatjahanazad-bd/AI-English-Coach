@@ -1,10 +1,11 @@
 /**
  * ==========================================================================
- * CHAT COACH LOGIC
- * Edit this file when changing:
- * - How chat messages are sent & received
- * - Bot responses & grammar corrections
- * - Typing indicators & quick suggestion chips
+ * CHAT COACH LOGIC (UI/js/chat.js)
+ * Connects the web UI to the backend AI IELTS Coach & Mentor:
+ * - Real API integration (/api/chat) with streaming-like responsiveness
+ * - SQLite chat history loading and synchronization
+ * - Type-safe message bubbles and markdown formatting
+ * - Animated typing indicator and quick suggestion chips
  * ==========================================================================
  */
 
@@ -16,10 +17,33 @@ function initChat() {
 
     if (!chatInput || !sendBtn || !chatMessages || !typingIndicator) return;
 
-    // Initial simulated delay for welcome typing indicator
-    setTimeout(() => {
-        typingIndicator.style.display = 'none';
-    }, 2000);
+    let isWaitingForResponse = false;
+
+    // Helper: Safely format AI coach markdown text (bold, italics, line breaks, bullet points)
+    function formatAIText(raw) {
+        if (!raw) return '';
+        // 1. Escape HTML to prevent injection
+        let escaped = escapeHtml(raw);
+
+        // 2. Bold: **text** -> <strong>text</strong>
+        escaped = escaped.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+        // 3. Italics: *text* -> <em>$1</em>
+        escaped = escaped.replace(/(^|[^\*])\*([^\*]+)\*([^\*]|$)/g, '$1<em>$2</em>$3');
+
+        // 4. Bullet points: lines starting with - or *
+        const lines = escaped.split('\n');
+        const formattedLines = lines.map(line => {
+            const trimmed = line.trim();
+            if (trimmed.startsWith('- ') || trimmed.startsWith('• ')) {
+                return `<div style="margin-left: 8px; margin-top: 2px;">• ${trimmed.substring(2)}</div>`;
+            }
+            return line;
+        });
+
+        // 5. Replace newlines with <br> (avoiding duplicate breaks around block divs)
+        return formattedLines.join('<br>').replace(/<br><div/g, '<div').replace(/<\/div><br>/g, '</div>');
+    }
 
     function addUserMessage(text) {
         const row = document.createElement('div');
@@ -32,19 +56,13 @@ function initChat() {
     function addAIMessage(text, showCorrection = false) {
         const row = document.createElement('div');
         row.className = 'message-row ai';
-        const correctionHtml = showCorrection ? `
-            <div class="inline-feedback">
-                <div>✏️ <span class="wrong">I want to practice</span> → <span class="correction">I'd like to practise</span></div>
-                <div style="margin-top: 4px;">💡 <span class="suggestion">Try: "I'm keen to practise..."</span></div>
-            </div>
-        ` : '';
+        const formatted = formatAIText(text);
 
         row.innerHTML = `
             <div class="ai-avatar">🌿</div>
             <div class="bubble ai">
                 <div class="ai-message-content">
-                    <span>${escapeHtml(text)}</span>
-                    ${correctionHtml}
+                    <span>${formatted}</span>
                 </div>
             </div>
         `;
@@ -52,35 +70,95 @@ function initChat() {
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
-    sendBtn.addEventListener('click', () => {
-        const text = chatInput.value.trim();
-        if (!text) return;
+    // Load persistent history from SQLite database
+    async function loadChatHistory() {
+        if (!window.AIEC_API || typeof window.AIEC_API.getChatHistory !== 'function') {
+            typingIndicator.style.display = 'none';
+            return;
+        }
 
+        try {
+            const history = await window.AIEC_API.getChatHistory();
+            if (Array.isArray(history) && history.length > 0) {
+                // Clear initial static mockup messages except the typing indicator
+                const rows = chatMessages.querySelectorAll('.message-row:not(#typingIndicator)');
+                rows.forEach(r => r.remove());
+
+                history.forEach(item => {
+                    if (item.sender === 'user') {
+                        addUserMessage(item.message);
+                    } else {
+                        addAIMessage(item.message);
+                    }
+                });
+            }
+        } catch (e) {
+            console.warn('[Chat UI] History sync failed, keeping initial prompt:', e);
+        } finally {
+            typingIndicator.style.display = 'none';
+        }
+    }
+
+    // Send user message to Backend Chatbot
+    async function handleSendMessage() {
+        const text = chatInput.value.trim();
+        if (!text || isWaitingForResponse) return;
+
+        isWaitingForResponse = true;
         addUserMessage(text);
         chatInput.value = '';
+        sendBtn.disabled = true;
 
         typingIndicator.style.display = 'flex';
         chatMessages.scrollTop = chatMessages.scrollHeight;
 
-        setTimeout(() => {
-            typingIndicator.style.display = 'none';
-            if (text.toLowerCase().includes('grammar') || text.toLowerCase().includes('correct')) {
-                addAIMessage("You wrote: 'I want to practice'. Here's a more natural version 👇", true);
+        try {
+            if (window.AIEC_API && typeof window.AIEC_API.sendChatMessage === 'function') {
+                const res = await window.AIEC_API.sendChatMessage(text);
+                typingIndicator.style.display = 'none';
+
+                if (res && res.reply) {
+                    addAIMessage(res.reply);
+                } else {
+                    addAIMessage("I'm here to help you practice! Try telling me about your day or asking for grammar advice. 😊");
+                }
             } else {
-                addAIMessage("That's a good start! Try expanding with a reason or example. I'll help you improve. 😊");
+                // Offline fallback if server is unreachable
+                setTimeout(() => {
+                    typingIndicator.style.display = 'none';
+                    addAIMessage("That's a good start! Try expanding with a reason or example to practice your speaking flow. 😊");
+                }, 1000);
             }
-        }, 1200);
-    });
+        } catch (err) {
+            console.error('[Chat Error]:', err);
+            typingIndicator.style.display = 'none';
+            addAIMessage("I had a brief connection glitch. Please send your message again, I'm ready! 😊");
+        } finally {
+            isWaitingForResponse = false;
+            sendBtn.disabled = false;
+            chatInput.focus();
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+    }
+
+    sendBtn.addEventListener('click', handleSendMessage);
 
     chatInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') sendBtn.click();
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleSendMessage();
+        }
     });
 
-    // Quick chips click-to-input
+    // Quick suggestion chips
     document.querySelectorAll('.quick-chip').forEach(chip => {
         chip.addEventListener('click', () => {
-            chatInput.value = chip.textContent;
-            chatInput.focus();
+            const prompt = chip.dataset.prompt || chip.textContent.trim();
+            chatInput.value = prompt;
+            handleSendMessage();
         });
     });
+
+    // Initialize chat history on load
+    loadChatHistory();
 }

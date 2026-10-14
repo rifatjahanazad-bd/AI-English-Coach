@@ -1,0 +1,55 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/index.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "UI/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "backend/game/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/index.py"
+    },
+    {
+      "src": "/game/(.*)",
+      "dest": "/backend/game/$1"
+    },
+    {
+      "src": "/game",
+      "dest": "/backend/game/index.html"
+    },
+    {
+      "src": "/js/(.*)",
+      "dest": "/UI/js/$1"
+    },
+    {
+      "src": "/css/(.*)",
+      "dest": "/UI/css/$1"
+    },
+    {
+      "src": "/modules/(.*)",
+      "dest": "/UI/modules/$1"
+    },
+    {
+      "src": "/(dashboard|personalmentor|speaking|test|practice|home|goal).*",
+      "dest": "/UI/index.html"
+    },
+    {
+      "src": "/",
+      "dest": "/UI/index.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/UI/$1"
+    }
+  ]
+}

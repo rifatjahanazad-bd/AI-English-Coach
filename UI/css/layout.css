@@ -8,31 +8,43 @@
 .app-shell {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-    max-width: 1280px;
-    margin: 0 auto;
+    height: 100vh;
+    height: 100dvh;
     width: 100%;
+    overflow: hidden;
 }
 
-/* --- Header --- */
+/* --- Header (Full-Width Edge-to-Edge Background) --- */
 .app-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px 24px;
-    background: rgba(255, 255, 255, 0.92);
+    width: 100%;
+    background: rgba(255, 255, 255, 0.94);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     position: sticky;
     top: 0;
     z-index: 50;
+    flex-shrink: 0;
+}
+
+.header-inner {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    padding: 12px 28px;
+    max-width: 1380px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .logo-area {
     display: flex;
     align-items: center;
     gap: 12px;
+    flex-shrink: 0;
 }
 
 .logo-mark {
@@ -70,67 +82,77 @@
     display: flex;
     align-items: center;
     gap: 12px;
+    flex-shrink: 0;
+    margin-left: auto;
 }
 
 .user-greeting {
     display: flex;
     align-items: center;
     gap: 8px;
-    background: var(--pale-yellow-bg);
-    padding: 6px 14px 6px 10px;
-    border-radius: 100px;
+    background: #FFFFFF;
+    padding: 5px 14px 5px 8px;
+    border-radius: var(--radius-pill);
     font-size: 13.5px;
     font-family: var(--font-display);
-    font-weight: 500;
-    border: 1px solid rgba(255, 212, 59, 0.2);
+    font-weight: 600;
+    color: #1F2923;
+    border: 1.5px solid var(--outline-border);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
     transition: var(--bounce-spring);
 }
 
 .user-greeting:hover {
     transform: translateY(-1px);
+    border-color: #FFB703;
+    box-shadow: 0 4px 12px rgba(255, 183, 3, 0.15);
 }
 
 .user-avatar {
-    width: 30px;
-    height: 30px;
-    background: linear-gradient(135deg, #FFD43B, #3ECF8E);
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, #FFD43B 0%, #22C55E 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 14px;
     font-family: var(--font-display);
-    font-weight: 600;
-    color: #1A1A1A;
-    box-shadow: 0 2px 6px rgba(255, 212, 59, 0.2);
+    font-weight: 700;
+    color: #FFFFFF;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
 }
 
 /* --- Main Body Grid --- */
 .app-body {
     display: flex;
     flex: 1;
+    min-height: 0;
     gap: 24px;
-    padding: 24px;
+    padding: 16px 24px 20px;
+    max-width: 1380px;
+    margin: 0 auto;
     width: 100%;
+    overflow: hidden;
 }
 
 .main-content {
     flex: 1;
+    min-height: 0;
+    min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    min-width: 0;
+    overflow: hidden;
 }
 
-/* --- Desktop Sidebar Tabs --- */
+/* --- Desktop Sidebar Tabs (Pill Buttons) --- */
 .side-tabs {
     display: none;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
     width: 220px;
     flex-shrink: 0;
-    position: sticky;
-    top: 100px;
+    position: static;
     align-self: flex-start;
 }
 
@@ -138,15 +160,15 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 12px 16px;
-    border-radius: 16px;
+    padding: 11px 18px;
+    border-radius: var(--radius-pill);
     font-size: 14.5px;
-    font-weight: 500;
+    font-weight: 600;
     color: var(--text-secondary);
     background: transparent;
-    border: none;
+    border: 1.5px solid transparent;
     cursor: pointer;
-    transition: all 0.18s ease;
+    transition: var(--bounce-spring);
     font-family: var(--font-display);
     text-align: left;
     width: 100%;
@@ -155,38 +177,57 @@
 .side-tab i, .side-tab svg {
     width: 20px;
     height: 20px;
-    stroke-width: 1.8;
+    stroke-width: 2;
     transition: transform 0.2s ease;
 }
 
 .side-tab:hover {
     background: #FFFFFF;
-    box-shadow: var(--shadow-sm);
+    border-color: var(--outline-border);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
     transform: translateX(3px);
-    color: var(--text-primary);
+    color: #1F2923;
 }
 
 .side-tab:hover i, .side-tab:hover svg {
-    transform: scale(1.05);
+    transform: scale(1.06);
 }
 
+/* Tab Active States (Themed by section) */
 .side-tab.active {
-    background: var(--pale-yellow-bg);
-    color: #9B7E00;
+    background: linear-gradient(135deg, #FFF6D6 0%, #FFEBA0 100%);
+    color: #8C5D00;
     font-weight: 600;
-    box-shadow: 0 2px 8px rgba(255, 212, 59, 0.15);
+    border-color: rgba(255, 183, 3, 0.35);
+    box-shadow: 0 4px 12px rgba(255, 183, 3, 0.2);
 }
 
-.side-tab.active:nth-child(2) {
-    background: var(--pale-green-bg);
-    color: var(--secondary-deep);
-    box-shadow: 0 2px 8px rgba(62, 207, 142, 0.15);
+.side-tab[data-page="home"].active {
+    background: linear-gradient(135deg, #FFF6D6 0%, #FFEBA0 100%);
+    color: #8C5D00;
+    border-color: rgba(255, 183, 3, 0.35);
+    box-shadow: 0 4px 12px rgba(255, 183, 3, 0.2);
 }
 
-.side-tab.active:nth-child(3) {
-    background: linear-gradient(135deg, #FFF9E0, #E8FAF1);
-    color: #2D6A4F;
-    box-shadow: 0 2px 8px rgba(62, 207, 142, 0.12);
+.side-tab[data-page="chat"].active {
+    background: linear-gradient(135deg, #EBF8FF 0%, #CFEDFF 100%);
+    color: #0369A1;
+    border-color: rgba(14, 165, 233, 0.35);
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.2);
+}
+
+.side-tab[data-page="practice"].active {
+    background: linear-gradient(135deg, #E8F9EE 0%, #C7F3D6 100%);
+    color: #166534;
+    border-color: rgba(34, 197, 94, 0.35);
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+}
+
+.side-tab[data-page="test"].active {
+    background: linear-gradient(135deg, #FFF0E6 0%, #FFD6BA 100%);
+    color: #C2410C;
+    border-color: rgba(251, 146, 60, 0.35);
+    box-shadow: 0 4px 12px rgba(251, 146, 60, 0.2);
 }
 
 /* --- Mobile Bottom Navigation --- */
@@ -210,8 +251,8 @@
     align-items: center;
     gap: 4px;
     padding: 8px 20px;
-    border-radius: 100px;
-    transition: var(--bounce-spring, all 0.2s ease);
+    border-radius: var(--radius-pill);
+    transition: var(--bounce-spring);
     cursor: pointer;
     border: none;
     background: transparent;
@@ -230,22 +271,22 @@
 
 .bottom-nav-item span {
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .bottom-nav-item.active {
-    background: var(--pale-yellow-bg);
-    color: #9B7E00;
+    background: var(--sunshine-yellow);
+    color: #11241E;
 }
 
 .bottom-nav-item.active:nth-child(2) {
-    background: var(--pale-green-bg);
-    color: var(--secondary-deep);
+    background: var(--planet-green);
+    color: #FFFFFF;
 }
 
 .bottom-nav-item.active:nth-child(3) {
-    background: linear-gradient(135deg, #FFF9E0, #E8FAF1);
-    color: #2D6A4F;
+    background: var(--forest-dark);
+    color: var(--neon-green);
 }
 
 /* --- Page Container --- */
@@ -254,26 +295,41 @@
     flex-direction: column;
     gap: 20px;
     animation: fadeIn 0.3s ease;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
 }
 
 .page.active {
     display: flex;
 }
 
+.page:not(.active) {
+    display: none !important;
+}
+
+/* Home / Personal Mentor chat & Practice Arena pages: fixed size, NOT scrollable as a whole, only inner containers scroll */
+#pageChat.page,
+#pagePractice.page {
+    overflow: hidden;
+    gap: 14px;
+}
+
+#pageChat .card:first-child,
+#pagePractice .practice-arena-header,
+#pagePractice > .card:first-child {
+    flex-shrink: 0;
+}
+
 /* --- Responsive --- */
 @media (min-width: 768px) {
     .side-tabs  { display: flex; }
     .bottom-nav { display: none; }
-    .app-body   { padding: 28px; }
-}
-
-@media (min-width: 1024px) {
-    .app-body { padding: 32px 40px; }
 }
 
 @media (max-width: 480px) {
-    .app-header { padding: 16px; }
-    .app-body   { padding: 16px; }
+    .header-inner { padding: 12px 16px; }
+    .app-body     { padding: 12px; }
     .logo-text h1 { font-size: 17px; }
     .logo-mark { width: 36px; height: 36px; font-size: 18px; }
     .user-greeting { font-size: 12px; padding: 6px 12px 6px 8px; }

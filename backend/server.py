@@ -22,5 +22,13 @@ from backend.api.app import app, create_app
 __all__ = ["app", "create_app"]
 
 if __name__ == "__main__":
+    import os
     import uvicorn
-    uvicorn.run("backend.server:app", host="0.0.0.0", port=3000, reload=True)
+
+    host = os.getenv("HOST", "0.0.0.0")
+    port = int(os.getenv("PORT", "3000"))
+    is_prod = os.getenv("ENV", "development").lower() == "production"
+    debug_flag = os.getenv("DEBUG", "true" if not is_prod else "false").lower() in ("true", "1")
+    reload_enabled = debug_flag and not is_prod
+
+    uvicorn.run("backend.server:app", host=host, port=port, reload=reload_enabled)

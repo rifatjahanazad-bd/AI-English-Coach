@@ -96,10 +96,10 @@
                 console.error('[Router] Handler error for', p, err);
             }
         } else {
-            // Default fallback route: /personalmentor
-            if (p !== '/home' && p !== '/personalmentor') {
-                console.warn('[Router] No matching route for', p, '-> fallback to /personalmentor');
-                navigate('/personalmentor', { replace: true });
+            // Default fallback route: /dashboard
+            if (p !== '/dashboard' && p !== '/personalmentor') {
+                console.warn('[Router] No matching route for', p, '-> fallback to /dashboard');
+                navigate('/dashboard', { replace: true });
                 return;
             }
         }
@@ -117,21 +117,36 @@
     // Route Definitions
     // -------------------------------------------------------------------------
 
-    // 1. Home / Landing
-    addRoute('/', 'home', (params) => {
-        switchPage('chat');
+    // 0. Dashboard (Overview)
+    addRoute('/', 'dashboard', (params) => {
+        switchPage('dashboard');
+        if (window.renderDashboard && typeof window.renderDashboard === 'function') {
+            window.renderDashboard();
+        }
     });
-    addRoute('/home', 'home', (params) => {
-        switchPage('chat');
+    addRoute('/dashboard', 'dashboard', (params) => {
+        switchPage('dashboard');
+        if (window.renderDashboard && typeof window.renderDashboard === 'function') {
+            window.renderDashboard();
+        }
+    });
+    addRoute('/home', 'home_redirect', (params) => {
+        navigate('/dashboard', { replace: true });
     });
 
-    // 2. Personal Mentor (AI Chat Coach)
+    // 1. Personal Mentor (AI Chat Coach)
     addRoute('/personalmentor', 'personalmentor', (params) => {
         switchPage('chat');
     });
 
     // 3. Goal & Speaking Targets
     addRoute('/goal', 'goal', (params) => {
+        switchPage('test');
+        if (typeof window.showGoalView === 'function') {
+            window.showGoalView();
+        }
+    });
+    addRoute('/speaking', 'speaking', (params) => {
         switchPage('test');
         if (typeof window.showGoalView === 'function') {
             window.showGoalView();
@@ -196,22 +211,38 @@
     // -------------------------------------------------------------------------
     function switchPage(pageName) {
         const pages = {
+            dashboard: document.getElementById('pageDashboard'),
             chat: document.getElementById('pageChat'),
             practice: document.getElementById('pagePractice'),
             test: document.getElementById('pageTest')
         };
         if (!pages[pageName]) return;
 
-        Object.values(pages).forEach(p => p && p.classList.remove('active'));
-        pages[pageName].classList.add('active');
+        // Hide all pages completely and remove active class
+        document.querySelectorAll('.main-content > .page').forEach(p => {
+            p.classList.remove('active');
+            p.style.display = 'none';
+        });
 
-        // Update active tab buttons
+        // Activate and display only the selected page
+        pages[pageName].classList.add('active');
+        pages[pageName].style.display = 'flex';
+
+        // Update active tab buttons (sidebar & bottom nav)
         document.querySelectorAll('.side-tab').forEach(tab => {
             tab.classList.toggle('active', tab.dataset.page === pageName);
         });
         document.querySelectorAll('.bottom-nav-item').forEach(tab => {
             tab.classList.toggle('active', tab.dataset.page === pageName);
         });
+
+        // If dashboard selected, trigger dynamic render
+        if (pageName === 'dashboard' && window.renderDashboard && typeof window.renderDashboard === 'function') {
+            window.renderDashboard();
+        }
+
+        // Notify active components (such as MemeScreen) of page change
+        window.dispatchEvent(new CustomEvent('aiec-route-changed', { detail: { page: pageName } }));
     }
 
     // -------------------------------------------------------------------------

@@ -70,32 +70,33 @@ def create_meme(payload: MemeRequest):
 
     concept = concepts[0]
 
-    # 5. Validate meme template & background with meme_validator
-    # If memegen returns a striped gray placeholder, try verified alternate templates
+    # 5. Validate meme template & download background with high efficiency
     template = meme_generator.sanitize_template(concept.get("template", "drake"))
     top_text = concept.get("top_text", "")
     bottom_text = concept.get("bottom_text", "")
 
-    candidate_templates = [template] + [t for t in ["drake", "fry", "spongebob", "fine", "doge", "rollsafe"] if t != template]
+    # Fast 2-step check: try primary template first, then at most 1 verified fallback
+    primary_cand = template
+    secondary_cand = "drake" if template != "drake" else "fry"
+    candidates = [primary_cand, secondary_cand]
 
     valid_image_bytes = None
-    chosen_template = template
+    chosen_template = primary_cand
 
-    for cand in candidate_templates:
+    session = requests.Session()
+    for cand in candidates:
         top_enc = meme_generator.sanitize_memegen_text(top_text)
         bot_enc = meme_generator.sanitize_memegen_text(bottom_text)
         api_url = f"https://api.memegen.link/images/{cand}/{top_enc}/{bot_enc}.png"
 
         try:
-            resp = requests.get(api_url, timeout=4)
-            if resp.status_code == 200 and len(resp.content) > 1000:
+            resp = session.get(api_url, timeout=5.0)
+            if resp.status_code == 200 and len(resp.content) > 10000:
                 is_valid, reason = validate_meme_image(resp.content)
                 if is_valid:
                     valid_image_bytes = resp.content
                     chosen_template = cand
                     break
-                else:
-                    print(f"  ⚠️ [Meme Validator] Filtered defective placeholder '{cand}': {reason}. Retrying next template...")
         except Exception:
             continue
 
@@ -107,20 +108,26 @@ def create_meme(payload: MemeRequest):
     if valid_image_bytes:
         with open(filepath, "wb") as f:
             f.write(valid_image_bytes)
+        # Apply pixel-based cropping to remove watermark / footer
+        crop_meme_image(
+            image_input=filepath,
+            top_px=payload.top_px,
+            bottom_px=payload.bottom_px,
+            left_px=payload.left_px,
+            right_px=payload.right_px,
+            output_path=filepath,
+        )
     else:
-        # Fallback to local Pillow card
+        # Fallback to local photographic template (guarantees real background image)
         concept["template"] = chosen_template
         meme_generator.create_local_fallback_image(concept, filepath)
 
-    # Apply pixel-based cropping to remove watermark / footer
-    crop_meme_image(
-        image_input=filepath,
-        top_px=payload.top_px,
-        bottom_px=payload.bottom_px,
-        left_px=payload.left_px,
-        right_px=payload.right_px,
-        output_path=filepath,
-    )
+    # Double check final image quality & filter out any non-background image
+    is_final_valid, reason = validate_meme_image(filepath)
+    if not is_final_valid:
+        # Re-render onto guaranteed local Drake or Fry template
+        concept["template"] = "drake"
+        meme_generator.create_local_fallback_image(concept, filepath)
 
     image_url = f"/output/memes/{filename}"
 

@@ -24,9 +24,15 @@ else:
 UI_DIR = REPO_ROOT / "UI"
 INDEX_HTML = UI_DIR / "index.html"
 MODULES_DIR = UI_DIR / "modules"
-OUTPUT_DIR = REPO_ROOT / "output"
+if os.getenv("VERCEL"):
+    OUTPUT_DIR = Path("/tmp") / "output"
+else:
+    OUTPUT_DIR = REPO_ROOT / "output"
 MEMES_OUTPUT_DIR = OUTPUT_DIR / "memes"
-MEMES_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+try:
+    MEMES_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+except Exception:
+    pass
 GAME_DIR = BACKEND_DIR / "game"
 
 # API & Model configurations
@@ -42,4 +48,8 @@ MAX_CONSECUTIVE_MEMES = 3  # 3 memes trigger cooldown
 COOLDOWN_MINUTES = 30
 
 # CORS settings
-CORS_ORIGINS = ["*"]
+_raw_cors = os.getenv("CORS_ORIGINS", "").strip()
+if _raw_cors:
+    CORS_ORIGINS = [orig.strip() for orig in _raw_cors.split(",") if orig.strip()]
+else:
+    CORS_ORIGINS = ["*"]

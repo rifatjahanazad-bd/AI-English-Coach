@@ -23,6 +23,18 @@
         return div.innerHTML;
     }
 
+    // Unbiased Fisher-Yates array shuffling helper
+    function shuffleArray(arr) {
+        const copy = [...arr];
+        for (let i = copy.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            const temp = copy[i];
+            copy[i] = copy[j];
+            copy[j] = temp;
+        }
+        return copy;
+    }
+
     function el(tag, className, html) {
         const n = document.createElement(tag);
         if (className) n.className = className;
@@ -219,17 +231,30 @@
 
             // Question prompt
             let qText = qData.q || '';
-            const options = qData.options || ['Option A', 'Option B', 'Option C', 'Option D'];
+
+            // Unbiased Fisher-Yates randomization: ensures correct answers are unpredictably distributed across A, B, C, D
+            if (!qData._shuffledOptions) {
+                const rawOptions = (qData.options && qData.options.length) 
+                    ? [...qData.options] 
+                    : ['Option A', 'Option B', 'Option C', 'Option D'];
+                qData._shuffledOptions = shuffleArray(rawOptions);
+            }
+            const options = qData._shuffledOptions;
             const correctAnswer = (qData.answer || '').trim();
 
             quizSideEl.innerHTML = `
                 <div class="quiz-player-card">
-                    <!-- Top Bar: Back, Class Name, Grid Icon -->
+                    <!-- Top Bar: Back, Class Name + Timer Beneath, Grid Icon -->
                     <div class="quiz-player-top">
                         <button type="button" class="quiz-top-btn quiz-back-btn" title="Back to collage grid">
                             <span class="btn-icon">‹</span>
                         </button>
-                        <h4 class="quiz-top-title">${esc(item.title || ('Class ' + (classIdx + 1)))}</h4>
+                        <div class="quiz-top-center">
+                            <h4 class="quiz-top-title">${esc(item.title || ('Class ' + (classIdx + 1)))}</h4>
+                            <div class="quiz-timer-badge">
+                                <span>⏱ ${formatTimer(timerSeconds)}</span>
+                            </div>
+                        </div>
                         <button type="button" class="quiz-top-btn quiz-grid-btn" title="View all classes grid">
                             <span class="btn-icon">⊞</span>
                         </button>
@@ -246,23 +271,21 @@
                         <div class="quiz-progress-fill" style="width: ${((currentQuestionIdx + 1) / totalQ) * 100}%;"></div>
                     </div>
 
-                    <!-- Illustration & Timer Badge -->
-                    <div class="quiz-visual-row">
-                        <div class="quiz-illustration-wrap">
-                            <span class="quiz-illustration-emoji">${esc(item.emoji || o.emoji || '🌱')}</span>
-                        </div>
-                        <div class="quiz-timer-badge">
-                            <span>⏱ ${formatTimer(timerSeconds)}</span>
-                        </div>
-                    </div>
-
                     <!-- Question Prompt / Blank Sentence -->
                     <div class="quiz-question-box">
                         <h2 class="quiz-question-text">${esc(qText)}</h2>
                     </div>
 
-                    <!-- Choose Your Answer Header -->
-                    <p class="quiz-section-label">Choose your answer</p>
+                    <!-- Interactive Bulb Hint Box -->
+                    <div class="quiz-hint-box" style="display: none;"></div>
+
+                    <!-- Choose Your Answer Header & Quick Hint Button -->
+                    <div class="quiz-options-header">
+                        <p class="quiz-section-label">Choose your answer</p>
+                        <button type="button" class="quiz-inline-hint-btn" id="quizInlineHintBtn" title="Get a hint for this question">
+                            <span class="inline-hint-icon">💡</span> Need a hint?
+                        </button>
+                    </div>
 
                     <!-- 4 Option Choice Grid (A, B, C, D) -->
                     <div class="quiz-options-grid">
@@ -285,10 +308,10 @@
                         <button type="button" class="quiz-nav-btn quiz-prev-btn" ${currentQuestionIdx === 0 ? 'disabled' : ''}>
                             <span>‹ Previous</span>
                         </button>
-                        <div class="quiz-hint-circle" title="Hint">
+                        <button type="button" class="quiz-hint-circle" id="quizHintBtn" aria-label="Toggle Hint" title="Click for Hint">
                             <span class="hint-icon">💡</span>
-                            <span class="hint-count">${totalQ - currentQuestionIdx}</span>
-                        </div>
+                            <span class="hint-badge-tag">HINT</span>
+                        </button>
                         <button type="button" class="quiz-nav-btn quiz-next-btn">
                             <span>Next ›</span>
                         </button>
@@ -363,6 +386,162 @@
                 }
             });
 
+        function buildQuizHint(qData, qText, correctAnswer, options) {
+            const ansLower = (correctAnswer || '').trim().toLowerCase();
+            
+            // Find which option letter matches the answer in the shuffled options (A, B, C, D)
+            const optIdx = options.findIndex(o => (o || '').trim().toLowerCase() === ansLower);
+            const optLetter = optIdx >= 0 ? (['A', 'B', 'C', 'D'][optIdx] || String.fromCharCode(65 + optIdx)) : '';
+
+            // Formulate an intuitive similar sentence
+            let similarSentence = '';
+            let helpfulTip = '';
+
+            if (ansLower === 'am') {
+                similarSentence = "I am excited to learn English today.";
+                helpfulTip = "In present simple, the first-person pronoun 'I' exclusively takes 'am'.";
+            } else if (ansLower === 'is') {
+                similarSentence = "She is an outstanding teacher in our school.";
+                helpfulTip = "Third-person singular subjects (he, she, it) pair with 'is'.";
+            } else if (ansLower === 'are') {
+                similarSentence = "They are ready to join the conversation.";
+                helpfulTip = "Plural subjects (we, you, they) pair with 'are'.";
+            } else if (ansLower === 'be') {
+                similarSentence = "Always try to be calm and confident.";
+                helpfulTip = "Use the base form 'be' following modals or imperatives.";
+            } else if (ansLower.includes("isn't") || ansLower.includes("is not")) {
+                similarSentence = "He isn't busy at the moment.";
+                helpfulTip = "Use 'isn't' / 'is not' for singular negative statements.";
+            } else if (ansLower.includes("aren't") || ansLower.includes("are not")) {
+                similarSentence = "We aren't late for our morning class.";
+                helpfulTip = "Use 'aren't' / 'are not' for plural negative statements.";
+            } else if (ansLower.includes("don't") || ansLower.includes("do not")) {
+                similarSentence = "I don't drink cold tea in the winter.";
+                helpfulTip = "Use 'don't' with I, you, we, and they in present simple.";
+            } else if (ansLower.includes("doesn't") || ansLower.includes("does not")) {
+                similarSentence = "She doesn't drive a car to work.";
+                helpfulTip = "Use 'doesn't' with third-person singular (he, she, it).";
+            } else if (ansLower.includes("where is")) {
+                similarSentence = "Where is the nearest library?";
+                helpfulTip = "Wh- question + 'is' + singular noun phrase.";
+            } else if (ansLower.includes("where are")) {
+                similarSentence = "Where are my keys?";
+                helpfulTip = "Wh- question + 'are' + plural noun phrase.";
+            } else if (ansLower.includes("yes, i am")) {
+                similarSentence = "Are you ready? → Yes, I am.";
+                helpfulTip = "In affirmative short answers, do not contract 'I am' into 'I'm'.";
+            } else if (ansLower.includes("no, she isn't") || ansLower.includes("no, he isn't")) {
+                similarSentence = "Is she tired? → No, she isn't.";
+                helpfulTip = "In negative short answers, use contracted forms like 'No, she isn't.'";
+            } else if (qText.includes('___')) {
+                // If template sentence, create a clean similar model
+                const subjectMatch = qText.match(/\b(I|You|He|She|It|We|They)\b/i);
+                const subj = subjectMatch ? subjectMatch[0] : 'I';
+                if (/^i$/i.test(subj)) {
+                    similarSentence = "I am ready to practice right now.";
+                    helpfulTip = "Notice the first-person subject 'I'.";
+                } else if (/^(he|she|it)$/i.test(subj)) {
+                    similarSentence = `${subj} is always on time.`;
+                    helpfulTip = `Notice the third-person singular subject '${subj}'.`;
+                } else {
+                    similarSentence = `${subj} are learning together.`;
+                    helpfulTip = `Notice the plural subject '${subj}'.`;
+                }
+            } else {
+                helpfulTip = "Pay close attention to grammatical agreement, clause structure, and word order.";
+            }
+
+            const ruleText = qData.explanation || qData.hint || 'Carefully match the subject pronoun with the correct verb form.';
+
+            return `
+                <div class="quiz-hint-inner">
+                    <div class="quiz-hint-badge-row">
+                        <span class="quiz-hint-badge">💡 Grammar Hint & Clue</span>
+                        <button type="button" class="quiz-hint-close-btn" aria-label="Close Hint" title="Close Hint">✕</button>
+                    </div>
+                    <div class="quiz-hint-content">
+                        <p class="quiz-hint-line">
+                            <span class="hint-label">Grammar rule:</span>
+                            <span class="hint-desc">${esc(ruleText)}</span>
+                        </p>
+                        ${similarSentence ? `
+                        <p class="quiz-hint-line">
+                            <span class="hint-label">Model example:</span>
+                            <span class="hint-sentence">"${esc(similarSentence)}"</span>
+                        </p>` : ''}
+                        ${helpfulTip ? `
+                        <p class="quiz-hint-line">
+                            <span class="hint-label">Key clue:</span>
+                            <span class="hint-desc">${esc(helpfulTip)}</span>
+                        </p>` : ''}
+                    </div>
+                    <div class="quiz-hint-footer">
+                        <button type="button" class="quiz-reveal-clue-btn">🔍 Reveal option clue</button>
+                        <span class="quiz-revealed-clue" style="display: none;">
+                            ${optLetter ? `Correct choice is <strong>Option ${optLetter}</strong> (${esc(correctAnswer)})` : `Answer: <strong>${esc(correctAnswer)}</strong>`}
+                        </span>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Handle Bulb Hint Click & Inline Hint Button: show structured hint & smooth scroll
+        const hintCircle = quizSideEl.querySelector('.quiz-hint-circle');
+        const inlineHintBtn = quizSideEl.querySelector('.quiz-inline-hint-btn');
+        const hintBox = quizSideEl.querySelector('.quiz-hint-box');
+
+        function toggleHint() {
+            if (!hintBox) return;
+            const isVisible = hintBox.style.display !== 'none';
+            if (isVisible) {
+                hintBox.style.display = 'none';
+                if (hintCircle) hintCircle.classList.remove('is-active');
+                if (inlineHintBtn) inlineHintBtn.classList.remove('is-active');
+            } else {
+                hintBox.innerHTML = buildQuizHint(qData, qText, correctAnswer, options);
+                hintBox.style.display = 'block';
+                if (hintCircle) hintCircle.classList.add('is-active');
+                if (inlineHintBtn) inlineHintBtn.classList.add('is-active');
+                playSound('correct');
+
+                // Hook up close button inside hint
+                const closeBtn = hintBox.querySelector('.quiz-hint-close-btn');
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        toggleHint();
+                    });
+                }
+
+                // Hook up reveal clue button inside hint
+                const revealBtn = hintBox.querySelector('.quiz-reveal-clue-btn');
+                const revealedClue = hintBox.querySelector('.quiz-revealed-clue');
+                if (revealBtn && revealedClue) {
+                    revealBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        revealBtn.style.display = 'none';
+                        revealedClue.style.display = 'inline-block';
+                    });
+                }
+
+                // Smoothly scroll hint into clear view
+                hintBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        if (hintCircle) {
+            hintCircle.addEventListener('click', (e) => {
+                e.preventDefault();
+                toggleHint();
+            });
+        }
+        if (inlineHintBtn) {
+            inlineHintBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                toggleHint();
+            });
+        }
+
             // Back button and Grid button: returns to 4-in-a-row collage grid
             quizSideEl.querySelectorAll('.quiz-back-btn, .quiz-grid-btn').forEach(b => {
                 b.addEventListener('click', () => {
@@ -398,12 +577,17 @@
                         <span class="stat-pill">Score: ${correctCount}/${totalQ} (${pct}%)</span>
                         <span class="stat-pill green">✓ Saved</span>
                     </div>
-                    <div class="completion-actions">
-                        <button type="button" class="btn-primary quiz-return-grid-btn">Back to Classes Grid</button>
-                        ${(classIdx + 1 < items.length) ? `<button type="button" class="btn-secondary quiz-next-class-btn">Next Class ${classIdx + 2} →</button>` : ''}
+                    <div class="completion-actions" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button type="button" class="btn-try-again quiz-retry-btn" style="flex: 1; min-width: 140px;">🔁 Try Again</button>
+                        <button type="button" class="btn-secondary quiz-return-grid-btn" style="flex: 1; min-width: 130px;">Classes Grid</button>
+                        ${(classIdx + 1 < items.length) ? `<button type="button" class="btn-primary quiz-next-class-btn" style="flex: 1; min-width: 140px;">Next Class →</button>` : ''}
                     </div>
                 </div>
             `;
+
+            quizSideEl.querySelector('.quiz-retry-btn').addEventListener('click', () => {
+                selectClassAndStart(item, classIdx);
+            });
 
             quizSideEl.querySelector('.quiz-return-grid-btn').addEventListener('click', () => {
                 closeQuizAndShowGrid();
@@ -433,6 +617,14 @@
             currentQuestionIdx = 0;
             correctCount = 0;
             timerSeconds = 180;
+
+            // Reset cached shuffled options so every new attempt gets fresh, unpredictable option distribution
+            if (item && Array.isArray(item.questions)) {
+                item.questions.forEach(q => {
+                    delete q._shuffledOptions;
+                });
+            }
+
             mainArea.classList.add('is-quiz-active');
             quizSideEl.style.display = 'block';
             paintCollage();
@@ -730,13 +922,13 @@
                     <div class="meme-modal-header">
                         <div class="meme-modal-title-wrap">
                             <span class="meme-tag">🎭 Learning Meme</span>
-                            <h4>Your English Learning Meme</h4>
+                            <h4>Your IELTS Study Break Meme</h4>
                         </div>
                         <button type="button" class="meme-modal-close" aria-label="Close">✕</button>
                     </div>
 
                     <!-- Meme Gallery Grid -->
-                    <div class="meme-gallery-grid" style="grid-template-columns: 1fr; max-width: 520px; margin: 0 auto;">
+                    <div class="meme-gallery-grid" style="grid-template-columns: 1fr; width: 100%; margin: 0 auto;">
                         ${memesList.map((m, idx) => `
                             <div class="meme-card-item">
                                 <div class="meme-card-header">
@@ -747,7 +939,12 @@
                                     <img src="${esc(m.image_url)}" alt="English Meme" onerror="this.onerror=null; this.src='https://api.memegen.link/images/drake/Studying_Grammar/Making_Memes.png';">
                                 </div>
                                 <div class="meme-card-body">
-                                    <p class="meme-card-joke">"${esc(m.joke || 'Keep learning and smiling!')}"</p>
+                                    <div class="meme-hint-box">
+                                        <div class="meme-hint-header">
+                                            <span class="meme-hint-badge">💡 IELTS Grammar Hint & Tip</span>
+                                        </div>
+                                        <p class="meme-hint-text">"${esc(m.joke || 'Keep learning and smiling!')}"</p>
+                                    </div>
                                     <div class="meme-card-actions">
                                         <a href="${esc(m.image_url)}" target="_blank" rel="noopener noreferrer" class="meme-download-btn" title="Open full image">
                                             <span>↗ View Full Size</span>
@@ -760,12 +957,12 @@
 
                     <!-- Cooldown & Quota Information Banner -->
                     <div class="meme-modal-cooldown-notice">
-                        <span>🎯 <strong>Quota:</strong> ${usedCount}/${dailyLimit} used today ${inCooldown ? '• ⏳ <strong>30-Minute Cooldown Active</strong> (take a study break!)' : ''}</span>
+                        <span>🎯 <strong>Quota:</strong> ${usedCount}/${dailyLimit} used today ${inCooldown ? '• ⏳ <strong>30-Minute Break Active</strong> (take a study break!)' : ''}</span>
                     </div>
 
                     <div class="meme-modal-footer">
-                        <span class="caption" style="color: #94A3B8;">Daily Limit: ${usedCount}/${dailyLimit} used today • Next batch in 30m</span>
-                        <button type="button" class="btn-primary meme-back-btn">Back to Practice</button>
+                        <span class="caption">1 meme per click • Laugh, refresh & get back to practice!</span>
+                        <button type="button" class="meme-back-btn">Back to Practice</button>
                     </div>
                 </div>
             `;

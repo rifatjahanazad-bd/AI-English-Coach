@@ -194,3 +194,9 @@ function escapeHtml(str) {
     div.textContent = str;
     return div.innerHTML;
 }
+
+// Expose globally on window
+window.topics = topics;
+window.practiceData = practiceData;
+window.escapeHtml = escapeHtml;
+

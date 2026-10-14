@@ -1,6 +1,8 @@
 """system.py - System health check, status, and API route catalog."""
 
-from fastapi import APIRouter
+import os
+from typing import Optional
+from fastapi import APIRouter, Header, HTTPException
 from backend.database import db
 from backend.api.config import MODULES_DIR
 
@@ -98,15 +100,25 @@ def get_api_routes():
 
 
 @router.get("/prompts")
-def get_system_prompts():
+def get_system_prompts(x_admin_key: Optional[str] = Header(None)):
     """
-    Returns all centralized system prompts currently loaded from backend/prompt.txt,
-    allowing the developer or app to inspect and verify active prompts.
+    Returns all centralized system prompts loaded from backend/prompt.txt.
+    Protected in production: requires X-Admin-Key header matching ADMIN_API_KEY.
     """
+    is_prod = os.getenv("ENV", "development").lower() == "production"
+    admin_secret = os.getenv("ADMIN_API_KEY", "").strip()
+
+    if is_prod:
+        if not admin_secret or x_admin_key != admin_secret:
+            raise HTTPException(
+                status_code=403,
+                detail="Access denied: System prompt inspection is disabled in production without admin credentials."
+            )
+
     from backend.prompt_loader import load_all_prompts, PROMPT_FILE
     prompts = load_all_prompts(force_reload=True)
     return {
-        "prompt_file": str(PROMPT_FILE),
+        "prompt_file": PROMPT_FILE.name if is_prod else str(PROMPT_FILE),
         "sections": list(prompts.keys()),
         "prompts": prompts
     }

@@ -40,30 +40,80 @@ SPEAKING_TOPICS = [
 ]
 
 
+MAX_AUDIO_BYTES = 25 * 1024 * 1024  # 25 MB max limit
+ALLOWED_EXTENSIONS = {".webm", ".wav", ".mp3", ".ogg", ".m4a"}
+
+
+def _validate_audio_header_and_get_suffix(header: bytes, filename: Optional[str]) -> str:
+    """Validates audio magic bytes or safe filename extension."""
+    if header.startswith(b"\x1a\x45\xdf\xa3"):
+        return ".webm"
+    if header.startswith(b"RIFF") and b"WAVE" in header[:16]:
+        return ".wav"
+    if header.startswith(b"ID3") or header.startswith(b"\xff\xfb") or header.startswith(b"\xff\xf3") or header.startswith(b"\xff\xf2"):
+        return ".mp3"
+    if header.startswith(b"OggS"):
+        return ".ogg"
+    if len(header) >= 8 and header[4:8] == b"ftyp":
+        return ".m4a"
+
+    # Secondary check against allowed extensions
+    ext = Path(filename or "").suffix.lower()
+    if ext in ALLOWED_EXTENSIONS:
+        return ext
+
+    raise HTTPException(
+        status_code=415,
+        detail="Unsupported or invalid audio format. Allowed: WebM, WAV, MP3, OGG, M4A."
+    )
+
+
+def _spool_uploaded_audio_safely(audio: UploadFile) -> tuple[str, str]:
+    """Safely spools audio upload enforcing 25MB limit and magic byte checks."""
+    header = audio.file.read(32)
+    if not header:
+        raise HTTPException(status_code=400, detail="Uploaded audio file is empty.")
+
+    suffix = _validate_audio_header_and_get_suffix(header, audio.filename)
+    audio.file.seek(0)
+
+    temp_file = tempfile.NamedTemporaryFile(suffix=suffix, delete=False)
+    temp_path = temp_file.name
+    total_bytes = 0
+
+    try:
+        while chunk := audio.file.read(1024 * 64):
+            total_bytes += len(chunk)
+            if total_bytes > MAX_AUDIO_BYTES:
+                temp_file.close()
+                if os.path.exists(temp_path):
+                    os.remove(temp_path)
+                raise HTTPException(
+                    status_code=413,
+                    detail="Audio file exceeds the maximum allowed limit of 25MB."
+                )
+            temp_file.write(chunk)
+    finally:
+        temp_file.close()
+
+    return temp_path, suffix
+
+
 @router.post("/evaluate")
 async def evaluate_speaking_audio(
     audio: UploadFile = File(...),
-    topic: Optional[str] = Form("Describe a memorable journey"),
-    prompt: Optional[str] = Form("Describe a memorable journey."),
-    model: Optional[str] = Form("deepseek-v4.1-flash:free"),
-    verify_compression: Optional[bool] = Form(True)
+    topic: Optional[str] = Form("General Speaking"),
+    prompt: Optional[str] = Form("Speak freely on the topic."),
+    model: Optional[str] = Form(None),
+    verify_compression: Optional[bool] = Form(False)
 ):
     """
-    Receives voice recording from frontend speaking test, compresses audio without
-    quality loss, transcribes it, and evaluates IELTS criteria returning exact fields:
-    - Fluency & Coherence, Lexical Resource, Grammatical Range, Pronunciation
-    - Gap Analysis (with 🕳️ and 📚)
-    - Where to improve (What you should have said, Better connectors, Focus topics next)
+    Receives voice recording from frontend speaking test, verifies file integrity
+    and size, compresses audio without quality loss, transcribes it, and evaluates IELTS criteria.
     """
-    suffix = Path(audio.filename or "recording.webm").suffix or ".webm"
-    temp_file = tempfile.NamedTemporaryFile(suffix=suffix, delete=False)
-    temp_path = temp_file.name
-    temp_file.close()
+    temp_path, _ = _spool_uploaded_audio_safely(audio)
 
     try:
-        with open(temp_path, "wb") as buffer:
-            shutil.copyfileobj(audio.file, buffer)
-
         result = speaking_evaluator.evaluate_speaking_audio(
             audio_path=temp_path,
             topic=topic,
@@ -97,15 +147,9 @@ async def verify_audio_compression(audio: UploadFile = File(...)):
     Compresses uploaded audio file and tests transcription with audio_to_txt
     to verify that compression maintains 100% speech quality.
     """
-    suffix = Path(audio.filename or "sample.wav").suffix or ".wav"
-    temp_file = tempfile.NamedTemporaryFile(suffix=suffix, delete=False)
-    temp_path = temp_file.name
-    temp_file.close()
+    temp_path, _ = _spool_uploaded_audio_safely(audio)
 
     try:
-        with open(temp_path, "wb") as buffer:
-            shutil.copyfileobj(audio.file, buffer)
-
         comp_path, comp_metrics = speaking_evaluator.compress_and_process_audio(
             temp_path,
             verify_with_audiototxt=True

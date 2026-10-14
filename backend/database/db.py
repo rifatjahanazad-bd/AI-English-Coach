@@ -12,8 +12,19 @@ from typing import Dict, Any, List, Optional
 from datetime import datetime, timedelta
 
 DATABASE_DIR = Path(__file__).resolve().parent
-DATABASE_DIR.mkdir(parents=True, exist_ok=True)
-DB_PATH = DATABASE_DIR / "app.db"
+if os.getenv("VERCEL") or not os.access(DATABASE_DIR, os.W_OK):
+    import shutil
+    tmp_db = Path("/tmp") / "app.db"
+    orig_db = DATABASE_DIR / "app.db"
+    if orig_db.exists() and not tmp_db.exists():
+        try:
+            shutil.copy2(orig_db, tmp_db)
+        except Exception:
+            pass
+    DB_PATH = tmp_db
+else:
+    DATABASE_DIR.mkdir(parents=True, exist_ok=True)
+    DB_PATH = DATABASE_DIR / "app.db"
 
 
 def get_connection() -> sqlite3.Connection:
@@ -148,6 +159,20 @@ def init_db():
                 email TEXT,
                 role TEXT DEFAULT 'learner',
                 preferences_json TEXT DEFAULT '{}',
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
+
+        # 10. Manual Accounts Table (name, phone, email, username, password_hash)
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS accounts (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                phone TEXT DEFAULT '',
+                email TEXT UNIQUE NOT NULL,
+                username TEXT UNIQUE NOT NULL,
+                password_hash TEXT NOT NULL,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
@@ -638,6 +663,90 @@ def update_user_preferences(user_id: str, preferences: Dict[str, Any]) -> Dict[s
         """, (user_id, json.dumps(preferences, ensure_ascii=False)))
         conn.commit()
     return get_or_create_user(user_id)
+
+
+# -------------------------------------------------------------------------
+# Manual Account Creation & Authentication
+# -------------------------------------------------------------------------
+def hash_password(password: str) -> str:
+    """Computes a SHA-256 hash with salt for secure password storage."""
+    salt = "aiec_manual_auth_v1_salt_"
+    import hashlib
+    return hashlib.sha256((salt + password).encode("utf-8")).hexdigest()
+
+
+def create_account(name: str, phone: str, email: str, username: str, password: str) -> Dict[str, Any]:
+    """Creates a manual learner account in SQLite database."""
+    name_clean = (name or "").strip()
+    phone_clean = (phone or "").strip()
+    email_clean = (email or "").strip().lower()
+    username_clean = (username or "").strip().lower()
+
+    if not name_clean:
+        raise ValueError("Full name is required.")
+    if not email_clean or "@" not in email_clean:
+        raise ValueError("A valid email address is required.")
+    if not username_clean:
+        raise ValueError("Username is required.")
+    if len(password or "") < 4:
+        raise ValueError("Password must be at least 4 characters.")
+
+    pwd_hash = hash_password(password)
+
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        # Check if username or email exists
+        cursor.execute("SELECT id FROM accounts WHERE username = ?", (username_clean,))
+        if cursor.fetchone():
+            raise ValueError(f"Username '{username_clean}' is already taken. Please choose another.")
+
+        cursor.execute("SELECT id FROM accounts WHERE email = ?", (email_clean,))
+        if cursor.fetchone():
+            raise ValueError(f"An account with email '{email_clean}' already exists. Please sign in instead.")
+
+        cursor.execute("""
+            INSERT INTO accounts (name, phone, email, username, password_hash)
+            VALUES (?, ?, ?, ?, ?)
+        """, (name_clean, phone_clean, email_clean, username_clean, pwd_hash))
+
+        # Also register in users table
+        cursor.execute("""
+            INSERT INTO users (user_id, display_name, email, role, preferences_json)
+            VALUES (?, ?, ?, 'learner', '{}')
+            ON CONFLICT(user_id) DO UPDATE SET
+                display_name = excluded.display_name,
+                email = excluded.email
+        """, (username_clean, name_clean, email_clean))
+
+        conn.commit()
+
+    return {
+        "id": username_clean,
+        "name": name_clean,
+        "phone": phone_clean,
+        "email": email_clean,
+        "username": username_clean
+    }
+
+
+def authenticate_account(username_or_email: str, password: str) -> Optional[Dict[str, Any]]:
+    """Validates login credentials against manual accounts."""
+    identifier = (username_or_email or "").strip().lower()
+    if not identifier or not password:
+        return None
+
+    pwd_hash = hash_password(password)
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT id, name, phone, email, username
+            FROM accounts
+            WHERE (username = ? OR email = ?) AND password_hash = ?
+        """, (identifier, identifier, pwd_hash))
+        row = cursor.fetchone()
+        if not row:
+            return None
+        return dict(row)
 
 
 # Initialize DB and seed modules on load

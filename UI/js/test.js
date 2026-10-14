@@ -21,13 +21,20 @@ function initSpeakingTest() {
     const topicGrid = document.getElementById('topicGrid');
     if (!topicGrid) return;
 
-    // Render topics from data.js
+    // Render topics from data.js (24 topics)
     topicGrid.innerHTML = '';
-    const topicsList = (window.topics && window.topics.length) ? window.topics : [
-        { name: 'Hometown', emoji: '🏡', prompt: 'Describe your hometown.', difficulty: 'easy' },
-        { name: 'Memorable Journey', emoji: '✈️', prompt: 'Describe a memorable journey you took.', difficulty: 'medium' },
-        { name: 'Technology', emoji: '💻', prompt: 'How has modern technology changed your daily life?', difficulty: 'hard' }
-    ];
+    const topicsList = (window.topics && window.topics.length) 
+        ? window.topics 
+        : (typeof topics !== 'undefined' && topics.length ? topics : [
+            { name: 'Hometown', emoji: '🏡', prompt: 'Describe your hometown.', difficulty: 'easy' },
+            { name: 'Memorable Journey', emoji: '✈️', prompt: 'Describe a memorable journey you took.', difficulty: 'medium' },
+            { name: 'Technology', emoji: '💻', prompt: 'How has modern technology changed your daily life?', difficulty: 'hard' }
+        ]);
+
+    const countBadge = document.querySelector('#pageTest .topic-count');
+    if (countBadge && topicsList.length) {
+        countBadge.textContent = `${topicsList.length} available`;
+    }
 
     topicsList.forEach((topic, index) => {
         const card = document.createElement('div');
@@ -245,12 +252,35 @@ function initSpeakingTest() {
         }
         stopWaveformVisualizer();
 
-        if (mediaRecorder && mediaRecorder.state !== 'inactive') {
-            try { mediaRecorder.stop(); } catch (e) {}
-        }
-        if (mediaStream) {
-            mediaStream.getTracks().forEach(t => t.stop());
-        }
+        return new Promise((resolve) => {
+            if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                const prevOnStop = mediaRecorder.onstop;
+                mediaRecorder.onstop = (e) => {
+                    if (audioChunks.length > 0) {
+                        const mime = mediaRecorder.mimeType || 'audio/webm';
+                        recordedAudioBlob = new Blob(audioChunks, { type: mime });
+                    }
+                    if (prevOnStop) prevOnStop(e);
+                    if (mediaStream) {
+                        mediaStream.getTracks().forEach(t => t.stop());
+                    }
+                    resolve(recordedAudioBlob);
+                };
+                try {
+                    mediaRecorder.stop();
+                } catch (e) {
+                    if (mediaStream) {
+                        mediaStream.getTracks().forEach(t => t.stop());
+                    }
+                    resolve(recordedAudioBlob);
+                }
+            } else {
+                if (mediaStream) {
+                    mediaStream.getTracks().forEach(t => t.stop());
+                }
+                resolve(recordedAudioBlob);
+            }
+        });
     }
 
     // Step 1 -> Step 2
@@ -454,7 +484,7 @@ function initSpeakingTest() {
     // Stop & Submit -> Send to Backend with Compression & AI Evaluation
     if (stopSubmitBtn) {
         stopSubmitBtn.addEventListener('click', async () => {
-            stopRecording();
+            await stopRecording();
 
             // Show processing UI inside testStep2
             const originalBtnText = stopSubmitBtn.innerHTML;
@@ -553,6 +583,7 @@ function initSpeakingTest() {
     const goalMinutesSelect = document.getElementById('goalMinutesSelect');
 
     async function loadGoalData() {
+        if (!goalBandText) return;
         if (window.AIEC_API && typeof window.AIEC_API.getGoal === 'function') {
             const goal = await window.AIEC_API.getGoal();
             if (goal) {
@@ -603,9 +634,11 @@ function initSpeakingTest() {
         if (s1) s1.classList.remove('hidden');
         if (s2) s2.classList.add('hidden');
         if (s3) s3.classList.add('hidden');
-        loadGoalData();
         const goalCard = document.getElementById('goalTargetCard');
-        if (goalCard) goalCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        if (goalCard) {
+            loadGoalData();
+            goalCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
     };
 
     window.selectTopicById = function(topicId) {
@@ -629,4 +662,17 @@ function initSpeakingTest() {
             if (promptText) promptText.textContent = `"${selectedPrompt}"`;
         }
     };
+
+    window.initSpeakingTest = initSpeakingTest;
 }
+
+window.initSpeakingTest = initSpeakingTest;
+window.addEventListener('aiec-route-changed', (e) => {
+    if (e.detail && e.detail.page === 'test') {
+        const grid = document.getElementById('topicGrid');
+        if (grid && grid.children.length < 5) {
+            initSpeakingTest();
+        }
+    }
+});
+

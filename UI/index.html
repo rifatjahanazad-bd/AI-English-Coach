@@ -7,16 +7,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IELTS Speaking Coach · AI Web App</title>
 
-    <!-- Google Fonts: Nunito (Clean, soft, airy rounded font) -->
+    <!-- Google Fonts: Fredoka (Playful Gaming Display font) & Nunito (Rounded Body font) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <!-- Modular CSS Stylesheets -->
-    <link rel="stylesheet" href="css/style.css?v=4">
+    <link rel="stylesheet" href="css/style.css?v=9">
 </head>
 
 <body>
@@ -25,21 +25,24 @@
         <!-- GLOBAL APP HEADER                                              -->
         <!-- ============================================================== -->
         <header class="app-header">
-            <div class="logo-area" style="cursor: pointer;" id="logoHomeBtn" title="Go to Home">
-                <div class="logo-mark">☀️</div>
-                <div class="logo-text">
-                    <h1>IELTS Coach</h1>
-                    <p>AI-powered speaking practice</p>
+            <div class="header-inner">
+                <div class="logo-area" style="cursor: pointer;" id="logoHomeBtn" title="AI English Coach">
+                    <div class="logo-mark">☀️</div>
+                    <div class="logo-text">
+                        <h1>IELTS Coach</h1>
+                        <p>AI-powered speaking practice</p>
+                    </div>
                 </div>
-            </div>
-            <div class="header-actions">
-                <a href="../backend/game/index.html" target="_blank" class="game-launch-btn" title="Play Fast Phrases Speed Game">
-                    <span>🎮</span>
-                    <span>Fast Phrases</span>
-                </a>
-                <div class="user-greeting" id="userAuthBtn" style="cursor: pointer;" title="Account & Unlock Status">
-                    <div class="user-avatar" id="userAvatar">👤</div>
-                    <span id="userStatusText">Guest (Sign in)</span>
+                <div class="header-actions">
+                    <a href="/game/" target="_blank" class="game-launch-btn" id="gameLaunchBtn"
+                        title="Play Fast Phrases Speed Game">
+                        <span>🎮</span>
+                        <span>Fast Phrases</span>
+                    </a>
+                    <div class="user-greeting" id="userAuthBtn" style="cursor: pointer;" title="Account & Unlock Status">
+                        <div class="user-avatar" id="userAvatar">👤</div>
+                        <span id="userStatusText">Guest (Sign in)</span>
+                    </div>
                 </div>
             </div>
         </header>
@@ -50,7 +53,11 @@
         <div class="app-body">
             <!-- DESKTOP NAVIGATION TABS -->
             <nav class="side-tabs" id="sideTabs">
-                <button class="side-tab active" data-page="chat" data-route="/personalmentor">
+                <button class="side-tab active" data-page="dashboard" data-route="/dashboard">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span>Dashboard</span>
+                </button>
+                <button class="side-tab" data-page="chat" data-route="/personalmentor">
                     <i data-lucide="message-circle"></i>
                     <span>Personal Mentor</span>
                 </button>
@@ -60,18 +67,27 @@
                 </button>
                 <button class="side-tab" data-page="test" data-route="/goal">
                     <i data-lucide="mic"></i>
-                    <span>Goal & Speaking</span>
+                    <span>Speaking Arena</span>
                 </button>
             </nav>
 
             <!-- MAIN CONTENT AREA -->
             <main class="main-content" id="mainContent">
+                <!-- ###################################################### -->
+                <!-- [PAGE 0] DASHBOARD SECTION                             -->
+                <!-- Style: css/dashboard.css | Logic: js/dashboard.js      -->
+                <!-- ###################################################### -->
+                <section id="pageDashboard" class="page active">
+                    <div id="dashboardRoot">
+                        <!-- Dynamically populated by js/dashboard.js -->
+                    </div>
+                </section>
 
                 <!-- ###################################################### -->
                 <!-- [PAGE 1] CHAT COACH SECTION                            -->
                 <!-- Style: css/chat.css | Logic: js/chat.js                -->
                 <!-- ###################################################### -->
-                <section id="pageChat" class="page active">
+                <section id="pageChat" class="page">
                     <div class="card" style="padding: 20px 24px;">
                         <div class="space-between">
                             <div>
@@ -88,9 +104,11 @@
                             <div class="ai-avatar">🌿</div>
                             <div class="bubble ai">
                                 <div class="ai-message-content">
-                                    <span>Hey Alex! Ready to practice? We can chat about anything — I'll help you sound more natural. ✨</span>
+                                    <span>Hey Alex! Ready to practice? We can chat about anything — I'll help you sound
+                                        more natural. ✨</span>
                                     <div class="inline-feedback">
-                                        <div>💡 <span class="suggestion">Try saying:</span> "I'd love to improve my fluency."</div>
+                                        <div>💡 <span class="suggestion">Try saying:</span> "I'd love to improve my
+                                            fluency."</div>
                                     </div>
                                 </div>
                             </div>
@@ -106,8 +124,11 @@
                                 <div class="ai-message-content">
                                     <span>Great goal! Let's start with a quick warm-up. Describe your hometown.</span>
                                     <div class="inline-feedback">
-                                        <div>✏️ <span class="wrong">I want to practice</span> → <span class="correction">I'd like to practise</span> <span class="suggestion">(more natural)</span></div>
-                                        <div style="margin-top: 6px;">💬 <span class="suggestion">Tip:</span> In British English, use "practise" (verb) and "practice" (noun).</div>
+                                        <div>✏️ <span class="wrong">I want to practice</span> → <span
+                                                class="correction">I'd like to practise</span> <span
+                                                class="suggestion">(more natural)</span></div>
+                                        <div style="margin-top: 6px;">💬 <span class="suggestion">Tip:</span> In British
+                                            English, use "practise" (verb) and "practice" (noun).</div>
                                     </div>
                                 </div>
                             </div>
@@ -129,10 +150,10 @@
                     <!-- Sticky Bottom Controls (Chips + Input Bar) -->
                     <div class="chat-bottom-bar">
                         <div class="quick-chips">
-                            <div class="quick-chip">Correct my grammar</div>
-                            <div class="quick-chip">Teach me idioms</div>
-                            <div class="quick-chip">Explain a word</div>
-                            <div class="quick-chip">Roleplay a cafe order</div>
+                            <button type="button" class="quick-chip" data-prompt="🎯 Quick band boost">🎯 Quick band boost</button>
+                            <button type="button" class="quick-chip" data-prompt="🗣️ Speak naturally">🗣️ Speak naturally</button>
+                            <button type="button" class="quick-chip" data-prompt="💡 Power vocabulary">💡 Power vocabulary</button>
+                            <button type="button" class="quick-chip" data-prompt="☕ Real-life conversation">☕ Real-life conversation</button>
                         </div>
 
                         <div class="input-bar">
@@ -154,29 +175,35 @@
                 <!-- Style: css/practice.css | Logic: js/practice.js        -->
                 <!-- ###################################################### -->
                 <section id="pagePractice" class="page">
-                    <div class="space-between mb-8">
-                        <div>
-                            <h2>Practice Arena</h2>
-                            <p class="caption">Targeted drills for Grammar, Vocabulary, Listening, and Writing</p>
+                    <div class="card practice-arena-header" style="padding: 20px 24px;">
+                        <div class="space-between">
+                            <div>
+                                <h2 style="font-size: 20px;">Practice Arena</h2>
+                                <p class="caption">Targeted drills for Grammar, Vocabulary, Listening, and Writing</p>
+                            </div>
+                            <span class="pill-chip green">🟢 Online</span>
                         </div>
                     </div>
 
                     <!-- STEP 1: 4 CATEGORIES WITH BIG THUMBNAILS & NEXT BUTTON -->
                     <div id="practiceStep1">
                         <div class="space-between mb-8">
-                            <p class="caption">Select a practice track · <span class="topic-count">4 available</span></p>
+                            <p class="caption">Select a practice track · <span class="topic-count">4 available</span>
+                            </p>
                         </div>
 
                         <div class="practice-category-scroll" id="practiceCategoryList">
                             <!-- 1. Grammar Lessons -->
                             <div class="practice-category-card selected" data-category="grammar">
-                                <div class="category-thumb-wrapper" style="background: linear-gradient(135deg, #FFF9E0 0%, #FFE58F 100%);">
+                                <div class="category-thumb-wrapper"
+                                    style="background: linear-gradient(135deg, #FFF9E0 0%, #FFE58F 100%);">
                                     <span class="category-thumb-emoji">📐</span>
                                     <span class="category-badge">Band 7+ Focus</span>
                                 </div>
                                 <div class="category-info">
                                     <h3>Grammar Lessons</h3>
-                                    <p class="caption">Master sentence structures, inversion, hypothetical conditionals & academic grammar.</p>
+                                    <p class="caption">Master sentence structures, inversion, hypothetical conditionals
+                                        & academic grammar.</p>
                                     <div class="category-meta">
                                         <span class="pill-chip">7 levels</span>
                                         <span class="text-sm text-secondary">Instant Analysis</span>
@@ -186,13 +213,15 @@
 
                             <!-- 2. Vocabulary Lessons -->
                             <div class="practice-category-card" data-category="vocabulary">
-                                <div class="category-thumb-wrapper" style="background: linear-gradient(135deg, #E8FAF1 0%, #A7F3D0 100%);">
+                                <div class="category-thumb-wrapper"
+                                    style="background: linear-gradient(135deg, #E8FAF1 0%, #A7F3D0 100%);">
                                     <span class="category-thumb-emoji">📚</span>
                                     <span class="category-badge">Lexical Boost</span>
                                 </div>
                                 <div class="category-info">
                                     <h3>Vocabulary Lessons</h3>
-                                    <p class="caption">High-scoring collocations, idioms, topic-specific vocabulary & sophisticated phrasing.</p>
+                                    <p class="caption">High-scoring collocations, idioms, topic-specific vocabulary &
+                                        sophisticated phrasing.</p>
                                     <div class="category-meta">
                                         <span class="pill-chip green">4 modules</span>
                                         <span class="text-sm text-secondary">Band 8+ Words</span>
@@ -202,15 +231,17 @@
 
                             <!-- 3. Listening Tests -->
                             <div class="practice-category-card" data-category="listening">
-                                <div class="category-thumb-wrapper" style="background: linear-gradient(135deg, #EEF2FF 0%, #C7D2FE 100%);">
+                                <div class="category-thumb-wrapper"
+                                    style="background: linear-gradient(135deg, #EEF2FF 0%, #C7D2FE 100%);">
                                     <span class="category-thumb-emoji">🎧</span>
                                     <span class="category-badge">Audio Drills</span>
                                 </div>
                                 <div class="category-info">
                                     <h3>Listening Tests</h3>
-                                    <p class="caption">Accent adaptation, fast speech connected audio, detail comprehension & note-taking.</p>
+                                    <p class="caption">Accent adaptation, fast speech connected audio, detail
+                                        comprehension & note-taking.</p>
                                     <div class="category-meta">
-                                        <span class="pill-chip" style="background: #E0E7FF; color: #4338CA;">4 audio sets</span>
+                                        <span class="pill-chip dark">4 audio sets</span>
                                         <span class="text-sm text-secondary">Interactive</span>
                                     </div>
                                 </div>
@@ -218,15 +249,17 @@
 
                             <!-- 4. Writing Lessons -->
                             <div class="practice-category-card" data-category="writing">
-                                <div class="category-thumb-wrapper" style="background: linear-gradient(135deg, #FFF1F2 0%, #FECDD3 100%);">
+                                <div class="category-thumb-wrapper"
+                                    style="background: linear-gradient(135deg, #FFF1F2 0%, #FECDD3 100%);">
                                     <span class="category-thumb-emoji">✍️</span>
                                     <span class="category-badge">Task 1 & 2</span>
                                 </div>
                                 <div class="category-info">
                                     <h3>Writing Lessons</h3>
-                                    <p class="caption">Essay structures, paragraph transitions, thesis statements & coherence techniques.</p>
+                                    <p class="caption">Essay structures, paragraph transitions, thesis statements &
+                                        coherence techniques.</p>
                                     <div class="category-meta">
-                                        <span class="pill-chip" style="background: #FFE4E6; color: #BE123C;">4 exercises</span>
+                                        <span class="pill-chip outline">4 exercises</span>
                                         <span class="text-sm text-secondary">Coherence Check</span>
                                     </div>
                                 </div>
@@ -237,12 +270,16 @@
                         <div class="practice-actions-bar">
                             <button class="btn-primary w-full" id="practiceNextBtn">Next: Choose Topic →</button>
                         </div>
+
+                        <!-- Dedicated Meme Generator Section for Practice Arena -->
+                        <div id="practiceMemeContainer" class="mt-16"></div>
                     </div>
 
                     <!-- STEP 2: LESSON SUB-TOPICS & EXERCISE (TRIGGERED BY NEXT) -->
                     <div id="practiceStep2" class="hidden">
                         <div class="space-between mb-8">
-                            <button class="btn-secondary" id="practiceBackBtn" style="padding: 8px 16px; font-size: 13px;">
+                            <button class="btn-secondary" id="practiceBackBtn"
+                                style="padding: 8px 16px; font-size: 13px;">
                                 ← Back to Tracks
                             </button>
                             <span class="pill-chip green" id="practiceSelectedCategoryPill">📐 Grammar Lessons</span>
@@ -276,18 +313,22 @@
                                 <span class="pill-chip" id="currentTopicChip">📌 Grammar Drill</span>
                                 <span class="caption" id="currentQuestionNum">Exercise 1 of 4</span>
                             </div>
-                            <h3 style="font-size: 18px;" id="practiceQuestionText">Describe a situation where a past decision changed your life.</h3>
-                            <p class="text-sm text-secondary mt-8" id="practiceQuestionHint">💡 <strong>Hint:</strong> Aim to use hypothetical conditionals.</p>
+                            <h3 style="font-size: 18px;" id="practiceQuestionText">Describe a situation where a past
+                                decision changed your life.</h3>
+                            <p class="text-sm text-secondary mt-8" id="practiceQuestionHint">💡 <strong>Hint:</strong>
+                                Aim to use hypothetical conditionals.</p>
                         </div>
 
                         <div class="textarea-wrapper">
-                            <textarea placeholder="Write your response here... (aim for 4-6 coherent sentences)" id="answerText"></textarea>
+                            <textarea placeholder="Write your response here... (aim for 4-6 coherent sentences)"
+                                id="answerText"></textarea>
                             <div class="word-count"><span id="wordCount">0</span> words</div>
                         </div>
 
                         <div class="link-input">
                             <i data-lucide="link" style="width: 18px; color: #9CA3AF;"></i>
-                            <input type="text" placeholder="Paste a reference link or vocabulary source (optional)" id="contextLink" value="">
+                            <input type="text" placeholder="Paste a reference link or vocabulary source (optional)"
+                                id="contextLink" value="">
                         </div>
 
                         <button class="btn-primary" id="submitAnswerBtn" style="align-self: flex-start;">
@@ -306,84 +347,29 @@
                 <!-- Style: css/test.css | Logic: js/test.js                -->
                 <!-- ###################################################### -->
                 <section id="pageTest" class="page">
-                    <div class="space-between mb-8">
-                        <div>
-                            <h2>Speaking Arena & IELTS Goals</h2>
-                            <p class="caption">Real microphone testing, AI IELTS scoring, and personalized study targets</p>
+                    <div class="card speaking-arena-header" style="padding: 20px 24px;">
+                        <div class="space-between">
+                            <div>
+                                <h2 style="font-size: 20px;">Speaking Arena</h2>
+                                <p class="caption">Choose a topic based on your preference.</p>
+                            </div>
+                            <span class="pill-chip green">🟢 Online</span>
                         </div>
                     </div>
 
-                    <!-- GOAL & STUDY OBJECTIVE BAR (Syncs with /api/goal/{user_id}) -->
-                    <div class="card mb-12" id="goalTargetCard" style="padding: 16px 20px; background: linear-gradient(135deg, #F8FAFC 0%, #EEF2FF 100%); border: 1px solid #E0E7FF;">
-                        <div class="space-between" style="align-items: center; flex-wrap: wrap; gap: 12px;">
-                            <div class="flex-row gap-12" style="align-items: center;">
-                                <span style="font-size: 28px;">🎯</span>
-                                <div>
-                                    <h3 style="font-size: 16px; margin: 0; font-weight: 700;">IELTS Target Goal: <span id="goalTargetBandText" style="color: #4F46E5;">Band 7.5</span></h3>
-                                    <p class="caption" id="goalTargetFocusText" style="margin: 2px 0 0;">Focus: Fluency & Coherence · 30 min/day</p>
-                                </div>
-                            </div>
-                            <div class="flex-row gap-8">
-                                <button type="button" class="btn-secondary" id="editGoalBtn" style="padding: 6px 14px; font-size: 13px;">
-                                    ⚙️ Edit Goal
-                                </button>
-                                <span class="pill-chip green" id="goalStatusBadge">On Track</span>
-                            </div>
-                        </div>
-
-                        <!-- Expandable Goal Editor Form -->
-                        <div id="goalEditPanel" class="hidden" style="margin-top: 14px; padding-top: 14px; border-top: 1px dashed #CBD5E1;">
-                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px;">
-                                <div>
-                                    <label class="caption" style="font-weight: 600;">Target Band Score</label>
-                                    <select id="goalBandSelect" class="form-select" style="width: 100%; padding: 8px 10px; border-radius: 8px; border: 1px solid #CBD5E1; margin-top: 4px;">
-                                        <option value="6.0">Band 6.0 (Competent)</option>
-                                        <option value="6.5">Band 6.5 (Good)</option>
-                                        <option value="7.0">Band 7.0 (Good User)</option>
-                                        <option value="7.5" selected>Band 7.5 (Very Good)</option>
-                                        <option value="8.0">Band 8.0 (Expert)</option>
-                                        <option value="8.5">Band 8.5 (Mastery)</option>
-                                        <option value="9.0">Band 9.0 (Expert Native)</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="caption" style="font-weight: 600;">Current Primary Focus</label>
-                                    <select id="goalFocusSelect" class="form-select" style="width: 100%; padding: 8px 10px; border-radius: 8px; border: 1px solid #CBD5E1; margin-top: 4px;">
-                                        <option value="Fluency & Coherence" selected>Fluency & Coherence</option>
-                                        <option value="Lexical Resource">Lexical Resource</option>
-                                        <option value="Grammatical Range">Grammatical Range</option>
-                                        <option value="Pronunciation">Pronunciation</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="caption" style="font-weight: 600;">Daily Study Time</label>
-                                    <select id="goalMinutesSelect" class="form-select" style="width: 100%; padding: 8px 10px; border-radius: 8px; border: 1px solid #CBD5E1; margin-top: 4px;">
-                                        <option value="15">15 minutes / day</option>
-                                        <option value="30" selected>30 minutes / day</option>
-                                        <option value="45">45 minutes / day</option>
-                                        <option value="60">60 minutes / day</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="flex-row gap-8 mt-12" style="justify-content: flex-end;">
-                                <button type="button" class="btn-secondary" id="cancelGoalBtn" style="padding: 6px 14px; font-size: 13px;">Cancel</button>
-                                <button type="button" class="btn-primary" id="saveGoalBtn" style="padding: 6px 16px; font-size: 13px;">Save Goal</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- STEP 1: CHOOSE TOPIC (24 AVAILABLE) -->
+                    <!-- STEP 1: CHOOSE TOPIC -->
                     <div id="testStep1">
-                        <div class="space-between" style="margin-bottom: 12px;">
-                            <p class="caption">Choose a topic · <span class="topic-count">24 available</span></p>
-                        </div>
                         <div class="topic-grid" id="topicGrid">
                             <!-- Populated dynamically via test.js & data.js -->
                         </div>
                         <div class="test-actions-bar">
                             <button class="btn-secondary" style="flex: 1;" id="surpriseBtn">🎲 Surprise me</button>
-                            <button class="btn-primary" style="flex: 2;" id="startRecordingBtn">Continue to Recording →</button>
+                            <button class="btn-primary" style="flex: 2;" id="startRecordingBtn">Continue to Recording
+                                →</button>
                         </div>
+
+                        <!-- Dedicated Meme Generator Section for Speaking Arena -->
+                        <div id="testMemeContainer" class="mt-16"></div>
                     </div>
 
                     <!-- STEP 2: VOICE RECORDING & TIMER -->
@@ -405,7 +391,8 @@
 
                         <div class="card" style="margin-top: 8px;">
                             <h3 style="font-size: 16px;" id="promptText">"Describe a memorable journey."</h3>
-                            <ul style="margin-top: 8px; padding-left: 20px; color: var(--text-secondary); font-size: 14px;">
+                            <ul
+                                style="margin-top: 8px; padding-left: 20px; color: var(--text-secondary); font-size: 14px;">
                                 <li>Where you went</li>
                                 <li>Who you were with</li>
                                 <li>Why it was memorable</li>
@@ -463,11 +450,13 @@
                         <div class="gap-analysis">
                             <div class="gap-item">
                                 <span class="icon">🕳️</span>
-                                <div><strong>You paused 12 times</strong> — work on flow using connectors like "well", "actually".</div>
+                                <div><strong>You paused 12 times</strong> — work on flow using connectors like "well",
+                                    "actually".</div>
                             </div>
                             <div class="gap-item">
                                 <span class="icon">📚</span>
-                                <div><strong>Limited topic vocabulary</strong> — try synonyms for "good": remarkable, stunning, impressive.</div>
+                                <div><strong>Limited topic vocabulary</strong> — try synonyms for "good": remarkable,
+                                    stunning, impressive.</div>
                             </div>
                         </div>
 
@@ -476,7 +465,8 @@
                             <div class="swipe-card">
                                 <h4>🎯 What you should have said</h4>
                                 <p class="text-sm">Add: "Furthermore, the journey taught me..."</p>
-                                <p class="text-sm" style="color: #1FA76A;">High-band snippet: "The breathtaking scenery left me speechless."</p>
+                                <p class="text-sm" style="color: #1FA76A;">High-band snippet: "The breathtaking scenery
+                                    left me speechless."</p>
                             </div>
                             <div class="swipe-card">
                                 <h4>🔗 Better connectors</h4>
@@ -490,8 +480,10 @@
 
                         <div class="flex-row gap-12 mt-12">
                             <button class="btn-secondary" style="flex: 1;" id="retakeTestBtn">🔁 Retake</button>
-                            <button class="btn-secondary" style="flex: 1;" onclick="alert('Score shared!')">📤 Share</button>
-                            <button class="btn-primary" style="flex: 1;" onclick="alert('Report saved.')">💾 Save</button>
+                            <button class="btn-secondary" style="flex: 1;" onclick="alert('Score shared!')">📤
+                                Share</button>
+                            <button class="btn-primary" style="flex: 1;" onclick="alert('Report saved.')">💾
+                                Save</button>
                         </div>
                     </div>
                 </section>
@@ -503,7 +495,11 @@
         <!-- MOBILE BOTTOM NAVIGATION                                       -->
         <!-- ============================================================== -->
         <nav class="bottom-nav" id="bottomNav">
-            <button class="bottom-nav-item active" data-page="chat" data-route="/personalmentor">
+            <button class="bottom-nav-item active" data-page="dashboard" data-route="/dashboard">
+                <i data-lucide="layout-dashboard"></i>
+                <span>Dashboard</span>
+            </button>
+            <button class="bottom-nav-item" data-page="chat" data-route="/personalmentor">
                 <i data-lucide="message-circle"></i>
                 <span>Mentor</span>
             </button>
@@ -513,9 +509,34 @@
             </button>
             <button class="bottom-nav-item" data-page="test" data-route="/goal">
                 <i data-lucide="mic"></i>
-                <span>Goal</span>
+                <span>Speaking</span>
             </button>
         </nav>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- FAST PHRASES IN-APP GAME MODAL                                 -->
+    <!-- ============================================================== -->
+    <div id="fastPhrasesModal" class="fast-phrases-modal-overlay hidden" role="dialog" aria-modal="true" aria-label="Fast Phrases Game Modal">
+        <div class="fast-phrases-modal-dialog">
+            <div class="fast-phrases-modal-bar">
+                <div class="fast-phrases-modal-title">
+                    <span class="game-badge">⚡ SPEED PUZZLE</span>
+                    <h3>Fast Phrases · Sentence Builder</h3>
+                </div>
+                <div class="fast-phrases-modal-actions">
+                    <a href="/game/" target="_blank" class="fast-phrases-action-btn" title="Open Full Screen in New Tab" id="fastPhrasesNewTabBtn">
+                        <i data-lucide="external-link"></i>
+                    </a>
+                    <button type="button" class="fast-phrases-action-btn close-btn" title="Close Game" id="closeFastPhrasesBtn">
+                        <i data-lucide="x"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="fast-phrases-frame-container">
+                <iframe id="fastPhrasesFrame" src="" title="Fast Phrases Game" allow="autoplay"></iframe>
+            </div>
+        </div>
     </div>
 
     <!-- ============================================================== -->
@@ -534,9 +555,12 @@
     <!-- 8. test.js               : Speaking test simulation            -->
     <!-- 9. router.js             : URL routing & path parameter sync   -->
     <!-- 10. app.js               : Master controller & bootstrapper    -->
-    <!-- Order per track: registry first, then A1-C2, then game.        -->
-    <!-- Section/game files are scaffold-only until screens are built.  -->
-    <script src="js/auth.js"></script>
+    <!-- Firebase App, Authentication & Firestore Database SDK (Compat) -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+    <script src="js/auth.js?v=2"></script>
     <script src="js/api.js"></script>
     <script src="js/data.js"></script>
     <script src="js/chat.js"></script>
@@ -580,6 +604,8 @@
     <script src="js/practice/modulepractice.js?v=2"></script>
     <script src="js/practice/practiceUI.js?v=2"></script>
     <script src="js/test.js"></script>
+    <script src="js/memescreen.js?v=2"></script>
+    <script src="js/dashboard.js?v=2"></script>
     <script src="js/router.js"></script>
     <script src="js/app.js"></script>
 </body>

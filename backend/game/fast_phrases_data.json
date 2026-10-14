@@ -1,378 +1,851 @@
 {
   "present": {
-    "title": "Present Tenses (Is / Are & Continuous)",
-    "emoji": "\u26a1",
-    "description": "Practice rapid syntax with Present Simple & Continuous actions.",
+    "level": "A1",
+    "title": "Present Tenses (Is / Are)",
+    "emoji": "⚡",
+    "desc": "Read the clue, build the sentence",
     "items": [
       {
-        "id": "pr-1",
-        "context": "A fluffy cat napping quietly",
-        "emoji": "\ud83d\udc31",
+        "id": "present_01",
+        "level": "A1",
+        "context": "A fluffy cat napping on a warm sofa",
+        "emoji": "🐱",
         "chunks": [
           "The cat",
           "is sleeping",
-          "on the warm sofa."
+          "on the sofa."
         ],
-        "distractor": null
+        "distractors": [
+          "are sleeping",
+          "on the bed."
+        ]
       },
       {
-        "id": "pr-2",
-        "context": "Children playing in the schoolyard",
-        "emoji": "\u26bd",
+        "id": "present_02",
+        "level": "A1",
+        "context": "Children playing football in the schoolyard",
+        "emoji": "⚽",
         "chunks": [
-          "The children",
+          "The kids",
           "are playing",
-          "football outside."
+          "outside."
         ],
-        "distractor": null
+        "distractors": [
+          "is playing",
+          "play football"
+        ]
       },
       {
-        "id": "pr-3",
-        "context": "A chef preparing vegetable soup",
-        "emoji": "\ud83c\udf72",
+        "id": "present_03",
+        "level": "A1",
+        "context": "A chef preparing fresh vegetable soup",
+        "emoji": "🍲",
         "chunks": [
-          "The chef",
-          "is cooking",
-          "fresh soup",
-          "in the kitchen."
+          "The cook",
+          "is making",
+          "some soup."
         ],
-        "distractor": null
+        "distractors": [
+          "are making",
+          "some soups."
+        ]
       },
       {
-        "id": "pr-4",
-        "context": "A girl reading an exciting adventure book",
-        "emoji": "\ud83d\udcd6",
+        "id": "present_04",
+        "level": "A1",
+        "context": "A student reading an exciting adventure novel",
+        "emoji": "📖",
         "chunks": [
           "She",
           "is reading",
-          "a new book",
-          "in the library."
+          "a good book."
         ],
-        "distractor": null
+        "distractors": [
+          "she are",
+          "read a book."
+        ]
       },
       {
-        "id": "pr-5",
-        "context": "Two friends riding bicycles in the park",
-        "emoji": "\ud83d\udeb2",
-        "chunks": [
-          "They",
-          "are riding",
-          "their bicycles",
-          "together."
-        ],
-        "distractor": null
-      },
-      {
-        "id": "pr-6",
-        "context": "The sun shining brightly today",
-        "emoji": "\u2600\ufe0f",
+        "id": "present_05",
+        "level": "A1",
+        "context": "The sun shining brightly over the green hills",
+        "emoji": "☀️",
         "chunks": [
           "The sun",
           "is shining",
-          "brightly today."
+          "today."
         ],
-        "distractor": null
+        "distractors": [
+          "are shining",
+          "yesterday."
+        ]
       },
       {
-        "id": "pr-7",
-        "context": "Birds singing early in the morning",
-        "emoji": "\ud83d\udc26",
-        "chunks": [
-          "The birds",
-          "are singing",
-          "in the tall tree."
-        ],
-        "distractor": null
-      },
-      {
-        "id": "pr-8",
+        "id": "present_06",
+        "level": "A1",
         "context": "A young boy drinking cold orange juice",
-        "emoji": "\ud83e\udd64",
+        "emoji": "🥤",
         "chunks": [
           "He",
           "is drinking",
-          "a glass of juice."
+          "some juice."
         ],
-        "distractor": null
+        "distractors": [
+          "is drink",
+          "a juice."
+        ]
+      },
+      {
+        "id": "present_07",
+        "level": "A1",
+        "context": "Two friends riding bicycles through the park",
+        "emoji": "🚲",
+        "chunks": [
+          "They",
+          "are riding",
+          "their bikes."
+        ],
+        "distractors": [
+          "is riding",
+          "there bikes."
+        ]
+      },
+      {
+        "id": "present_08",
+        "level": "A1",
+        "context": "Birds singing beautifully in the tall tree",
+        "emoji": "🐦",
+        "chunks": [
+          "The birds",
+          "are singing",
+          "outside."
+        ],
+        "distractors": [
+          "is singing",
+          "a song."
+        ]
+      },
+      {
+        "id": "present_09",
+        "level": "A1",
+        "context": "A woman painting a beautiful sunset landscape",
+        "emoji": "🎨",
+        "chunks": [
+          "She",
+          "is painting",
+          "a picture."
+        ],
+        "distractors": [
+          "she are",
+          "paint a picture."
+        ]
+      },
+      {
+        "id": "present_10",
+        "level": "A1",
+        "context": "A dog chasing its tail in the garden",
+        "emoji": "🐕",
+        "chunks": [
+          "The dog",
+          "is running",
+          "around."
+        ],
+        "distractors": [
+          "are running",
+          "is run"
+        ]
+      },
+      {
+        "id": "present_11",
+        "level": "A1",
+        "context": "A teacher explaining a difficult math problem",
+        "emoji": "🧑‍🏫",
+        "chunks": [
+          "She",
+          "is teaching",
+          "a class."
+        ],
+        "distractors": [
+          "is teach",
+          "to class."
+        ]
+      },
+      {
+        "id": "present_12",
+        "level": "A1",
+        "context": "A baker preparing fresh bread every morning",
+        "emoji": "🥖",
+        "chunks": [
+          "He",
+          "is baking",
+          "some bread."
+        ],
+        "distractors": [
+          "are baking",
+          "a breads."
+        ]
       }
     ]
   },
   "past_future": {
-    "title": "Past & Future Tenses (Did, Will & Going to)",
-    "emoji": "\u23f3",
-    "description": "Assemble narrative sentences across past events and future plans.",
+    "level": "A2",
+    "title": "Past & Future Tenses",
+    "emoji": "⏳",
+    "desc": "Read the clue, build the sentence",
     "items": [
       {
-        "id": "pf-1",
+        "id": "past_future_01",
+        "level": "A2",
         "context": "Yesterday we visited the grand museum",
-        "emoji": "\ud83c\udfdb\ufe0f",
+        "emoji": "🏛️",
         "chunks": [
           "We",
-          "visited",
-          "the national museum",
-          "yesterday."
+          "went",
+          "to the museum."
         ],
-        "distractor": null
+        "distractors": [
+          "was go",
+          "at museum."
+        ]
       },
       {
-        "id": "pf-2",
-        "context": "He bought fresh apples at the market",
-        "emoji": "\ud83c\udf4e",
+        "id": "past_future_02",
+        "level": "A2",
+        "context": "He bought fresh red apples at the market",
+        "emoji": "🍎",
         "chunks": [
           "He",
-          "bought",
-          "fresh apples",
-          "at the grocery store."
+          "got",
+          "some apples."
         ],
-        "distractor": null
+        "distractors": [
+          "has get",
+          "any apples."
+        ]
       },
       {
-        "id": "pf-3",
-        "context": "Tomorrow it will rain heavily",
-        "emoji": "\ud83c\udf27\ufe0f",
+        "id": "past_future_03",
+        "level": "A2",
+        "context": "Tomorrow it will rain in the afternoon",
+        "emoji": "🌧️",
         "chunks": [
           "It",
-          "will rain",
-          "heavily tomorrow",
-          "afternoon."
+          "is going to",
+          "rain tomorrow."
         ],
-        "distractor": null
+        "distractors": [
+          "will going to",
+          "rains tomorrow."
+        ]
       },
       {
-        "id": "pf-4",
-        "context": "They are going to travel to London",
-        "emoji": "\u2708\ufe0f",
+        "id": "past_future_04",
+        "level": "A2",
+        "context": "They are travelling to London next week",
+        "emoji": "✈️",
         "chunks": [
           "They",
-          "are going to visit",
-          "London",
-          "next summer."
+          "will fly",
+          "to London."
         ],
-        "distractor": null
+        "distractors": [
+          "will flying",
+          "fly to London"
+        ]
       },
       {
-        "id": "pf-5",
-        "context": "She wrote an inspiring letter to her friend",
-        "emoji": "\u2709\ufe0f",
+        "id": "past_future_05",
+        "level": "A2",
+        "context": "She wrote an inspiring letter last night",
+        "emoji": "✉️",
         "chunks": [
           "She",
           "wrote",
-          "a long letter",
-          "last night."
+          "a letter."
         ],
-        "distractor": null
+        "distractors": [
+          "has wrote",
+          "written letter."
+        ]
       },
       {
-        "id": "pf-6",
-        "context": "The student finished all homework early",
-        "emoji": "\ud83d\udcdd",
+        "id": "past_future_06",
+        "level": "A2",
+        "context": "The family ate dinner together at the restaurant",
+        "emoji": "🍽️",
         "chunks": [
-          "The student",
-          "finished",
-          "the homework",
-          "before dinner."
+          "They",
+          "had dinner",
+          "together."
         ],
-        "distractor": null
+        "distractors": [
+          "have ate",
+          "at together."
+        ]
       },
       {
-        "id": "pf-7",
-        "context": "I will call you as soon as I arrive",
-        "emoji": "\ud83d\udcde",
+        "id": "past_future_07",
+        "level": "A2",
+        "context": "He will study medicine at the university",
+        "emoji": "🎓",
         "chunks": [
-          "I",
-          "will call you",
-          "when I arrive home."
+          "He",
+          "is going to",
+          "study medicine."
         ],
-        "distractor": null
+        "distractors": [
+          "is go to",
+          "studies medicine."
+        ]
       },
       {
-        "id": "pf-8",
-        "context": "We saw an incredible movie last weekend",
-        "emoji": "\ud83c\udfac",
+        "id": "past_future_08",
+        "level": "A2",
+        "context": "They watched a scary movie last weekend",
+        "emoji": "🎬",
+        "chunks": [
+          "They",
+          "saw",
+          "a film."
+        ],
+        "distractors": [
+          "was seen",
+          "seen film."
+        ]
+      },
+      {
+        "id": "past_future_09",
+        "level": "A2",
+        "context": "She is going to bake a chocolate cake",
+        "emoji": "🎂",
+        "chunks": [
+          "She",
+          "will make",
+          "a cake."
+        ],
+        "distractors": [
+          "will made",
+          "making cake."
+        ]
+      },
+      {
+        "id": "past_future_10",
+        "level": "A2",
+        "context": "We played volleyball on the sunny beach",
+        "emoji": "🏐",
         "chunks": [
           "We",
-          "saw",
-          "an exciting film",
-          "last Saturday."
+          "played",
+          "volleyball."
         ],
-        "distractor": null
+        "distractors": [
+          "were played",
+          "play volleyball."
+        ]
+      },
+      {
+        "id": "past_future_11",
+        "level": "A2",
+        "context": "He drove his new car to the countryside",
+        "emoji": "🚙",
+        "chunks": [
+          "He",
+          "drove",
+          "out of town."
+        ],
+        "distractors": [
+          "has drove",
+          "drive out."
+        ]
+      },
+      {
+        "id": "past_future_12",
+        "level": "A2",
+        "context": "Tomorrow the students will take an exam",
+        "emoji": "📝",
+        "chunks": [
+          "They",
+          "will have",
+          "a test."
+        ],
+        "distractors": [
+          "will had",
+          "having a test."
+        ]
       }
     ]
   },
   "location": {
-    "title": "Location & Prepositions (In, On, Under, Next to)",
-    "emoji": "\ud83d\udccd",
-    "description": "Fast spatial grammar matching items to their exact locations.",
+    "level": "A1",
+    "title": "Prepositions of Place",
+    "emoji": "📍",
+    "desc": "Read the clue, build the sentence",
     "items": [
       {
-        "id": "loc-1",
+        "id": "location_01",
+        "level": "A1",
         "context": "A puppy hiding beneath the wooden table",
-        "emoji": "\ud83d\udc36",
+        "emoji": "🐶",
         "chunks": [
-          "The small puppy",
-          "is hiding",
-          "under the wooden table."
+          "The dog",
+          "is under",
+          "the table."
         ],
-        "distractor": null
+        "distractors": [
+          "are under",
+          "in the table."
+        ]
       },
       {
-        "id": "loc-2",
-        "context": "Keys resting on the dining table",
-        "emoji": "\ud83d\udd11",
+        "id": "location_02",
+        "level": "A1",
+        "context": "Keys resting on the kitchen counter",
+        "emoji": "🔑",
         "chunks": [
-          "The car keys",
-          "are lying",
-          "on the kitchen counter."
+          "The keys",
+          "are on",
+          "the counter."
         ],
-        "distractor": null
+        "distractors": [
+          "is on",
+          "at counter."
+        ]
       },
       {
-        "id": "loc-3",
-        "context": "A clock hanging on the wall between posters",
-        "emoji": "\u23f0",
+        "id": "location_03",
+        "level": "A1",
+        "context": "A clock hanging between two posters",
+        "emoji": "⏰",
         "chunks": [
           "The clock",
-          "hangs",
-          "on the wall",
-          "between the posters."
+          "is between",
+          "the posters."
         ],
-        "distractor": null
+        "distractors": [
+          "is among",
+          "between posters."
+        ]
       },
       {
-        "id": "loc-4",
+        "id": "location_04",
+        "level": "A1",
         "context": "A red car parked in front of the house",
-        "emoji": "\ud83d\ude97",
+        "emoji": "🚗",
         "chunks": [
-          "A red car",
-          "is parked",
-          "in front of",
+          "The car",
+          "is in front of",
           "the house."
         ],
-        "distractor": null
+        "distractors": [
+          "is in front",
+          "front of house."
+        ]
       },
       {
-        "id": "loc-5",
-        "context": "Books organized neatly inside the backpack",
-        "emoji": "\ud83c\udf92",
+        "id": "location_05",
+        "level": "A1",
+        "context": "Coffee sitting next to the laptop",
+        "emoji": "☕",
         "chunks": [
-          "The textbooks",
-          "are inside",
-          "the blue backpack."
-        ],
-        "distractor": null
-      },
-      {
-        "id": "loc-6",
-        "context": "A coffee cup sitting next to the laptop",
-        "emoji": "\u2615",
-        "chunks": [
-          "The hot coffee",
-          "is sitting",
-          "next to",
+          "The coffee",
+          "is next to",
           "the laptop."
         ],
-        "distractor": null
+        "distractors": [
+          "is near to",
+          "next the laptop."
+        ]
       },
       {
-        "id": "loc-7",
-        "context": "A bridge crossing over the wide river",
-        "emoji": "\ud83c\udf09",
+        "id": "location_06",
+        "level": "A1",
+        "context": "A cat sitting on top of the bookshelf",
+        "emoji": "📚",
         "chunks": [
-          "The stone bridge",
-          "crosses",
-          "over the deep river."
+          "The cat",
+          "is on",
+          "the shelf."
         ],
-        "distractor": null
+        "distractors": [
+          "are on",
+          "in shelf."
+        ]
+      },
+      {
+        "id": "location_07",
+        "level": "A1",
+        "context": "Children playing behind the tall fence",
+        "emoji": "🏡",
+        "chunks": [
+          "The kids",
+          "are behind",
+          "the fence."
+        ],
+        "distractors": [
+          "is behind",
+          "back of fence."
+        ]
+      },
+      {
+        "id": "location_08",
+        "level": "A1",
+        "context": "A bird perched on the window ledge",
+        "emoji": "🪟",
+        "chunks": [
+          "The bird",
+          "is on",
+          "the window."
+        ],
+        "distractors": [
+          "are at",
+          "inside window."
+        ]
+      },
+      {
+        "id": "location_09",
+        "level": "A1",
+        "context": "A ball resting beside the wooden bench",
+        "emoji": "⚽",
+        "chunks": [
+          "The ball",
+          "is beside",
+          "the bench."
+        ],
+        "distractors": [
+          "is besides",
+          "beside bench."
+        ]
+      },
+      {
+        "id": "location_10",
+        "level": "A1",
+        "context": "A picture hanging above the fireplace",
+        "emoji": "🖼️",
+        "chunks": [
+          "The art",
+          "is above",
+          "the fireplace."
+        ],
+        "distractors": [
+          "is on top",
+          "over fireplace."
+        ]
       }
     ]
   },
   "modals": {
-    "title": "Questions & Modals (Can, Must, Should, Wh-)",
-    "emoji": "\u2753",
-    "description": "Construct interrogatives and modal expressions rapidly.",
+    "level": "B1",
+    "title": "Questions & Modals",
+    "emoji": "❓",
+    "desc": "Read the clue, build the sentence",
     "items": [
       {
-        "id": "mod-1",
-        "context": "Asking where the train station is located",
-        "emoji": "\ud83d\ude89",
+        "id": "modals_01",
+        "level": "B1",
+        "context": "Asking where the train station is",
+        "emoji": "🚉",
         "chunks": [
           "Where",
           "is",
-          "the nearest train station",
-          "?"
+          "the station?"
         ],
-        "distractor": null
+        "distractors": [
+          "are",
+          "station is?"
+        ]
       },
       {
-        "id": "mod-2",
-        "context": "Can penguins fly in the cold sky?",
-        "emoji": "\ud83d\udc27",
+        "id": "modals_02",
+        "level": "B1",
+        "context": "Penguins cannot fly in the sky",
+        "emoji": "🐧",
         "chunks": [
           "Penguins",
-          "cannot fly",
-          "in the sky."
+          "can't fly",
+          "at all."
         ],
-        "distractor": null
+        "distractors": [
+          "cannot flying",
+          "never fly."
+        ]
       },
       {
-        "id": "mod-3",
-        "context": "Asking what time the store opens tomorrow",
-        "emoji": "\ud83c\udfea",
+        "id": "modals_03",
+        "level": "B1",
+        "context": "Asking what time the supermarket opens",
+        "emoji": "🏪",
         "chunks": [
-          "What time",
+          "When",
           "does",
-          "the supermarket open",
-          "tomorrow?"
+          "the store open?"
         ],
-        "distractor": null
+        "distractors": [
+          "is",
+          "store opens?"
+        ]
       },
       {
-        "id": "mod-4",
-        "context": "Students should study before the test",
-        "emoji": "\ud83d\udcda",
+        "id": "modals_04",
+        "level": "B1",
+        "context": "Students should study before the exam",
+        "emoji": "📚",
         "chunks": [
           "You",
-          "should study",
-          "carefully before",
-          "the final exam."
+          "should",
+          "study hard."
         ],
-        "distractor": null
+        "distractors": [
+          "should to",
+          "studying hard."
+        ]
       },
       {
-        "id": "mod-5",
-        "context": "Is there any fresh milk left in the fridge?",
-        "emoji": "\ud83e\udd5b",
+        "id": "modals_05",
+        "level": "B1",
+        "context": "Checking if there is milk in the fridge",
+        "emoji": "🥛",
         "chunks": [
           "Is there",
-          "any milk left",
-          "in the refrigerator",
-          "?"
+          "any milk",
+          "left?"
         ],
-        "distractor": null
+        "distractors": [
+          "Are there",
+          "some milk"
+        ]
       },
       {
-        "id": "mod-6",
-        "context": "Why did she leave the party so early?",
-        "emoji": "\ud83c\udf89",
+        "id": "modals_06",
+        "level": "B1",
+        "context": "He can speak three different languages",
+        "emoji": "🗣️",
         "chunks": [
-          "Why",
-          "did she leave",
-          "the birthday party",
-          "so early?"
+          "He",
+          "can speak",
+          "many languages."
         ],
-        "distractor": null
+        "distractors": [
+          "can speaks",
+          "much languages."
+        ]
       },
       {
-        "id": "mod-7",
-        "context": "We must wear seatbelts in the car",
-        "emoji": "\ud83d\udee1\ufe0f",
+        "id": "modals_07",
+        "level": "B1",
+        "context": "Asking how much the red shoes cost",
+        "emoji": "👟",
         "chunks": [
-          "Everyone",
-          "must wear",
-          "a seatbelt",
-          "in the car."
+          "How much",
+          "are",
+          "the shoes?"
         ],
-        "distractor": null
+        "distractors": [
+          "is",
+          "how many"
+        ]
+      },
+      {
+        "id": "modals_08",
+        "level": "B1",
+        "context": "You must wear a seatbelt in the car",
+        "emoji": "🚗",
+        "chunks": [
+          "You",
+          "must",
+          "buckle up."
+        ],
+        "distractors": [
+          "must to",
+          "buckling up."
+        ]
+      },
+      {
+        "id": "modals_09",
+        "level": "B1",
+        "context": "Asking who wrote this famous novel",
+        "emoji": "✍️",
+        "chunks": [
+          "Who",
+          "wrote",
+          "this book?"
+        ],
+        "distractors": [
+          "did write",
+          "has wrote"
+        ]
+      },
+      {
+        "id": "modals_10",
+        "level": "B1",
+        "context": "We should always recycle plastic bottles",
+        "emoji": "♻️",
+        "chunks": [
+          "We",
+          "should recycle",
+          "more."
+        ],
+        "distractors": [
+          "should to recycle",
+          "many more."
+        ]
+      }
+    ]
+  },
+  "comparatives": {
+    "level": "B1+",
+    "title": "Comparatives & Superlatives",
+    "emoji": "📊",
+    "desc": "Read the clue, build the sentence",
+    "items": [
+      {
+        "id": "comparatives_01",
+        "level": "B1+",
+        "context": "An elephant is bigger than a mouse",
+        "emoji": "🐘",
+        "chunks": [
+          "A mouse",
+          "is smaller",
+          "than an elephant."
+        ],
+        "distractors": [
+          "is more small",
+          "then an elephant."
+        ]
+      },
+      {
+        "id": "comparatives_02",
+        "level": "B1+",
+        "context": "This is the tallest building in the city",
+        "emoji": "🏙️",
+        "chunks": [
+          "No building",
+          "is taller",
+          "than this one."
+        ],
+        "distractors": [
+          "is more tall",
+          "as this one."
+        ]
+      },
+      {
+        "id": "comparatives_03",
+        "level": "B1+",
+        "context": "Pizza is more popular than salad",
+        "emoji": "🍕",
+        "chunks": [
+          "Salad",
+          "is less popular",
+          "than pizza."
+        ],
+        "distractors": [
+          "is least popular",
+          "then pizza."
+        ]
+      },
+      {
+        "id": "comparatives_04",
+        "level": "B1+",
+        "context": "She runs faster than her older brother",
+        "emoji": "🏃",
+        "chunks": [
+          "Her brother",
+          "runs slower",
+          "than she does."
+        ],
+        "distractors": [
+          "run slower",
+          "than she do."
+        ]
+      },
+      {
+        "id": "comparatives_05",
+        "level": "B1+",
+        "context": "This is the most beautiful garden I have seen",
+        "emoji": "🌺",
+        "chunks": [
+          "I have never",
+          "seen",
+          "a nicer garden."
+        ],
+        "distractors": [
+          "saw",
+          "nicest garden."
+        ]
+      },
+      {
+        "id": "comparatives_06",
+        "level": "B1+",
+        "context": "A cheetah is the fastest land animal",
+        "emoji": "🐆",
+        "chunks": [
+          "No animal",
+          "runs faster",
+          "than a cheetah."
+        ],
+        "distractors": [
+          "run fastest",
+          "then a cheetah."
+        ]
+      },
+      {
+        "id": "comparatives_07",
+        "level": "B1+",
+        "context": "Math is harder than art for some students",
+        "emoji": "🧮",
+        "chunks": [
+          "Art",
+          "is easier",
+          "than math."
+        ],
+        "distractors": [
+          "is more easy",
+          "as math."
+        ]
+      },
+      {
+        "id": "comparatives_08",
+        "level": "B1+",
+        "context": "Summer is warmer than winter",
+        "emoji": "🌡️",
+        "chunks": [
+          "Winter",
+          "is colder",
+          "than summer."
+        ],
+        "distractors": [
+          "is more cold",
+          "then summer."
+        ]
+      },
+      {
+        "id": "comparatives_09",
+        "level": "B1+",
+        "context": "Gold is more valuable than silver",
+        "emoji": "🥇",
+        "chunks": [
+          "Silver",
+          "is less valuable",
+          "than gold."
+        ],
+        "distractors": [
+          "is least valuable",
+          "then gold."
+        ]
+      },
+      {
+        "id": "comparatives_10",
+        "level": "B1+",
+        "context": "Mount Everest is the highest mountain",
+        "emoji": "🏔️",
+        "chunks": [
+          "No mountain",
+          "is higher",
+          "than Everest."
+        ],
+        "distractors": [
+          "is more high",
+          "then Everest."
+        ]
       }
     ]
   }

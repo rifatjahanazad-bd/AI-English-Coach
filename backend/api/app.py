@@ -8,7 +8,7 @@ Structured according to modern Python backend architecture:
 """
 
 from typing import Optional
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
@@ -17,7 +17,7 @@ from backend.api.config import (
     CORS_ORIGINS,
     INDEX_HTML,
     REPO_ROOT,
-    OUTPUT_DIR,
+    MEMES_OUTPUT_DIR,
     GAME_DIR,
 )
 from backend.api.routes import register_routes
@@ -40,6 +40,24 @@ def create_app() -> FastAPI:
         allow_headers=["*"],
     )
 
+    # 1b. Defensive Security Headers Middleware
+    @application.middleware("http")
+    async def add_security_headers(request: Request, call_next):
+        response = await call_next(request)
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        response.headers["X-Frame-Options"] = "SAMEORIGIN"
+        response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+        response.headers["Content-Security-Policy"] = (
+            "default-src 'self'; "
+            "script-src 'self' 'unsafe-inline' https://unpkg.com https://www.gstatic.com https://apis.google.com; "
+            "frame-src 'self' https://*.firebaseapp.com https://accounts.google.com; "
+            "connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://*.firebaseapp.com https://tokenharbor.ai; "
+            "img-src 'self' data: https:; "
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+            "font-src 'self' data: https://fonts.gstatic.com;"
+        )
+        return response
+
     # 2. Register all structured API domain routers
     register_routes(application)
 
@@ -51,9 +69,12 @@ def create_app() -> FastAPI:
 
     spa_paths = [
         "/",
+        "/dashboard",
         "/home",
         "/personalmentor",
         "/goal",
+        "/speaking",
+        "/speaking/{full_path:path}",
         "/test",
         "/test/{full_path:path}",
         "/practice",
@@ -74,8 +95,9 @@ def create_app() -> FastAPI:
         application.mount("/UI", StaticFiles(directory=str(ui_dir), html=True), name="ui")
     if GAME_DIR.exists():
         application.mount("/game", StaticFiles(directory=str(GAME_DIR), html=True), name="game")
-    if OUTPUT_DIR.exists():
-        application.mount("/output", StaticFiles(directory=str(OUTPUT_DIR)), name="output")
+        application.mount("/backend/game", StaticFiles(directory=str(GAME_DIR), html=True), name="backend_game")
+    if MEMES_OUTPUT_DIR.exists():
+        application.mount("/output/memes", StaticFiles(directory=str(MEMES_OUTPUT_DIR)), name="memes")
 
     return application
 

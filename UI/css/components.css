@@ -19,139 +19,360 @@
     box-shadow: var(--shadow-md);
 }
 
-/* --- Pill Chip --- */
-.pill-chip {
+/* --- Pill Chips & Labels (Inspired by Image 3 Toy & Activity App Palette) --- */
+.pill-chip,
+.label-chip {
     display: inline-flex;
     align-items: center;
     gap: 6px;
     padding: 6px 14px;
     border-radius: var(--radius-pill);
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 700;
     font-family: var(--font-display);
-    background: var(--pale-yellow-bg);
-    color: #8A6D00;
+    background: var(--label-yellow-bg, #FFF7D6);
+    color: var(--label-yellow-text, #B45309);
+    border: 1.5px solid var(--label-yellow-border, #FCD34D);
     white-space: nowrap;
-    transition: all 0.2s ease;
+    transition: var(--bounce-spring);
+    box-shadow: 0 2px 6px rgba(180, 83, 9, 0.05);
 }
 
-.pill-chip:hover {
+.pill-chip:hover,
+.label-chip:hover {
     transform: translateY(-1px);
+    background: var(--label-yellow-hover, #FEF08A);
+    box-shadow: 0 4px 10px rgba(180, 83, 9, 0.12);
 }
 
-.pill-chip.green {
-    background: var(--pale-green-bg);
-    color: var(--secondary-deep);
+/* Green Variant (Puzzles, Progress, Grammar) */
+.pill-chip.green,
+.label-chip.green {
+    background: var(--label-green-bg, #E8FAF1);
+    color: var(--label-green-text, #15803D);
+    border: 1.5px solid var(--label-green-border, #86EFAC);
+    box-shadow: 0 2px 6px rgba(21, 128, 61, 0.05);
 }
 
-/* --- Badge --- */
+.pill-chip.green:hover,
+.label-chip.green:hover {
+    background: var(--label-green-hover, #D1FAE5);
+    box-shadow: 0 4px 10px rgba(21, 128, 61, 0.12);
+}
+
+/* Orange Variant (Activities, Painting, Vocabulary) */
+.pill-chip.orange,
+.label-chip.orange {
+    background: var(--label-orange-bg, #FFF0E6);
+    color: var(--label-orange-text, #C2410C);
+    border: 1.5px solid var(--label-orange-border, #FDBA74);
+    box-shadow: 0 2px 6px rgba(194, 65, 12, 0.05);
+}
+
+.pill-chip.orange:hover,
+.label-chip.orange:hover {
+    background: var(--label-orange-hover, #FED7AA);
+    box-shadow: 0 4px 10px rgba(194, 65, 12, 0.12);
+}
+
+/* Purple Variant (Creative, Listening, Levels) */
+.pill-chip.purple,
+.label-chip.purple {
+    background: var(--label-purple-bg, #F5EEFF);
+    color: var(--label-purple-text, #7E22CE);
+    border: 1.5px solid var(--label-purple-border, #D8B4FE);
+    box-shadow: 0 2px 6px rgba(126, 34, 206, 0.05);
+}
+
+.pill-chip.purple:hover,
+.label-chip.purple:hover {
+    background: var(--label-purple-hover, #E9D5FF);
+    box-shadow: 0 4px 10px rgba(126, 34, 206, 0.12);
+}
+
+/* Blue Variant (Target, Clock, Writing) */
+.pill-chip.blue,
+.label-chip.blue {
+    background: var(--label-blue-bg, #E0F2FE);
+    color: var(--label-blue-text, #0369A1);
+    border: 1.5px solid var(--label-blue-border, #7DD3FC);
+    box-shadow: 0 2px 6px rgba(3, 105, 161, 0.05);
+}
+
+.pill-chip.blue:hover,
+.label-chip.blue:hover {
+    background: var(--label-blue-hover, #BAE6FD);
+    box-shadow: 0 4px 10px rgba(3, 105, 161, 0.12);
+}
+
+/* Outlined Clean Variant */
+.pill-chip.outline {
+    background: #FFFFFF;
+    border: 1.5px solid var(--outline-border);
+    color: var(--text-primary);
+}
+
+.pill-chip.outline:hover {
+    background: #F9FAFB;
+    border-color: #CBD5E1;
+}
+
+/* --- Badges & Chips (Matching Image 3 Aesthetic) --- */
 .badge-green {
-    background: #E8FAF1;
-    color: #1FA76A;
+    background: var(--label-green-bg, #E8FAF1);
+    color: var(--label-green-text, #15803D);
+    border: 1.5px solid var(--label-green-border, #86EFAC);
     font-family: var(--font-display);
-    font-weight: 600;
+    font-weight: 700;
     padding: 4px 12px;
-    border-radius: 100px;
-    font-size: 13.5px;
+    border-radius: var(--radius-pill);
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
 }
 
 .topic-count {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: var(--pale-green-bg);
-    color: var(--secondary-deep);
+    background: var(--label-green-bg, #E8FAF1);
+    color: var(--label-green-text, #15803D);
+    border: 1px solid var(--label-green-border, #86EFAC);
     font-family: var(--font-display);
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 700;
     padding: 2px 10px;
     border-radius: 100px;
 }
 
-/* --- Primary Button: Clean, luminous, warm glow --- */
-.btn-primary {
-    background: linear-gradient(135deg, #FFD43B 0%, #3ECF8E 100%);
+/* ==========================================================================
+   IMAGE 1 INSPIRATION: "TRY AGAIN" 3D TACTILE GREEN GAME BUTTON
+   - Chunky tactile 3D shelf underneath
+   - Physical press-down feedback
+   - White all-caps bold display typography
+   ========================================================================== */
+.btn-try-again,
+.btn-3d-green,
+.btn-primary.btn-green,
+.btn-green {
+    background: linear-gradient(180deg, #4ADE80 0%, #22C55E 55%, #16A34A 100%);
+    color: #FFFFFF !important;
     border: none;
-    color: #1A1A1A;
-    font-weight: 600;
-    font-size: 15px;
-    padding: 13px 26px;
+    font-family: var(--font-display);
+    font-size: 15.5px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 13px 30px;
     border-radius: var(--radius-pill);
+    box-shadow: 0 5px 0 #15803D, 0 8px 18px rgba(21, 128, 61, 0.35);
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    box-shadow: 0 4px 14px rgba(255, 212, 59, 0.3);
-    transition: all 0.2s ease;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.1s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    top: 0;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+    user-select: none;
+}
+
+.btn-try-again:hover,
+.btn-3d-green:hover,
+.btn-primary.btn-green:hover,
+.btn-green:hover {
+    background: linear-gradient(180deg, #58E28B 0%, #26D165 55%, #18AE50 100%);
+    top: -2px;
+    box-shadow: 0 7px 0 #15803D, 0 12px 24px rgba(21, 128, 61, 0.45);
+    color: #FFFFFF !important;
+}
+
+.btn-try-again:active,
+.btn-3d-green:active,
+.btn-primary.btn-green:active,
+.btn-green:active {
+    top: 3px;
+    box-shadow: 0 2px 0 #15803D, 0 4px 8px rgba(21, 128, 61, 0.2);
+}
+
+/* ==========================================================================
+   IMAGE 2 INSPIRATION: "PLAY" BUBBLE-CANDY GLOSSY 3D BUTTON
+   - Thick white outer border ring
+   - Specular top gloss highlight
+   - Juicy radiant gradient & 3D bottom base
+   ========================================================================== */
+.btn-play,
+.btn-candy,
+.btn-play-red {
+    background: linear-gradient(180deg, #FF5C7A 0%, #FF2453 50%, #E60039 100%);
+    color: #FFFFFF !important;
+    border: 3.5px solid #FFFFFF;
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 11px 28px;
+    border-radius: var(--radius-pill);
+    box-shadow: inset 0 2.5px 3px rgba(255, 255, 255, 0.8), inset 0 -2px 3px rgba(0, 0, 0, 0.25), 0 5px 0 #A80D31, 0 8px 22px rgba(230, 0, 57, 0.45);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.1s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    top: 0;
+    text-shadow: 0 1.5px 3px rgba(0, 0, 0, 0.3);
+    user-select: none;
+}
+
+.btn-play:hover,
+.btn-candy:hover,
+.btn-play-red:hover {
+    background: linear-gradient(180deg, #FF6F8B 0%, #FF3864 50%, #F50040 100%);
+    top: -2px;
+    border-color: #FFFFFF;
+    box-shadow: inset 0 3px 4px rgba(255, 255, 255, 0.9), inset 0 -2px 3px rgba(0, 0, 0, 0.25), 0 7px 0 #A80D31, 0 12px 28px rgba(230, 0, 57, 0.55);
+}
+
+.btn-play:active,
+.btn-candy:active,
+.btn-play-red:active {
+    top: 3px;
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.5), inset 0 -1px 2px rgba(0, 0, 0, 0.2), 0 2px 0 #A80D31, 0 4px 10px rgba(230, 0, 57, 0.3);
+}
+
+/* Sunny Golden Variant of the Play Button */
+.btn-play.btn-gold,
+.btn-play-gold {
+    background: linear-gradient(180deg, #FFD43B 0%, #FFB703 55%, #FB8500 100%);
+    border: 3.5px solid #FFFFFF;
+    color: #1A1A1A !important;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.7);
+    box-shadow: inset 0 2.5px 3px rgba(255, 255, 255, 0.8), inset 0 -2px 3px rgba(0, 0, 0, 0.15), 0 5px 0 #C2410C, 0 8px 22px rgba(251, 133, 0, 0.4);
+}
+
+.btn-play.btn-gold:hover,
+.btn-play-gold:hover {
+    background: linear-gradient(180deg, #FFE066 0%, #FFC107 55%, #FF9800 100%);
+    top: -2px;
+    box-shadow: inset 0 3px 4px rgba(255, 255, 255, 0.9), inset 0 -2px 3px rgba(0, 0, 0, 0.15), 0 7px 0 #C2410C, 0 12px 28px rgba(251, 133, 0, 0.5);
+}
+
+.btn-play.btn-gold:active,
+.btn-play-gold:active {
+    top: 3px;
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.6), inset 0 -1px 2px rgba(0, 0, 0, 0.15), 0 2px 0 #C2410C, 0 4px 10px rgba(251, 133, 0, 0.3);
+}
+
+/* --- Primary Button: Tactile 3D Sunshine Action Button --- */
+.btn-primary {
+    background: linear-gradient(180deg, #FFD43B 0%, #F5B800 60%, #E69D00 100%);
+    border: none;
+    color: #1A1A1A;
+    font-weight: 800;
+    font-size: 15px;
+    padding: 12px 26px;
+    border-radius: var(--radius-pill);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 4px 0 #B87700, 0 6px 18px rgba(245, 184, 0, 0.35);
+    transition: all 0.12s ease;
     cursor: pointer;
     font-family: var(--font-display);
+    text-decoration: none;
+    position: relative;
+    top: 0;
+    user-select: none;
 }
 
 .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 212, 59, 0.42);
+    top: -2px;
+    background: linear-gradient(180deg, #FFE066 0%, #FFC41E 60%, #F5A500 100%);
+    box-shadow: 0 6px 0 #B87700, 0 10px 22px rgba(245, 184, 0, 0.45);
+    color: #1A1A1A;
 }
 
 .btn-primary:active {
-    transform: translateY(1px);
-    box-shadow: 0 2px 8px rgba(255, 212, 59, 0.22);
+    top: 3px;
+    box-shadow: 0 1px 0 #B87700, 0 3px 6px rgba(245, 184, 0, 0.2);
 }
 
-/* --- Secondary Button --- */
+/* --- Secondary Button: Clean Outlined 3D Pill --- */
 .btn-secondary {
-    background: var(--surface);
-    border: 1.5px solid #E5E7EB;
+    background: #FFFFFF;
+    border: 2px solid var(--outline-border);
     color: var(--text-primary);
-    font-weight: 500;
+    font-weight: 700;
     font-size: 14.5px;
-    padding: 11px 20px;
+    padding: 10px 22px;
     border-radius: var(--radius-pill);
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    transition: all 0.2s ease;
+    transition: all 0.12s ease;
     cursor: pointer;
     font-family: var(--font-display);
+    text-decoration: none;
+    box-shadow: 0 3px 0 #E2E8F0, 0 4px 10px rgba(0, 0, 0, 0.04);
+    position: relative;
+    top: 0;
 }
 
 .btn-secondary:hover {
     background: #F9FAFB;
-    border-color: #D1D5DB;
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-sm);
+    border-color: #CBD5E1;
+    color: var(--text-primary);
+    top: -1px;
+    box-shadow: 0 4px 0 #CBD5E1, 0 6px 14px rgba(0, 0, 0, 0.06);
 }
 
 .btn-secondary:active {
-    transform: translateY(1px);
+    top: 2px;
+    box-shadow: 0 1px 0 #CBD5E1, 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-/* --- Fast Phrases Game Launcher Button --- */
+/* --- Fast Phrases Game Launcher Button (Glossy Candy Play Button with White Ring) --- */
 .game-launch-btn {
     display: inline-flex;
     align-items: center;
-    gap: 7px;
-    background: linear-gradient(135deg, #FFE44D 0%, #7BC67E 100%);
-    color: #1A3026;
+    gap: 8px;
+    background: linear-gradient(180deg, #FFD43B 0%, #FFB703 55%, #FB8500 100%);
+    color: #1E2923;
     font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 13px;
-    padding: 7px 16px;
+    font-weight: 800;
+    font-size: 13.5px;
+    padding: 7px 18px;
     border-radius: var(--radius-pill);
     text-decoration: none;
-    box-shadow: 0 3px 10px rgba(62, 207, 142, 0.22);
-    transition: all 0.2s ease;
+    border: 2.5px solid #FFFFFF;
+    box-shadow: inset 0 1.5px 2px rgba(255, 255, 255, 0.8), 0 4px 0 #C2410C, 0 6px 14px rgba(251, 133, 0, 0.35);
+    transition: all 0.12s ease;
     cursor: pointer;
+    white-space: nowrap;
+    position: relative;
+    top: 0;
 }
 
 .game-launch-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 5px 14px rgba(62, 207, 142, 0.32);
+    top: -1px;
+    background: linear-gradient(180deg, #FFE066 0%, #FFC107 55%, #FF9800 100%);
+    box-shadow: inset 0 2px 3px rgba(255, 255, 255, 0.9), 0 5px 0 #C2410C, 0 8px 18px rgba(251, 133, 0, 0.45);
+    color: #1E2923;
 }
 
 .game-launch-btn:active {
-    transform: translateY(1px);
-    box-shadow: 0 2px 6px rgba(62, 207, 142, 0.18);
+    top: 2px;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.6), 0 1px 0 #C2410C, 0 3px 6px rgba(251, 133, 0, 0.25);
 }
 
 /* --- Icon Button --- */
@@ -221,7 +442,7 @@
 .progress-ring .score-inner {
     position: relative;
     font-size: 26px;
-    font-weight: 700;
+    font-weight: 600;
     font-family: var(--font-display);
     font-variant-numeric: tabular-nums;
     color: #1A1A1A;
@@ -291,3 +512,352 @@
 
 .feedback-card.green-border  { border-left-color: var(--secondary-green); }
 .feedback-card.yellow-border { border-left-color: var(--primary-yellow); }
+
+/* --- Social Auth Buttons (Google, Facebook, LinkedIn, Instagram) --- */
+.aiec-social-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    width: 100%;
+    margin: 14px 0 10px 0;
+}
+
+.btn-social {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+.btn-social:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.btn-social:active {
+    transform: translateY(0);
+}
+
+.btn-social svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+/* Specific Provider Palettes */
+.btn-google {
+    background: #FFFFFF;
+    color: #3C4043;
+    border: 1px solid #DADCE0;
+}
+.btn-google:hover {
+    background: #F8FAFD;
+    border-color: #C2C6DC;
+}
+
+.btn-facebook {
+    background: #1877F2;
+    color: #FFFFFF;
+}
+.btn-facebook:hover {
+    background: #166FE5;
+}
+
+.btn-linkedin {
+    background: #0A66C2;
+    color: #FFFFFF;
+}
+.btn-linkedin:hover {
+    background: #0856A3;
+}
+
+.btn-instagram {
+    background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
+    color: #FFFFFF;
+}
+.btn-instagram:hover {
+    opacity: 0.95;
+    filter: brightness(1.05);
+}
+
+.auth-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #8E8E93;
+    font-size: 12px;
+    margin: 10px 0;
+    width: 100%;
+}
+.auth-divider::before, .auth-divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #E5E7EB;
+}
+.auth-divider span {
+    padding: 0 10px;
+}
+
+/* Auth Modal Tabs, Inputs & Forms */
+.auth-tabs {
+    display: flex;
+    width: 100%;
+    background: #F1F5F9;
+    border-radius: 999px;
+    padding: 4px;
+    gap: 4px;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+}
+
+.auth-tab-btn {
+    flex: 1;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 999px;
+    background: transparent;
+    color: #64748B;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.auth-tab-btn.active {
+    background: #FFFFFF;
+    color: #0F172A;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    text-align: left;
+}
+
+.auth-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    width: 100%;
+}
+
+.auth-input-group label {
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #475569;
+}
+
+.auth-input {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 12px;
+    font-size: 13.5px;
+    color: #1E293B;
+    background: #FFFFFF;
+    box-sizing: border-box;
+    transition: all 0.15s ease;
+    outline: none;
+    font-family: inherit;
+}
+
+.auth-input:focus {
+    border-color: #2563EB;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.auth-error-msg {
+    color: #DC2626;
+    background: #FEF2F2;
+    border: 1px solid #FCA5A5;
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 4px;
+}
+
+.auth-toggle-note {
+    font-size: 12.5px;
+    color: #64748B;
+    text-align: center;
+    margin-top: 6px;
+}
+
+.auth-toggle-note a {
+    color: #2563EB;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.auth-toggle-note a:hover {
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   FAST PHRASES IN-APP MODAL STYLING
+   ========================================================================== */
+.fast-phrases-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: rgba(15, 23, 42, 0.78);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    opacity: 1;
+    transition: opacity 0.2s ease;
+}
+
+.fast-phrases-modal-overlay.hidden {
+    display: none !important;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.fast-phrases-modal-dialog {
+    width: 100%;
+    max-width: 900px;
+    height: 92vh;
+    max-height: 720px;
+    background: #5CC5D8;
+    border-radius: 24px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), inset 0 0 0 2px rgba(255, 255, 255, 0.4);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: fastPhrasesPopIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes fastPhrasesPopIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.94) translateY(12px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.fast-phrases-modal-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 18px;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(8px);
+    border-bottom: 1.5px solid rgba(255, 255, 255, 0.3);
+    color: #1E2923;
+}
+
+.fast-phrases-modal-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.fast-phrases-modal-title h3 {
+    font-size: 15px;
+    font-weight: 800;
+    color: #1E293B;
+    margin: 0;
+    letter-spacing: -0.2px;
+}
+
+.fast-phrases-modal-title .game-badge {
+    font-size: 10.5px;
+    font-weight: 900;
+    background: #FFB703;
+    color: #1E2923;
+    padding: 3px 8px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+}
+
+.fast-phrases-modal-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.fast-phrases-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.85);
+    color: #2D3748;
+    border: 1.5px solid rgba(255, 255, 255, 0.95);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-decoration: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.fast-phrases-action-btn i {
+    width: 16px;
+    height: 16px;
+}
+
+.fast-phrases-action-btn:hover {
+    background: #FFFFFF;
+    transform: scale(1.08);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    color: #0F172A;
+}
+
+.fast-phrases-action-btn.close-btn:hover {
+    background: #EF5350;
+    color: #FFFFFF;
+    border-color: #EF5350;
+}
+
+.fast-phrases-frame-container {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    background: #E8EEF2;
+}
+
+.fast-phrases-frame-container iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+}
+
+@media (max-width: 640px) {
+    .fast-phrases-modal-dialog {
+        height: 98vh;
+        max-height: 98vh;
+        border-radius: 16px;
+    }
+    .fast-phrases-modal-bar {
+        padding: 8px 12px;
+    }
+}
+

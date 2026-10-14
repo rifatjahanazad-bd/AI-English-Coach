@@ -66,6 +66,10 @@
 
     async function saveProgress(track, level, moduleId, isCompleted) {
         const uid = getUserId();
+        // Direct Cloud Firestore backup if signed in
+        if (window.AIEC_Auth && typeof window.AIEC_Auth.saveProgressToFirestore === 'function') {
+            window.AIEC_Auth.saveProgressToFirestore(track, level, moduleId, isCompleted);
+        }
         try {
             const res = await fetch(`${API_BASE}/api/progress`, {
                 method: 'POST',
@@ -98,6 +102,10 @@
 
     async function saveScore(track, level, moduleId, score, total) {
         const uid = getUserId();
+        // Direct Cloud Firestore backup if signed in
+        if (window.AIEC_Auth && typeof window.AIEC_Auth.saveScoreToFirestore === 'function') {
+            window.AIEC_Auth.saveScoreToFirestore(track, level, moduleId, score, total);
+        }
         try {
             const res = await fetch(`${API_BASE}/api/scores`, {
                 method: 'POST',
@@ -247,13 +255,27 @@
         return null;
     }
 
+    async function getChatHistory(userId) {
+        const uid = userId || getUserId();
+        try {
+            const res = await fetch(`${API_BASE}/api/chat/history/${encodeURIComponent(uid)}`);
+            if (res.ok) {
+                const data = await res.json();
+                return data.history || [];
+            }
+        } catch (e) {
+            console.warn('[API Client] Chat history fetch failed:', e);
+        }
+        return [];
+    }
+
     async function evaluateSpeakingAudio(audioBlob, topic, prompt) {
         try {
             const formData = new FormData();
             formData.append('audio', audioBlob, 'speaking_recording.webm');
             formData.append('topic', topic || 'General Speaking');
             formData.append('prompt', prompt || 'Speak freely on the topic.');
-            formData.append('verify_compression', 'true');
+            formData.append('verify_compression', 'false');
 
             const res = await fetch(`${API_BASE}/api/speaking/evaluate`, {
                 method: 'POST',
@@ -307,6 +329,10 @@
     async function saveGoal(goalData) {
         const uid = getUserId();
         const payload = Object.assign({ user_id: uid }, goalData);
+        // Direct Cloud Firestore backup if signed in
+        if (window.AIEC_Auth && typeof window.AIEC_Auth.saveGoalToFirestore === 'function') {
+            window.AIEC_Auth.saveGoalToFirestore(payload);
+        }
         try {
             const res = await fetch(`${API_BASE}/api/goal`, {
                 method: 'POST',
@@ -363,6 +389,7 @@
         generateMeme,
         getMemeStatus,
         sendChatMessage,
+        getChatHistory,
         evaluateSpeakingAudio,
         evaluateSpeakingText,
         getGoal,

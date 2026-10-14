@@ -85,6 +85,7 @@ function initPractice() {
         if (!skipNavigate && window.AIEC_Router) {
             window.AIEC_Router.navigate('/practice/' + selectedCategory);
         }
+        if (practiceStep2) practiceStep2.scrollTop = 0;
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -97,7 +98,10 @@ function initPractice() {
     if (practiceBackBtn) {
         practiceBackBtn.addEventListener('click', () => {
             if (practiceStep2) practiceStep2.classList.add('hidden');
-            if (practiceStep1) practiceStep1.classList.remove('hidden');
+            if (practiceStep1) {
+                practiceStep1.classList.remove('hidden');
+                practiceStep1.scrollTop = 0;
+            }
             if (feedbackPanel) feedbackPanel.classList.add('hidden');
             selectedGrammarLevel = null;
             if (modulePracticeCard) modulePracticeCard.classList.add('hidden');
@@ -175,21 +179,28 @@ function initPractice() {
             const desc = sec.desc || lv.desc || '';
             const count = (sec.count != null ? sec.count : lv.count) || 0;
             const soon = status === 'soon';
+            const themeClass = (window.PracticeCards && window.PracticeCards.getThemeClass) ? window.PracticeCards.getThemeClass(lv.level) : 'card-theme-' + String(lv.level).toLowerCase().replace('+', 'plus');
+            const svgArt = (window.PracticeCards && window.PracticeCards.getLevelSvg) ? window.PracticeCards.getLevelSvg(lv.level) : `<span class="grammar-level-emoji">${escapeHtml(sec.emoji || lv.emoji || '📐')}</span>`;
             const card = document.createElement('button');
-            card.className = 'grammar-level-card' + (soon ? ' is-soon' : '');
+            card.className = 'grammar-level-card ' + themeClass + (soon ? ' is-soon' : '');
             card.dataset.level = lv.level;
             card.disabled = !!soon;
             card.innerHTML = `
-                <span class="grammar-level-thumb">
-                    <span class="grammar-level-code">${escapeHtml(lv.level)}</span>
-                    <span class="grammar-level-emoji">${escapeHtml(sec.emoji || lv.emoji || '📐')}</span>
-                </span>
-                <h4>${escapeHtml(lv.level)} · ${escapeHtml(sec.title || lv.title || '')}</h4>
-                <span class="caption">${escapeHtml(desc)}</span>
-                <span class="grammar-level-meta">
-                    <span class="grammar-level-count${soon ? ' soon' : ''}">${soon ? 'Coming soon' : count + ' topics'}</span>
-                    <span class="caption">🎮 ${escapeHtml(game.type || 'quiz')}</span>
-                </span>
+                <div class="grammar-level-thumb">
+                    <div class="thumb-art-container">${svgArt}</div>
+                    <div class="thumb-pill-banner">
+                        <span class="thumb-pill-code">${escapeHtml(lv.level)}</span>
+                        <span class="thumb-pill-title">${escapeHtml(sec.title || lv.title || '')}</span>
+                    </div>
+                </div>
+                <div class="grammar-card-body">
+                    <h4>${escapeHtml(lv.level)} · ${escapeHtml(sec.title || lv.title || '')}</h4>
+                    <p class="caption">${escapeHtml(desc)}</p>
+                    <div class="grammar-level-meta">
+                        <span class="grammar-level-count${soon ? ' soon' : ''}">${soon ? 'Coming soon' : count + ' topics'}</span>
+                        <span class="grammar-level-game-tag">🎮 ${escapeHtml(game.type || 'quiz')}</span>
+                    </div>
+                </div>
             `;
             if (!soon) {
                 card.addEventListener('click', () => selectGrammarLevel(mod, lv, sec));
@@ -250,7 +261,11 @@ function initPractice() {
                     }
                 },
                 onPlayGame: () => {
-                    window.open('../backend/game/index.html', '_blank');
+                    if (typeof window.openFastPhrasesGame === 'function') {
+                        window.openFastPhrasesGame();
+                    } else {
+                        window.open('/game/', '_blank');
+                    }
                 }
             });
             showModules();

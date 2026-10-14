@@ -72,6 +72,13 @@ def validate_meme_image(
         if std_val < 5.0:
             return False, f"image_blank_or_solid (std={std_val:.2f})"
 
+        # Check 4: Filter out text-only cards with no photographic background image
+        # Genuine photographic meme templates have 20,000+ to 150,000+ unique colors.
+        # Flat text cards with no background image have fewer than 5,000 unique colors.
+        unique_colors = len(np.unique(rgb_arr.reshape(-1, 3), axis=0))
+        if unique_colors < 10000:
+            return False, f"no_background_image_text_card (unique_colors={unique_colors})"
+
         return True, "valid"
 
     except Exception as e:

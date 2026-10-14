@@ -7,12 +7,20 @@ import time
 from datetime import datetime
 
 import numpy as np
-# pyrefly: ignore [missing-import]
-import sounddevice as sd
-# pyrefly: ignore [missing-import]
-import soundfile as sf
-# pyrefly: ignore [missing-import]
-import speech_recognition as sr
+try:
+    import sounddevice as sd
+except Exception:
+    sd = None
+
+try:
+    import soundfile as sf
+except Exception:
+    sf = None
+
+try:
+    import speech_recognition as sr
+except Exception:
+    sr = None
 
 # audioop-lts provides the audioop module in Python 3.13+
 try:

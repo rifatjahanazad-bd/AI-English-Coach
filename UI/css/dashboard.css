@@ -1,0 +1,1478 @@
+/* ==========================================================================
+   DASHBOARD SECTION STYLES (dashboard.css)
+   Gamified educational dashboard inspired by modern mobile reference:
+   - Rounded card capsules & soft friendly pill geometry (border-radius: 22px-30px)
+   - Profile bar with circular quick action badges & live streak flame
+   - Featured progress hero card with slider progress bar & pulsing play button
+   - 3-pillar capsule stat counters (Total Activities, Completed, Pending)
+   - Interactive CEFR Level track (A1 to C2) with live inspector
+   - Bento-style feature cards with SVG gauge rings, band meters & interactive widgets
+   - Learning Leaderboard with 1st/2nd/3rd visual podium
+   - 7-Day milestone streak banner
+   ========================================================================== */
+
+#pageDashboard {
+    padding: 0;
+    width: 100%;
+}
+
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 8px 0 40px 0;
+    max-width: 1060px;
+    margin: 0 auto;
+    width: 100%;
+    animation: dashFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes dashFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==========================================================================
+   0. GUEST / DEMO NOTIFICATION BANNER
+   ========================================================================== */
+.dash-guest-notice {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+    border: 1.5px solid #BFDBFE;
+    border-radius: 20px;
+    padding: 12px 20px;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.06);
+    gap: 16px;
+}
+
+.dash-guest-notice-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.dash-guest-notice-icon {
+    font-size: 24px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.dash-guest-notice-text {
+    font-size: 13.5px;
+    color: #1E3A8A;
+    font-weight: 600;
+}
+
+.dash-guest-notice-text strong {
+    color: #1D4ED8;
+    font-weight: 800;
+}
+
+.dash-guest-notice-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #2563EB;
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: 800;
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+    transition: all 0.15s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.dash-guest-notice-btn:hover {
+    background: #1D4ED8;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(37, 99, 235, 0.35);
+}
+
+/* ==========================================================================
+   1. TOP PROFILE & GREETING BAR
+   ========================================================================== */
+.dash-profile-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 26px;
+    padding: 16px 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.dash-profile-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.dash-avatar-circle {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FEF08A 0%, #FBBF24 50%, #F59E0B 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    box-shadow: 0 6px 16px rgba(245, 158, 11, 0.35);
+    border: 3px solid #FFFFFF;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.dash-avatar-level-badge {
+    position: absolute;
+    bottom: -4px;
+    right: -4px;
+    background: #2563EB;
+    color: #FFFFFF;
+    font-size: 10px;
+    font-weight: 900;
+    padding: 2px 6px;
+    border-radius: 999px;
+    border: 2px solid #FFFFFF;
+    letter-spacing: 0.2px;
+}
+
+.dash-user-names h2 {
+    font-size: 20px;
+    font-weight: 800;
+    color: #0F172A;
+    margin: 0 0 3px 0;
+    line-height: 1.2;
+}
+
+.dash-user-names .dash-user-subtitle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #64748B;
+    flex-wrap: wrap;
+}
+
+.dash-band-tag {
+    background: #FEF3C7;
+    color: #B45309;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: 11.5px;
+    border: 1px solid #FDE68A;
+}
+
+.dash-profile-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.dash-streak-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #FFF7ED;
+    color: #C2410C;
+    border: 1.5px solid #FFEDD5;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 800;
+    box-shadow: 0 2px 8px rgba(234, 88, 12, 0.08);
+}
+
+.dash-streak-pill .dash-flame {
+    animation: flamePulse 1.4s infinite ease-in-out alternate;
+    display: inline-block;
+}
+
+@keyframes flamePulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.2); }
+}
+
+.dash-xp-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #F0FDF4;
+    color: #15803D;
+    border: 1.5px solid #DCFCE7;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.dash-icon-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #F8FAFC;
+    border: 1.5px solid #E2E8F0;
+    color: #475569;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    position: relative;
+}
+
+.dash-icon-btn:hover {
+    background: #FFFFFF;
+    border-color: #CBD5E1;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+    color: #0F172A;
+}
+
+.dash-icon-badge {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 10px;
+    height: 10px;
+    background: #EF4444;
+    border-radius: 50%;
+    border: 2px solid #FFFFFF;
+}
+
+/* ==========================================================================
+   2. FEATURED PROGRESS HERO CARD
+   ========================================================================== */
+.dash-hero-card {
+    background: linear-gradient(135deg, #1E40AF 0%, #2563EB 50%, #3B82F6 100%);
+    border-radius: 30px;
+    padding: 28px 32px;
+    color: #FFFFFF;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 14px 36px rgba(37, 99, 235, 0.28);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+}
+
+.dash-hero-card::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    right: -40px;
+    width: 260px;
+    height: 260px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.dash-hero-card::after {
+    content: '';
+    position: absolute;
+    bottom: -80px;
+    left: 20%;
+    width: 300px;
+    height: 160px;
+    background: radial-gradient(circle, rgba(147, 197, 253, 0.25) 0%, rgba(147, 197, 253, 0) 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.dash-hero-content {
+    flex: 1;
+    max-width: 600px;
+    z-index: 2;
+}
+
+.dash-hero-badge-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 11.5px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-bottom: 8px;
+}
+
+.dash-hero-content h3 {
+    font-size: 24px;
+    font-weight: 800;
+    color: #FFFFFF;
+    margin: 0 0 6px 0;
+    letter-spacing: -0.3px;
+    line-height: 1.25;
+}
+
+.dash-hero-sub {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0 0 20px 0;
+    font-weight: 600;
+}
+
+.dash-progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.dash-progress-track {
+    flex: 1;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.24);
+    border-radius: 999px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.dash-progress-fill {
+    height: 100%;
+    width: 68%;
+    background: linear-gradient(90deg, #6EE7B7 0%, #A7F3D0 50%, #FFFFFF 100%);
+    border-radius: 999px;
+    box-shadow: 0 0 14px rgba(255, 255, 255, 0.8);
+    transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dash-hero-play-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #FFFFFF;
+    color: #2563EB;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    flex-shrink: 0;
+    position: relative;
+}
+
+.dash-hero-play-btn::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    animation: playPulse 2s infinite ease-out;
+}
+
+@keyframes playPulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(1.25); opacity: 0; }
+}
+
+.dash-hero-play-btn:hover {
+    transform: scale(1.12);
+    background: #F0F9FF;
+    color: #1D4ED8;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.3);
+}
+
+.dash-hero-badge-right {
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.16);
+    backdrop-filter: blur(12px);
+    border: 1.5px solid rgba(255, 255, 255, 0.35);
+    padding: 16px 24px;
+    border-radius: 24px;
+    text-align: center;
+    flex-shrink: 0;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.dash-hero-avatar-anim {
+    font-size: 40px;
+    margin-bottom: 6px;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+.dash-hero-badge-title {
+    font-size: 15px;
+    font-weight: 800;
+    color: #FFFFFF;
+}
+
+.dash-hero-badge-sub {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.88);
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   3. "MY LEARNING PLAN" - 3 STAT PILLARS (Capsule counters from reference)
+   ========================================================================== */
+.dash-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 8px 0 0 0;
+}
+
+.dash-section-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #0F172A;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.dash-section-sub {
+    font-size: 13px;
+    color: #64748B;
+    font-weight: 600;
+}
+
+.dash-pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.dash-stat-capsule {
+    border-radius: 28px;
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.dash-stat-capsule:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+}
+
+.capsule-green {
+    background: linear-gradient(180deg, #F0FDF4 0%, #DCFCE7 100%);
+    border: 1.5px solid #BBF7D0;
+}
+
+.capsule-peach {
+    background: linear-gradient(180deg, #FFF7ED 0%, #FFEDD5 100%);
+    border: 1.5px solid #FED7AA;
+}
+
+.capsule-blue {
+    background: linear-gradient(180deg, #F0F9FF 0%, #E0F2FE 100%);
+    border: 1.5px solid #BAE6FD;
+}
+
+.dash-capsule-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    border: 2px solid #FFFFFF;
+}
+
+.capsule-green .dash-capsule-icon { background: #FFFFFF; color: #16A34A; }
+.capsule-peach .dash-capsule-icon { background: #FFFFFF; color: #EA580C; }
+.capsule-blue .dash-capsule-icon  { background: #FFFFFF; color: #0284C7; }
+
+.dash-capsule-number {
+    font-size: 38px;
+    font-weight: 900;
+    line-height: 1;
+    font-family: 'Fredoka', sans-serif;
+}
+
+.capsule-green .dash-capsule-number { color: #065F46; }
+.capsule-peach .dash-capsule-number { color: #9A3412; }
+.capsule-blue .dash-capsule-number  { color: #075985; }
+
+.dash-capsule-label {
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.capsule-green .dash-capsule-label { color: #047857; }
+.capsule-peach .dash-capsule-label { color: #C2410C; }
+.capsule-blue .dash-capsule-label  { color: #0369A1; }
+
+.dash-capsule-pill-tag {
+    font-size: 11px;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: 999px;
+    margin-top: 2px;
+}
+
+.capsule-green .dash-capsule-pill-tag { background: #BBF7D0; color: #065F46; }
+.capsule-peach .dash-capsule-pill-tag { background: #FED7AA; color: #9A3412; }
+.capsule-blue .dash-capsule-pill-tag  { background: #BAE6FD; color: #075985; }
+
+/* ==========================================================================
+   4. CEFR ENGLISH LEVELS TRACK (A1 to C2 Chips)
+   ========================================================================= */
+.dash-levels-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 6px 2px 10px 2px;
+    scrollbar-width: none;
+}
+
+.dash-levels-bar::-webkit-scrollbar {
+    display: none;
+}
+
+.dash-level-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 999px;
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    color: #475569;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+.dash-level-pill:hover {
+    border-color: #CBD5E1;
+    transform: translateY(-2px);
+    color: #1E293B;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.dash-level-pill.active {
+    background: #EFF6FF;
+    border-color: #3B82F6;
+    color: #1D4ED8;
+    box-shadow: 0 4px 14px rgba(59, 130, 246, 0.25);
+    position: relative;
+}
+
+.dash-level-pill.mastered {
+    background: #ECFDF5;
+    border-color: #86EFAC;
+    color: #15803D;
+}
+
+.dash-level-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #94A3B8;
+}
+
+.dash-level-pill.active .dash-level-dot {
+    background: #2563EB;
+    box-shadow: 0 0 8px rgba(37, 99, 235, 0.8);
+    animation: dotPulse 1.5s infinite alternate;
+}
+
+@keyframes dotPulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.35); }
+}
+
+.dash-level-pill.mastered .dash-level-dot {
+    background: #22C55E;
+}
+
+/* Level Inspector Banner */
+.dash-level-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
+    border: 1.5px solid #E2E8F0;
+    border-radius: 22px;
+    padding: 18px 24px;
+    font-size: 13.5px;
+    color: #475569;
+    gap: 16px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+    flex-wrap: wrap;
+}
+
+.dash-level-banner-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex: 1;
+}
+
+.dash-level-banner-badge {
+    padding: 6px 12px;
+    background: #EFF6FF;
+    border: 1.5px solid #BFDBFE;
+    border-radius: 12px;
+    color: #1D4ED8;
+    font-weight: 900;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.dash-level-banner-desc strong {
+    color: #0F172A;
+    font-weight: 800;
+}
+
+.dash-level-banner-tags {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+    flex-wrap: wrap;
+}
+
+.dash-level-tag {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 6px;
+    background: #F1F5F9;
+    color: #475569;
+}
+
+.dash-level-tag.tag-green { background: #DCFCE7; color: #166534; }
+.dash-level-tag.tag-blue  { background: #DBEAFE; color: #1E40AF; }
+
+.dash-level-banner-btn {
+    padding: 10px 20px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s ease;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    flex-shrink: 0;
+}
+
+.dash-level-banner-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
+}
+
+/* ==========================================================================
+   5. BENTO CARDS GRID (Rich Aesthetics from Reference)
+   ========================================================================== */
+.dash-bento-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+}
+
+.dash-bento-card {
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 28px;
+    padding: 26px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.dash-bento-card:hover {
+    border-color: #CBD5E1;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Card Tops */
+.dash-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dash-card-icon-circle {
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.icon-blue-soft   { background: #EFF6FF; color: #2563EB; border: 1px solid #DBEAFE; }
+.icon-orange-soft { background: #FFF7ED; color: #EA580C; border: 1px solid #FFEDD5; }
+.icon-green-soft  { background: #ECFDF5; color: #059669; border: 1px solid #D1FAE5; }
+.icon-yellow-soft { background: #FEF9C3; color: #D97706; border: 1px solid #FDE68A; }
+
+.dash-card-fraction-pill {
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 12.5px;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+}
+
+.fraction-blue   { background: #DBEAFE; color: #1D4ED8; }
+.fraction-orange { background: #FFEDD5; color: #C2410C; }
+.fraction-green  { background: #DCFCE7; color: #15803D; }
+
+/* Card Body */
+.dash-card-body h4 {
+    font-size: 19px;
+    font-weight: 800;
+    color: #0F172A;
+    margin: 0 0 6px 0;
+    letter-spacing: -0.2px;
+}
+
+.dash-card-body p {
+    font-size: 13.5px;
+    color: #64748B;
+    margin: 0 0 16px 0;
+    line-height: 1.5;
+}
+
+/* CARD 1: Practice Score Visual Gauge */
+.dash-score-visual-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 20px;
+    padding: 16px 20px;
+}
+
+.dash-score-gauge-wrap {
+    position: relative;
+    width: 84px;
+    height: 84px;
+    flex-shrink: 0;
+}
+
+.dash-gauge-svg {
+    transform: rotate(-90deg);
+    width: 84px;
+    height: 84px;
+}
+
+.dash-gauge-bg {
+    fill: none;
+    stroke: #E2E8F0;
+    stroke-width: 8;
+}
+
+.dash-gauge-fill {
+    fill: none;
+    stroke: url(#scoreGradient);
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 220;
+    stroke-dashoffset: 26; /* 88% filled */
+    transition: stroke-dashoffset 1s ease-out;
+}
+
+.dash-gauge-inner-text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.dash-gauge-inner-text strong {
+    font-size: 20px;
+    font-weight: 900;
+    color: #1E293B;
+    line-height: 1;
+    font-family: 'Fredoka', sans-serif;
+}
+
+.dash-gauge-inner-text span {
+    font-size: 9.5px;
+    font-weight: 800;
+    color: #16A34A;
+    text-transform: uppercase;
+}
+
+.dash-score-bars-wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.dash-score-bar-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.dash-score-bar-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: #475569;
+}
+
+.dash-score-bar-labels strong {
+    color: #0F172A;
+}
+
+.dash-score-bar-track {
+    height: 6px;
+    background: #E2E8F0;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.dash-score-bar-fill {
+    height: 100%;
+    border-radius: 999px;
+}
+
+.bar-green  { background: linear-gradient(90deg, #10B981, #34D399); }
+.bar-amber  { background: linear-gradient(90deg, #F59E0B, #FBBF24); }
+.bar-purple { background: linear-gradient(90deg, #6366F1, #818CF8); }
+
+/* CARD 2: Vocabulary Problems Interactive Cards */
+.dash-vocab-problem-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.dash-vocab-card-interactive {
+    background: #FFFBEB;
+    border: 1.5px solid #FDE68A;
+    border-radius: 16px;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.15s ease;
+}
+
+.dash-vocab-card-interactive:hover {
+    background: #FEF3C7;
+    border-color: #FCD34D;
+    transform: translateX(2px);
+}
+
+.dash-vocab-word-title {
+    font-size: 15px;
+    font-weight: 800;
+    color: #92400E;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.dash-vocab-type-badge {
+    font-size: 10.5px;
+    font-weight: 700;
+    background: #FEF3C7;
+    border: 1px solid #FCD34D;
+    color: #78350F;
+    padding: 1px 6px;
+    border-radius: 6px;
+}
+
+.dash-vocab-issue-text {
+    font-size: 12px;
+    font-weight: 600;
+    color: #B45309;
+    margin-top: 2px;
+}
+
+.dash-vocab-ask-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #FFFFFF;
+    color: #D97706;
+    border: 1.5px solid #FCD34D;
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(217, 119, 6, 0.1);
+    transition: all 0.15s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.dash-vocab-ask-btn:hover {
+    background: #D97706;
+    color: #FFFFFF;
+    transform: scale(1.05);
+}
+
+/* CARD 3: Speaking Arena Readiness Criteria Meters */
+.dash-speaking-criteria-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    border-radius: 20px;
+    padding: 16px;
+}
+
+.dash-criteria-item {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 14px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.dash-criteria-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: #475569;
+}
+
+.dash-criteria-band {
+    font-size: 13px;
+    font-weight: 900;
+    color: #059669;
+}
+
+.dash-criteria-meter {
+    display: flex;
+    gap: 3px;
+    height: 5px;
+}
+
+.dash-meter-seg {
+    flex: 1;
+    background: #E2E8F0;
+    border-radius: 2px;
+}
+
+.dash-meter-seg.filled {
+    background: #10B981;
+}
+
+/* CARD 4: Fast Phrases Speed Game Teaser */
+.dash-game-teaser-box {
+    background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+    border: 1.5px solid #FDE68A;
+    border-radius: 20px;
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.dash-game-target-sentence {
+    font-size: 14px;
+    font-weight: 700;
+    color: #78350F;
+    background: #FFFFFF;
+    border: 1px dashed #FCD34D;
+    border-radius: 12px;
+    padding: 8px 14px;
+}
+
+.dash-game-chips-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.dash-game-preview-chip {
+    padding: 6px 12px;
+    background: #FFFFFF;
+    border: 1.5px solid #FCD34D;
+    color: #92400E;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.12s ease;
+}
+
+.dash-game-preview-chip:hover {
+    background: #D97706;
+    color: #FFFFFF;
+    transform: translateY(-1px);
+}
+
+.dash-game-stats-mini {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: #92400E;
+    padding-top: 4px;
+}
+
+/* Card Footers */
+.dash-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 14px;
+    border-top: 1px solid #F1F5F9;
+}
+
+.dash-author-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #64748B;
+}
+
+.dash-author-avatar {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #F1F5F9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+}
+
+.dash-card-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #F8FAFC;
+    color: #2563EB;
+    border: 1.5px solid #E2E8F0;
+    padding: 7px 16px;
+    border-radius: 999px;
+    font-size: 12.5px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.dash-card-cta-btn:hover {
+    background: #2563EB;
+    color: #FFFFFF;
+    border-color: #2563EB;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+/* ==========================================================================
+   6. LEARNING LEADERBOARD PODIUM (Directly from User Reference Screen #3)
+   ========================================================================== */
+.dash-leaderboard-card {
+    background: linear-gradient(145deg, #0F172A 0%, #1E293B 100%);
+    border-radius: 30px;
+    padding: 28px 32px;
+    color: #FFFFFF;
+    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.35);
+    border: 1.5px solid #334155;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.dash-leaderboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.dash-leaderboard-title-group h3 {
+    font-size: 22px;
+    font-weight: 800;
+    color: #FFFFFF;
+    margin: 0 0 4px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dash-leaderboard-title-group p {
+    font-size: 13px;
+    color: #94A3B8;
+    margin: 0;
+}
+
+.dash-leaderboard-top-stats {
+    display: flex;
+    gap: 12px;
+}
+
+.dash-top-stat-pill {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px 16px;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dash-top-stat-pill strong {
+    font-size: 15px;
+    font-weight: 800;
+    color: #F8FAFC;
+}
+
+.dash-top-stat-pill span {
+    font-size: 11px;
+    color: #94A3B8;
+}
+
+/* 3D Visual Podium */
+.dash-podium-wrap {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 20px;
+    padding-top: 14px;
+}
+
+.dash-podium-spot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 140px;
+}
+
+.dash-podium-avatar {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    border: 3px solid #FFFFFF;
+    margin-bottom: 8px;
+    position: relative;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.spot-gold .dash-podium-avatar   { border-color: #F59E0B; background: #FEF3C7; }
+.spot-silver .dash-podium-avatar { border-color: #94A3B8; background: #E2E8F0; }
+.spot-bronze .dash-podium-avatar { border-color: #D97706; background: #FFEDD5; }
+
+.dash-podium-rank-tag {
+    position: absolute;
+    bottom: -6px;
+    background: #0F172A;
+    color: #FFFFFF;
+    font-size: 11px;
+    font-weight: 900;
+    padding: 1px 7px;
+    border-radius: 999px;
+    border: 2px solid;
+}
+
+.spot-gold .dash-podium-rank-tag   { border-color: #F59E0B; color: #F59E0B; }
+.spot-silver .dash-podium-rank-tag { border-color: #94A3B8; color: #E2E8F0; }
+.spot-bronze .dash-podium-rank-tag { border-color: #D97706; color: #FED7AA; }
+
+.dash-podium-name {
+    font-size: 13.5px;
+    font-weight: 800;
+    color: #FFFFFF;
+    margin-bottom: 2px;
+}
+
+.dash-podium-score {
+    font-size: 12px;
+    color: #94A3B8;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.dash-podium-bar {
+    width: 100%;
+    border-radius: 18px 18px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    font-weight: 900;
+    font-family: 'Fredoka', sans-serif;
+    color: rgba(255, 255, 255, 0.95);
+    box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.2);
+}
+
+.spot-gold .dash-podium-bar {
+    height: 120px;
+    background: linear-gradient(180deg, #F59E0B 0%, #D97706 100%);
+    box-shadow: 0 0 24px rgba(245, 158, 11, 0.35);
+}
+
+.spot-silver .dash-podium-bar {
+    height: 90px;
+    background: linear-gradient(180deg, #3B82F6 0%, #1D4ED8 100%);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+.spot-bronze .dash-podium-bar {
+    height: 70px;
+    background: linear-gradient(180deg, #8B5CF6 0%, #6D28D9 100%);
+    box-shadow: 0 0 16px rgba(139, 92, 246, 0.3);
+}
+
+/* User's Leaderboard Strip */
+.dash-user-rank-strip {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    border-radius: 18px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13.5px;
+    font-weight: 700;
+}
+
+.dash-user-rank-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.dash-user-rank-number {
+    font-size: 16px;
+    font-weight: 900;
+    color: #38BDF8;
+}
+
+.dash-user-rank-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #4ADE80;
+    font-weight: 800;
+}
+
+/* ==========================================================================
+   7. 7-DAY MILESTONE STREAK BANNER
+   ========================================================================== */
+.dash-milestone-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 26px;
+    padding: 20px 28px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.03);
+    flex-wrap: wrap;
+    gap: 18px;
+}
+
+.dash-milestone-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.dash-milestone-trophy {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FEF08A 0%, #FBBF24 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    box-shadow: 0 6px 16px rgba(251, 191, 36, 0.35);
+    border: 3px solid #FFFFFF;
+    flex-shrink: 0;
+}
+
+.dash-milestone-text h4 {
+    font-size: 17px;
+    font-weight: 800;
+    color: #0F172A;
+    margin: 0 0 3px 0;
+}
+
+.dash-milestone-text p {
+    font-size: 13px;
+    color: #64748B;
+    margin: 0;
+    font-weight: 600;
+}
+
+.dash-milestone-days {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.dash-day-dot {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #F1F5F9;
+    color: #64748B;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12.5px;
+    font-weight: 800;
+    border: 1.5px solid #E2E8F0;
+    transition: all 0.15s ease;
+    cursor: default;
+}
+
+.dash-day-dot.completed {
+    background: #DCFCE7;
+    color: #15803D;
+    border-color: #86EFAC;
+    box-shadow: 0 2px 8px rgba(34, 197, 94, 0.2);
+}
+
+.dash-day-dot.today {
+    background: #2563EB;
+    color: #FFFFFF;
+    border-color: #1D4ED8;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+    position: relative;
+    transform: scale(1.1);
+}
+
+.dash-day-dot.today::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 2px solid #60A5FA;
+    animation: todayPulse 1.8s infinite ease-out;
+}
+
+@keyframes todayPulse {
+    0% { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(1.3); opacity: 0; }
+}
+
+.dash-day-dot.locked {
+    background: #F8FAFC;
+    color: #94A3B8;
+}
+
+/* ==========================================================================
+   8. RESPONSIVE DESIGN
+   ========================================================================== */
+@media (max-width: 900px) {
+    .dash-bento-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .dash-hero-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .dash-hero-badge-right {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    
+    .dash-podium-wrap {
+        gap: 12px;
+    }
+    
+    .dash-podium-spot {
+        width: 105px;
+    }
+}
+
+@media (max-width: 640px) {
+    .dash-pillars-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .dash-profile-bar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .dash-milestone-banner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .dash-milestone-days {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .dash-day-dot {
+        width: 34px;
+        height: 34px;
+        font-size: 11px;
+    }
+}

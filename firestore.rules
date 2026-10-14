@@ -1,0 +1,19 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // User documents and personal collections: read & write by owner
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+
+      match /{allSubcollections=**} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+
+    // Username index for checking uniqueness and looking up email during username-based login
+    match /usernames/{username} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+  }
+}

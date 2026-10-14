@@ -149,6 +149,13 @@ _hits: dict[str, deque] = defaultdict(deque)
 def allowed(user_id: str) -> tuple[bool, int]:
     """Sliding window: return (allowed, seconds_until_reset)."""
     now = time.time()
+
+    # Prevent unbounded dictionary growth: evict stale IP / user keys
+    if len(_hits) > 1000:
+        stale_keys = [k for k, timestamps in _hits.items() if not timestamps or (now - timestamps[-1] >= RATE_WINDOW)]
+        for k in stale_keys:
+            _hits.pop(k, None)
+
     q = _hits[user_id]
 
     while q and now - q[0] >= RATE_WINDOW:
@@ -333,6 +340,13 @@ def chat(
 
         if normalized is not None:
             _feedback[user_id] = normalized
+
+    # Bound in-memory session dictionaries to prevent memory leakage
+    if len(_history) > 1000:
+        oldest_sessions = list(_history.keys())[:200]
+        for k in oldest_sessions:
+            _history.pop(k, None)
+            _feedback.pop(k, None)
 
     hist = _history[user_id]
 

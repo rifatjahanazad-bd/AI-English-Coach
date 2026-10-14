@@ -3,27 +3,84 @@
    Edit this file when changing: colors, fonts, spacing, or utility classes.
    ========================================================================== */
 
-/* --- Design Tokens --- */
+/* --- Design Tokens (Focused on Fresh Green, Sunny Yellow/Amber & Warm Orange) --- */
 :root {
-    --bg-soft: #FAFAF7;
+    --bg-soft: #FAF9F5;
     --surface: #FFFFFF;
+
+    /* Warm Sunny Amber & Nature Green Palette */
+    --sunshine-yellow: #FFD43B;
+    --sunshine-dark: #FFB703;
+    --amber-orange: #FB8500;
+    --planet-green: #22C55E;
+    --planet-green-hover: #16A34A;
+    --forest-soft: #1E3A2F;
+    --neon-green: #22C55E;
+    --outline-border: #E5E9E2;
+    --outline-hover: #FFB703;
+
     --primary-yellow: #FFD43B;
     --primary-deep: #F5B800;
     --secondary-green: #3ECF8E;
     --secondary-deep: #1FA76A;
-    --text-primary: #1E293B;
-    --text-secondary: #64748B;
+
+    --text-primary: #1F2923;
+    --text-secondary: #5C6E64;
     --pale-yellow-bg: #FFF9E0;
     --pale-green-bg: #E8FAF1;
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.03);
-    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.05);
-    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.06);
-    --radius-card: 20px;
-    --radius-pill: 100px;
-    --font-display: 'Nunito', system-ui, -apple-system, sans-serif;
-    --font-body: 'Nunito', system-ui, -apple-system, sans-serif;
+    --pale-orange-bg: #FFF0E6;
+
+    /* Label & Pill Colors (Inspired by Image 3 Toy & Activity App Palette) */
+    --label-yellow-bg: #FFF7D6;
+    --label-yellow-border: #FCD34D;
+    --label-yellow-text: #B45309;
+    --label-yellow-hover: #FEF08A;
+
+    --label-green-bg: #E8FAF1;
+    --label-green-border: #86EFAC;
+    --label-green-text: #15803D;
+    --label-green-hover: #D1FAE5;
+
+    --label-orange-bg: #FFF0E6;
+    --label-orange-border: #FDBA74;
+    --label-orange-text: #C2410C;
+    --label-orange-hover: #FED7AA;
+
+    --label-purple-bg: #F5EEFF;
+    --label-purple-border: #D8B4FE;
+    --label-purple-text: #7E22CE;
+    --label-purple-hover: #E9D5FF;
+
+    --label-blue-bg: #E0F2FE;
+    --label-blue-border: #7DD3FC;
+    --label-blue-text: #0369A1;
+    --label-blue-hover: #BAE6FD;
+
+    --label-coral-bg: #FFE4E6;
+    --label-coral-border: #FDA4AF;
+    --label-coral-text: #BE123C;
+    --label-coral-hover: #FECDD3;
+
+    /* 3D Tactile Button Tokens (Inspired by Image 1 Try Again & Image 2 Play) */
+    --btn-green-top: #4ADE80;
+    --btn-green-mid: #22C55E;
+    --btn-green-base: #15803D;
+    --btn-green-depth: 0 5px 0 #15803D, 0 8px 18px rgba(21, 128, 61, 0.35);
+
+    --btn-play-top: #FF5C7A;
+    --btn-play-mid: #FF2453;
+    --btn-play-base: #A80D31;
+    --btn-play-depth: inset 0 2.5px 3px rgba(255, 255, 255, 0.8), inset 0 -2px 3px rgba(0, 0, 0, 0.25), 0 0 0 3.5px #FFFFFF, 0 5px 0 #A80D31, 0 8px 22px rgba(230, 0, 57, 0.45);
+
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.07);
+    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.09);
+    --radius-card: 22px;
+    --radius-pill: 9999px;
+    --font-display: 'Fredoka', 'Nunito', system-ui, -apple-system, sans-serif;
+    --font-body: 'Fredoka', 'Nunito', system-ui, -apple-system, sans-serif;
     --font: var(--font-body);
-    --bounce-spring: all 0.2s ease;
+    --bounce-spring: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* --- Reset --- */
@@ -34,6 +91,10 @@
     -webkit-tap-highlight-color: transparent;
 }
 
+html, body {
+    height: 100%;
+}
+
 body {
     font-family: var(--font);
     font-weight: 400;
@@ -41,12 +102,18 @@ body {
     color: var(--text-primary);
     line-height: 1.6;
     font-size: 15px;
-    min-height: 100vh;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
 }
 
-/* --- Playful & Clean Typography --- */
+/* --- Playful Gaming Typography with Semi-Bold (600) Bold Style --- */
+strong, b {
+    font-weight: 600;
+}
+
 h1, h2, h3, h4 {
     font-family: var(--font-display);
     font-weight: 600;
@@ -71,6 +138,12 @@ h3 {
     font-size: 17px;
     font-weight: 600;
     line-height: 1.35;
+}
+
+h4 {
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.4;
 }
 
 .caption {
