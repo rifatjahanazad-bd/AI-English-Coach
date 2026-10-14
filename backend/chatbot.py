@@ -355,8 +355,26 @@ def chat(
 
     # One system message only: some providers reject or ignore a second one.
     active_prompt = get_ielts_coach_prompt() or SYSTEM_PROMPT
+
+    # Duolingo Behavioral Profile Injection
+    behavior_summary = ""
+    try:
+        from backend.database import db
+        scoring = db.get_user_scoring(user_id)
+        if scoring:
+            behavior_summary = (
+                f"\n\nLEARNER BEHAVIORAL PROFILE: "
+                f"Level {scoring.get('current_level', 1)} ({scoring.get('current_league', 'Bronze')} League), "
+                f"{scoring.get('streak_days', 1)}-day streak, "
+                f"Overall drill accuracy: {scoring.get('accuracy_rate', 0.0)}%. "
+                f"Target CEFR: {scoring.get('cefr_level', 'B1')}. "
+                f"Use this context naturally to praise their dedication and guide their practice."
+            )
+    except Exception:
+        pass
+
     system_content = (
-        active_prompt + "\n\n" + _feedback_message(_feedback.get(user_id))
+        active_prompt + behavior_summary + "\n\n" + _feedback_message(_feedback.get(user_id))
     )
 
     messages = [{"role": "system", "content": system_content}, *hist]

@@ -273,7 +273,39 @@
             userBtn.classList.add('guest-active');
             userBtn.classList.remove('member-active');
         }
+
+        // Live Duolingo Behavioral Scoring & Level Sync across all pages
+        if (window.AIEC_API && typeof window.AIEC_API.getUserScoring === 'function') {
+            var uid = (isLoggedIn() && getUser().id) || 'guest';
+            window.AIEC_API.getUserScoring(uid).then(function (scoring) {
+                if (!scoring) return;
+                var streakEl = document.getElementById('globalStreakCount');
+                var streakPill = document.getElementById('globalStreakPill');
+                var xpEl = document.getElementById('globalXpCount');
+                var lvlEl = document.getElementById('globalLevelText');
+                var leagueEl = document.getElementById('globalLeagueBadge');
+
+                if (streakEl) streakEl.textContent = String(scoring.streak_days || 1);
+                if (streakPill) streakPill.title = `${scoring.streak_days || 1}-Day Streak · ${scoring.streak_boost_label || '1.0x'}`;
+                if (xpEl) xpEl.textContent = (scoring.total_xp || 0).toLocaleString() + ' XP';
+                if (lvlEl) lvlEl.textContent = 'LVL ' + (scoring.current_level || 1);
+                if (leagueEl) {
+                    var b = (scoring.league_details && scoring.league_details.badge) || '🥉';
+                    leagueEl.textContent = b;
+                    var lvlPill = document.getElementById('globalLevelPill');
+                    if (lvlPill) lvlPill.title = `Level ${scoring.current_level || 1} · ${scoring.current_league || 'Bronze'} League`;
+                }
+            }).catch(function () {});
+        }
     }
+
+    // Listen to level up & scoring update events
+    window.addEventListener('aiec:levelup', function () {
+        updateHeaderUI();
+    });
+    window.addEventListener('aiec:scoring-updated', function () {
+        updateHeaderUI();
+    });
 
     // Modal builder helper
     function closeActiveModal() {

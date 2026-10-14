@@ -537,6 +537,20 @@ function initSpeakingTest() {
 
                 if (responseData && !responseData.error) {
                     renderEvaluationReport(responseData);
+                    // Duolingo Behavioral Scoring: Award Speaking XP & Trigger Level Up
+                    if (window.AIEC_API && typeof window.AIEC_API.recordScoringEvent === 'function') {
+                        const bandScore = parseFloat(responseData.overall_band || 7.0);
+                        window.AIEC_API.recordScoringEvent({
+                            event_type: 'speaking_test',
+                            category: 'speaking',
+                            score: bandScore,
+                            max_score: 9.0,
+                            metadata: {
+                                topic: selectedTopic,
+                                criteria: responseData.criteria || {}
+                            }
+                        });
+                    }
                 } else if (responseData && responseData.error) {
                     alert(`Evaluation note: ${responseData.message || 'Please speak for at least 15 seconds.'}`);
                 }

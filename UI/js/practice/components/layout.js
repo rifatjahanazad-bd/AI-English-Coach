@@ -568,6 +568,12 @@
             paintCollage();
 
             const pct = Math.round((correctCount / totalQ) * 100);
+            const accuracyBonus = Math.round((correctCount / totalQ) * 20);
+            const isPerfect = (correctCount === totalQ && totalQ > 0);
+            const perfectBonus = isPerfect ? 25 : 0;
+            const baseXP = 20;
+            const totalEarnedXP = baseXP + accuracyBonus + perfectBonus;
+
             quizSideEl.innerHTML = `
                 <div class="quiz-player-card quiz-completed-card">
                     <div class="completion-badge">${pct >= 70 ? '🎉' : '💪'}</div>
@@ -577,6 +583,20 @@
                         <span class="stat-pill">Score: ${correctCount}/${totalQ} (${pct}%)</span>
                         <span class="stat-pill green">✓ Saved</span>
                     </div>
+
+                    <!-- Duolingo Behavioral XP Reward Box -->
+                    <div class="duolingo-xp-reward-box" style="margin: 14px 0 18px 0; padding: 12px 14px; background: rgba(245, 158, 11, 0.08); border: 1.5px solid rgba(245, 158, 11, 0.3); border-radius: 16px; text-align: left;">
+                        <div style="display: flex; align-items: center; justify-content: space-between; font-weight: 800; font-size: 14.5px; color: #D97706; margin-bottom: 5px;">
+                            <span>⭐ +${totalEarnedXP} XP Earned</span>
+                            ${isPerfect ? '<span style="background: #FEF3C7; color: #B45309; padding: 2px 8px; border-radius: 999px; font-size: 11px;">🌟 PERFECT LESSON (+25 XP)</span>' : ''}
+                        </div>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap; font-size: 11.5px; color: #64748B;">
+                            <span>Base: +${baseXP}</span>
+                            <span>Accuracy: +${accuracyBonus}</span>
+                            <span>🔥 Streak Multiplier Active</span>
+                        </div>
+                    </div>
+
                     <div class="completion-actions" style="display: flex; gap: 10px; flex-wrap: wrap;">
                         <button type="button" class="btn-try-again quiz-retry-btn" style="flex: 1; min-width: 140px;">🔁 Try Again</button>
                         <button type="button" class="btn-secondary quiz-return-grid-btn" style="flex: 1; min-width: 130px;">Classes Grid</button>

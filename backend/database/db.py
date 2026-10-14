@@ -178,6 +178,42 @@ def init_db():
             )
         """)
 
+        # 11. Duolingo Behavioral Scoring & Level Engine Table
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS user_scoring (
+                user_id TEXT PRIMARY KEY,
+                total_xp INTEGER DEFAULT 0,
+                current_level INTEGER DEFAULT 1,
+                current_league TEXT DEFAULT 'Bronze',
+                streak_days INTEGER DEFAULT 1,
+                last_active_date TEXT,
+                accuracy_rate REAL DEFAULT 0.0,
+                quizzes_taken INTEGER DEFAULT 0,
+                speaking_tests_taken INTEGER DEFAULT 0,
+                perfect_scores_count INTEGER DEFAULT 0,
+                badges_json TEXT DEFAULT '[]',
+                stats_json TEXT DEFAULT '{}',
+                cefr_level TEXT DEFAULT 'B1',
+                cefr_ready INTEGER DEFAULT 0,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
+
+        # 12. Scoring Events Log (discrete user actions: drills, speaking, logins)
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS scoring_events (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id TEXT NOT NULL,
+                event_type TEXT NOT NULL,
+                category TEXT DEFAULT '',
+                score REAL DEFAULT 0.0,
+                max_score REAL DEFAULT 0.0,
+                xp_awarded INTEGER DEFAULT 0,
+                metadata_json TEXT DEFAULT '{}',
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
+
         conn.commit()
 
 
@@ -394,6 +430,175 @@ def get_latest_scores(user_id: str, track: str, level: str) -> Dict[str, Any]:
                     "created_at": r["created_at"]
                 }
         return scores
+
+
+def get_all_user_scores_history(user_id: str) -> List[Dict[str, Any]]:
+    """Retrieves all quiz and drill scores recorded for a user."""
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT id, user_id, track, level, module_id, score, total, percentage, created_at
+            FROM quiz_scores
+            WHERE user_id = ?
+            ORDER BY created_at ASC
+        """, (user_id,))
+        return [dict(r) for r in cursor.fetchall()]
+
+
+def get_user_scoring(user_id: str) -> Optional[Dict[str, Any]]:
+    """Retrieves gamification and scoring profile for a user."""
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT user_id, total_xp, current_level, current_league, streak_days,
+                   last_active_date, accuracy_rate, quizzes_taken, speaking_tests_taken,
+                   perfect_scores_count, badges_json, stats_json, cefr_level, cefr_ready, updated_at
+            FROM user_scoring
+            WHERE user_id = ?
+        """, (user_id,))
+        row = cursor.fetchone()
+        if not row:
+            return None
+        res = dict(row)
+        try:
+            res["badges"] = json.loads(res.get("badges_json") or "[]")
+        except Exception:
+            res["badges"] = []
+        try:
+            res["stats"] = json.loads(res.get("stats_json") or "{}")
+        except Exception:
+            res["stats"] = {}
+        return res
+
+
+def save_user_scoring(user_id: str, data: Dict[str, Any]) -> Dict[str, Any]:
+    """Persists or updates gamification, XP, level, and behavioral records for a user."""
+    badges_str = json.dumps(data.get("badges", []), ensure_ascii=False) if isinstance(data.get("badges"), list) else str(data.get("badges_json") or "[]")
+    stats_str = json.dumps(data.get("stats", {}), ensure_ascii=False) if isinstance(data.get("stats"), dict) else str(data.get("stats_json") or "{}")
+
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO user_scoring (
+                user_id, total_xp, current_level, current_league, streak_days,
+                last_active_date, accuracy_rate, quizzes_taken, speaking_tests_taken,
+                perfect_scores_count, badges_json, stats_json, cefr_level, cefr_ready, updated_at
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+            ON CONFLICT(user_id) DO UPDATE SET
+                total_xp = excluded.total_xp,
+                current_level = excluded.current_level,
+                current_league = excluded.current_league,
+                streak_days = excluded.streak_days,
+                last_active_date = excluded.last_active_date,
+                accuracy_rate = excluded.accuracy_rate,
+                quizzes_taken = excluded.quizzes_taken,
+                speaking_tests_taken = excluded.speaking_tests_taken,
+                perfect_scores_count = excluded.perfect_scores_count,
+                badges_json = excluded.badges_json,
+                stats_json = excluded.stats_json,
+                cefr_level = excluded.cefr_level,
+                cefr_ready = excluded.cefr_ready,
+                updated_at = CURRENT_TIMESTAMP
+        """, (
+            user_id,
+            int(data.get("total_xp", 0)),
+            int(data.get("current_level", 1)),
+            str(data.get("current_league", "Bronze")),
+            int(data.get("streak_days", 1)),
+            str(data.get("last_active_date") or datetime.now().strftime("%Y-%m-%d")),
+            float(data.get("accuracy_rate", 0.0)),
+            int(data.get("quizzes_taken", 0)),
+            int(data.get("speaking_tests_taken", 0)),
+            int(data.get("perfect_scores_count", 0)),
+            badges_str,
+            stats_str,
+            str(data.get("cefr_level", "B1")),
+            1 if data.get("cefr_ready") else 0
+        ))
+        conn.commit()
+
+    return get_user_scoring(user_id) or data
+
+
+def record_scoring_event(
+    user_id: str,
+    event_type: str,
+    category: str = "",
+    score: float = 0.0,
+    max_score: float = 0.0,
+    xp_awarded: int = 0,
+    metadata: Optional[Dict[str, Any]] = None
+) -> Dict[str, Any]:
+    """Records a single scoring event (quiz complete, speaking exam, speed drill, etc.)."""
+    meta_json = json.dumps(metadata or {}, ensure_ascii=False)
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO scoring_events (user_id, event_type, category, score, max_score, xp_awarded, metadata_json)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        """, (user_id, event_type, category, score, max_score, xp_awarded, meta_json))
+        event_id = cursor.lastrowid
+        conn.commit()
+
+    return {
+        "id": event_id,
+        "user_id": user_id,
+        "event_type": event_type,
+        "category": category,
+        "score": score,
+        "max_score": max_score,
+        "xp_awarded": xp_awarded,
+        "metadata": metadata or {}
+    }
+
+
+def get_scoring_events(user_id: str, limit: int = 50) -> List[Dict[str, Any]]:
+    """Retrieves recent scoring events for behavioral evaluation."""
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT id, user_id, event_type, category, score, max_score, xp_awarded, metadata_json, created_at
+            FROM scoring_events
+            WHERE user_id = ?
+            ORDER BY created_at DESC
+            LIMIT ?
+        """, (user_id, limit))
+        results = []
+        for r in cursor.fetchall():
+            item = dict(r)
+            try:
+                item["metadata"] = json.loads(item.get("metadata_json") or "{}")
+            except Exception:
+                item["metadata"] = {}
+            results.append(item)
+        return results
+
+
+def get_scoring_leaderboard(limit: int = 10) -> List[Dict[str, Any]]:
+    """Returns top learners ordered by XP, level, and league tier."""
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT s.user_id, s.total_xp, s.current_level, s.current_league, s.streak_days,
+                   s.accuracy_rate, s.badges_json, COALESCE(u.display_name, a.name, s.user_id) AS display_name
+            FROM user_scoring s
+            LEFT JOIN users u ON s.user_id = u.user_id
+            LEFT JOIN accounts a ON s.user_id = a.username
+            ORDER BY s.total_xp DESC
+            LIMIT ?
+        """, (limit,))
+        rows = cursor.fetchall()
+        leaderboard = []
+        for idx, r in enumerate(rows):
+            entry = dict(r)
+            try:
+                entry["badges"] = json.loads(entry.get("badges_json") or "[]")
+            except Exception:
+                entry["badges"] = []
+            entry["rank"] = idx + 1
+            leaderboard.append(entry)
+        return leaderboard
 
 
 def get_user_goal(user_id: str) -> Dict[str, Any]:

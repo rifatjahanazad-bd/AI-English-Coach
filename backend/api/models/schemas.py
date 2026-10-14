@@ -58,3 +58,13 @@ class UserPreferencesRequest(BaseModel):
     user_id: str = Field(default="guest", description="User identifier")
     display_name: Optional[str] = Field(default="Learner", description="Display name")
     preferences: Optional[Dict[str, Any]] = Field(default_factory=dict, description="User UI & study preferences")
+
+
+class ScoringEventRequest(BaseModel):
+    user_id: str = Field(default="guest", description="User identifier")
+    event_type: str = Field(default="quiz_complete", description="Event type (quiz_complete, speaking_test, speed_game, daily_login)")
+    category: Optional[str] = Field(default="grammar", description="Track/category (grammar, vocabulary, listening, writing, speaking)")
+    score: float = Field(default=0.0, description="Earned score or band")
+    max_score: float = Field(default=0.0, description="Maximum possible score")
+    metadata: Optional[Dict[str, Any]] = Field(default_factory=dict, description="Additional context/metadata")
+

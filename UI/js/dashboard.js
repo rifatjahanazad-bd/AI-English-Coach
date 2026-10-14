@@ -187,6 +187,23 @@
         let userName = loggedIn ? 'Alex Morgan' : 'Alex Morgan';
         let userRole = loggedIn ? 'Active Candidate' : 'Guest Explorer';
 
+        const currentUid = (window.AIEC_Auth && typeof window.AIEC_Auth.getUser === 'function' && window.AIEC_Auth.getUser() && window.AIEC_Auth.getUser().id) || 'guest';
+        let scoring = {
+            total_xp: 130,
+            current_level: 2,
+            current_league: 'Bronze',
+            league_details: { badge: '🥉', name: 'Bronze', color: '#CD7F32' },
+            streak_days: 1,
+            streak_multiplier: 1.0,
+            streak_boost_label: 'Standard Pace (1.0x)',
+            accuracy_rate: 93.3,
+            quizzes_taken: 1,
+            speaking_tests_taken: 1,
+            perfect_scores_count: 0,
+            level_progress: { level: 2, progress_percentage: 66, remaining_xp_to_next: 67 },
+            coaching_insights: [{ type: 'streak', title: 'Build Your Habit 🌱', text: 'Practice 2 more days consecutively to unlock your booster!', icon: '⚡' }]
+        };
+
         try {
             if (window.AIEC_Auth && typeof window.AIEC_Auth.getUser === 'function') {
                 const u = window.AIEC_Auth.getUser();
@@ -199,6 +216,10 @@
             if (savedGoal) {
                 const parsed = JSON.parse(savedGoal);
                 if (parsed.target_band) targetBand = parsed.target_band;
+            }
+            const cachedScoring = localStorage.getItem(`aiec_scoring_${currentUid}`);
+            if (cachedScoring) {
+                scoring = Object.assign(scoring, JSON.parse(cachedScoring));
             }
         } catch (e) {}
 
@@ -237,7 +258,7 @@
                     <div class="dash-profile-info">
                         <div class="dash-avatar-circle" title="Student Profile">
                             <span>🧑‍🎓</span>
-                            <span class="dash-avatar-level-badge">LVL 12</span>
+                            <span class="dash-avatar-level-badge" id="dashProfileLvlBadge">LVL ${scoring.current_level}</span>
                         </div>
                         <div class="dash-user-names">
                             <h2>${userName}</h2>
@@ -252,13 +273,17 @@
                         </div>
                     </div>
                     <div class="dash-profile-actions">
-                        <div class="dash-streak-pill" title="4-Day Study Streak">
+                        <div class="dash-streak-pill" id="dashStreakPill" title="${scoring.streak_boost_label}">
                             <span class="dash-flame">🔥</span>
-                            <span>4 Days Streak</span>
+                            <span id="dashStreakText">${scoring.streak_days} Days Streak</span>
                         </div>
-                        <div class="dash-xp-pill" title="Experience Points">
+                        <div class="dash-xp-pill" id="dashXpPill" title="Experience Points">
                             <span>⭐</span>
-                            <span>1,680 XP</span>
+                            <span id="dashXpText">${(scoring.total_xp || 0).toLocaleString()} XP</span>
+                        </div>
+                        <div class="dash-xp-pill" style="background: rgba(99, 102, 241, 0.12); color: #4338CA;" title="${scoring.current_league} League Tier">
+                            <span>${(scoring.league_details && scoring.league_details.badge) || '🥉'}</span>
+                            <span>${scoring.current_league}</span>
                         </div>
                         <button class="dash-icon-btn" id="dashTimerBtn" title="Study Time: 28h Total">
                             <i data-lucide="clock"></i>
@@ -274,13 +299,13 @@
                 <div class="dash-hero-card">
                     <div class="dash-hero-content">
                         <div class="dash-hero-badge-tag">
-                            <span>⚡ WEEKLY SPRINT</span>
+                            <span>⚡ DUOLINGO LEVEL JOURNEY</span>
                         </div>
-                        <h3>5 Activities Completed This Week</h3>
-                        <div class="dash-hero-sub">Speaking Fluency & Lexical Precision · Level ${activeLevel.code} Vantage</div>
+                        <h3>Level ${scoring.current_level} Learner · ${(scoring.league_details && scoring.league_details.badge) || '🥉'} ${scoring.current_league} League</h3>
+                        <div class="dash-hero-sub">${scoring.level_progress.remaining_xp_to_next} XP needed to reach Level ${scoring.current_level + 1}</div>
                         <div class="dash-progress-wrap">
                             <div class="dash-progress-track">
-                                <div class="dash-progress-fill" style="width: 72%;"></div>
+                                <div class="dash-progress-fill" style="width: ${scoring.level_progress.progress_percentage}%;"></div>
                             </div>
                             <button class="dash-hero-play-btn" id="dashHeroPlayBtn" title="Resume Daily Sprint">
                                 <i data-lucide="play" style="width: 22px; height: 22px; margin-left: 3px;"></i>
@@ -288,9 +313,9 @@
                         </div>
                     </div>
                     <div class="dash-hero-badge-right">
-                        <div class="dash-hero-avatar-anim">🎧</div>
-                        <div class="dash-hero-badge-title">Band ${targetBand} Target</div>
-                        <div class="dash-hero-badge-sub">On Track · 72% Pacing</div>
+                        <div class="dash-hero-avatar-anim">🏆</div>
+                        <div class="dash-hero-badge-title">Level ${scoring.current_level} Active</div>
+                        <div class="dash-hero-badge-sub">${scoring.level_progress.progress_percentage}% Next Level</div>
                     </div>
                 </div>
 
@@ -818,13 +843,67 @@
         if (window.lucide && typeof window.lucide.createIcons === 'function') {
             window.lucide.createIcons();
         }
+
+        // 10. Live background scoring sync & podium leaderboard
+        if (window.AIEC_API && typeof window.AIEC_API.getUserScoring === 'function') {
+            window.AIEC_API.getUserScoring(currentUid).then(live => {
+                if (live) {
+                    const lvlBadge = document.getElementById('dashProfileLvlBadge');
+                    const streakText = document.getElementById('dashStreakText');
+                    const xpText = document.getElementById('dashXpText');
+                    if (lvlBadge) lvlBadge.textContent = `LVL ${live.current_level}`;
+                    if (streakText) streakText.textContent = `${live.streak_days} Days Streak`;
+                    if (xpText) xpText.textContent = `${(live.total_xp || 0).toLocaleString()} XP`;
+                }
+            }).catch(() => {});
+        }
+        if (window.AIEC_API && typeof window.AIEC_API.getScoringLeaderboard === 'function') {
+            window.AIEC_API.getScoringLeaderboard(4).then(leaders => {
+                if (leaders && leaders.length >= 3) {
+                    const spots = root.querySelectorAll('.dash-podium-spot');
+                    // spot 0 is silver (#2), spot 1 is gold (#1), spot 2 is bronze (#3)
+                    if (spots[1] && leaders[0]) {
+                        const nameEl = spots[1].querySelector('.dash-podium-name');
+                        const scoreEl = spots[1].querySelector('.dash-podium-score');
+                        if (nameEl) nameEl.textContent = leaders[0].display_name;
+                        if (scoreEl) scoreEl.textContent = `${(leaders[0].total_xp || 0).toLocaleString()} XP`;
+                    }
+                    if (spots[0] && leaders[1]) {
+                        const nameEl = spots[0].querySelector('.dash-podium-name');
+                        const scoreEl = spots[0].querySelector('.dash-podium-score');
+                        if (nameEl) nameEl.textContent = leaders[1].display_name;
+                        if (scoreEl) scoreEl.textContent = `${(leaders[1].total_xp || 0).toLocaleString()} XP`;
+                    }
+                    if (spots[2] && leaders[2]) {
+                        const nameEl = spots[2].querySelector('.dash-podium-name');
+                        const scoreEl = spots[2].querySelector('.dash-podium-score');
+                        if (nameEl) nameEl.textContent = leaders[2].display_name;
+                        if (scoreEl) scoreEl.textContent = `${(leaders[2].total_xp || 0).toLocaleString()} XP`;
+                    }
+                }
+            }).catch(() => {});
+        }
     }
 
     // Expose globally
     window.renderDashboard = renderDashboard;
 
-    // Listen to Auth State Changes so Dashboard dynamically updates on login / logout
+    // Listen to Auth State Changes & Scoring updates so Dashboard dynamically updates
     window.addEventListener('aiec-auth-changed', () => {
+        const pageDashboard = document.getElementById('pageDashboard');
+        if (pageDashboard && pageDashboard.classList.contains('active')) {
+            renderDashboard();
+        }
+    });
+
+    window.addEventListener('aiec:levelup', () => {
+        const pageDashboard = document.getElementById('pageDashboard');
+        if (pageDashboard && pageDashboard.classList.contains('active')) {
+            renderDashboard();
+        }
+    });
+
+    window.addEventListener('aiec:scoring-updated', () => {
         const pageDashboard = document.getElementById('pageDashboard');
         if (pageDashboard && pageDashboard.classList.contains('active')) {
             renderDashboard();

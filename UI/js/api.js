@@ -106,6 +106,7 @@
         if (window.AIEC_Auth && typeof window.AIEC_Auth.saveScoreToFirestore === 'function') {
             window.AIEC_Auth.saveScoreToFirestore(track, level, moduleId, score, total);
         }
+        let scoreRes = null;
         try {
             const res = await fetch(`${API_BASE}/api/scores`, {
                 method: 'POST',
@@ -119,11 +120,22 @@
                     total
                 })
             });
-            if (res.ok) return await res.json();
+            if (res.ok) scoreRes = await res.json();
         } catch (e) {
             console.warn('[API Client] Server score save failed');
         }
-        return null;
+
+        // Duolingo Behavioral Scoring & Level-Up Trigger
+        recordScoringEvent({
+            user_id: uid,
+            event_type: 'quiz_complete',
+            category: track,
+            score: Number(score) || 0,
+            max_score: Number(total) || 0,
+            metadata: { level, module_id: moduleId }
+        }).catch(err => console.warn('[API Client] Scoring event dispatch note:', err));
+
+        return scoreRes;
     }
 
     async function getMemeStatus() {
@@ -369,14 +381,183 @@
         return null;
     }
 
-    async function getRoutes() {
+    // =========================================================================
+    // Duolingo Behavioral Scoring & Level-Up API
+    // =========================================================================
+
+    function playCelebrationSound() {
         try {
-            const res = await fetch(`${API_BASE}/api/routes`);
-            if (res.ok) return await res.json();
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (!AudioCtx) return;
+            const ctx = new AudioCtx();
+            const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+            notes.forEach((freq, idx) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.value = freq;
+                const start = ctx.currentTime + (idx * 0.09);
+                gain.gain.setValueAtTime(0.01, start);
+                gain.gain.exponentialRampToValueAtTime(0.28, start + 0.04);
+                gain.gain.exponentialRampToValueAtTime(0.001, start + 0.32);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(start);
+                osc.stop(start + 0.35);
+            });
+        } catch (e) {}
+    }
+
+    function showLevelUpCelebration(celebration) {
+        if (!celebration) return;
+        playCelebrationSound();
+
+        // Dispatch window event so dashboard or profile bars can refresh
+        window.dispatchEvent(new CustomEvent('aiec:levelup', { detail: celebration }));
+
+        // Remove any existing celebration modal
+        const existing = document.getElementById('aiecLevelUpModal');
+        if (existing) existing.remove();
+
+        const modal = document.createElement('div');
+        modal.id = 'aiecLevelUpModal';
+        modal.className = 'aiec-levelup-overlay';
+        modal.innerHTML = `
+            <div class="aiec-levelup-card animate-pop-in">
+                <div class="aiec-levelup-stars">✨ 🌟 ✨</div>
+                <div class="aiec-levelup-badge-ring">
+                    <span class="aiec-levelup-number">LVL ${celebration.new_level}</span>
+                </div>
+                <h2 class="aiec-levelup-title">${celebration.title || '🎉 LEVEL UP!'}</h2>
+                <p class="aiec-levelup-msg">${celebration.message || 'You reached a new learning milestone!'}</p>
+                <div class="aiec-levelup-bonus">
+                    <span>⭐ +${celebration.reward_xp || 50} Bonus XP</span>
+                    <span>🔥 Streak Active</span>
+                </div>
+                <button class="aiec-levelup-btn" id="aiecLevelUpClaimBtn">Continue Crushing It! 🚀</button>
+            </div>
+        `;
+        document.body.appendChild(modal);
+
+        const claimBtn = modal.querySelector('#aiecLevelUpClaimBtn');
+        if (claimBtn) {
+            claimBtn.addEventListener('click', () => {
+                modal.classList.add('fade-out');
+                setTimeout(() => modal.remove(), 260);
+            });
+        }
+        // Auto-dismiss after 7 seconds if unclicked
+        setTimeout(() => {
+            if (document.body.contains(modal)) {
+                modal.classList.add('fade-out');
+                setTimeout(() => modal.remove(), 260);
+            }
+        }, 7000);
+    }
+
+    async function getUserScoring(userId) {
+        const uid = userId || getUserId();
+        try {
+            const res = await fetch(`${API_BASE}/api/scoring/user/${encodeURIComponent(uid)}`);
+            if (res.ok) {
+                const data = await res.json();
+                // Cache locally for offline reliability
+                try {
+                    localStorage.setItem(`aiec_scoring_${uid}`, JSON.stringify(data));
+                } catch (e) {}
+                return data;
+            }
         } catch (e) {
-            console.warn('[API Client] Routes fetch failed:', e);
+            console.warn('[API Client] Scoring profile fetch failed, using local fallback:', e);
+        }
+
+        // Offline Fallback
+        try {
+            const cached = localStorage.getItem(`aiec_scoring_${uid}`);
+            if (cached) return JSON.parse(cached);
+        } catch (e) {}
+
+        return {
+            user_id: uid,
+            total_xp: 150,
+            current_level: 2,
+            current_league: 'Bronze',
+            streak_days: 1,
+            streak_multiplier: 1.0,
+            streak_boost_label: 'Standard Pace (1.0x)',
+            accuracy_rate: 90.0,
+            quizzes_taken: 2,
+            speaking_tests_taken: 0,
+            level_progress: { level: 2, progress_percentage: 25, remaining_xp_to_next: 150 },
+            track_mastery: {
+                grammar: { count: 2, correct: 18, total: 20, accuracy: 90.0 },
+                vocabulary: { count: 0, correct: 0, total: 0, accuracy: 0.0 },
+                listening: { count: 0, correct: 0, total: 0, accuracy: 0.0 },
+                speaking: { count: 0, avg_band: 0.0 }
+            },
+            badges: [{ id: 'first_steps', name: 'First Steps', emoji: '🌱', desc: 'Completed your first practice exercise.' }],
+            cefr_readiness: { current_cefr: 'B1', next_target_cefr: 'B1+', readiness_percentage: 25, is_ready_for_promotion: false, checklist: [] },
+            coaching_insights: [{ type: 'streak', title: 'Keep Going! 🔥', text: 'Daily consistency unlocks streak multipliers.', icon: '⚡' }]
+        };
+    }
+
+    async function recordScoringEvent(eventData) {
+        const uid = (eventData && eventData.user_id) || getUserId();
+        const payload = Object.assign({
+            user_id: uid,
+            event_type: 'quiz_complete',
+            category: 'grammar',
+            score: 0,
+            max_score: 0,
+            metadata: {}
+        }, eventData);
+
+        try {
+            const res = await fetch(`${API_BASE}/api/scoring/event`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            if (res.ok) {
+                const data = await res.json();
+                if (data.leveled_up && data.celebration) {
+                    showLevelUpCelebration(data.celebration);
+                }
+                // Refresh local cached scoring
+                if (data.profile) {
+                    try {
+                        localStorage.setItem(`aiec_scoring_${uid}`, JSON.stringify(data.profile));
+                    } catch (e) {}
+                }
+                return data;
+            }
+        } catch (e) {
+            console.warn('[API Client] Record scoring event failed:', e);
         }
         return null;
+    }
+
+    async function getScoringLeaderboard(limit = 10) {
+        try {
+            const res = await fetch(`${API_BASE}/api/scoring/leaderboard?limit=${encodeURIComponent(limit)}`);
+            if (res.ok) {
+                const data = await res.json();
+                return data.leaderboard || [];
+            }
+        } catch (e) {
+            console.warn('[API Client] Leaderboard fetch failed:', e);
+        }
+        return [];
+    }
+
+    async function getAvailableBadges() {
+        try {
+            const res = await fetch(`${API_BASE}/api/scoring/badges`);
+            if (res.ok) return await res.json();
+        } catch (e) {
+            console.warn('[API Client] Badges fetch failed:', e);
+        }
+        return { badges: [], leagues: [] };
     }
 
     window.AIEC_API = {
@@ -396,6 +577,11 @@
         saveGoal,
         getSpeakingTopics,
         getSpeakingTopic,
-        getRoutes
+        getRoutes,
+        getUserScoring,
+        recordScoringEvent,
+        getScoringLeaderboard,
+        getAvailableBadges,
+        showLevelUpCelebration
     };
 })();

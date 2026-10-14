@@ -861,3 +861,141 @@
     }
 }
 
+/* =========================================================================
+   DUOLINGO LEVEL-UP CELEBRATION MODAL
+   ========================================================================= */
+.aiec-levelup-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 20px;
+    animation: aiecFadeIn 0.25s ease-out;
+}
+
+.aiec-levelup-overlay.fade-out {
+    animation: aiecFadeOut 0.25s ease-in forwards;
+}
+
+.aiec-levelup-card {
+    background: linear-gradient(145deg, #1E293B 0%, #0F172A 100%);
+    border: 2px solid rgba(251, 191, 36, 0.6);
+    box-shadow: 0 25px 60px -15px rgba(245, 158, 11, 0.35), 0 0 40px rgba(251, 191, 36, 0.25);
+    border-radius: 28px;
+    padding: 36px 32px;
+    max-width: 440px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    color: #FFFFFF;
+}
+
+.animate-pop-in {
+    animation: aiecPopIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.aiec-levelup-stars {
+    font-size: 28px;
+    margin-bottom: 8px;
+    animation: aiecPulse 1.5s infinite;
+}
+
+.aiec-levelup-badge-ring {
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 16px auto;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #F59E0B, #EF4444);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 30px rgba(245, 158, 11, 0.6);
+    border: 4px solid #FEF3C7;
+}
+
+.aiec-levelup-number {
+    font-size: 20px;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    color: #FFFFFF;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.aiec-levelup-title {
+    font-size: 26px;
+    font-weight: 800;
+    margin: 0 0 8px 0;
+    background: linear-gradient(135deg, #FDE68A 0%, #F59E0B 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.aiec-levelup-msg {
+    font-size: 15px;
+    color: #CBD5E1;
+    line-height: 1.5;
+    margin: 0 0 20px 0;
+}
+
+.aiec-levelup-bonus {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.aiec-levelup-bonus span {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #FEF3C7;
+}
+
+.aiec-levelup-btn {
+    width: 100%;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.4);
+    transition: all 0.2s ease;
+}
+
+.aiec-levelup-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 25px -5px rgba(16, 185, 129, 0.6);
+}
+
+@keyframes aiecPopIn {
+    0% { transform: scale(0.7); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes aiecFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes aiecFadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes aiecPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+
