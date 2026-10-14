@@ -10,9 +10,27 @@
  * Automatically falls back to offline local storage if backend server is unreachable.
  */
 (function () {
-    const API_BASE = window.location.origin.includes('localhost') || window.location.origin.includes('127.0.0.1')
-        ? window.location.origin
-        : '';
+    const API_BASE = (function () {
+        // 1. Explicit override if set globally or in localStorage
+        if (typeof window.AIEC_API_BASE === 'string' && window.AIEC_API_BASE.trim()) {
+            return window.AIEC_API_BASE.trim().replace(/\/+$/, '');
+        }
+        try {
+            const stored = localStorage.getItem('aiec_api_base');
+            if (stored && stored.trim()) return stored.trim().replace(/\/+$/, '');
+        } catch (e) {}
+
+        // 2. Frontend dev servers (e.g. Vite :5173, Live Server :5500, :8000, :8080)
+        // If frontend is on a separate port on localhost/127.0.0.1, point to backend at :3000
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            if (window.location.port && window.location.port !== '3000') {
+                return `${window.location.protocol}//${window.location.hostname}:3000`;
+            }
+        }
+
+        // 3. Same-origin backend (:3000) or Vercel serverless: relative path works everywhere
+        return '';
+    })();
 
     function getUserId() {
         if (window.AIEC_Auth && typeof window.AIEC_Auth.getUser === 'function') {

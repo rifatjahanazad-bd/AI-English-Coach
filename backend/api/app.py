@@ -48,11 +48,12 @@ def create_app() -> FastAPI:
         response.headers["X-Frame-Options"] = "SAMEORIGIN"
         response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
         response.headers["Content-Security-Policy"] = (
-            "default-src 'self'; "
-            "script-src 'self' 'unsafe-inline' https://unpkg.com https://www.gstatic.com https://apis.google.com; "
+            "default-src 'self' https: http: data: blob:; "
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://www.gstatic.com https://apis.google.com https://cdn.jsdelivr.net; "
             "frame-src 'self' https://*.firebaseapp.com https://accounts.google.com; "
-            "connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://*.firebaseapp.com https://tokenharbor.ai; "
-            "img-src 'self' data: https:; "
+            "connect-src 'self' http://localhost:* http://127.0.0.1:* https://*.googleapis.com https://*.firebaseio.com https://*.firebaseapp.com https://*.firebasestorage.app https://tokenharbor.ai https: ws: wss:; "
+            "img-src 'self' data: blob: https:; "
+            "media-src 'self' blob: data: https:; "
             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
             "font-src 'self' data: https://fonts.gstatic.com;"
         )

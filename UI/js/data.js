@@ -159,7 +159,7 @@ const practiceData = {
     }
 };
 
-// 2. SPEAKING TEST TOPIC DATA (24 TOPICS)
+// 2. SPEAKING TEST TOPIC DATA (11 TOPICS)
 const topics = [
     { name: 'Hometown', emoji: '🏠', difficulty: 'easy', prompt: 'Describe your hometown.' },
     { name: 'Work/Study', emoji: '💼', difficulty: 'medium', prompt: 'Describe your job or studies.' },
@@ -171,20 +171,7 @@ const topics = [
     { name: 'Education', emoji: '📚', difficulty: 'easy', prompt: 'Describe a teacher who influenced you.' },
     { name: 'Culture', emoji: '🎭', difficulty: 'medium', prompt: 'Describe a cultural tradition in your country.' },
     { name: 'Sports', emoji: '⚽', difficulty: 'easy', prompt: 'Describe a sport you enjoy watching or playing.' },
-    { name: 'Food', emoji: '🍜', difficulty: 'easy', prompt: 'Describe a traditional dish from your country.' },
-    { name: 'Health', emoji: '🏥', difficulty: 'medium', prompt: 'Describe a healthy habit you have.' },
-    { name: 'Music', emoji: '🎵', difficulty: 'easy', prompt: 'Describe a song that means a lot to you.' },
-    { name: 'Books', emoji: '📖', difficulty: 'medium', prompt: 'Describe a book that changed your perspective.' },
-    { name: 'Movies', emoji: '🎬', difficulty: 'easy', prompt: 'Describe a movie you recently enjoyed.' },
-    { name: 'Weather', emoji: '🌤️', difficulty: 'easy', prompt: 'Describe your favourite type of weather.' },
-    { name: 'Transport', emoji: '🚌', difficulty: 'medium', prompt: 'Describe how you usually travel to work or school.' },
-    { name: 'Shopping', emoji: '🛍️', difficulty: 'easy', prompt: 'Describe a memorable shopping experience.' },
-    { name: 'Family', emoji: '👨👩👧', difficulty: 'easy', prompt: 'Describe a family member you admire.' },
-    { name: 'Friendship', emoji: '🤝', difficulty: 'medium', prompt: 'Describe a close friend and why they matter.' },
-    { name: 'City Life', emoji: '🏙️', difficulty: 'medium', prompt: 'Describe what you like about city life.' },
-    { name: 'Rural Life', emoji: '🌻', difficulty: 'hard', prompt: 'Describe the advantages of living in the countryside.' },
-    { name: 'Volunteering', emoji: '🤲', difficulty: 'hard', prompt: 'Describe a volunteering experience you had.' },
-    { name: 'Future Plans', emoji: '🌟', difficulty: 'medium', prompt: 'Describe a goal you want to achieve in the future.' }
+    { name: 'Food', emoji: '🍜', difficulty: 'easy', prompt: 'Describe a traditional dish from your country.' }
 ];
 
 // Helper: Escape HTML

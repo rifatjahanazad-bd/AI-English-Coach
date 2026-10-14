@@ -320,23 +320,6 @@
             }
         }
 
-        // 2. Speaking Arena Meme Section
-        const testContainer = document.getElementById('testMemeContainer');
-        if (testContainer && !testContainer.hasChildNodes()) {
-            testContainer.innerHTML = createBannerHtml({
-                badgeText: '✨ Speaking Warm-Up • Relieve Exam Stress',
-                title: 'Nervous about IELTS Speaking? Laugh it off! 🎤😂',
-                subtitle: 'Relieve pre-test anxiety with funny memes about examiner poker faces, awkward pauses, and Band 9 idioms.',
-                btnText: 'Generate Speaking Meme',
-                themeClass: 'speaking-meme-theme'
-            });
-
-            const btn = testContainer.querySelector('.aiec-gen-meme-btn');
-            if (btn) {
-                btn.addEventListener('click', () => triggerMemeGeneration('IELTS Speaking Test & Examiner Reactions', btn));
-            }
-        }
-
         syncAllBanners();
     }
 

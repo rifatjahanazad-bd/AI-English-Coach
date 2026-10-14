@@ -23,20 +23,7 @@ SPEAKING_TOPICS = [
     {"id": "education", "name": "Education", "emoji": "📚", "difficulty": "easy", "prompt": "Describe a teacher who influenced you."},
     {"id": "culture", "name": "Culture", "emoji": "🎭", "difficulty": "medium", "prompt": "Describe a cultural tradition in your country."},
     {"id": "sports", "name": "Sports", "emoji": "⚽", "difficulty": "easy", "prompt": "Describe a sport you enjoy watching or playing."},
-    {"id": "food", "name": "Food", "emoji": "🍜", "difficulty": "easy", "prompt": "Describe a traditional dish from your country."},
-    {"id": "health", "name": "Health", "emoji": "🏥", "difficulty": "medium", "prompt": "Describe a healthy habit you have."},
-    {"id": "music", "name": "Music", "emoji": "🎵", "difficulty": "easy", "prompt": "Describe a song that means a lot to you."},
-    {"id": "books", "name": "Books", "emoji": "📖", "difficulty": "medium", "prompt": "Describe a book that changed your perspective."},
-    {"id": "movies", "name": "Movies", "emoji": "🎬", "difficulty": "easy", "prompt": "Describe a movie you recently enjoyed."},
-    {"id": "weather", "name": "Weather", "emoji": "🌤️", "difficulty": "easy", "prompt": "Describe your favourite type of weather."},
-    {"id": "transport", "name": "Transport", "emoji": "🚌", "difficulty": "medium", "prompt": "Describe how you usually travel to work or school."},
-    {"id": "shopping", "name": "Shopping", "emoji": "🛍️", "difficulty": "easy", "prompt": "Describe a memorable shopping experience."},
-    {"id": "family", "name": "Family", "emoji": "👨‍👩‍👧", "difficulty": "easy", "prompt": "Describe a family member you admire."},
-    {"id": "friendship", "name": "Friendship", "emoji": "🤝", "difficulty": "medium", "prompt": "Describe a close friend and why they matter."},
-    {"id": "city-life", "name": "City Life", "emoji": "🏙️", "difficulty": "medium", "prompt": "Describe what you like about city life."},
-    {"id": "rural-life", "name": "Rural Life", "emoji": "🌻", "difficulty": "hard", "prompt": "Describe the advantages of living in the countryside."},
-    {"id": "volunteering", "name": "Volunteering", "emoji": "🤲", "difficulty": "hard", "prompt": "Describe a volunteering experience you had."},
-    {"id": "future-plans", "name": "Future Plans", "emoji": "🌟", "difficulty": "medium", "prompt": "Describe a goal you want to achieve in the future."}
+    {"id": "food", "name": "Food", "emoji": "🍜", "difficulty": "easy", "prompt": "Describe a traditional dish from your country."}
 ]
 
 
