@@ -59,6 +59,19 @@ def create_app() -> FastAPI:
         )
         return response
 
+    # 1c. Vercel Serverless Path Normalization Middleware
+    @application.middleware("http")
+    async def normalize_api_path(request: Request, call_next):
+        """Normalizes request path if Vercel serverless rewrite strips the /api prefix."""
+        raw_path = request.scope.get("path", "")
+        api_prefixes = (
+            "/chat", "/speaking", "/modules", "/meme",
+            "/auth", "/goal", "/scoring", "/health", "/system", "/scores", "/progress"
+        )
+        if not raw_path.startswith("/api") and any(raw_path == p or raw_path.startswith(f"{p}/") for p in api_prefixes):
+            request.scope["path"] = f"/api{raw_path}"
+        return await call_next(request)
+
     # 2. Register all structured API domain routers
     register_routes(application)
 

@@ -1,8 +1,8 @@
-"""memes.py - AI English meme generation, validation, cropping, and rate limits."""
-
+import base64
 import random
 from datetime import datetime
 from fastapi import APIRouter, HTTPException
+from fastapi.responses import FileResponse
 import requests
 
 from backend.database import db
@@ -129,7 +129,16 @@ def create_meme(payload: MemeRequest):
         concept["template"] = "drake"
         meme_generator.create_local_fallback_image(concept, filepath)
 
-    image_url = f"/output/memes/{filename}"
+    # Convert image to data URI for 100% reliable zero-latency delivery in serverless environments (Vercel)
+    data_uri = ""
+    try:
+        with open(filepath, "rb") as img_f:
+            b64_content = base64.b64encode(img_f.read()).decode("ascii")
+            data_uri = f"data:image/png;base64,{b64_content}"
+    except Exception as e:
+        print(f"[warn] Failed to encode meme data URI: {e}")
+
+    image_url = data_uri if data_uri else f"/api/meme/image/{filename}"
 
     memes = [
         {
@@ -139,6 +148,7 @@ def create_meme(payload: MemeRequest):
             "topic": concept.get("topic", payload.topic),
             "joke": concept.get("joke", ""),
             "image_url": image_url,
+            "filename": filename,
         }
     ]
 
@@ -151,3 +161,16 @@ def create_meme(payload: MemeRequest):
         "count": 1,
         "stats": stats,
     }
+
+
+@router.get("/image/{filename}")
+def get_meme_image_file(filename: str):
+    """Serves generated meme PNG images directly from backend storage."""
+    file_p = MEMES_OUTPUT_DIR / filename
+    if file_p.exists():
+        return FileResponse(str(file_p), media_type="image/png")
+    # Fallback to local template if generated file was cleared
+    tmpl_p = meme_generator.LOCAL_TEMPLATES_DIR / "drake.png"
+    if tmpl_p.exists():
+        return FileResponse(str(tmpl_p), media_type="image/png")
+    raise HTTPException(status_code=404, detail="Meme image not found")

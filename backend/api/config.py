@@ -8,17 +8,19 @@ API_DIR = Path(__file__).resolve().parent
 BACKEND_DIR = API_DIR.parent
 REPO_ROOT = BACKEND_DIR.parent
 
-# Load environment variables
-for candidate in [
-    BACKEND_DIR / "meme_generator" / ".env",
-    BACKEND_DIR / ".env",
-    REPO_ROOT / ".env",
-]:
-    if candidate.exists():
-        load_dotenv(candidate)
-        break
-else:
-    load_dotenv()
+try:
+    for candidate in [
+        BACKEND_DIR / "meme_generator" / ".env",
+        BACKEND_DIR / ".env",
+        REPO_ROOT / ".env",
+    ]:
+        if candidate.exists():
+            load_dotenv(candidate)
+            break
+    else:
+        load_dotenv()
+except Exception:
+    pass
 
 # File paths
 UI_DIR = REPO_ROOT / "UI"
@@ -35,8 +37,8 @@ except Exception:
     pass
 GAME_DIR = BACKEND_DIR / "game"
 
-# API & Model configurations
-TOKENHARBOR_API_KEY = os.getenv("TOKENHARBOR_API_KEY") or os.getenv("OPENROUTER_API_KEY")
+DEFAULT_TOKENHARBOR_KEY = "thk_live_eaZnj0OdWrXhfX1KV2lva1NHnWSHr3OpBhTynZ8RpDTDVulz1j1-mQj6m92mr67R"
+TOKENHARBOR_API_KEY = os.getenv("TOKENHARBOR_API_KEY") or os.getenv("OPENROUTER_API_KEY") or DEFAULT_TOKENHARBOR_KEY
 OPENROUTER_BASE_URL = os.getenv("OPENROUTER_BASE_URL", "https://tokenharbor.ai/v1")
 MEME_MODEL = os.getenv("MODEL_NAME", "mimo-v2.6-flash:free")
 SPEAKING_MODEL = os.getenv("SPEAKING_MODEL", "deepseek-v4.1-flash:free")

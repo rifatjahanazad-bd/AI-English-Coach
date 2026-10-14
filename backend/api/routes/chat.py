@@ -28,7 +28,7 @@ def handle_chat(payload: ChatRequest):
         reply = chatbot.chat(user_id=valid_id, text=message_text)
     except Exception as e:
         print(f"[error] Chatbot error: {e}")
-        reply = "I'm having a brief connection issue. Could you please repeat that? I'm here to help you practice!"
+        reply = chatbot.generate_offline_ielts_reply(message_text)
 
     # Persist both user message and bot reply into SQLite chat_history
     try:

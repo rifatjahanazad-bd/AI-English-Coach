@@ -12,6 +12,69 @@
 
     const MEME_CATALOG = [
         {
+            template: "woman-cat",
+            top: "Teacher: You cannot just invent your own irregular verbs!",
+            bottom: "Me: I eated, I sleeped, and I catched the bus",
+            topic: "Irregular Verbs",
+            caption: "Why conjugate when you can just add -ed to everything and hope for the best?"
+        },
+        {
+            template: "gb",
+            top: "Very good -> Exceptional -> Quintessentially sublime",
+            bottom: "Me substituting every single basic word in IELTS Task 2",
+            topic: "IELTS Lexical Resource",
+            caption: "The examiner having to look up your 5-syllable synonyms in the Oxford Dictionary."
+        },
+        {
+            template: "right",
+            top: "I finished my 250-word IELTS essay in 12 minutes!",
+            bottom: "You checked for subject-verb agreement, right? ... Right?",
+            topic: "Essay Proofreading",
+            caption: "When you finish with 20 minutes left and 35 missing plural 's' endings."
+        },
+        {
+            template: "panik-kalm-panik",
+            top: "Exam tomorrow: PANIK! Practiced with AI English Coach: KALM!",
+            bottom: "Section 4 is an Australian lecture about marsupials: PANIK!",
+            topic: "IELTS Listening Section 4",
+            caption: "The audio has rain, rustling papers, and a cricket match in the background."
+        },
+        {
+            template: "leo",
+            top: "Successfully using 'Notwithstanding the aforementioned' casually",
+            bottom: "Cheers to Band 9 fluency",
+            topic: "Over-formal English",
+            caption: "When you order coffee like you are addressing the United Nations General Assembly."
+        },
+        {
+            template: "cheems",
+            top: "English when typing online: Sophisticated & profound",
+            bottom: "English when IELTS examiner stares at me: me no speak good",
+            topic: "Speaking Test Pressure",
+            caption: "Brain has temporarily left the chat."
+        },
+        {
+            template: "facepalm",
+            top: "Examiner: How long have you lived in your hometown?",
+            bottom: "Me: Yes, I am live here since 20 years ago",
+            topic: "Present Perfect Traps",
+            caption: "The examiner's pen twitching slightly as they mark your grammatical range."
+        },
+        {
+            template: "ams",
+            top: "When the examiner asks 'What is your full name?'",
+            bottom: "And you accidentally say 'I completely agree with this statement'",
+            topic: "Speaking Test Anxiety",
+            caption: "The rehearsed Task 2 essay template taking over your speech in Part 1."
+        },
+        {
+            template: "db",
+            top: "Me trying to master past perfect",
+            bottom: "Phrasal verbs with 14 different meanings",
+            topic: "Grammar Distractions",
+            caption: "'Turn up', 'turn down', 'turn off', 'turn on'... please make it stop!"
+        },
+        {
             template: "drake",
             top: "Using simple everyday words",
             bottom: "Forcing Band 9 collocations into every single sentence",
@@ -24,6 +87,13 @@
             bottom: "Or just speaking at 3x speed with heavy slang",
             topic: "Listening Comprehension",
             caption: "When the examiner starts speaking and all consonants vanish into thin air."
+        },
+        {
+            template: "rollsafe",
+            top: "Can't make grammar mistakes",
+            bottom: "If you only speak in one-word answers",
+            topic: "Speaking Strategy",
+            caption: "Examiner: Describe your hometown. Me: Yes."
         },
         {
             template: "buzz",
@@ -52,6 +122,27 @@
             bottom: "Me: Since the dawn of civilization humans have existed",
             topic: "Speaking Part 1",
             caption: "When you over-philosophize a simple question about your breakfast."
+        },
+        {
+            template: "gru",
+            top: "Study 50 grammar rules",
+            bottom: "Forget every single one when examiner says hello",
+            topic: "Exam Panic",
+            caption: "Wait... what was my name in the present perfect tense again?"
+        },
+        {
+            template: "wonka",
+            top: "Please tell me more",
+            bottom: "About how watching movies without subtitles made you fluent",
+            topic: "Learning Myths",
+            caption: "Passive watching isn't quite the same as active grammar drills."
+        },
+        {
+            template: "fine",
+            top: "Examiner: Describe a book that influenced you",
+            bottom: "Me who has not read a book since 2018: This is fine",
+            topic: "Speaking Part 2",
+            caption: "Time to invent an award-winning novel in 60 seconds."
         }
     ];
 
