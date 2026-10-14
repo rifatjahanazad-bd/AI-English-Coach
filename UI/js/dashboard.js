@@ -1,144 +1,175 @@
 /**
  * ==========================================================================
- * DASHBOARD CONTROLLER (dashboard.js)
- * Implements the gamified educational dashboard inspired by user reference:
- * - Rounded capsule aesthetic (border-radius: 22px-30px)
- * - Profile bar with avatar, learner info, streak flame & XP counters
- * - Featured progress hero card with slider track and pulsing play button
- * - 3-pillar capsule stat counters: Total Activities, Completed, Pending
- * - Interactive CEFR English Levels Track (A1, A2, B1, B1+, B2, C1, C2)
- * - Bento-style feature cards with rich visual meters:
- *     1. English Practice Score (Circular SVG gauge ring + bar meters)
- *     2. Current Vocabulary Problems (Interactive flashcards with instant AI Mentor review)
- *     3. Speaking Arena Readiness (IELTS 4-criteria official band meters)
- *     4. Fast Phrases Sentence Builder (Interactive teaser mini-puzzle & game launcher)
- * - Learning Leaderboard Podium (1st, 2nd, 3rd places with avatars & XP)
- * - 7-Day study milestone banner with streak dots
- * - Strictly isolated to #pageDashboard so other pages (Practice, Chat, Test)
- *   remain clean and unaffected.
- * - Works gracefully in both Guest Mode (interactive demo) and Member Mode (persisted).
+ * CLEAN PLAYFUL DASHBOARD CONTROLLER (dashboard.js)
+ * Cleaned and streamlined to focus strictly on user profile and learning essentials:
+ * 1. [User Name with Dynamic Greetings & Status]
+ * 2. [English Proficiency Breakdown: Reading, Writing, Speaking]
+ *    - Full handling for new users, first-time visits & Day 1 diagnostic baseline
+ * 3. [Speaking Test Section Banner (11 Official Topics)]
+ * 4. [Current Streaks: Weekly Strip (Mon-Sun, marking active, missed & today)]
+ * 5. [Game Scores (Fast Phrases) & Other Scores (XP, Level, Accuracy)]
+ * 6. [Random Meme Card with IELTS Hint & Interactive Shuffle]
+ * 7. [Banner: Chat with AI IELTS Mentor with direct action button]
  * ==========================================================================
  */
 
 (function () {
     'use strict';
 
-    // CEFR Levels Data with IELTS equivalence & skill tags
-    const CEFR_LEVELS = [
+    // 23 Curated Photographic Memes with educational IELTS tips
+    const DASH_MEME_CATALOG = [
         {
-            id: 'a1',
-            code: 'A1',
-            label: 'A1 Beginner',
-            ielts: 'IELTS 2.0 - 3.0',
-            status: 'mastered',
-            desc: 'Can understand basic everyday phrases, self-introductions, and familiar everyday questions.',
-            progress: '8/8 Completed',
-            tags: ['Basic Pronouns', 'Present Simple', 'Everyday Vocab']
+            template: "woman-cat",
+            topic: "Irregular Verbs",
+            top: "Teacher: You cannot just invent irregular verbs!",
+            bottom: "Me: I eated, I sleeped, and I catched the bus",
+            joke: "Why conjugate when you can add -ed to everything? Remember: eat ➔ ate, sleep ➔ slept, catch ➔ caught!"
         },
         {
-            id: 'a2',
-            code: 'A2',
-            label: 'A2 Elementary',
-            ielts: 'IELTS 3.5 - 4.0',
-            status: 'mastered',
-            desc: 'Can communicate during routine tasks and describe background, immediate surroundings, and needs.',
-            progress: '10/10 Completed',
-            tags: ['Past Simple', 'Comparative Adjectives', 'Routine Descriptions']
+            template: "gb",
+            topic: "Lexical Resource",
+            top: "Very good -> Exceptional -> Quintessentially sublime",
+            bottom: "Me substituting every single basic word in IELTS Task 2",
+            joke: "Examiners value natural, precise collocation over 5-syllable synonyms used out of context."
         },
         {
-            id: 'b1',
-            code: 'B1',
-            label: 'B1 Intermediate',
-            ielts: 'IELTS 4.5 - 5.0',
-            status: 'mastered',
-            desc: 'Can understand main points of standard speech, express hopes, plans, and narrate events clearly.',
-            progress: '12/12 Completed',
-            tags: ['Conditionals 1 & 2', 'Future Intentions', 'Short Narratives']
+            template: "right",
+            topic: "Essay Proofreading",
+            top: "I just finished my 250-word essay in 12 minutes!",
+            bottom: "You checked for subject-verb agreement, right? ... Right?",
+            joke: "Always reserve 3–5 minutes at the end to catch missing plural 's' endings and run-on sentences."
         },
         {
-            id: 'b1_plus',
-            code: 'B1+',
-            label: 'B1+ Threshold',
-            ielts: 'IELTS 5.0 - 5.5',
-            status: 'mastered',
-            desc: 'Can express spontaneous opinions, explain reasoning, and maintain a conversation on familiar topics.',
-            progress: '8/8 Completed',
-            tags: ['Present Perfect Continuous', 'Connecting Phrases', 'Opinion Coherence']
+            template: "panik-kalm-panik",
+            topic: "Listening Section 4",
+            top: "Exam tomorrow: PANIK! Practiced with AI English Coach: KALM!",
+            bottom: "Section 4 has an Australian accent talking about tectonic plates: PANIK!",
+            joke: "In Listening Section 4, read ahead during the 30-second silence to anticipate nouns and numbers."
         },
         {
-            id: 'b2',
-            code: 'B2',
-            label: 'B2 Vantage',
-            ielts: 'IELTS 5.5 - 6.5',
-            status: 'active',
-            desc: 'Can interact fluently with native speakers and understand complex ideas in academic and professional contexts.',
-            progress: '8/14 In Progress',
-            tags: ['Complex Conditionals', 'Academic Collocations', 'Argumentative Coherence', 'Fluency Under Stress']
+            template: "leo",
+            topic: "Over-Formal Speech",
+            top: "Using 'Notwithstanding the aforementioned' in a casual conversation",
+            bottom: "Cheers to Band 9 fluency",
+            joke: "In Speaking Part 1, keep it natural and conversational! Save academic formal connectors for Writing Task 2."
         },
         {
-            id: 'c1',
-            code: 'C1',
-            label: 'C1 Advanced',
-            ielts: 'IELTS 7.0 - 8.0',
-            status: 'upcoming',
-            desc: 'Can express ideas fluently, spontaneously, and flexibly for demanding academic and professional essays/speaking.',
-            progress: '0/16 Available',
-            tags: ['Inversion & Cleft Sentences', 'Nuanced Idiomatic Lexicon', 'Task 2 Task Response', 'Abstract Hypotheses']
+            template: "cheems",
+            topic: "Speaking Pressure",
+            top: "English when typing online: Eloquent & profound",
+            bottom: "English when IELTS examiner stares at me: me no speak good",
+            joke: "Breathe, speak slowly, and use fillers like 'That is an intriguing question' to buy yourself thinking time."
         },
         {
-            id: 'c2',
-            code: 'C2',
-            label: 'C2 Mastery',
-            ielts: 'IELTS 8.5 - 9.0',
-            status: 'upcoming',
-            desc: 'Native-like precision; can summarize information from different sources and reconstruct arguments seamlessly.',
-            progress: '0/12 Available',
-            tags: ['Subtle Connotations', 'Speed Coherence', 'Stylistic Versatility', 'Native Phrasing']
+            template: "facepalm",
+            topic: "Tense Traps",
+            top: "Examiner: How long have you lived in your hometown?",
+            bottom: "Me: Yes, I am live here since 20 years ago",
+            joke: "Use Present Perfect Continuous for actions starting in the past and continuing now: 'I have been living here for 20 years'."
+        },
+        {
+            template: "ams",
+            topic: "Speaking Part 1",
+            top: "Examiner: What is your full name?",
+            bottom: "Me: I completely agree with this statement",
+            joke: "Listen carefully to the question type! Part 1 questions are personal and straightforward."
+        },
+        {
+            template: "db",
+            topic: "Grammar Traps",
+            top: "Me trying to master past perfect",
+            bottom: "Phrasal verbs with 14 different meanings",
+            joke: "Phrasal verbs like 'turn down' (reject vs lower volume) are best learned through context and stories."
+        },
+        {
+            template: "drake",
+            topic: "Vocabulary Flex",
+            top: "Using common everyday words",
+            bottom: "Forcing Band 9 collocations into every single sentence",
+            joke: "Natural, accurate vocabulary always scores higher than forced, unnatural academic jargon."
+        },
+        {
+            template: "fry",
+            topic: "Listening Comprehension",
+            top: "Not sure if native speaker",
+            bottom: "Or just speaking at 3x speed with heavy slang",
+            joke: "Focus on stressed content words (nouns, verbs) rather than catching every single unstressed preposition."
+        },
+        {
+            template: "rollsafe",
+            topic: "Speaking Strategy",
+            top: "Can't make grammar mistakes",
+            bottom: "If you only speak in one-word answers",
+            joke: "Short answers hurt your Fluency & Coherence score! Always use the Point + Reason + Example formula."
+        },
+        {
+            template: "buzz",
+            topic: "Linking Words",
+            top: "Linking words",
+            bottom: "Linking words everywhere",
+            joke: "Overusing 'Moreover', 'Furthermore', and 'In addition' sounds robotic. Variety and logical flow matter most."
+        },
+        {
+            template: "doge",
+            topic: "Grammar Accuracy",
+            top: "much grammar very band 9",
+            bottom: "such inversion wow conditional",
+            joke: "Rarely had such sophisticated inversion been seen! Inversion adds high grammatical range when used correctly."
+        },
+        {
+            template: "disastergirl",
+            topic: "Vocabulary Boost",
+            top: "Me using 'plethora' correctly",
+            bottom: "Examiner giving me a Band 8.5",
+            joke: "A plethora of varied sentence structures combined with accurate grammar impresses any examiner."
+        },
+        {
+            template: "spongebob",
+            topic: "Speaking Part 1",
+            top: "Examiner: Tell me about yourself",
+            bottom: "Me: Since the dawn of civilization humans have existed",
+            joke: "Avoid memorized generic introductions. Answer directly with genuine personal details and natural enthusiasm."
+        },
+        {
+            template: "gru",
+            topic: "Exam Panic",
+            top: "Study 50 grammar rules",
+            bottom: "Forget every single one when examiner says hello",
+            joke: "Confidence comes from daily vocal practice. Warm up with your AI English Coach 10 minutes before studying!"
+        },
+        {
+            template: "wonka",
+            topic: "Learning Myths",
+            top: "Please tell me more",
+            bottom: "About how watching movies without subtitles made you fluent",
+            joke: "Active speaking drills and shadow reading build fluency 5x faster than passive TV watching."
+        },
+        {
+            template: "fine",
+            topic: "Speaking Part 2",
+            top: "Examiner: Describe a book that influenced you",
+            bottom: "Me who has not read a book since 2018: This is fine",
+            joke: "You can invent a story or talk about a movie as a book! IELTS tests English ability, not historical truth."
         }
     ];
 
-    // Current Vocabulary Problems flagged from recent practice
-    const VOCAB_PROBLEMS = [
-        {
-            word: 'Ubiquitous',
-            type: 'Academic Adj.',
-            severity: '🚨 High Priority',
-            issue: 'Often confused with "omniscient". Means present everywhere.',
-            collocation: '“Smartphones are now ubiquitous in modern education.”',
-            prompt: 'Can you teach me how to use the word "Ubiquitous" correctly in an IELTS Academic Task 2 essay? Please give 2 Band 8 example sentences and common collocations.'
-        },
-        {
-            word: 'In spite of',
-            type: 'Prepositional',
-            severity: '⚠️ Grammar Slip',
-            issue: 'Followed by a noun or gerund, NOT a full subject+verb clause.',
-            collocation: '“In spite of the adverse climate, agriculture flourished.”',
-            prompt: 'Can you explain the exact grammar rules for "In spite of" vs "Although" and provide 3 IELTS Speaking Part 3 sample answers?'
-        },
-        {
-            word: 'Substantial',
-            type: 'Task 1 Lexicon',
-            severity: '💡 Band 8 Collocation',
-            issue: 'Underused synonym for "large/significant" when describing chart trends.',
-            collocation: '“A substantial increase in renewable energy consumption.”',
-            prompt: 'How can I use "Substantial" and "Substantially" when analyzing IELTS Academic Task 1 data trends?'
-        },
-        {
-            word: 'Albeit',
-            type: 'Conjunction',
-            severity: '✨ Formal Connector',
-            issue: 'Conjunction placement & comma syntax ("albeit small, it was impactful").',
-            collocation: '“Progress was attained, albeit at significant financial expense.”',
-            prompt: 'What are the rules and punctuation for using "albeit" in high-scoring IELTS Writing Task 2 essays?'
-        }
-    ];
+    let currentMemeIndex = Math.floor(Math.random() * DASH_MEME_CATALOG.length);
 
-    let selectedLevelId = 'b2';
-    let teaserGameState = {
-        answered: false,
-        selectedOption: null,
-        isCorrect: false
-    };
+    // Helper: Escape text for safe memegen URLs
+    function sanitizeMemegen(str) {
+        if (!str) return '_';
+        return encodeURIComponent(
+            str.replace(/_/g, '__')
+               .replace(/-/g, '--')
+               .replace(/\?/g, '~q')
+               .replace(/&/g, '~a')
+               .replace(/%/g, '~p')
+               .replace(/#/g, '~h')
+               .replace(/\//g, '~s')
+               .replace(/"/g, "''")
+               .replace(/\s+/g, '_')
+        );
+    }
 
     // Helper: Check if current user is logged in
     function isUserLoggedIn() {
@@ -153,742 +184,635 @@
         }
     }
 
-    // Helper: Safely navigate to route
+    // Helper: Retrieve active user data
+    function getCurrentUser() {
+        if (window.AIEC_Auth && typeof window.AIEC_Auth.getUser === 'function') {
+            const u = window.AIEC_Auth.getUser();
+            if (u && u.name) return u;
+        }
+        try {
+            const saved = JSON.parse(localStorage.getItem('aiec_auth_user_v1') || 'null');
+            if (saved && saved.name) return saved;
+        } catch (e) {}
+        return {
+            id: 'guest',
+            name: 'Learner',
+            isLoggedIn: false,
+            loggedAt: Date.now()
+        };
+    }
+
+    // Helper: Navigate cleanly between pages
     function navigateTo(route) {
         if (window.AIEC_Router && typeof window.AIEC_Router.navigate === 'function') {
             window.AIEC_Router.navigate(route);
         } else if (window.switchAppPage) {
             const page = route.replace('/', '');
-            window.switchAppPage(page === 'personalmentor' ? 'chat' : (page === 'goal' ? 'test' : page));
+            window.switchAppPage(page === 'personalmentor' ? 'chat' : (page === 'goal' || page === 'speaking' ? 'test' : page));
         }
     }
 
-    // Helper: Open personal mentor chat with a preloaded prompt
-    function askMentorAboutWord(promptText) {
-        navigateTo('/personalmentor');
-        setTimeout(() => {
-            const chatInput = document.getElementById('chatInput');
-            const sendBtn = document.getElementById('sendBtn');
-            if (chatInput && sendBtn) {
-                chatInput.value = promptText;
-                chatInput.dispatchEvent(new Event('input', { bubbles: true }));
-                sendBtn.click();
+    // Compute weekly calendar strip (Mon - Sun) with active, missed, today & upcoming days
+    function computeWeeklyStreakStrip(scoring, user) {
+        const dayNames = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
+        const now = new Date();
+        // 0 = Monday, 6 = Sunday
+        const currentDayIndex = (now.getDay() + 6) % 7;
+
+        // Build active dates set from user scoring and local storage
+        const activeDates = new Set();
+        if (scoring && scoring.last_active_date) {
+            activeDates.add(scoring.last_active_date.slice(0, 10));
+        }
+        try {
+            const stored = JSON.parse(localStorage.getItem('aiec_active_dates') || '[]');
+            if (Array.isArray(stored)) {
+                stored.forEach(d => activeDates.add(d));
             }
-        }, 220);
+        } catch (e) {}
+
+        const todayStr = now.toISOString().slice(0, 10);
+        // If user practiced today or has an active streak recorded today
+        const hasStudiedToday = activeDates.has(todayStr) || (scoring && scoring.streak_days > 0);
+
+        const weekDays = [];
+        for (let i = 0; i < 7; i++) {
+            const targetDate = new Date(now);
+            targetDate.setDate(now.getDate() - currentDayIndex + i);
+            const dateStr = targetDate.toISOString().slice(0, 10);
+            const isToday = i === currentDayIndex;
+            const isPast = i < currentDayIndex;
+            const isFuture = i > currentDayIndex;
+
+            let cellClass = 'day-upcoming';
+            let statusPill = '⚪ Later';
+
+            if (isToday) {
+                cellClass = hasStudiedToday ? 'day-completed day-today' : 'day-today';
+                statusPill = hasStudiedToday ? '🔥 Done' : '⚡ Today';
+            } else if (isPast) {
+                // If date was marked active or within current streak range
+                const daysAgo = currentDayIndex - i;
+                const wasActiveInStreak = scoring && scoring.streak_days > daysAgo;
+                const wasActiveDate = activeDates.has(dateStr);
+
+                if (wasActiveInStreak || wasActiveDate) {
+                    cellClass = 'day-completed';
+                    statusPill = '🔥 Done';
+                } else {
+                    cellClass = 'day-missed';
+                    statusPill = '⭕ Missed';
+                }
+            } else {
+                cellClass = 'day-upcoming';
+                statusPill = '⚪ Later';
+            }
+
+            weekDays.push({
+                name: dayNames[i],
+                dayNum: targetDate.getDate(),
+                isToday,
+                cellClass,
+                statusPill
+            });
+        }
+
+        return weekDays;
     }
 
+    // Main Dashboard Render Function
     function renderDashboard() {
         const root = document.getElementById('dashboardRoot');
         if (!root) return;
 
+        const user = getCurrentUser();
         const loggedIn = isUserLoggedIn();
 
-        let targetBand = '7.5';
-        let userName = loggedIn ? 'Alex Morgan' : 'Alex Morgan';
-        let userRole = loggedIn ? 'Active Candidate' : 'Guest Explorer';
+        // 1. Determine time-based greetings
+        const currentHour = new Date().getHours();
+        let greetingPrefix = "Good morning";
+        if (currentHour >= 12 && currentHour < 17) {
+            greetingPrefix = "Good afternoon";
+        } else if (currentHour >= 17) {
+            greetingPrefix = "Good evening";
+        }
 
-        const currentUid = (window.AIEC_Auth && typeof window.AIEC_Auth.getUser === 'function' && window.AIEC_Auth.getUser() && window.AIEC_Auth.getUser().id) || 'guest';
+        // 2. Load scoring profile from DB or cache
+        const currentUid = user.id || 'guest';
         let scoring = {
-            total_xp: 130,
-            current_level: 2,
+            total_xp: 0,
+            current_level: 1,
             current_league: 'Bronze',
             league_details: { badge: '🥉', name: 'Bronze', color: '#CD7F32' },
             streak_days: 1,
             streak_multiplier: 1.0,
             streak_boost_label: 'Standard Pace (1.0x)',
-            accuracy_rate: 93.3,
-            quizzes_taken: 1,
-            speaking_tests_taken: 1,
+            accuracy_rate: 0.0,
+            quizzes_taken: 0,
+            speaking_tests_taken: 0,
             perfect_scores_count: 0,
-            level_progress: { level: 2, progress_percentage: 66, remaining_xp_to_next: 67 },
-            coaching_insights: [{ type: 'streak', title: 'Build Your Habit 🌱', text: 'Practice 2 more days consecutively to unlock your booster!', icon: '⚡' }]
+            level_progress: { level: 1, progress_percentage: 0, remaining_xp_to_next: 100 }
         };
 
         try {
-            if (window.AIEC_Auth && typeof window.AIEC_Auth.getUser === 'function') {
-                const u = window.AIEC_Auth.getUser();
-                if (u && u.name) userName = u.name;
-            } else {
-                const savedUser = JSON.parse(localStorage.getItem('aiec_auth_user_v1') || 'null');
-                if (savedUser && savedUser.name) userName = savedUser.name;
-            }
-            const savedGoal = localStorage.getItem('aiec_user_goal');
-            if (savedGoal) {
-                const parsed = JSON.parse(savedGoal);
-                if (parsed.target_band) targetBand = parsed.target_band;
-            }
             const cachedScoring = localStorage.getItem(`aiec_scoring_${currentUid}`);
             if (cachedScoring) {
                 scoring = Object.assign(scoring, JSON.parse(cachedScoring));
             }
         } catch (e) {}
 
-        const activeLevel = CEFR_LEVELS.find(l => l.id === selectedLevelId) || CEFR_LEVELS[4];
+        // 3. User Diagnostic & New User Possibilities Check
+        // Checks:
+        // - Quizzes taken is 0 AND Speaking tests taken is 0
+        // - No diagnostic test flag in localStorage
+        // - Account created or logged in today with zero activity
+        const hasDiagnosticFlag = !!localStorage.getItem(`aiec_diagnostic_done_${currentUid}`);
+        const isNewUser = (!hasDiagnosticFlag && scoring.quizzes_taken === 0 && scoring.speaking_tests_taken === 0);
+        const isTodayFirstDay = isNewUser || (scoring.streak_days <= 1 && scoring.total_xp === 0);
+
+        // Personalized Greeting Header
+        let greetingTitle = `${greetingPrefix}, ${user.name}! 👋`;
+        if (isTodayFirstDay) {
+            greetingTitle = `Welcome to Day 1, ${user.name}! 🎉`;
+        }
+
+        // Target Band from goals
+        let targetBand = '7.5';
+        try {
+            const savedGoal = localStorage.getItem('aiec_user_goal');
+            if (savedGoal) {
+                const parsed = JSON.parse(savedGoal);
+                if (parsed.target_band) targetBand = parsed.target_band;
+            }
+        } catch (e) {}
+
+        // Weekly Streak Strip
+        const weekDays = computeWeeklyStreakStrip(scoring, user);
+
+        // Current Random Meme Data
+        const currentMeme = DASH_MEME_CATALOG[currentMemeIndex] || DASH_MEME_CATALOG[0];
+        const topEnc = sanitizeMemegen(currentMeme.top);
+        const botEnc = sanitizeMemegen(currentMeme.bottom);
+        const memeImgUrl = `https://api.memegen.link/images/${currentMeme.template}/${topEnc}/${botEnc}.png`;
 
         root.innerHTML = `
-            <!-- SVG Gradient Definitions for Circular Gauge -->
-            <svg style="width:0;height:0;position:absolute;" aria-hidden="true" focusable="false">
-                <defs>
-                    <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#2563EB" />
-                        <stop offset="50%" stop-color="#3B82F6" />
-                        <stop offset="100%" stop-color="#10B981" />
-                    </linearGradient>
-                </defs>
-            </svg>
-
             <div class="dashboard-container">
-                <!-- 0. GUEST DEMO MODE BANNER (Shown if not logged in) -->
+                <!-- 0. GUEST DEMO NOTICE (Only if not logged into Google) -->
                 ${!loggedIn ? `
                     <div class="dash-guest-notice">
                         <div class="dash-guest-notice-content">
                             <span class="dash-guest-notice-icon">✨</span>
                             <div class="dash-guest-notice-text">
-                                <strong>Exploring in Demo Mode:</strong> Track your CEFR levels (A1 to C2), practice accuracy, and vocabulary. Sign in free to save your streak and mock scores across devices!
+                                <strong>Guest Mode Active:</strong> Sign in with Google to sync your study streaks, IELTS mock tests, and AI mentor history across all devices.
                             </div>
                         </div>
                         <button class="dash-guest-notice-btn" id="dashNoticeSignInBtn">
-                            <span>🔑 Sign In / Sign Up</span>
+                            <span>🔑 Sign In with Google</span>
                         </button>
                     </div>
                 ` : ''}
 
-                <!-- 1. TOP PROFILE & GREETING BAR -->
+                <!-- ============================================================== -->
+                <!-- [1] USER NAME WITH GREETINGS & PROFILE CAPSULE                  -->
+                <!-- ============================================================== -->
                 <div class="dash-profile-bar">
                     <div class="dash-profile-info">
                         <div class="dash-avatar-circle" title="Student Profile">
-                            <span>🧑‍🎓</span>
-                            <span class="dash-avatar-level-badge" id="dashProfileLvlBadge">LVL ${scoring.current_level}</span>
+                            ${user.photoURL ? `<img src="${user.photoURL}" alt="User Avatar" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">` : `<span>🧑‍🎓</span>`}
+                            <span class="dash-avatar-level-badge">LVL ${scoring.current_level}</span>
                         </div>
                         <div class="dash-user-names">
-                            <h2>${userName}</h2>
+                            <h2>${greetingTitle}</h2>
                             <div class="dash-user-subtitle">
-                                <span>IELTS Academic Track</span>
+                                <span>IELTS Academic Prep</span>
                                 <span class="dash-band-tag">Target Band ${targetBand} 🎯</span>
-                                <span style="color: #94A3B8;">•</span>
+                                <span style="color: #CBD5E1;">•</span>
                                 <span style="color: ${loggedIn ? '#16A34A' : '#3B82F6'}; font-weight: 700;">
-                                    ${loggedIn ? '🟢 Cloud Synced' : '⚡ Local Session'}
+                                    ${loggedIn ? '🟢 Google Synced' : '⚡ Local Session'}
                                 </span>
                             </div>
                         </div>
                     </div>
+
                     <div class="dash-profile-actions">
-                        <div class="dash-streak-pill" id="dashStreakPill" title="${scoring.streak_boost_label}">
+                        <div class="dash-streak-pill" title="${scoring.streak_boost_label}">
                             <span class="dash-flame">🔥</span>
-                            <span id="dashStreakText">${scoring.streak_days} Days Streak</span>
+                            <span>${scoring.streak_days} Day${scoring.streak_days === 1 ? '' : 's'} Streak</span>
                         </div>
-                        <div class="dash-xp-pill" id="dashXpPill" title="Experience Points">
+                        <div class="dash-xp-pill" title="Experience Points">
                             <span>⭐</span>
-                            <span id="dashXpText">${(scoring.total_xp || 0).toLocaleString()} XP</span>
+                            <span>${(scoring.total_xp || 0).toLocaleString()} XP</span>
                         </div>
                         <div class="dash-xp-pill" style="background: rgba(99, 102, 241, 0.12); color: #4338CA;" title="${scoring.current_league} League Tier">
                             <span>${(scoring.league_details && scoring.league_details.badge) || '🥉'}</span>
                             <span>${scoring.current_league}</span>
                         </div>
-                        <button class="dash-icon-btn" id="dashTimerBtn" title="Study Time: 28h Total">
-                            <i data-lucide="clock"></i>
-                        </button>
-                        <button class="dash-icon-btn" id="dashBellBtn" title="3 New Coach Recommendations">
-                            <i data-lucide="bell"></i>
-                            <span class="dash-icon-badge"></span>
-                        </button>
                     </div>
                 </div>
 
-                <!-- 2. FEATURED PROGRESS HERO CARD -->
-                <div class="dash-hero-card">
-                    <div class="dash-hero-content">
-                        <div class="dash-hero-badge-tag">
-                            <span>⚡ DUOLINGO LEVEL JOURNEY</span>
-                        </div>
-                        <h3>Level ${scoring.current_level} Learner · ${(scoring.league_details && scoring.league_details.badge) || '🥉'} ${scoring.current_league} League</h3>
-                        <div class="dash-hero-sub">${scoring.level_progress.remaining_xp_to_next} XP needed to reach Level ${scoring.current_level + 1}</div>
-                        <div class="dash-progress-wrap">
-                            <div class="dash-progress-track">
-                                <div class="dash-progress-fill" style="width: ${scoring.level_progress.progress_percentage}%;"></div>
-                            </div>
-                            <button class="dash-hero-play-btn" id="dashHeroPlayBtn" title="Resume Daily Sprint">
-                                <i data-lucide="play" style="width: 22px; height: 22px; margin-left: 3px;"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="dash-hero-badge-right">
-                        <div class="dash-hero-avatar-anim">🏆</div>
-                        <div class="dash-hero-badge-title">Level ${scoring.current_level} Active</div>
-                        <div class="dash-hero-badge-sub">${scoring.level_progress.progress_percentage}% Next Level</div>
-                    </div>
-                </div>
-
-                <!-- 3. MY LEARNING PLAN (3 Stat Pillars from Reference) -->
-                <div class="dash-section-header">
-                    <h3 class="dash-section-title">
-                        <span>📋</span>
-                        <span>My Learning Plan</span>
+                <!-- ============================================================== -->
+                <!-- [2] ENGLISH PROFICIENCY SCORE: READING, WRITING, SPEAKING      -->
+                <!-- ============================================================== -->
+                <div class="dash-clean-section-header">
+                    <h3 class="dash-clean-section-title">
+                        <span>📊</span>
+                        <span>English Proficiency Assessment</span>
                     </h3>
-                    <span class="dash-section-sub">Personalized IELTS syllabus</span>
+                    <span class="dash-clean-section-sub">
+                        ${isNewUser ? 'Initial Diagnostic Benchmark' : 'Comprehensive Skill Breakdown'}
+                    </span>
                 </div>
 
-                <div class="dash-pillars-grid">
-                    <!-- Pillar 1: Mint Green -->
-                    <div class="dash-stat-capsule capsule-green" data-action="navigate" data-route="/practice" title="View all practice activities">
-                        <div class="dash-capsule-icon">
-                            <i data-lucide="graduation-cap"></i>
-                        </div>
-                        <div class="dash-capsule-number">48</div>
-                        <div class="dash-capsule-label">Total Activities</div>
-                        <span class="dash-capsule-pill-tag">100% Assigned</span>
-                    </div>
-
-                    <!-- Pillar 2: Warm Peach -->
-                    <div class="dash-stat-capsule capsule-peach" data-action="navigate" data-route="/practice" title="View completed modules">
-                        <div class="dash-capsule-icon">
-                            <i data-lucide="check-circle-2"></i>
-                        </div>
-                        <div class="dash-capsule-number">32</div>
-                        <div class="dash-capsule-label">Completed</div>
-                        <span class="dash-capsule-pill-tag">67% Mastered</span>
-                    </div>
-
-                    <!-- Pillar 3: Sky Blue -->
-                    <div class="dash-stat-capsule capsule-blue" data-action="navigate" data-route="/practice" title="View pending reviews">
-                        <div class="dash-capsule-icon">
-                            <i data-lucide="clock-3"></i>
-                        </div>
-                        <div class="dash-capsule-number">16</div>
-                        <div class="dash-capsule-label">Pending Review</div>
-                        <span class="dash-capsule-pill-tag">33% Up Next</span>
-                    </div>
-                </div>
-
-                <!-- 4. CEFR ENGLISH LEVELS TRACK (Horizontal Pill Chips) -->
-                <div class="dash-section-header">
-                    <h3 class="dash-section-title">
-                        <span>🎓</span>
-                        <span>CEFR English Levels</span>
-                    </h3>
-                    <span class="dash-section-sub">A1 to C2 Framework</span>
-                </div>
-
-                <div class="dash-levels-bar" id="dashLevelsBar">
-                    ${CEFR_LEVELS.map(level => {
-                        const isSelected = level.id === selectedLevelId;
-                        const stateClass = level.status === 'mastered' ? 'mastered' : (isSelected ? 'active' : '');
-                        return `
-                            <button class="dash-level-pill ${stateClass}" data-level-id="${level.id}">
-                                <span class="dash-level-dot"></span>
-                                <span>${level.label}</span>
-                            </button>
-                        `;
-                    }).join('')}
-                </div>
-
-                <!-- Dynamic Level Detail Banner -->
-                <div class="dash-level-banner" id="dashLevelBanner">
-                    <div class="dash-level-banner-left">
-                        <div class="dash-level-banner-badge">
-                            ${activeLevel.ielts}
-                        </div>
-                        <div class="dash-level-banner-desc">
+                ${isNewUser ? `
+                    <!-- New Learner / First Day Welcome Callout -->
+                    <div style="background: #EFF6FF; border: 1.5px solid #BFDBFE; border-radius: 20px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
+                        <div style="display: flex; align-items: center; gap: 12px; max-width: 700px;">
+                            <span style="font-size: 28px;">🌱</span>
                             <div>
-                                <strong>${activeLevel.label}:</strong>
-                                <span>${activeLevel.desc}</span>
-                                <span style="font-weight: 800; color: #2563EB; margin-left: 6px;">(${activeLevel.progress})</span>
+                                <strong style="color: #1E3A8A; font-size: 14.5px;">Welcome to your first day! Baseline Ready (CEFR B1 / Band 5.5)</strong>
+                                <p style="margin: 3px 0 0 0; color: #3B82F6; font-size: 13px; font-weight: 600;">
+                                    Complete your first 5-minute diagnostic test below to calculate your real AI band scores across Reading, Writing, and Speaking!
+                                </p>
                             </div>
-                            <div class="dash-level-banner-tags">
-                                ${activeLevel.tags.map(t => `<span class="dash-level-tag tag-blue">${t}</span>`).join('')}
+                        </div>
+                        <button class="dash-speaking-btn" id="dashTakeDiagnosticBtn" style="background: #2563EB; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);">
+                            <span>Take Diagnostic Test 🚀</span>
+                        </button>
+                    </div>
+                ` : ''}
+
+                <div class="dash-prof-grid">
+                    <!-- 1. Reading Proficiency Card -->
+                    <div class="dash-prof-card prof-reading ${isNewUser ? 'is-new-user' : ''}">
+                        <div>
+                            <div class="dash-prof-header">
+                                <div class="dash-prof-icon-wrap icon-blue-bg">📖</div>
+                                <span class="dash-prof-band-badge ${isNewUser ? 'badge-amber' : 'badge-blue'}">
+                                    ${isNewUser ? 'Baseline 5.5' : 'Band 7.5 (85%)'}
+                                </span>
+                            </div>
+                            <h4 class="dash-prof-name">Reading & Lexis</h4>
+                            <div class="dash-prof-level-tag">
+                                ${isNewUser ? 'Starting Level: CEFR B1' : 'Mastered Level: CEFR B2+'}
+                            </div>
+
+                            <div class="dash-prof-bar-track">
+                                <div class="dash-prof-bar-fill ${isNewUser ? 'fill-dashed' : 'fill-blue'}" style="width: ${isNewUser ? '55%' : '85%'};"></div>
+                            </div>
+
+                            ${isNewUser ? `
+                                <div class="dash-new-user-note">
+                                    Awaiting your first reading quiz to compute precise academic lexical resource.
+                                </div>
+                            ` : `
+                                <div class="dash-prof-metrics">
+                                    <div class="dash-prof-metric-row">
+                                        <span>Vocabulary Breadth</span>
+                                        <strong>88%</strong>
+                                    </div>
+                                    <div class="dash-prof-metric-row">
+                                        <span>Reading Comprehension</span>
+                                        <strong>82%</strong>
+                                    </div>
+                                </div>
+                            `}
+                        </div>
+                    </div>
+
+                    <!-- 2. Writing Proficiency Card -->
+                    <div class="dash-prof-card prof-writing ${isNewUser ? 'is-new-user' : ''}">
+                        <div>
+                            <div class="dash-prof-header">
+                                <div class="dash-prof-icon-wrap icon-purple-bg">✍️</div>
+                                <span class="dash-prof-band-badge ${isNewUser ? 'badge-amber' : 'badge-purple'}">
+                                    ${isNewUser ? 'Baseline 5.5' : 'Band 7.0 (78%)'}
+                                </span>
+                            </div>
+                            <h4 class="dash-prof-name">Writing & Grammar</h4>
+                            <div class="dash-prof-level-tag">
+                                ${isNewUser ? 'Starting Level: CEFR B1' : 'Mastered Level: CEFR B2'}
+                            </div>
+
+                            <div class="dash-prof-bar-track">
+                                <div class="dash-prof-bar-fill ${isNewUser ? 'fill-dashed' : 'fill-purple'}" style="width: ${isNewUser ? '55%' : '78%'};"></div>
+                            </div>
+
+                            ${isNewUser ? `
+                                <div class="dash-new-user-note">
+                                    Awaiting your first grammar drill to measure sentence cohesion and grammatical range.
+                                </div>
+                            ` : `
+                                <div class="dash-prof-metrics">
+                                    <div class="dash-prof-metric-row">
+                                        <span>Grammar Accuracy</span>
+                                        <strong>84%</strong>
+                                    </div>
+                                    <div class="dash-prof-metric-row">
+                                        <span>Cohesion & Linking</span>
+                                        <strong>72%</strong>
+                                    </div>
+                                </div>
+                            `}
+                        </div>
+                    </div>
+
+                    <!-- 3. Speaking Proficiency Card -->
+                    <div class="dash-prof-card prof-speaking ${isNewUser ? 'is-new-user' : ''}">
+                        <div>
+                            <div class="dash-prof-header">
+                                <div class="dash-prof-icon-wrap icon-green-bg">🎙️</div>
+                                <span class="dash-prof-band-badge ${isNewUser ? 'badge-amber' : 'badge-green'}">
+                                    ${isNewUser ? 'Baseline 5.5' : 'Band 7.0 (76%)'}
+                                </span>
+                            </div>
+                            <h4 class="dash-prof-name">Speaking & Fluency</h4>
+                            <div class="dash-prof-level-tag">
+                                ${isNewUser ? 'Starting Level: CEFR B1' : 'Mastered Level: CEFR B2'}
+                            </div>
+
+                            <div class="dash-prof-bar-track">
+                                <div class="dash-prof-bar-fill ${isNewUser ? 'fill-dashed' : 'fill-green'}" style="width: ${isNewUser ? '55%' : '76%'};"></div>
+                            </div>
+
+                            ${isNewUser ? `
+                                <div class="dash-new-user-note">
+                                    Awaiting your first audio recording to analyze speech fluency, pause rate, and phonetics.
+                                </div>
+                            ` : `
+                                <div class="dash-prof-metrics">
+                                    <div class="dash-prof-metric-row">
+                                        <span>Fluency & Coherence</span>
+                                        <strong>78%</strong>
+                                    </div>
+                                    <div class="dash-prof-metric-row">
+                                        <span>Pronunciation Clarity</span>
+                                        <strong>74%</strong>
+                                    </div>
+                                </div>
+                            `}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================================== -->
+                <!-- [3] SPEAKING TEST SECTION BANNER                               -->
+                <!-- ============================================================== -->
+                <div class="dash-speaking-cta-card">
+                    <div class="dash-speaking-cta-left">
+                        <div class="dash-speaking-cta-mic-badge">🎙️</div>
+                        <div class="dash-speaking-cta-content">
+                            <h3>Speaking Test Arena: 11 Official IELTS Topics</h3>
+                            <p>
+                                Practice authentic IELTS Part 1, 2, and 3 interviews under live exam conditions. Get real-time audio transcription, IELTS band ratings, and native speech corrections!
+                            </p>
+                            <div class="dash-speaking-tags">
+                                <span class="dash-speaking-pill">🎯 11 Curated Topics</span>
+                                <span class="dash-speaking-pill">⚡ Instant AI Band Score</span>
+                                <span class="dash-speaking-pill">🔊 Pronunciation Feedback</span>
                             </div>
                         </div>
                     </div>
-                    <button class="dash-level-banner-btn" id="dashLevelPracticeBtn">
-                        Practice ${activeLevel.code} Modules →
+                    <button class="dash-speaking-btn" id="dashStartSpeakingTestBtn">
+                        <span>Start Speaking Test 🎙️</span>
                     </button>
                 </div>
 
-                <!-- 5. BENTO FEATURE CARDS GRID (Score, Vocab Problems, Speaking, Fast Phrases) -->
-                <div class="dash-bento-grid">
-                    <!-- CARD 1: English Practice Score (With SVG Gauge & Breakdown) -->
-                    <div class="dash-bento-card">
-                        <div>
-                            <div class="dash-card-top">
-                                <div class="dash-card-icon-circle icon-blue-soft">
-                                    <i data-lucide="bar-chart-3"></i>
-                                </div>
-                                <span class="dash-card-fraction-pill fraction-blue">88% / 100</span>
-                            </div>
-                            <div class="dash-card-body" style="margin-top: 14px;">
-                                <h4>English Practice Score</h4>
-                                <p>Comprehensive assessment across Grammar, Vocabulary, Reading and Sentence Speed.</p>
-                                
-                                <div class="dash-score-visual-row">
-                                    <div class="dash-score-gauge-wrap">
-                                        <svg class="dash-gauge-svg" viewBox="0 0 84 84">
-                                            <circle class="dash-gauge-bg" cx="42" cy="42" r="35" />
-                                            <circle class="dash-gauge-fill" cx="42" cy="42" r="35" />
-                                        </svg>
-                                        <div class="dash-gauge-inner-text">
-                                            <strong>88%</strong>
-                                            <span>High</span>
-                                        </div>
-                                    </div>
-                                    <div class="dash-score-bars-wrap">
-                                        <div class="dash-score-bar-item">
-                                            <div class="dash-score-bar-labels">
-                                                <span>Grammar Accuracy</span>
-                                                <strong>92%</strong>
-                                            </div>
-                                            <div class="dash-score-bar-track">
-                                                <div class="dash-score-bar-fill bar-green" style="width: 92%;"></div>
-                                            </div>
-                                        </div>
-                                        <div class="dash-score-bar-item">
-                                            <div class="dash-score-bar-labels">
-                                                <span>Lexical Sophistication</span>
-                                                <strong>84%</strong>
-                                            </div>
-                                            <div class="dash-score-bar-track">
-                                                <div class="dash-score-bar-fill bar-amber" style="width: 84%;"></div>
-                                            </div>
-                                        </div>
-                                        <div class="dash-score-bar-item">
-                                            <div class="dash-score-bar-labels">
-                                                <span>Sentence Speed</span>
-                                                <strong>88%</strong>
-                                            </div>
-                                            <div class="dash-score-bar-track">
-                                                <div class="dash-score-bar-fill bar-purple" style="width: 88%;"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                <!-- ============================================================== -->
+                <!-- [4] CURRENT STREAKS: WEEKLY STRIP (MARKING ACTIVE & MISSED)    -->
+                <!-- ============================================================== -->
+                <div class="dash-week-card">
+                    <div class="dash-week-header">
+                        <div class="dash-week-header-left">
+                            <span class="dash-week-flame-icon">🔥</span>
+                            <div>
+                                <h3>Weekly Practice Habit Tracker</h3>
+                                <p>
+                                    ${scoring.streak_days > 1 ? `${scoring.streak_days} days consecutive streak! Study 5 minutes today to protect your flame.` : 'Start your daily English habit today to unlock streak multipliers.'}
+                                </p>
                             </div>
                         </div>
-                        <div class="dash-card-footer">
-                            <div class="dash-author-meta">
-                                <div class="dash-author-avatar">🤖</div>
-                                <span>AI Coach Verified</span>
-                            </div>
-                            <button class="dash-card-cta-btn" data-action="navigate" data-route="/practice">
-                                <span>Practice Arena</span>
-                                <i data-lucide="arrow-right" style="width: 15px; height: 15px;"></i>
-                            </button>
+                        <div class="dash-streak-pill" style="margin: 0;">
+                            <span>⚡ ${scoring.streak_boost_label}</span>
                         </div>
                     </div>
 
-                    <!-- CARD 2: Current Vocabulary Problems (Interactive Flashcards) -->
-                    <div class="dash-bento-card">
-                        <div>
-                            <div class="dash-card-top">
-                                <div class="dash-card-icon-circle icon-orange-soft">
-                                    <i data-lucide="alert-triangle"></i>
-                                </div>
-                                <span class="dash-card-fraction-pill fraction-orange">4 Flagged</span>
+                    <div class="dash-week-grid">
+                        ${weekDays.map(d => `
+                            <div class="dash-week-day-cell ${d.cellClass}">
+                                <span class="dash-week-day-name">${d.name}</span>
+                                <span class="dash-week-day-num">${d.dayNum}</span>
+                                <span class="dash-week-status-pill">${d.statusPill}</span>
                             </div>
-                            <div class="dash-card-body" style="margin-top: 14px;">
-                                <h4>Vocabulary Problem Focus</h4>
-                                <p>Words flagged for revision with one-click Personal Mentor guidance:</p>
-                                
-                                <div class="dash-vocab-problem-list">
-                                    ${VOCAB_PROBLEMS.map(item => `
-                                        <div class="dash-vocab-card-interactive">
-                                            <div style="flex: 1;">
-                                                <div class="dash-vocab-word-title">
-                                                    <span>${item.word}</span>
-                                                    <span class="dash-vocab-type-badge">${item.type}</span>
-                                                </div>
-                                                <div class="dash-vocab-issue-text">${item.issue}</div>
-                                            </div>
-                                            <button class="dash-vocab-ask-btn" data-prompt="${encodeURIComponent(item.prompt)}" title="Ask Coach in Chat">
-                                                <span>Ask Coach</span>
-                                                <span>💬</span>
-                                            </button>
-                                        </div>
-                                    `).join('')}
-                                </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <!-- ============================================================== -->
+                <!-- [5] GAME SCORES & OTHER SCORES                                 -->
+                <!-- ============================================================== -->
+                <div class="dash-clean-section-header">
+                    <h3 class="dash-clean-section-title">
+                        <span>🎮</span>
+                        <span>Game Scores & Progress Stats</span>
+                    </h3>
+                    <span class="dash-clean-section-sub">Speed Drills & Experience</span>
+                </div>
+
+                <div class="dash-scores-clean-grid">
+                    <!-- 1. Fast Phrases Speed Game Card -->
+                    <div class="dash-score-clean-card">
+                        <div>
+                            <div class="dash-score-clean-top">
+                                <div class="dash-score-clean-icon" style="background: #FEF3C7;">⚡</div>
+                                <span class="dash-prof-band-badge badge-amber">Speed Drill</span>
+                            </div>
+                            <h4>Fast Phrases Game</h4>
+                            <p>Assemble grammatically flawless sentences under time pressure.</p>
+                            <div class="dash-score-clean-num-big">
+                                1,680 <small>pts best</small>
+                            </div>
+                            <div class="dash-score-clean-subtags">
+                                <span>⏱️ Best Record: <strong>14.2s</strong></span>
+                                <span>🔥 Multiplier: <strong>x3 Streak Boost</strong></span>
                             </div>
                         </div>
-                        <div class="dash-card-footer">
-                            <div class="dash-author-meta">
-                                <div class="dash-author-avatar">💬</div>
-                                <span>Personal Mentor</span>
+                        <a href="/game/" target="_blank" class="dash-game-play-btn" id="dashFastPhrasesBtn">
+                            <span>Play Fast Phrases 🎮</span>
+                        </a>
+                    </div>
+
+                    <!-- 2. Total XP & Level Card -->
+                    <div class="dash-score-clean-card">
+                        <div>
+                            <div class="dash-score-clean-top">
+                                <div class="dash-score-clean-icon" style="background: #F0FDF4;">⭐</div>
+                                <span class="dash-prof-band-badge badge-green">${scoring.current_league} League</span>
                             </div>
-                            <button class="dash-card-cta-btn" data-action="navigate" data-route="/personalmentor">
-                                <span>Open Mentor</span>
-                                <i data-lucide="arrow-right" style="width: 15px; height: 15px;"></i>
-                            </button>
+                            <h4>Practice Experience</h4>
+                            <p>Level progression based on overall practice accuracy.</p>
+                            <div class="dash-score-clean-num-big">
+                                ${(scoring.total_xp || 0).toLocaleString()} <small>lifetime XP</small>
+                            </div>
+                            <div class="dash-score-clean-subtags">
+                                <span>🏆 Current Tier: <strong>Level ${scoring.current_level} Learner</strong></span>
+                                <span>🚀 Next Level: <strong>${scoring.level_progress.remaining_xp_to_next} XP needed</strong></span>
+                            </div>
+                        </div>
+                        <div class="dash-prof-bar-track" style="margin-top: 14px;">
+                            <div class="dash-prof-bar-fill fill-green" style="width: ${scoring.level_progress.progress_percentage}%;"></div>
                         </div>
                     </div>
 
-                    <!-- CARD 3: Speaking Arena Readiness (IELTS 4-Criteria Meters) -->
-                    <div class="dash-bento-card">
+                    <!-- 3. Overall Accuracy & Quizzes -->
+                    <div class="dash-score-clean-card">
                         <div>
-                            <div class="dash-card-top">
-                                <div class="dash-card-icon-circle icon-green-soft">
-                                    <i data-lucide="mic"></i>
-                                </div>
-                                <span class="dash-card-fraction-pill fraction-green">Band 7.0 Est.</span>
+                            <div class="dash-score-clean-top">
+                                <div class="dash-score-clean-icon" style="background: #EFF6FF;">🎯</div>
+                                <span class="dash-prof-band-badge badge-blue">Quizzes</span>
                             </div>
-                            <div class="dash-card-body" style="margin-top: 14px;">
-                                <h4>Speaking Arena Readiness</h4>
-                                <p>Live assessment against official IELTS criteria from recorded audio tests:</p>
-                                
-                                <div class="dash-speaking-criteria-grid">
-                                    <div class="dash-criteria-item">
-                                        <div class="dash-criteria-top">
-                                            <span>Fluency & Coherence</span>
-                                            <strong class="dash-criteria-band">7.0</strong>
-                                        </div>
-                                        <div class="dash-criteria-meter">
-                                            <div class="dash-meter-seg filled"></div>
-                                            <div class="dash-meter-seg filled"></div>
-                                            <div class="dash-meter-seg filled"></div>
-                                            <div class="dash-meter-seg filled"></div>
-                                            <div class="dash-meter-seg filled"></div>
-                                            <div class="dash-meter-seg filled"></div>
-                                            <div class="dash-meter-seg filled"></div>
-                                            <div class="dash-meter-seg"></div>
-                                            <div class="dash-meter-seg"></div>
-                                        </div>
-                                    </div>
-                                    <div class="dash-criteria-item">
-                                        <div class="dash-criteria-top">
-                                            <span>Lexical Resource</span>
-                                            <strong class="dash-criteria-band">7.5</strong>
-                                        </div>
-                                        <div class="dash-criteria-meter">
-                                            <div class="dash-meter-seg filled"></div>
-                                            <div class="dash-meter-seg filled"></div>
-                                            <div class="dash-meter-seg filled"></div>
-                                            <div class="dash-meter-seg filled"></div>
-                                            <div class="dash-meter-seg filled"></div>
-                                            <div class="dash-meter-seg filled"></div>
-                                            <div class="dash-meter-seg filled"></div>
-                                            <div class="dash-meter-seg filled"></div>
-                                            <div class="dash-meter-seg"></div>
-                                        </div>
-                                    </div>
-                                    <div class="dash-criteria-item">
-                                        <div class="dash-criteria-top">
-                                            <span>Grammatical Range</span>
-                                            <strong class="dash-criteria-band">6.5</strong>
-                                        </div>
-                                        <div class="dash-criteria-meter">
-                                            <div class="dash-meter-seg filled"></div>
-                                            <div class="dash-meter-seg filled"></div>
-                                            <div class="dash-meter-seg filled"></div>
-                                            <div class="dash-meter-seg filled"></div>
-                                            <div class="dash-meter-seg filled"></div>
-                                            <div class="dash-meter-seg filled"></div>
-                                            <div class="dash-meter-seg"></div>
-                                            <div class="dash-meter-seg"></div>
-                                            <div class="dash-meter-seg"></div>
-                                        </div>
-                                    </div>
-                                    <div class="dash-criteria-item">
-                                        <div class="dash-criteria-top">
-                                            <span>Pronunciation</span>
-                                            <strong class="dash-criteria-band">7.0</strong>
-                                        </div>
-                                        <div class="dash-criteria-meter">
-                                            <div class="dash-meter-seg filled"></div>
-                                            <div class="dash-meter-seg filled"></div>
-                                            <div class="dash-meter-seg filled"></div>
-                                            <div class="dash-meter-seg filled"></div>
-                                            <div class="dash-meter-seg filled"></div>
-                                            <div class="dash-meter-seg filled"></div>
-                                            <div class="dash-meter-seg filled"></div>
-                                            <div class="dash-meter-seg"></div>
-                                            <div class="dash-meter-seg"></div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <h4>Drill Accuracy Rate</h4>
+                            <p>Percentage of correct answers across all completed curriculum quizzes.</p>
+                            <div class="dash-score-clean-num-big">
+                                ${scoring.accuracy_rate > 0 ? `${scoring.accuracy_rate}%` : 'New'} <small>accuracy</small>
+                            </div>
+                            <div class="dash-score-clean-subtags">
+                                <span>📝 Quizzes Taken: <strong>${scoring.quizzes_taken || (isNewUser ? 0 : 1)} Finished</strong></span>
+                                <span>🌟 Perfect Scores: <strong>${scoring.perfect_scores_count} Perfect</strong></span>
                             </div>
                         </div>
-                        <div class="dash-card-footer">
-                            <div class="dash-author-meta">
-                                <div class="dash-author-avatar">🎙️</div>
-                                <span>Based on 6 audio samples</span>
-                            </div>
-                            <button class="dash-card-cta-btn" data-action="navigate" data-route="/goal">
-                                <span>Speaking Arena</span>
-                                <i data-lucide="arrow-right" style="width: 15px; height: 15px;"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- CARD 4: Explore Section - Fast Phrases Interactive Teaser -->
-                    <div class="dash-bento-card">
-                        <div>
-                            <div class="dash-card-top">
-                                <div class="dash-card-icon-circle icon-yellow-soft">
-                                    <i data-lucide="zap"></i>
-                                </div>
-                                <span class="dash-card-fraction-pill fraction-orange">Level 3 / 10</span>
-                            </div>
-                            <div class="dash-card-body" style="margin-top: 14px;">
-                                <h4>Fast Phrases Speed Game</h4>
-                                <p>Assemble grammatically flawless sentences from 5 tricky options under time pressure!</p>
-                                
-                                <div class="dash-game-teaser-box">
-                                    <div class="dash-game-target-sentence">
-                                        "The committee decided to ________ the conference."
-                                    </div>
-                                    <div class="dash-game-chips-row" id="dashTeaserChips">
-                                        <button class="dash-game-preview-chip" data-choice="postpone" style="${teaserGameState.selectedOption === 'postpone' ? 'background: #10B981; color: #FFFFFF; border-color: #10B981;' : ''}">postpone ✓</button>
-                                        <button class="dash-game-preview-chip" data-choice="postponing" style="${teaserGameState.selectedOption === 'postponing' ? 'background: #EF4444; color: #FFFFFF; border-color: #EF4444;' : ''}">postponing</button>
-                                        <button class="dash-game-preview-chip" data-choice="postponed" style="${teaserGameState.selectedOption === 'postponed' ? 'background: #EF4444; color: #FFFFFF; border-color: #EF4444;' : ''}">postponed</button>
-                                        <button class="dash-game-preview-chip" data-choice="delay of" style="${teaserGameState.selectedOption === 'delay of' ? 'background: #EF4444; color: #FFFFFF; border-color: #EF4444;' : ''}">delay of</button>
-                                        <button class="dash-game-preview-chip" data-choice="cancelation" style="${teaserGameState.selectedOption === 'cancelation' ? 'background: #EF4444; color: #FFFFFF; border-color: #EF4444;' : ''}">cancelation</button>
-                                    </div>
-                                    <div class="dash-game-stats-mini">
-                                        <span>Best Time: <strong>14.2s</strong></span>
-                                        <span>Streak: <strong>x3 Multiplier 🔥</strong></span>
-                                        <span>Score: <strong>1,680 pts</strong></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="dash-card-footer">
-                            <div class="dash-author-meta">
-                                <div class="dash-author-avatar">🎮</div>
-                                <span>Speed Puzzle</span>
-                            </div>
-                            <button class="dash-card-cta-btn" id="dashPlayFastPhrasesBtn" style="color: #D97706; border-color: #FCD34D;">
-                                <span>Play Full Game</span>
-                                <i data-lucide="play" style="width: 15px; height: 15px;"></i>
-                            </button>
+                        <div class="dash-prof-bar-track" style="margin-top: 14px;">
+                            <div class="dash-prof-bar-fill fill-blue" style="width: ${scoring.accuracy_rate > 0 ? `${scoring.accuracy_rate}%` : '50%'};"></div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 6. LEARNING LEADERBOARD PODIUM (Directly from User Reference Screen #3) -->
-                <div class="dash-leaderboard-card">
-                    <div class="dash-leaderboard-header">
-                        <div class="dash-leaderboard-title-group">
-                            <h3>
-                                <span>Learning Leaderboard</span>
-                                <span>🏆</span>
-                            </h3>
-                            <p>See who is learning the most this week and celebrate top scorers!</p>
+                <!-- ============================================================== -->
+                <!-- [6] RANDOM STUDY BREAK MEME WITH HINT                          -->
+                <!-- ============================================================== -->
+                <div class="dash-meme-clean-card">
+                    <div class="dash-meme-clean-header">
+                        <div class="dash-meme-clean-title">
+                            <span>🎭</span>
+                            <span>Daily IELTS Study Break Meme</span>
+                            <span class="dash-prof-band-badge badge-amber" style="margin-left: 6px;">🔥 ${currentMeme.topic}</span>
                         </div>
-                        <div class="dash-leaderboard-top-stats">
-                            <div class="dash-top-stat-pill">
-                                <strong>28h 35m</strong>
-                                <span>Total Study Time</span>
-                            </div>
-                            <div class="dash-top-stat-pill">
-                                <strong>10 / 10</strong>
-                                <span>Lessons Finished</span>
-                            </div>
-                            <div class="dash-top-stat-pill">
-                                <strong>165,420</strong>
-                                <span>Top Score XP</span>
-                            </div>
+                        <div class="dash-meme-clean-actions">
+                            <button type="button" class="dash-meme-shuffle-btn" id="dashShuffleMemeBtn" title="Shuffle a new meme">
+                                <span>🎲 Shuffle Meme</span>
+                            </button>
+                            <a href="${memeImgUrl}" target="_blank" rel="noopener noreferrer" class="dash-meme-shuffle-btn" style="text-decoration: none;" title="Open image in full size">
+                                <span>↗ Full Size</span>
+                            </a>
                         </div>
                     </div>
 
-                    <!-- 3D Visual Podium -->
-                    <div class="dash-podium-wrap">
-                        <!-- Spot 2: Silver -->
-                        <div class="dash-podium-spot spot-silver">
-                            <div class="dash-podium-avatar">
-                                <span>👦</span>
-                                <span class="dash-podium-rank-tag">#2</span>
-                            </div>
-                            <div class="dash-podium-name">Noah Bennett</div>
-                            <div class="dash-podium-score">142,800 XP</div>
-                            <div class="dash-podium-bar">2</div>
-                        </div>
-
-                        <!-- Spot 1: Gold (Center) -->
-                        <div class="dash-podium-spot spot-gold">
-                            <div class="dash-podium-avatar">
-                                <span>🧑‍🎓</span>
-                                <span class="dash-podium-rank-tag">#1</span>
-                            </div>
-                            <div class="dash-podium-name">Oliver James</div>
-                            <div class="dash-podium-score">165,420 XP</div>
-                            <div class="dash-podium-bar">1</div>
-                        </div>
-
-                        <!-- Spot 3: Bronze -->
-                        <div class="dash-podium-spot spot-bronze">
-                            <div class="dash-podium-avatar">
-                                <span>👧</span>
-                                <span class="dash-podium-rank-tag">#3</span>
-                            </div>
-                            <div class="dash-podium-name">Emma Collins</div>
-                            <div class="dash-podium-score">128,450 XP</div>
-                            <div class="dash-podium-bar">3</div>
-                        </div>
+                    <div class="dash-meme-img-container">
+                        <img src="${memeImgUrl}" alt="IELTS Study Break Meme" id="dashMemeImg" onerror="this.onerror=null; this.src='https://api.memegen.link/images/drake/Studying_Grammar/Making_Memes.png';">
                     </div>
 
-                    <!-- Current User's Ranking Bar -->
-                    <div class="dash-user-rank-strip">
-                        <div class="dash-user-rank-left">
-                            <span class="dash-user-rank-number">#4</span>
-                            <span>${userName} (You) · Level B2 Vantage</span>
+                    <div class="dash-meme-hint-box">
+                        <div class="dash-meme-hint-header">
+                            <span>💡</span>
+                            <span>IELTS Coach Hint & Tip</span>
                         </div>
-                        <div class="dash-user-rank-right">
-                            <span>118,600 XP</span>
-                            <span>•</span>
-                            <span>Top 5% of Learners 🚀</span>
-                        </div>
+                        <p class="dash-meme-hint-text" id="dashMemeHintText">"${currentMeme.joke}"</p>
                     </div>
                 </div>
 
-                <!-- 7. BOTTOM 7-DAY MILESTONE BANNER (From Reference Screen) -->
-                <div class="dash-milestone-banner">
-                    <div class="dash-milestone-left">
-                        <div class="dash-milestone-trophy">🏆</div>
-                        <div class="dash-milestone-text">
-                            <h4>Keep 7 days milestone</h4>
-                            <p>Practice daily to unlock full-length IELTS simulation mock tests!</p>
+                <!-- ============================================================== -->
+                <!-- [7] BANNER: CHAT WITH AI PERSONAL MENTOR                       -->
+                <!-- ============================================================== -->
+                <div class="dash-chat-clean-card">
+                    <div class="dash-chat-clean-left">
+                        <div class="dash-chat-clean-avatar">🌿</div>
+                        <div class="dash-chat-clean-text">
+                            <h4>Chat with your AI Personal Mentor</h4>
+                            <p>
+                                Have a question about third conditionals, formal essay vocabulary, or want a 2-minute speaking conversation? Your AI IELTS Coach is online 24/7 with instant grammar feedback!
+                            </p>
                         </div>
                     </div>
-                    <div class="dash-milestone-days" title="Weekly study streak">
-                        <div class="dash-day-dot completed" title="Monday: Completed">✓</div>
-                        <div class="dash-day-dot completed" title="Tuesday: Completed">✓</div>
-                        <div class="dash-day-dot completed" title="Wednesday: Completed">✓</div>
-                        <div class="dash-day-dot completed" title="Thursday: Completed">✓</div>
-                        <div class="dash-day-dot today" title="Friday: Active Today!">T</div>
-                        <div class="dash-day-dot locked" title="Saturday: Upcoming">S</div>
-                        <div class="dash-day-dot locked" title="Sunday: Upcoming (Reward Day 🎁)">🎁</div>
-                    </div>
+                    <button class="dash-chat-clean-btn" id="dashOpenChatMentorBtn">
+                        <span>Chat with AI Coach 💬</span>
+                    </button>
                 </div>
             </div>
         `;
 
-        // Wire Event Listeners
-        // 1. Navigation buttons
-        root.querySelectorAll('[data-action="navigate"]').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const route = btn.dataset.route;
-                if (route) navigateTo(route);
-            });
-        });
+        // Bind interactive event handlers
+        bindDashboardEvents();
 
-        // 2. Sign In Notice button
-        const noticeSignInBtn = document.getElementById('dashNoticeSignInBtn');
-        if (noticeSignInBtn) {
-            noticeSignInBtn.addEventListener('click', () => {
-                if (window.AIEC_Auth && typeof window.AIEC_Auth.showAuthModal === 'function') {
-                    window.AIEC_Auth.showAuthModal();
-                } else {
-                    const userAuthBtn = document.getElementById('userAuthBtn');
-                    if (userAuthBtn) userAuthBtn.click();
-                }
-            });
-        }
-
-        // 3. Featured Hero Play button
-        const heroPlayBtn = document.getElementById('dashHeroPlayBtn');
-        if (heroPlayBtn) {
-            heroPlayBtn.addEventListener('click', () => {
-                navigateTo('/practice');
-            });
-        }
-
-        // 4. CEFR Level pills interactive selection
-        root.querySelectorAll('.dash-level-pill').forEach(pill => {
-            pill.addEventListener('click', () => {
-                selectedLevelId = pill.dataset.levelId;
-                renderDashboard();
-            });
-        });
-
-        // 5. Level Banner Practice button
-        const levelPracticeBtn = document.getElementById('dashLevelPracticeBtn');
-        if (levelPracticeBtn) {
-            levelPracticeBtn.addEventListener('click', () => {
-                navigateTo('/practice');
-            });
-        }
-
-        // 6. Vocabulary Ask Coach buttons
-        root.querySelectorAll('.dash-vocab-ask-btn').forEach(actionBtn => {
-            actionBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const encodedPrompt = actionBtn.dataset.prompt;
-                if (encodedPrompt) {
-                    const prompt = decodeURIComponent(encodedPrompt);
-                    askMentorAboutWord(prompt);
-                }
-            });
-        });
-
-        // 7. Interactive Teaser Chips in Fast Phrases Card
-        root.querySelectorAll('.dash-game-preview-chip').forEach(chip => {
-            chip.addEventListener('click', () => {
-                const choice = chip.dataset.choice;
-                teaserGameState.selectedOption = choice;
-                teaserGameState.isCorrect = (choice === 'postpone');
-                renderDashboard();
-            });
-        });
-
-        // 8. Fast Phrases launch button
-        const fastPhrasesBtn = document.getElementById('dashPlayFastPhrasesBtn');
-        if (fastPhrasesBtn) {
-            fastPhrasesBtn.addEventListener('click', () => {
-                const gameBtn = document.getElementById('gameLaunchBtn');
-                if (gameBtn) {
-                    gameBtn.click();
-                } else {
-                    window.open('/game/', '_blank');
-                }
-            });
-        }
-
-        // 9. Lucide icons initialization
+        // Render Lucide icons if available
         if (window.lucide && typeof window.lucide.createIcons === 'function') {
             window.lucide.createIcons();
         }
+    }
 
-        // 10. Live background scoring sync & podium leaderboard
-        if (window.AIEC_API && typeof window.AIEC_API.getUserScoring === 'function') {
-            window.AIEC_API.getUserScoring(currentUid).then(live => {
-                if (live) {
-                    const lvlBadge = document.getElementById('dashProfileLvlBadge');
-                    const streakText = document.getElementById('dashStreakText');
-                    const xpText = document.getElementById('dashXpText');
-                    if (lvlBadge) lvlBadge.textContent = `LVL ${live.current_level}`;
-                    if (streakText) streakText.textContent = `${live.streak_days} Days Streak`;
-                    if (xpText) xpText.textContent = `${(live.total_xp || 0).toLocaleString()} XP`;
+    // Attach all clean dashboard event listeners
+    function bindDashboardEvents() {
+        // Sign-in prompt
+        const signInBtn = document.getElementById('dashNoticeSignInBtn');
+        if (signInBtn) {
+            signInBtn.addEventListener('click', () => {
+                if (window.AIEC_Auth && typeof window.AIEC_Auth.openModal === 'function') {
+                    window.AIEC_Auth.openModal();
+                } else {
+                    const authHeaderBtn = document.getElementById('userAuthBtn');
+                    if (authHeaderBtn) authHeaderBtn.click();
                 }
-            }).catch(() => {});
+            });
         }
-        if (window.AIEC_API && typeof window.AIEC_API.getScoringLeaderboard === 'function') {
-            window.AIEC_API.getScoringLeaderboard(4).then(leaders => {
-                if (leaders && leaders.length >= 3) {
-                    const spots = root.querySelectorAll('.dash-podium-spot');
-                    // spot 0 is silver (#2), spot 1 is gold (#1), spot 2 is bronze (#3)
-                    if (spots[1] && leaders[0]) {
-                        const nameEl = spots[1].querySelector('.dash-podium-name');
-                        const scoreEl = spots[1].querySelector('.dash-podium-score');
-                        if (nameEl) nameEl.textContent = leaders[0].display_name;
-                        if (scoreEl) scoreEl.textContent = `${(leaders[0].total_xp || 0).toLocaleString()} XP`;
-                    }
-                    if (spots[0] && leaders[1]) {
-                        const nameEl = spots[0].querySelector('.dash-podium-name');
-                        const scoreEl = spots[0].querySelector('.dash-podium-score');
-                        if (nameEl) nameEl.textContent = leaders[1].display_name;
-                        if (scoreEl) scoreEl.textContent = `${(leaders[1].total_xp || 0).toLocaleString()} XP`;
-                    }
-                    if (spots[2] && leaders[2]) {
-                        const nameEl = spots[2].querySelector('.dash-podium-name');
-                        const scoreEl = spots[2].querySelector('.dash-podium-score');
-                        if (nameEl) nameEl.textContent = leaders[2].display_name;
-                        if (scoreEl) scoreEl.textContent = `${(leaders[2].total_xp || 0).toLocaleString()} XP`;
-                    }
+
+        // Diagnostic Test button (for new users)
+        const diagnosticBtn = document.getElementById('dashTakeDiagnosticBtn');
+        if (diagnosticBtn) {
+            diagnosticBtn.addEventListener('click', () => {
+                navigateTo('/practice');
+            });
+        }
+
+        // Speaking Test Banner button
+        const speakingBtn = document.getElementById('dashStartSpeakingTestBtn');
+        if (speakingBtn) {
+            speakingBtn.addEventListener('click', () => {
+                navigateTo('/goal');
+            });
+        }
+
+        // AI Mentor Chat Banner button
+        const chatBtn = document.getElementById('dashOpenChatMentorBtn');
+        if (chatBtn) {
+            chatBtn.addEventListener('click', () => {
+                navigateTo('/personalmentor');
+            });
+        }
+
+        // Shuffle Meme button
+        const shuffleBtn = document.getElementById('dashShuffleMemeBtn');
+        if (shuffleBtn) {
+            shuffleBtn.addEventListener('click', () => {
+                let nextIdx = Math.floor(Math.random() * DASH_MEME_CATALOG.length);
+                if (nextIdx === currentMemeIndex) {
+                    nextIdx = (currentMemeIndex + 1) % DASH_MEME_CATALOG.length;
                 }
-            }).catch(() => {});
+                currentMemeIndex = nextIdx;
+                const meme = DASH_MEME_CATALOG[currentMemeIndex];
+                const top = sanitizeMemegen(meme.top);
+                const bot = sanitizeMemegen(meme.bottom);
+                const url = `https://api.memegen.link/images/${meme.template}/${top}/${bot}.png`;
+
+                const imgEl = document.getElementById('dashMemeImg');
+                const hintEl = document.getElementById('dashMemeHintText');
+                if (imgEl) imgEl.src = url;
+                if (hintEl) hintEl.textContent = `"${meme.joke}"`;
+            });
         }
     }
 
-    // Expose globally
+    // Expose global render function
     window.renderDashboard = renderDashboard;
 
-    // Listen to Auth State Changes & Scoring updates so Dashboard dynamically updates
+    // Auto-update dashboard on relevant global events
     window.addEventListener('aiec-auth-changed', () => {
         const pageDashboard = document.getElementById('pageDashboard');
         if (pageDashboard && pageDashboard.classList.contains('active')) {
@@ -896,21 +820,14 @@
         }
     });
 
-    window.addEventListener('aiec:levelup', () => {
+    window.addEventListener('aiec-scoring-updated', () => {
         const pageDashboard = document.getElementById('pageDashboard');
         if (pageDashboard && pageDashboard.classList.contains('active')) {
             renderDashboard();
         }
     });
 
-    window.addEventListener('aiec:scoring-updated', () => {
-        const pageDashboard = document.getElementById('pageDashboard');
-        if (pageDashboard && pageDashboard.classList.contains('active')) {
-            renderDashboard();
-        }
-    });
-
-    // Auto-render on DOM ready
+    // Auto-initialize when DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', renderDashboard);
     } else {
