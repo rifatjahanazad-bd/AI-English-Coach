@@ -140,18 +140,25 @@ function initChat() {
         chatMessages.scrollTop = chatMessages.scrollHeight;
 
         try {
+            let res = null;
             if (window.AIEC_API && typeof window.AIEC_API.sendChatMessage === 'function') {
-                const res = await window.AIEC_API.sendChatMessage(text);
-                typingIndicator.style.display = 'none';
-
-                if (res && res.reply) {
-                    addAIMessage(res.reply);
-                } else {
-                    addAIMessage("I'm having a brief connection issue reaching the AI tutor service. Please check your network or try again in a moment! 😊");
-                }
+                res = await window.AIEC_API.sendChatMessage(text);
             } else {
-                typingIndicator.style.display = 'none';
-                addAIMessage("I'm connecting with your AI coach. Please check your network or try again in a moment! 😊");
+                const uid = (window.AIEC_Auth && typeof window.AIEC_Auth.getUser === 'function' && window.AIEC_Auth.getUser()?.id) || 'guest';
+                const fetchRes = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user_id: uid, message: text })
+                });
+                if (fetchRes.ok) res = await fetchRes.json();
+            }
+
+            typingIndicator.style.display = 'none';
+
+            if (res && res.reply) {
+                addAIMessage(res.reply);
+            } else {
+                addAIMessage("I'm having a brief connection delay reaching the AI tutor service. Please send your message again or try again in a moment! 😊");
             }
         } catch (err) {
             console.error('[Chat Error]:', err);

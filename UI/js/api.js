@@ -432,6 +432,16 @@
         return null;
     }
 
+    async function getRoutes() {
+        try {
+            const res = await fetch(`${API_BASE}/api/routes`);
+            if (res.ok) return await res.json();
+        } catch (e) {
+            console.warn('[API Client] Routes fetch failed:', e);
+        }
+        return null;
+    }
+
     // =========================================================================
     // Duolingo Behavioral Scoring & Level-Up API
     // =========================================================================
