@@ -81,24 +81,24 @@ def create_app() -> FastAPI:
             request.scope["path"] = raw_path
             return await call_next(request)
 
-        if not raw_path.startswith("/api/"):
-            for prefix in ("/api/index.py", "api/index.py", "/index.py", "index.py"):
-                if raw_path.startswith(prefix):
-                    raw_path = raw_path[len(prefix):]
-                    break
+        # Strip any serverless handler prefixes (e.g. /api/index.py, /index.py)
+        for prefix in ("/api/index.py", "api/index.py", "/index.py", "index.py"):
+            if raw_path.startswith(prefix):
+                raw_path = raw_path[len(prefix):]
+                break
 
-            if not raw_path.startswith("/"):
-                raw_path = f"/{raw_path}"
+        if not raw_path.startswith("/"):
+            raw_path = f"/{raw_path}"
 
-            api_prefixes = (
-                "/chat", "/speaking", "/modules", "/meme",
-                "/auth", "/goal", "/scoring", "/health", "/system", "/scores", "/progress"
-            )
-            if any(raw_path == p or raw_path.startswith(f"{p}/") for p in api_prefixes):
+        api_prefixes = (
+            "/chat", "/speaking", "/modules", "/meme",
+            "/auth", "/goal", "/scoring", "/health", "/system", "/scores", "/progress"
+        )
+        if any(raw_path == p or raw_path.startswith(f"{p}/") for p in api_prefixes):
+            if not raw_path.startswith("/api"):
                 raw_path = f"/api{raw_path}"
 
-            request.scope["path"] = raw_path
-
+        request.scope["path"] = raw_path
         return await call_next(request)
 
     # 2. Register all structured API domain routers
