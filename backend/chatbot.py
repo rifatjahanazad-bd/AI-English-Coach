@@ -487,13 +487,20 @@ def generate_offline_ielts_reply(text: str) -> str:
             "**Your turn:** Answer this: *What is your favorite time of day?* Start with one of those phrases!"
         )
 
-    if "power vocabulary" in lower or "vocabulary" in lower and total_words <= 4:
+    if "power vocabulary" in lower or ("vocabulary" in lower and total_words <= 4):
         return (
             "Here are 3 **Band 7+ power collocations** you can use in almost any IELTS topic: 🌟\n\n"
             "1. **Play an integral role** (instead of *is very important*)\n"
             "2. **A wide array of** (instead of *many different*)\n"
             "3. **Have a profound impact on** (instead of *greatly change*)\n\n"
             "**Your turn:** Pick ONE of these collocations and write a sentence about your studies, job, or hobbies!"
+        )
+
+    if "real-life conversation" in lower or ("conversation" in lower and total_words <= 4):
+        return (
+            "Hi there! Welcome to the student cafe! ☕\n\n"
+            "I'm your barista today. We have fresh espresso, iced matcha lattes, herbal tea, and warm pastries.\n\n"
+            "**What can I get started for you today?** (Try ordering in 1-2 friendly sentences!)"
         )
 
     # B. Specific Question: "Difference between X and Y"

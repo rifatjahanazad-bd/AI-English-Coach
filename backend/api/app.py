@@ -29,6 +29,7 @@ def create_app() -> FastAPI:
         title="AI English Coach API",
         description="Structured modular backend API for AI English Coach, IELTS preparation, and speaking evaluation",
         version="2.0.0",
+        redirect_slashes=False,
     )
 
     # 1. CORS Middleware
@@ -62,14 +63,32 @@ def create_app() -> FastAPI:
     # 1c. Vercel Serverless Path Normalization Middleware
     @application.middleware("http")
     async def normalize_api_path(request: Request, call_next):
-        """Normalizes request path if Vercel serverless rewrite strips the /api prefix."""
-        raw_path = request.scope.get("path", "")
+        """Normalizes request path if Vercel serverless rewrite strips or prepends the /api prefix."""
+        matched = (
+            request.headers.get("x-matched-path")
+            or request.headers.get("x-forwarded-uri")
+            or request.headers.get("x-original-uri")
+            or request.scope.get("path", "")
+        )
+        raw_path = matched.split("?")[0] if matched else request.scope.get("path", "")
+
+        # Strip script name if Vercel prepends entrypoint script
+        for script_prefix in ("/api/index.py", "api/index.py", "/index.py", "index.py"):
+            if raw_path.startswith(script_prefix):
+                raw_path = raw_path[len(script_prefix):]
+                break
+
+        if not raw_path.startswith("/"):
+            raw_path = f"/{raw_path}"
+
         api_prefixes = (
             "/chat", "/speaking", "/modules", "/meme",
             "/auth", "/goal", "/scoring", "/health", "/system", "/scores", "/progress"
         )
         if not raw_path.startswith("/api") and any(raw_path == p or raw_path.startswith(f"{p}/") for p in api_prefixes):
-            request.scope["path"] = f"/api{raw_path}"
+            raw_path = f"/api{raw_path}"
+
+        request.scope["path"] = raw_path
         return await call_next(request)
 
     # 2. Register all structured API domain routers
