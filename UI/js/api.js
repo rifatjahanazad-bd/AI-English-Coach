@@ -279,8 +279,10 @@
                 body: JSON.stringify({ user_id: uid, message, history: history || [] })
             });
             if (res.ok) return await res.json();
+            const errText = await res.text().catch(() => '');
+            console.error('[API Client] Chat API failed with HTTP', res.status, errText);
         } catch (e) {
-            console.warn('[API Client] Chat API failed');
+            console.warn('[API Client] Chat API network failed:', e);
         }
         return null;
     }

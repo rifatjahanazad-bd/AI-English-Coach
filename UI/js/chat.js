@@ -120,14 +120,14 @@ function initChat() {
                 if (res && res.reply) {
                     addAIMessage(res.reply);
                 } else {
-                    addAIMessage("I'm here to help you practice! Try telling me about your day or asking for grammar advice. 😊");
+                    addAIMessage("I'm having a temporary connection issue reaching the AI tutor service. Please check your network or try again in a moment! 😊");
                 }
             } else {
                 // Offline fallback if server is unreachable
                 setTimeout(() => {
                     typingIndicator.style.display = 'none';
-                    addAIMessage("That's a good start! Try expanding with a reason or example to practice your speaking flow. 😊");
-                }, 1000);
+                    addAIMessage("I'm having a temporary connection issue reaching the AI tutor service. Please check your network or try again in a moment! 😊");
+                }, 800);
             }
         } catch (err) {
             console.error('[Chat Error]:', err);

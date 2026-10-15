@@ -1,5 +1,5 @@
 import re
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 from backend import chatbot
 from backend.database import db
 from backend.api.models.schemas import ChatRequest
@@ -17,15 +17,23 @@ def _sanitize_user_id(uid: str) -> str:
 
 
 @router.post("")
-def handle_chat(payload: ChatRequest):
+@router.post("/")
+def handle_chat(payload: ChatRequest, request: Request):
     """Routes messages to the backend AI IELTS Coach chatbot and records conversation history."""
     valid_id = _sanitize_user_id(payload.user_id)
     message_text = (payload.message or "").strip()
     if not message_text:
         raise HTTPException(status_code=400, detail="Chat message cannot be empty.")
 
+    # Prevent global lockout for guest visitors: derive per-client IP identifier for rate limiting
+    if valid_id == "guest":
+        client_ip = (request.client.host if request.client else "127.0.0.1").replace(":", "_")
+        rate_id = f"guest_{client_ip}"
+    else:
+        rate_id = valid_id
+
     try:
-        reply = chatbot.chat(user_id=valid_id, text=message_text)
+        reply = chatbot.chat(user_id=rate_id, text=message_text)
     except Exception as e:
         print(f"[error] Chatbot error: {e}")
         reply = chatbot.generate_offline_ielts_reply(message_text)
