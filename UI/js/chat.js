@@ -150,10 +150,8 @@ function initChat() {
                     addAIMessage(generateClientFallbackReply(text));
                 }
             } else {
-                setTimeout(() => {
-                    typingIndicator.style.display = 'none';
-                    addAIMessage(generateClientFallbackReply(text));
-                }, 600);
+                typingIndicator.style.display = 'none';
+                addAIMessage("I'm connecting with your AI coach. Please check your network or try again in a moment! 😊");
             }
         } catch (err) {
             console.error('[Chat Error]:', err);

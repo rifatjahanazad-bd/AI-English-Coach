@@ -71,6 +71,16 @@ def create_app() -> FastAPI:
             return await call_next(request)
 
         raw_path = request.scope.get("path", "")
+        # Do not rewrite client SPA routes on GET / HEAD requests
+        spa_page_routes = {"/", "/dashboard", "/home", "/personalmentor", "/goal", "/speaking", "/test", "/practice", "/game"}
+        if request.method in ("GET", "HEAD") and (
+            raw_path in spa_page_routes
+            or raw_path.startswith("/test/")
+            or raw_path.startswith("/practice/")
+        ):
+            request.scope["path"] = raw_path
+            return await call_next(request)
+
         if not raw_path.startswith("/api/"):
             for prefix in ("/api/index.py", "api/index.py", "/index.py", "index.py"):
                 if raw_path.startswith(prefix):
@@ -100,6 +110,13 @@ def create_app() -> FastAPI:
             return FileResponse(str(INDEX_HTML))
         raise HTTPException(status_code=404, detail="UI index.html not found")
 
+    def serve_game():
+        """Serves the Fast Phrases game index.html."""
+        game_index = GAME_DIR / "index.html"
+        if game_index.exists():
+            return FileResponse(str(game_index))
+        raise HTTPException(status_code=404, detail="Game index.html not found")
+
     spa_paths = [
         "/",
         "/dashboard",
@@ -115,6 +132,9 @@ def create_app() -> FastAPI:
     ]
     for path in spa_paths:
         application.add_api_route(path, serve_spa, methods=["GET", "HEAD"])
+
+    application.add_api_route("/game", serve_game, methods=["GET", "HEAD"])
+    application.add_api_route("/game/", serve_game, methods=["GET", "HEAD"])
 
     # 4. Mount Static Directories for web client assets
     ui_dir = REPO_ROOT / "UI"
