@@ -504,7 +504,7 @@
                                 <span>IELTS Academic Prep</span>
                                 <span class="dash-band-tag">Target Band ${targetBand} 🎯</span>
                                 <span style="color: #CBD5E1;">•</span>
-                                <span style="color: ${loggedIn ? '#16A34A' : '#3B82F6'}; font-weight: 700;">
+                                <span style="color: ${loggedIn ? '#16A34A' : '#D97706'}; font-weight: 700;">
                                     ${loggedIn ? '🟢 Google Synced' : '⚡ Local Session'}
                                 </span>
                             </div>
@@ -520,7 +520,7 @@
                             <span>⭐</span>
                             <span>${(scoring.total_xp || 0).toLocaleString()} XP</span>
                         </div>
-                        <div class="dash-xp-pill" style="background: rgba(99, 102, 241, 0.12); color: #4338CA;" title="${scoring.current_league} League Tier">
+                        <div class="dash-xp-pill" style="background: #FFFBEB; color: #B45309; border: 1.5px solid #FDE68A;" title="${scoring.current_league} League Tier">
                             <span>${(scoring.league_details && scoring.league_details.badge) || '🥉'}</span>
                             <span>${scoring.current_league}</span>
                         </div>
@@ -545,8 +545,8 @@
                     <div class="dash-prof-card prof-reading ${!readingProf.assessed ? 'is-new-user' : ''}">
                         <div>
                             <div class="dash-prof-header">
-                                <div class="dash-prof-icon-wrap icon-blue-bg">📖</div>
-                                <span class="dash-prof-band-badge ${!readingProf.assessed ? 'badge-amber' : 'badge-blue'}">
+                                <div class="dash-prof-icon-wrap icon-amber-bg">📖</div>
+                                <span class="dash-prof-band-badge badge-amber">
                                     ${readingProf.band}
                                 </span>
                             </div>
@@ -556,7 +556,7 @@
                             </div>
 
                             <div class="dash-prof-bar-track">
-                                <div class="dash-prof-bar-fill ${!readingProf.assessed ? 'fill-dashed' : 'fill-blue'}" style="width: ${!readingProf.assessed ? '55%' : `${readingProf.accuracy}%`};"></div>
+                                <div class="dash-prof-bar-fill ${!readingProf.assessed ? 'fill-dashed' : 'fill-amber'}" style="width: ${!readingProf.assessed ? '55%' : `${readingProf.accuracy}%`};"></div>
                             </div>
 
                             ${!readingProf.assessed ? `
@@ -582,8 +582,8 @@
                     <div class="dash-prof-card prof-writing ${!writingProf.assessed ? 'is-new-user' : ''}">
                         <div>
                             <div class="dash-prof-header">
-                                <div class="dash-prof-icon-wrap icon-purple-bg">✍️</div>
-                                <span class="dash-prof-band-badge ${!writingProf.assessed ? 'badge-amber' : 'badge-purple'}">
+                                <div class="dash-prof-icon-wrap icon-orange-bg">✍️</div>
+                                <span class="dash-prof-band-badge badge-orange">
                                     ${writingProf.band}
                                 </span>
                             </div>
@@ -593,7 +593,7 @@
                             </div>
 
                             <div class="dash-prof-bar-track">
-                                <div class="dash-prof-bar-fill ${!writingProf.assessed ? 'fill-dashed' : 'fill-purple'}" style="width: ${!writingProf.assessed ? '55%' : `${writingProf.accuracy}%`};"></div>
+                                <div class="dash-prof-bar-fill ${!writingProf.assessed ? 'fill-dashed' : 'fill-orange'}" style="width: ${!writingProf.assessed ? '55%' : `${writingProf.accuracy}%`};"></div>
                             </div>
 
                             ${!writingProf.assessed ? `
@@ -620,7 +620,7 @@
                         <div>
                             <div class="dash-prof-header">
                                 <div class="dash-prof-icon-wrap icon-green-bg">🎙️</div>
-                                <span class="dash-prof-band-badge ${!speakingProf.assessed ? 'badge-amber' : 'badge-green'}">
+                                <span class="dash-prof-band-badge badge-green">
                                     ${speakingProf.band}
                                 </span>
                             </div>
@@ -722,7 +722,7 @@
                     <div class="dash-score-clean-card">
                         <div>
                             <div class="dash-score-clean-top">
-                                <div class="dash-score-clean-icon" style="background: #FEF3C7;">⚡</div>
+                                <div class="dash-score-clean-icon" style="background: #FFFBEB; border: 1.5px solid #FDE68A; color: #D97706;">⚡</div>
                                 <span class="dash-prof-band-badge badge-amber">Speed Drill</span>
                             </div>
                             <h4>Fast Phrases Game</h4>
@@ -744,7 +744,7 @@
                     <div class="dash-score-clean-card">
                         <div>
                             <div class="dash-score-clean-top">
-                                <div class="dash-score-clean-icon" style="background: #F0FDF4;">⭐</div>
+                                <div class="dash-score-clean-icon" style="background: #F0FDF4; border: 1.5px solid #BBF7D0; color: #15803D;">⭐</div>
                                 <span class="dash-prof-band-badge badge-green">${scoring.current_league} League</span>
                             </div>
                             <h4>Practice Experience</h4>
@@ -766,8 +766,8 @@
                     <div class="dash-score-clean-card">
                         <div>
                             <div class="dash-score-clean-top">
-                                <div class="dash-score-clean-icon" style="background: #EFF6FF;">🎯</div>
-                                <span class="dash-prof-band-badge badge-blue">Quizzes</span>
+                                <div class="dash-score-clean-icon" style="background: #FFFBEB; border: 1.5px solid #FDE68A; color: #D97706;">🎯</div>
+                                <span class="dash-prof-band-badge badge-amber">Quizzes</span>
                             </div>
                             <h4>Drill Accuracy Rate</h4>
                             <p>Percentage of correct answers across all completed curriculum quizzes.</p>
@@ -780,7 +780,7 @@
                             </div>
                         </div>
                         <div class="dash-prof-bar-track" style="margin-top: 14px;">
-                            <div class="dash-prof-bar-fill fill-blue" style="width: ${scoring.accuracy_rate > 0 ? `${scoring.accuracy_rate}%` : '50%'};"></div>
+                            <div class="dash-prof-bar-fill fill-amber" style="width: ${scoring.accuracy_rate > 0 ? `${scoring.accuracy_rate}%` : '50%'};"></div>
                         </div>
                     </div>
                 </div>
