@@ -108,7 +108,7 @@ def call_gemini_tutor(gemini_client: Any, system_prompt: str, history: List[Dict
             turns.append(f"{role.upper()}: {h.get('content', '')}")
         prompt_text = "\n\n".join(turns)
 
-        for model_name in ["gemini-2.5-flash", "gemini-1.5-flash"]:
+        for model_name in ["gemini-2.0-flash", "gemini-1.5-flash"]:
             try:
                 resp = gemini_client.models.generate_content(
                     model=model_name,
@@ -133,37 +133,18 @@ def call_gemini_tutor(gemini_client: Any, system_prompt: str, history: List[Dict
 
 def get_openai_compatible_targets() -> List[Tuple[str, OpenAI, List[str]]]:
     """
-    Returns configured OpenAI-compatible endpoints with generous 20.0s timeout
-    allowing LLM responses to complete naturally without premature fallback.
+    Returns configured OpenAI-compatible endpoints with serverless-optimized 8.0s timeout.
+    TokenHarbor is prioritized FIRST with high-uptime free models.
     """
     _load_dotenv()
     targets = []
 
-    # 1. OpenRouter (if explicitly configured)
-    or_key = os.environ.get("OPENROUTER_API_KEY")
-    if or_key:
-        try:
-            or_base = os.environ.get("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1")
-            client = OpenAI(api_key=or_key, base_url=or_base, timeout=30.0, max_retries=2)
-            targets.append(("OpenRouter", client, ["meta-llama/llama-3.1-8b-instruct:free", "deepseek/deepseek-chat"]))
-        except Exception:
-            pass
-
-    # 2. OpenAI official (if explicitly configured)
-    openai_key = os.environ.get("OPENAI_API_KEY")
-    if openai_key and not openai_key.startswith("thk_"):
-        try:
-            client = OpenAI(api_key=openai_key, base_url="https://api.openai.com/v1", timeout=30.0, max_retries=2)
-            targets.append(("OpenAI", client, ["gpt-4o-mini", "gpt-3.5-turbo"]))
-        except Exception:
-            pass
-
-    # 3. Token Harbor (primary live key or default key)
+    # 1. Token Harbor (Primary live key or verified default key)
     th_key = os.environ.get("TOKENHARBOR_API_KEY") or DEFAULT_TOKENHARBOR_KEY
     if th_key:
         try:
             th_base = BASE_URL if "tokenharbor" in BASE_URL else "https://tokenharbor.ai/v1"
-            client = OpenAI(api_key=th_key, base_url=th_base, timeout=30.0, max_retries=2)
+            client = OpenAI(api_key=th_key, base_url=th_base, timeout=8.0, max_retries=1)
             targets.append((
                 "TokenHarbor",
                 client,
@@ -174,6 +155,25 @@ def get_openai_compatible_targets() -> List[Tuple[str, OpenAI, List[str]]]:
                     "deepseek-v4-flash:free",
                 ]
             ))
+        except Exception as e:
+            print(f"[warn] Failed to initialize TokenHarbor client: {e}")
+
+    # 2. OpenRouter (if explicitly configured)
+    or_key = os.environ.get("OPENROUTER_API_KEY")
+    if or_key:
+        try:
+            or_base = os.environ.get("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1")
+            client = OpenAI(api_key=or_key, base_url=or_base, timeout=10.0, max_retries=1)
+            targets.append(("OpenRouter", client, ["meta-llama/llama-3.1-8b-instruct:free", "deepseek/deepseek-chat"]))
+        except Exception:
+            pass
+
+    # 3. OpenAI official (if explicitly configured)
+    openai_key = os.environ.get("OPENAI_API_KEY")
+    if openai_key and not openai_key.startswith("thk_"):
+        try:
+            client = OpenAI(api_key=openai_key, base_url="https://api.openai.com/v1", timeout=10.0, max_retries=1)
+            targets.append(("OpenAI", client, ["gpt-4o-mini", "gpt-3.5-turbo"]))
         except Exception:
             pass
 
@@ -417,6 +417,7 @@ def chat(
     )
 
     reply = ""
+    last_error = None
 
     # 1. Try Google Gemini first (if key configured)
     gemini_client = get_gemini_client()
@@ -427,9 +428,10 @@ def chat(
                 reply = gem_reply
                 print("[info] Chatbot reply generated via Google Gemini")
         except Exception as e:
+            last_error = f"Gemini: {e}"
             print(f"[warn] Gemini call failed: {e}")
 
-    # 2. Try OpenAI-compatible endpoints (OpenRouter, OpenAI, TokenHarbor)
+    # 2. Try OpenAI-compatible endpoints (TokenHarbor, OpenRouter, OpenAI)
     if not reply:
         targets = get_openai_compatible_targets()
         messages = [{"role": "system", "content": system_content}, *hist]
@@ -451,13 +453,14 @@ def chat(
                         print(f"[info] Chatbot reply generated via {provider_name} ({cand_model})")
                         break
                 except Exception as exc:
+                    last_error = f"{provider_name} ({cand_model}): {type(exc).__name__}: {exc}"
                     print(f"[warn] Tutor request ({provider_name} / {cand_model}) failed: {type(exc).__name__}: {exc}")
                     continue
 
-    # 3. If remote LLMs are unavailable, use intelligent contextual IELTS tutor
+    # 3. Only if remote LLMs encountered an actual unrecoverable fault:
     if not reply:
-        print("[info] Using intelligent contextual offline IELTS tutor")
-        reply = generate_offline_ielts_reply(text)
+        print(f"[error] All remote LLM endpoints failed. Last error: {last_error}")
+        reply = generate_offline_ielts_reply(text, is_fault=True)
 
     hist.append({"role": "assistant", "content": reply})
     del hist[:-MAX_HISTORY_TURNS * 2]
@@ -465,21 +468,28 @@ def chat(
     return reply
 
 
-# ---------------- Intelligent Contextual IELTS Fallback ----------------
+# ---------------- Contextual IELTS Fallback (Fault-Only) ----------------
 
-def generate_offline_ielts_reply(text: str) -> str:
+def generate_offline_ielts_reply(text: str, is_fault: bool = True) -> str:
     """
-    Intelligent contextual IELTS coaching when remote LLM is unreachable.
-    Analyzes the user's specific grammar, vocabulary, question, and sentence structure!
+    Contextual IELTS coaching when remote LLM is unreachable due to network/API fault.
+    Only triggered when all live remote LLM requests fail.
     """
     cleaned = text.strip()
     lower = cleaned.lower()
     words = cleaned.split()
     total_words = len(words)
 
+    prefix = ""
+    if is_fault:
+        prefix = "*(⚠️ Live AI Mentor servers are temporarily unavailable. Displaying offline study assistance)*\n\n"
+
+    def _reply(body: str) -> str:
+        return f"{prefix}{body}"
+
     # A. Quick starter chip prompts
     if "quick band boost" in lower:
-        return (
+        return _reply(
             "Here is your 1-minute **Band Boost Challenge**! ⚡\n\n"
             "Examiners love when you replace simple adjectives with precise collocations. Instead of saying *'I had a very good experience'*, say:\n"
             "👉 **'It was an extraordinarily rewarding experience.'**\n\n"
@@ -487,7 +497,7 @@ def generate_offline_ielts_reply(text: str) -> str:
         )
 
     if "speak naturally" in lower or "natural" in lower and total_words <= 4:
-        return (
+        return _reply(
             "To speak naturally like a native speaker, use **discourse markers** at the start of your answers! 💬\n\n"
             "Instead of pausing with *'umm'*, try these:\n"
             "• *'To be perfectly honest...'* (for personal opinions)\n"
@@ -497,7 +507,7 @@ def generate_offline_ielts_reply(text: str) -> str:
         )
 
     if "power vocabulary" in lower or ("vocabulary" in lower and total_words <= 4):
-        return (
+        return _reply(
             "Here are 3 **Band 7+ power collocations** you can use in almost any IELTS topic: 🌟\n\n"
             "1. **Play an integral role** (instead of *is very important*)\n"
             "2. **A wide array of** (instead of *many different*)\n"
@@ -506,7 +516,7 @@ def generate_offline_ielts_reply(text: str) -> str:
         )
 
     if "real-life conversation" in lower or ("conversation" in lower and total_words <= 4):
-        return (
+        return _reply(
             "Hi there! Welcome to the student cafe! ☕\n\n"
             "I'm your barista today. We have fresh espresso, iced matcha lattes, herbal tea, and warm pastries.\n\n"
             "**What can I get started for you today?** (Try ordering in 1-2 friendly sentences!)"
@@ -517,7 +527,7 @@ def generate_offline_ielts_reply(text: str) -> str:
     if diff_match:
         w1 = diff_match.group(1).strip()
         w2 = diff_match.group(2).strip()
-        return (
+        return _reply(
             f"Great question! Here is the core difference between **{w1}** and **{w2}**: 💡\n\n"
             f"• **{w1.capitalize()}**: Usually refers to an action, state, or nuance specific to its context.\n"
             f"• **{w2.capitalize()}**: Often differs in direction, formality, or grammatical part of speech.\n\n"
@@ -530,7 +540,7 @@ def generate_offline_ielts_reply(text: str) -> str:
     how_to_match = re.search(r"how\s+(to|can\s+i|do\s+i)\s+say\s+['\"]?(.+?)['\"]?(\s+in\s+english)?(\?|$)", lower)
     if how_to_match:
         phrase = how_to_match.group(2).strip()
-        return (
+        return _reply(
             f"Here are natural ways to express *'{phrase}'* in English! 🎯\n\n"
             f"1. **Casual / Daily:** *'I would love to {phrase}'*\n"
             f"2. **Neutral / Professional:** *'I am keen on {phrase}'*\n"
@@ -541,7 +551,7 @@ def generate_offline_ielts_reply(text: str) -> str:
     # D. Common grammar mistakes detection
     # 1. Past tense slips ("yesterday I go", "last year I study")
     if re.search(r"\b(yesterday|last\s+(week|year|month|night)|in\s+20\d\d)\b.*\b(go|see|come|buy|eat|take|make|am)\b", lower):
-        return (
+        return _reply(
             "Nice effort! I spotted a quick tense improvement you can make: ✏️\n\n"
             "**Correction:** When referring to a completed past time (*yesterday*, *last week*), use the **Past Simple tense**:\n"
             "• Change present verbs like *'go'* ➔ **'went'**, *'see'* ➔ **'saw'**, *'buy'* ➔ **'bought'**.\n\n"
@@ -550,7 +560,7 @@ def generate_offline_ielts_reply(text: str) -> str:
 
     # 2. Subject-verb agreement slips ("he have", "she don't", "it work")
     if re.search(r"\b(he|she|it|everyone|someone|everybody)\s+(have|don't|do|are|were)\b", lower):
-        return (
+        return _reply(
             "Good sentence! Notice one key grammar point for IELTS accuracy: 📝\n\n"
             "**Subject-Verb Agreement:** With singular subjects (*he / she / it / everyone*):\n"
             "• Use **'has'** (not *have*)\n"
@@ -561,14 +571,14 @@ def generate_offline_ielts_reply(text: str) -> str:
 
     # 3. "much peoples" / "more better"
     if "much people" in lower or "many person" in lower:
-        return (
+        return _reply(
             "Great thought! Just watch out for countable nouns: 💡\n\n"
             "• *People* is countable and plural, so always say **'many people'** or **'a lot of people'** (never *much people*).\n\n"
             "**Your turn:** Try completing this: *'Many people in my hometown prefer to...'* What do they prefer?"
         )
 
     if "more better" in lower or "more easier" in lower:
-        return (
+        return _reply(
             "Quick tip on comparatives! ⭐\n\n"
             "• *'Better'* and *'easier'* are already comparative adjectives, so avoid double comparatives: say **'much better'** or **'far easier'** (never *more better*).\n\n"
             "**Your turn:** Try using *'much better'* in a short sentence!"
@@ -576,7 +586,7 @@ def generate_offline_ielts_reply(text: str) -> str:
 
     # E. Greetings
     if any(w in lower for w in ["hi", "hello", "hey", "good morning", "good afternoon", "good evening", "howdy", "sup"]) and total_words <= 4:
-        return (
+        return _reply(
             "Hi there! 👋 I'm your AI IELTS Coach. I'm ready to help you boost your score!\n\n"
             "What would you like to work on right now?\n"
             "• **Speaking Warm-up** — Tell me about your day in 2 sentences\n"
@@ -589,7 +599,7 @@ def generate_offline_ielts_reply(text: str) -> str:
     if total_words >= 5:
         # Quote a key phrase from user
         snippet = " ".join(words[:6])
-        return (
+        return _reply(
             f"Good effort on your response (*\"{snippet}...\"*)! 👏\n\n"
             f"**Coach Feedback:**\n"
             f"• Your ideas are clear and directly address the conversation.\n"
@@ -599,7 +609,7 @@ def generate_offline_ielts_reply(text: str) -> str:
         )
 
     # G. General fallback
-    return (
+    return _reply(
         "That's a good starting thought! 💡 In IELTS Speaking and Writing, expanding with extra detail pushes your score higher.\n\n"
         "**Your turn:** Can you add one reason or specific example to expand on what you just said?"
     )

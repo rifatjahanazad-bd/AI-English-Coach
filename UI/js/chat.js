@@ -99,32 +99,6 @@ function initChat() {
         }
     }
 
-    function generateClientFallbackReply(text) {
-        const lower = (text || '').toLowerCase().trim();
-        const words = lower.split(/\s+/).filter(Boolean);
-
-        if (lower.includes('speak naturally') || (lower.includes('natural') && words.length <= 4)) {
-            return "To sound naturally fluent in IELTS Speaking, use **discourse markers** like *'To be honest'*, *'Actually'*, or *'If I remember correctly'*. These buy you thinking time without unnatural pauses!\n\n**Quick Drill:** Answer this: *What is your favorite room in your house?* Start your answer with one of those phrases!";
-        }
-
-        if (lower.includes('real-life conversation') || (lower.includes('conversation') && words.length <= 4)) {
-            return "Hi there! Welcome to the student cafe! ☕\n\nI'm your barista today. We have espresso, iced lattes, herbal teas, and warm blueberry muffins.\n\n**What can I get started for you today?** (Try ordering in 1-2 friendly sentences!)";
-        }
-
-        if (lower.includes('quick band boost') || (lower.includes('boost') && words.length <= 4)) {
-            return "Here is your 1-minute **Band Boost Challenge**! ⚡\n\nInstead of saying *'It was very interesting'*, try using a higher-band collocation:\n👉 **'It was utterly captivating'** or **'It was deeply rewarding'**.\n\n**Your turn:** Rewrite this sentence using a stronger collocation: *'The movie was very good.'* Give it a shot!";
-        }
-
-        if (lower.includes('power vocabulary') || (lower.includes('vocabulary') && words.length <= 4)) {
-            return "Here are 3 **Band 7+ power collocations** you can use across multiple IELTS topics:\n\n1. **Play an integral role** (instead of *is very important*)\n2. **Have a profound impact on** (instead of *changes a lot*)\n3. **Cope with mounting pressure** (instead of *deal with stress*)\n\n**Your turn:** Use ONE of these in a sentence about your studies or career!";
-        }
-
-        if (lower.includes('ielts') || lower.includes('practice') || lower.includes('practise') || lower.includes('speaking')) {
-            return "Great choice! Let's do a quick IELTS Speaking Part 1 warm-up.\n\n**Examiner question:** *\"Do you prefer spending your free time indoors or outdoors?\"*\n\nGive an answer in 2-3 sentences: state your preference, then explain **why** using a connector like *'primarily because'* or *'on the other hand'*.";
-        }
-
-        return "That's an interesting point! In IELTS Speaking, expanding your thoughts is key to achieving Band 7+.\n\n**Follow-up question:** Could you give a specific example or explain *why* that is important to you? Try answering in 2-3 sentences.";
-    }
 
     // Send user message to Backend Chatbot
     async function handleSendMessage() {

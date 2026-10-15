@@ -20,6 +20,81 @@ def health_check():
     }
 
 
+@router.get("/llm-test")
+def test_llm_status():
+    """Live diagnostic endpoint that tests all LLM providers and returns exact errors/latencies."""
+    import time
+    from backend import chatbot
+
+    results = {
+        "env_keys": {
+            "TOKENHARBOR_API_KEY_set": bool(os.environ.get("TOKENHARBOR_API_KEY")),
+            "GEMINI_API_KEY_set": bool(os.environ.get("GEMINI_API_KEY")),
+            "OPENROUTER_API_KEY_set": bool(os.environ.get("OPENROUTER_API_KEY")),
+            "OPENAI_API_KEY_set": bool(os.environ.get("OPENAI_API_KEY")),
+        },
+        "tests": []
+    }
+
+    # 1. Test TokenHarbor
+    th_start = time.time()
+    try:
+        from openai import OpenAI
+        th_key = os.environ.get("TOKENHARBOR_API_KEY") or chatbot.DEFAULT_TOKENHARBOR_KEY
+        client = OpenAI(api_key=th_key, base_url="https://tokenharbor.ai/v1", timeout=8.0, max_retries=1)
+        r = client.chat.completions.create(
+            model="claude-haiku-5.5:free",
+            messages=[{"role": "user", "content": "ping"}],
+            max_tokens=5
+        )
+        results["tests"].append({
+            "provider": "TokenHarbor",
+            "model": "claude-haiku-5.5:free",
+            "status": "ok",
+            "latency_sec": round(time.time() - th_start, 2),
+            "preview": (r.choices[0].message.content or "").strip()
+        })
+    except Exception as exc:
+        results["tests"].append({
+            "provider": "TokenHarbor",
+            "model": "claude-haiku-5.5:free",
+            "status": "error",
+            "error_type": type(exc).__name__,
+            "error_message": str(exc),
+            "latency_sec": round(time.time() - th_start, 2)
+        })
+
+    # 2. Test Gemini if configured
+    gem_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
+    if gem_key:
+        gem_start = time.time()
+        try:
+            from google import genai
+            g_client = genai.Client(api_key=gem_key)
+            resp = g_client.models.generate_content(
+                model="gemini-2.0-flash",
+                contents="ping"
+            )
+            results["tests"].append({
+                "provider": "GoogleGemini",
+                "model": "gemini-2.0-flash",
+                "status": "ok",
+                "latency_sec": round(time.time() - gem_start, 2),
+                "preview": (resp.text or "").strip()[:50]
+            })
+        except Exception as exc:
+            results["tests"].append({
+                "provider": "GoogleGemini",
+                "model": "gemini-2.0-flash",
+                "status": "error",
+                "error_type": type(exc).__name__,
+                "error_message": str(exc),
+                "latency_sec": round(time.time() - gem_start, 2)
+            })
+
+    return results
+
+
 @router.get("/routes")
 def get_api_routes():
     """
