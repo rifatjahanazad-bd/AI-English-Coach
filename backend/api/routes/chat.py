@@ -36,7 +36,7 @@ def handle_chat(payload: ChatRequest, request: Request):
         reply = chatbot.chat(user_id=rate_id, text=message_text)
     except Exception as e:
         print(f"[error] Chatbot error: {e}")
-        reply = chatbot.generate_offline_ielts_reply(message_text, is_fault=True)
+        reply = chatbot.generate_offline_ielts_reply(message_text)
 
     # Persist both user message and bot reply into SQLite chat_history
     try:

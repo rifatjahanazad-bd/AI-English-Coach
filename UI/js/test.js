@@ -641,6 +641,65 @@ function initSpeakingTest() {
         });
     }
 
+    // Connect Goal Target Card with /api/goal/{user_id}
+    const goalBandText = document.getElementById('goalTargetBandText');
+    const goalFocusText = document.getElementById('goalTargetFocusText');
+    const editGoalBtn = document.getElementById('editGoalBtn');
+    const goalEditPanel = document.getElementById('goalEditPanel');
+    const cancelGoalBtn = document.getElementById('cancelGoalBtn');
+    const saveGoalBtn = document.getElementById('saveGoalBtn');
+    const goalBandSelect = document.getElementById('goalBandSelect');
+    const goalFocusSelect = document.getElementById('goalFocusSelect');
+    const goalMinutesSelect = document.getElementById('goalMinutesSelect');
+
+    async function loadGoalData() {
+        if (!goalBandText) return;
+        if (window.AIEC_API && typeof window.AIEC_API.getGoal === 'function') {
+            const goal = await window.AIEC_API.getGoal();
+            if (goal) {
+                if (goalBandText) goalBandText.textContent = `Band ${goal.target_band || 7.5}`;
+                if (goalFocusText) goalFocusText.textContent = `Focus: ${goal.current_focus || 'Fluency & Coherence'} · ${goal.daily_minutes || 30} min/day`;
+                if (goalBandSelect) goalBandSelect.value = String(goal.target_band || 7.5);
+                if (goalFocusSelect) goalFocusSelect.value = goal.current_focus || 'Fluency & Coherence';
+                if (goalMinutesSelect) goalMinutesSelect.value = String(goal.daily_minutes || 30);
+            }
+        }
+    }
+
+    if (editGoalBtn && goalEditPanel) {
+        editGoalBtn.addEventListener('click', () => {
+            goalEditPanel.classList.toggle('hidden');
+        });
+    }
+    if (cancelGoalBtn && goalEditPanel) {
+        cancelGoalBtn.addEventListener('click', () => {
+            goalEditPanel.classList.add('hidden');
+        });
+    }
+    if (saveGoalBtn && goalEditPanel) {
+        saveGoalBtn.addEventListener('click', async () => {
+            const newBand = parseFloat(goalBandSelect ? goalBandSelect.value : 7.5);
+            const newFocus = goalFocusSelect ? goalFocusSelect.value : 'Fluency & Coherence';
+            const newMins = parseInt(goalMinutesSelect ? goalMinutesSelect.value : 30, 10);
+            const goalPayload = {
+                target_band: newBand,
+                current_focus: newFocus,
+                daily_minutes: newMins
+            };
+            if (window.AIEC_API && typeof window.AIEC_API.saveGoal === 'function') {
+                await window.AIEC_API.saveGoal(goalPayload);
+            } else {
+                localStorage.setItem('aiec_user_goal', JSON.stringify(goalPayload));
+                window.dispatchEvent(new CustomEvent('aiec-goal-updated', { detail: goalPayload }));
+            }
+            if (goalBandText) goalBandText.textContent = `Band ${newBand}`;
+            if (goalFocusText) goalFocusText.textContent = `Focus: ${newFocus} · ${newMins} min/day`;
+            goalEditPanel.classList.add('hidden');
+        });
+    }
+
+    loadGoalData();
+
     // Global route helpers for speaking test section
     window.showGoalView = function() {
         const s1 = document.getElementById('testStep1');
@@ -649,8 +708,10 @@ function initSpeakingTest() {
         if (s1) s1.classList.remove('hidden');
         if (s2) s2.classList.add('hidden');
         if (s3) s3.classList.add('hidden');
-        if (window.AIEC_Router) {
-            window.AIEC_Router.navigate('/test');
+        const goalCard = document.getElementById('goalTargetCard');
+        if (goalCard) {
+            loadGoalData();
+            goalCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
     };
 

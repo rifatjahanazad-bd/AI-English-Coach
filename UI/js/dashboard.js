@@ -489,6 +489,21 @@
 
         root.innerHTML = `
             <div class="dashboard-container">
+                <!-- 0. GUEST DEMO NOTICE (Only if not logged into Google) -->
+                ${!loggedIn ? `
+                    <div class="dash-guest-notice">
+                        <div class="dash-guest-notice-content">
+                            <span class="dash-guest-notice-icon">✨</span>
+                            <div class="dash-guest-notice-text">
+                                <strong>Guest Mode Active:</strong> Sign in with Google to sync your study streaks, IELTS mock tests, and AI mentor history across all devices.
+                            </div>
+                        </div>
+                        <button class="dash-guest-notice-btn" id="dashNoticeSignInBtn">
+                            <span>🔑 Sign In with Google</span>
+                        </button>
+                    </div>
+                ` : ''}
+
                 <!-- ============================================================== -->
                 <!-- [1] USER NAME WITH GREETINGS & PROFILE CAPSULE                  -->
                 <!-- ============================================================== -->
@@ -504,7 +519,7 @@
                                 <span>IELTS Academic Prep</span>
                                 <span class="dash-band-tag">Target Band ${targetBand} 🎯</span>
                                 <span style="color: #CBD5E1;">•</span>
-                                <span style="color: ${loggedIn ? '#16A34A' : '#D97706'}; font-weight: 700;">
+                                <span style="color: ${loggedIn ? '#16A34A' : '#3B82F6'}; font-weight: 700;">
                                     ${loggedIn ? '🟢 Google Synced' : '⚡ Local Session'}
                                 </span>
                             </div>
@@ -520,7 +535,7 @@
                             <span>⭐</span>
                             <span>${(scoring.total_xp || 0).toLocaleString()} XP</span>
                         </div>
-                        <div class="dash-xp-pill" style="background: #FFFBEB; color: #B45309; border: 1.5px solid #FDE68A;" title="${scoring.current_league} League Tier">
+                        <div class="dash-xp-pill" style="background: rgba(99, 102, 241, 0.12); color: #4338CA;" title="${scoring.current_league} League Tier">
                             <span>${(scoring.league_details && scoring.league_details.badge) || '🥉'}</span>
                             <span>${scoring.current_league}</span>
                         </div>
@@ -536,17 +551,35 @@
                         <span>English Proficiency Assessment</span>
                     </h3>
                     <span class="dash-clean-section-sub">
-                        Comprehensive Skill Breakdown
+                        ${isNewUser ? 'Initial Diagnostic Benchmark' : 'Comprehensive Skill Breakdown'}
                     </span>
                 </div>
+
+                ${isNewUser ? `
+                    <!-- New Learner / First Day Welcome Callout -->
+                    <div style="background: #EFF6FF; border: 1.5px solid #BFDBFE; border-radius: 20px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
+                        <div style="display: flex; align-items: center; gap: 12px; max-width: 700px;">
+                            <span style="font-size: 28px;">🌱</span>
+                            <div>
+                                <strong style="color: #1E3A8A; font-size: 14.5px;">Welcome to your first day! Baseline Ready (CEFR B1 / Band 5.5)</strong>
+                                <p style="margin: 3px 0 0 0; color: #3B82F6; font-size: 13px; font-weight: 600;">
+                                    Complete your first 5-minute diagnostic test below to calculate your real AI band scores across Reading, Writing, and Speaking!
+                                </p>
+                            </div>
+                        </div>
+                        <button class="dash-speaking-btn" id="dashTakeDiagnosticBtn" style="background: #2563EB; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);">
+                            <span>Take Diagnostic Test 🚀</span>
+                        </button>
+                    </div>
+                ` : ''}
 
                 <div class="dash-prof-grid">
                     <!-- 1. Reading Proficiency Card -->
                     <div class="dash-prof-card prof-reading ${!readingProf.assessed ? 'is-new-user' : ''}">
                         <div>
                             <div class="dash-prof-header">
-                                <div class="dash-prof-icon-wrap icon-amber-bg">📖</div>
-                                <span class="dash-prof-band-badge badge-amber">
+                                <div class="dash-prof-icon-wrap icon-blue-bg">📖</div>
+                                <span class="dash-prof-band-badge ${!readingProf.assessed ? 'badge-amber' : 'badge-blue'}">
                                     ${readingProf.band}
                                 </span>
                             </div>
@@ -556,7 +589,7 @@
                             </div>
 
                             <div class="dash-prof-bar-track">
-                                <div class="dash-prof-bar-fill ${!readingProf.assessed ? 'fill-dashed' : 'fill-amber'}" style="width: ${!readingProf.assessed ? '55%' : `${readingProf.accuracy}%`};"></div>
+                                <div class="dash-prof-bar-fill ${!readingProf.assessed ? 'fill-dashed' : 'fill-blue'}" style="width: ${!readingProf.assessed ? '55%' : `${readingProf.accuracy}%`};"></div>
                             </div>
 
                             ${!readingProf.assessed ? `
@@ -582,8 +615,8 @@
                     <div class="dash-prof-card prof-writing ${!writingProf.assessed ? 'is-new-user' : ''}">
                         <div>
                             <div class="dash-prof-header">
-                                <div class="dash-prof-icon-wrap icon-orange-bg">✍️</div>
-                                <span class="dash-prof-band-badge badge-orange">
+                                <div class="dash-prof-icon-wrap icon-purple-bg">✍️</div>
+                                <span class="dash-prof-band-badge ${!writingProf.assessed ? 'badge-amber' : 'badge-purple'}">
                                     ${writingProf.band}
                                 </span>
                             </div>
@@ -593,7 +626,7 @@
                             </div>
 
                             <div class="dash-prof-bar-track">
-                                <div class="dash-prof-bar-fill ${!writingProf.assessed ? 'fill-dashed' : 'fill-orange'}" style="width: ${!writingProf.assessed ? '55%' : `${writingProf.accuracy}%`};"></div>
+                                <div class="dash-prof-bar-fill ${!writingProf.assessed ? 'fill-dashed' : 'fill-purple'}" style="width: ${!writingProf.assessed ? '55%' : `${writingProf.accuracy}%`};"></div>
                             </div>
 
                             ${!writingProf.assessed ? `
@@ -620,7 +653,7 @@
                         <div>
                             <div class="dash-prof-header">
                                 <div class="dash-prof-icon-wrap icon-green-bg">🎙️</div>
-                                <span class="dash-prof-band-badge badge-green">
+                                <span class="dash-prof-band-badge ${!speakingProf.assessed ? 'badge-amber' : 'badge-green'}">
                                     ${speakingProf.band}
                                 </span>
                             </div>
@@ -722,7 +755,7 @@
                     <div class="dash-score-clean-card">
                         <div>
                             <div class="dash-score-clean-top">
-                                <div class="dash-score-clean-icon" style="background: #FFFBEB; border: 1.5px solid #FDE68A; color: #D97706;">⚡</div>
+                                <div class="dash-score-clean-icon" style="background: #FEF3C7;">⚡</div>
                                 <span class="dash-prof-band-badge badge-amber">Speed Drill</span>
                             </div>
                             <h4>Fast Phrases Game</h4>
@@ -744,7 +777,7 @@
                     <div class="dash-score-clean-card">
                         <div>
                             <div class="dash-score-clean-top">
-                                <div class="dash-score-clean-icon" style="background: #F0FDF4; border: 1.5px solid #BBF7D0; color: #15803D;">⭐</div>
+                                <div class="dash-score-clean-icon" style="background: #F0FDF4;">⭐</div>
                                 <span class="dash-prof-band-badge badge-green">${scoring.current_league} League</span>
                             </div>
                             <h4>Practice Experience</h4>
@@ -766,8 +799,8 @@
                     <div class="dash-score-clean-card">
                         <div>
                             <div class="dash-score-clean-top">
-                                <div class="dash-score-clean-icon" style="background: #FFFBEB; border: 1.5px solid #FDE68A; color: #D97706;">🎯</div>
-                                <span class="dash-prof-band-badge badge-amber">Quizzes</span>
+                                <div class="dash-score-clean-icon" style="background: #EFF6FF;">🎯</div>
+                                <span class="dash-prof-band-badge badge-blue">Quizzes</span>
                             </div>
                             <h4>Drill Accuracy Rate</h4>
                             <p>Percentage of correct answers across all completed curriculum quizzes.</p>
@@ -780,7 +813,7 @@
                             </div>
                         </div>
                         <div class="dash-prof-bar-track" style="margin-top: 14px;">
-                            <div class="dash-prof-bar-fill fill-amber" style="width: ${scoring.accuracy_rate > 0 ? `${scoring.accuracy_rate}%` : '50%'};"></div>
+                            <div class="dash-prof-bar-fill fill-blue" style="width: ${scoring.accuracy_rate > 0 ? `${scoring.accuracy_rate}%` : '50%'};"></div>
                         </div>
                     </div>
                 </div>
@@ -849,6 +882,27 @@
 
     // Attach all clean dashboard event listeners
     function bindDashboardEvents() {
+        // Sign-in prompt
+        const signInBtn = document.getElementById('dashNoticeSignInBtn');
+        if (signInBtn) {
+            signInBtn.addEventListener('click', () => {
+                if (window.AIEC_Auth && typeof window.AIEC_Auth.openModal === 'function') {
+                    window.AIEC_Auth.openModal();
+                } else {
+                    const authHeaderBtn = document.getElementById('userAuthBtn');
+                    if (authHeaderBtn) authHeaderBtn.click();
+                }
+            });
+        }
+
+        // Diagnostic Test button (for new users)
+        const diagnosticBtn = document.getElementById('dashTakeDiagnosticBtn');
+        if (diagnosticBtn) {
+            diagnosticBtn.addEventListener('click', () => {
+                navigateTo('/practice');
+            });
+        }
+
         // Speaking Test Banner button
         const speakingBtn = document.getElementById('dashStartSpeakingTestBtn');
         if (speakingBtn) {

@@ -274,8 +274,7 @@
         const uid = getUserId();
         try {
             const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
-            // Generous 75s timeout to allow live LLM generation without premature client abortion
-            const timeoutId = controller ? setTimeout(() => controller.abort(), 75000) : null;
+            const timeoutId = controller ? setTimeout(() => controller.abort(), 45000) : null;
             const res = await fetch(`${API_BASE}/api/chat`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -287,7 +286,7 @@
             const errText = await res.text().catch(() => '');
             console.error('[API Client] Chat API failed with HTTP', res.status, errText);
         } catch (e) {
-            console.warn('[API Client] Chat API network failed or timed out:', e);
+            console.warn('[API Client] Chat API network failed:', e);
         }
         return null;
     }
