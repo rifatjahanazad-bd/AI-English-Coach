@@ -63,32 +63,32 @@ def create_app() -> FastAPI:
     # 1c. Vercel Serverless Path Normalization Middleware
     @application.middleware("http")
     async def normalize_api_path(request: Request, call_next):
-        """Normalizes request path if Vercel serverless rewrite strips or prepends the /api prefix."""
-        matched = (
-            request.headers.get("x-matched-path")
-            or request.headers.get("x-forwarded-uri")
-            or request.headers.get("x-original-uri")
-            or request.scope.get("path", "")
-        )
-        raw_path = matched.split("?")[0] if matched else request.scope.get("path", "")
+        """Ensures request.scope['path'] matches the target FastAPI route under all serverless rewrites."""
+        query_path = request.query_params.get("__path__")
+        if query_path:
+            clean_subpath = query_path.strip().lstrip("/")
+            request.scope["path"] = f"/api/{clean_subpath}" if clean_subpath else "/api"
+            return await call_next(request)
 
-        # Strip script name if Vercel prepends entrypoint script
-        for script_prefix in ("/api/index.py", "api/index.py", "/index.py", "index.py"):
-            if raw_path.startswith(script_prefix):
-                raw_path = raw_path[len(script_prefix):]
-                break
+        raw_path = request.scope.get("path", "")
+        if not raw_path.startswith("/api/"):
+            for prefix in ("/api/index.py", "api/index.py", "/index.py", "index.py"):
+                if raw_path.startswith(prefix):
+                    raw_path = raw_path[len(prefix):]
+                    break
 
-        if not raw_path.startswith("/"):
-            raw_path = f"/{raw_path}"
+            if not raw_path.startswith("/"):
+                raw_path = f"/{raw_path}"
 
-        api_prefixes = (
-            "/chat", "/speaking", "/modules", "/meme",
-            "/auth", "/goal", "/scoring", "/health", "/system", "/scores", "/progress"
-        )
-        if not raw_path.startswith("/api") and any(raw_path == p or raw_path.startswith(f"{p}/") for p in api_prefixes):
-            raw_path = f"/api{raw_path}"
+            api_prefixes = (
+                "/chat", "/speaking", "/modules", "/meme",
+                "/auth", "/goal", "/scoring", "/health", "/system", "/scores", "/progress"
+            )
+            if any(raw_path == p or raw_path.startswith(f"{p}/") for p in api_prefixes):
+                raw_path = f"/api{raw_path}"
 
-        request.scope["path"] = raw_path
+            request.scope["path"] = raw_path
+
         return await call_next(request)
 
     # 2. Register all structured API domain routers

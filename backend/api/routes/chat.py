@@ -57,7 +57,10 @@ def handle_chat(payload: ChatRequest, request: Request):
     return {"reply": reply}
 
 
+@router.get("/history")
+@router.get("/history/")
 @router.get("/history/{user_id}")
+@router.get("/history/{user_id}/")
 def get_chat_history(user_id: str = "guest"):
     """Retrieves previous chat messages for this user."""
     valid_id = _sanitize_user_id(user_id)

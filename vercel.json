@@ -24,7 +24,11 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "api/index.py"
+      "dest": "api/index.py?__path__=$1"
+    },
+    {
+      "src": "/api",
+      "dest": "api/index.py?__path__=health"
     },
     {
       "src": "/game/(.*)",
