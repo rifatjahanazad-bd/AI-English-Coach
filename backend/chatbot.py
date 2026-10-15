@@ -144,7 +144,7 @@ def get_openai_compatible_targets() -> List[Tuple[str, OpenAI, List[str]]]:
     if or_key:
         try:
             or_base = os.environ.get("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1")
-            client = OpenAI(api_key=or_key, base_url=or_base, timeout=20.0, max_retries=1)
+            client = OpenAI(api_key=or_key, base_url=or_base, timeout=30.0, max_retries=2)
             targets.append(("OpenRouter", client, ["meta-llama/llama-3.1-8b-instruct:free", "deepseek/deepseek-chat"]))
         except Exception:
             pass
@@ -153,7 +153,7 @@ def get_openai_compatible_targets() -> List[Tuple[str, OpenAI, List[str]]]:
     openai_key = os.environ.get("OPENAI_API_KEY")
     if openai_key and not openai_key.startswith("thk_"):
         try:
-            client = OpenAI(api_key=openai_key, base_url="https://api.openai.com/v1", timeout=20.0, max_retries=1)
+            client = OpenAI(api_key=openai_key, base_url="https://api.openai.com/v1", timeout=30.0, max_retries=2)
             targets.append(("OpenAI", client, ["gpt-4o-mini", "gpt-3.5-turbo"]))
         except Exception:
             pass
@@ -163,8 +163,17 @@ def get_openai_compatible_targets() -> List[Tuple[str, OpenAI, List[str]]]:
     if th_key:
         try:
             th_base = BASE_URL if "tokenharbor" in BASE_URL else "https://tokenharbor.ai/v1"
-            client = OpenAI(api_key=th_key, base_url=th_base, timeout=20.0, max_retries=1)
-            targets.append(("TokenHarbor", client, ["deepseek-v4.1-flash:free", "mimo-v2.6-flash:free"]))
+            client = OpenAI(api_key=th_key, base_url=th_base, timeout=30.0, max_retries=2)
+            targets.append((
+                "TokenHarbor",
+                client,
+                [
+                    "claude-haiku-5.5:free",
+                    "deepseek-v4.1-flash:free",
+                    "mimo-v2.6-flash:free",
+                    "deepseek-v4-flash:free",
+                ]
+            ))
         except Exception:
             pass
 

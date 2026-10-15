@@ -147,7 +147,7 @@ function initChat() {
                 if (res && res.reply) {
                     addAIMessage(res.reply);
                 } else {
-                    addAIMessage(generateClientFallbackReply(text));
+                    addAIMessage("I'm having a brief connection issue reaching the AI tutor service. Please check your network or try again in a moment! 😊");
                 }
             } else {
                 typingIndicator.style.display = 'none';
@@ -156,7 +156,7 @@ function initChat() {
         } catch (err) {
             console.error('[Chat Error]:', err);
             typingIndicator.style.display = 'none';
-            addAIMessage(generateClientFallbackReply(text));
+            addAIMessage("I had a brief connection glitch. Please send your message again, I'm ready! 😊");
         } finally {
             isWaitingForResponse = false;
             sendBtn.disabled = false;
@@ -185,4 +185,9 @@ function initChat() {
 
     // Initialize chat history on load
     loadChatHistory();
+
+    // Reload chat history whenever user signs in or signs out
+    window.addEventListener('aiec-auth-changed', () => {
+        loadChatHistory();
+    });
 }

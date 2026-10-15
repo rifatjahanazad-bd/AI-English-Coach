@@ -273,11 +273,15 @@
     async function sendChatMessage(message, history) {
         const uid = getUserId();
         try {
+            const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+            const timeoutId = controller ? setTimeout(() => controller.abort(), 45000) : null;
             const res = await fetch(`${API_BASE}/api/chat`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ user_id: uid, message, history: history || [] })
+                body: JSON.stringify({ user_id: uid, message, history: history || [] }),
+                signal: controller ? controller.signal : undefined
             });
+            if (timeoutId) clearTimeout(timeoutId);
             if (res.ok) return await res.json();
             const errText = await res.text().catch(() => '');
             console.error('[API Client] Chat API failed with HTTP', res.status, errText);
@@ -343,10 +347,23 @@
         const uid = userId || getUserId();
         try {
             const res = await fetch(`${API_BASE}/api/goal/${encodeURIComponent(uid)}`);
-            if (res.ok) return await res.json();
+            if (res.ok) {
+                const data = await res.json();
+                try {
+                    localStorage.setItem('aiec_user_goal', JSON.stringify(data));
+                } catch (e) {}
+                return data;
+            }
         } catch (e) {
             console.warn('[API Client] Goal fetch failed:', e);
         }
+
+        // Offline or cached fallback
+        try {
+            const cached = localStorage.getItem('aiec_user_goal');
+            if (cached) return JSON.parse(cached);
+        } catch (e) {}
+
         return {
             user_id: uid,
             target_band: 7.5,
@@ -361,6 +378,13 @@
     async function saveGoal(goalData) {
         const uid = getUserId();
         const payload = Object.assign({ user_id: uid }, goalData);
+
+        // Immediate local sync & window event dispatch
+        try {
+            localStorage.setItem('aiec_user_goal', JSON.stringify(payload));
+            window.dispatchEvent(new CustomEvent('aiec-goal-updated', { detail: payload }));
+        } catch (e) {}
+
         // Direct Cloud Firestore backup if signed in
         if (window.AIEC_Auth && typeof window.AIEC_Auth.saveGoalToFirestore === 'function') {
             window.AIEC_Auth.saveGoalToFirestore(payload);
@@ -371,7 +395,14 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
-            if (res.ok) return await res.json();
+            if (res.ok) {
+                const data = await res.json();
+                try {
+                    localStorage.setItem('aiec_user_goal', JSON.stringify(data));
+                    window.dispatchEvent(new CustomEvent('aiec-goal-updated', { detail: data }));
+                } catch (e) {}
+                return data;
+            }
         } catch (e) {
             console.warn('[API Client] Goal save failed:', e);
         }
@@ -499,25 +530,27 @@
 
         return {
             user_id: uid,
-            total_xp: 150,
-            current_level: 2,
+            total_xp: 0,
+            current_level: 1,
             current_league: 'Bronze',
+            league_details: { badge: '🥉', name: 'Bronze', color: '#CD7F32' },
             streak_days: 1,
             streak_multiplier: 1.0,
             streak_boost_label: 'Standard Pace (1.0x)',
-            accuracy_rate: 90.0,
-            quizzes_taken: 2,
+            accuracy_rate: 0.0,
+            quizzes_taken: 0,
             speaking_tests_taken: 0,
-            level_progress: { level: 2, progress_percentage: 25, remaining_xp_to_next: 150 },
+            perfect_scores_count: 0,
+            level_progress: { level: 1, progress_percentage: 0, remaining_xp_to_next: 100 },
             track_mastery: {
-                grammar: { count: 2, correct: 18, total: 20, accuracy: 90.0 },
+                grammar: { count: 0, correct: 0, total: 0, accuracy: 0.0 },
                 vocabulary: { count: 0, correct: 0, total: 0, accuracy: 0.0 },
                 listening: { count: 0, correct: 0, total: 0, accuracy: 0.0 },
                 speaking: { count: 0, avg_band: 0.0 }
             },
-            badges: [{ id: 'first_steps', name: 'First Steps', emoji: '🌱', desc: 'Completed your first practice exercise.' }],
-            cefr_readiness: { current_cefr: 'B1', next_target_cefr: 'B1+', readiness_percentage: 25, is_ready_for_promotion: false, checklist: [] },
-            coaching_insights: [{ type: 'streak', title: 'Keep Going! 🔥', text: 'Daily consistency unlocks streak multipliers.', icon: '⚡' }]
+            badges: [],
+            cefr_readiness: { current_cefr: 'B1', next_target_cefr: 'B2', readiness_percentage: 0, is_ready_for_promotion: false, checklist: [] },
+            coaching_insights: [{ type: 'streak', title: 'Start Today! 🔥', text: 'Daily consistency unlocks streak multipliers.', icon: '⚡' }]
         };
     }
 
@@ -549,6 +582,8 @@
                         localStorage.setItem(`aiec_scoring_${uid}`, JSON.stringify(data.profile));
                     } catch (e) {}
                 }
+                window.dispatchEvent(new CustomEvent('aiec-scoring-updated', { detail: data }));
+                window.dispatchEvent(new CustomEvent('aiec:scoring-updated', { detail: data }));
                 return data;
             }
         } catch (e) {

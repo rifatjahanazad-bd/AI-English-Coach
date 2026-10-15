@@ -280,6 +280,125 @@
         return weekDays;
     }
 
+    // Helper: Compute skill proficiency metrics dynamically based on real user actions
+    function computeSkillProficiency(skillKey, scoring) {
+        let count = 0;
+        let accuracy = 0;
+        let avgBand = 0;
+
+        let localScores = null;
+        try {
+            const raw = localStorage.getItem('aiec-scores-v1');
+            if (raw) localScores = JSON.parse(raw);
+        } catch (e) {}
+
+        if (skillKey === 'reading') {
+            const vocTrack = scoring.track_mastery && scoring.track_mastery.vocabulary;
+            let vCount = (vocTrack && vocTrack.count) || 0;
+            let vAcc = (vocTrack && vocTrack.accuracy) || 0;
+
+            if (localScores && localScores.vocabulary) {
+                let lTotal = 0, lScore = 0, lCount = 0;
+                Object.values(localScores.vocabulary).forEach(lvl => {
+                    Object.values(lvl).forEach(item => {
+                        lTotal += (item.total || 0);
+                        lScore += (item.score || 0);
+                        lCount++;
+                    });
+                });
+                if (lCount > vCount) {
+                    vCount = lCount;
+                    vAcc = lTotal > 0 ? Math.round((lScore / lTotal) * 100) : 0;
+                }
+            }
+            count = vCount;
+            accuracy = vAcc;
+        } else if (skillKey === 'writing') {
+            const gramTrack = scoring.track_mastery && scoring.track_mastery.grammar;
+            let gCount = (gramTrack && gramTrack.count) || 0;
+            let gAcc = (gramTrack && gramTrack.accuracy) || 0;
+
+            if (localScores) {
+                let lTotal = 0, lScore = 0, lCount = 0;
+                ['grammar', 'writing'].forEach(t => {
+                    if (localScores[t]) {
+                        Object.values(localScores[t]).forEach(lvl => {
+                            Object.values(lvl).forEach(item => {
+                                lTotal += (item.total || 0);
+                                lScore += (item.score || 0);
+                                lCount++;
+                            });
+                        });
+                    }
+                });
+                if (lCount > gCount) {
+                    gCount = lCount;
+                    gAcc = lTotal > 0 ? Math.round((lScore / lTotal) * 100) : 0;
+                }
+            }
+            count = gCount;
+            accuracy = gAcc;
+        } else if (skillKey === 'speaking') {
+            const spkTrack = scoring.track_mastery && scoring.track_mastery.speaking;
+            count = (spkTrack && spkTrack.count) || scoring.speaking_tests_taken || 0;
+            avgBand = (spkTrack && spkTrack.avg_band) || 0;
+
+            try {
+                const rawSpk = localStorage.getItem('aiec_speaking_reports');
+                if (rawSpk) {
+                    const repList = JSON.parse(rawSpk);
+                    if (Array.isArray(repList) && repList.length > 0) {
+                        if (repList.length > count) count = repList.length;
+                        const bands = repList.map(r => parseFloat(r.overall_band || 0)).filter(b => b > 0);
+                        if (bands.length > 0) {
+                            const sum = bands.reduce((a, b) => a + b, 0);
+                            avgBand = Math.round((sum / bands.length) * 10) / 10;
+                        }
+                    }
+                }
+            } catch (e) {}
+
+            if (avgBand > 0) {
+                accuracy = Math.min(100, Math.round((avgBand / 9.0) * 100));
+            }
+        }
+
+        const assessed = count > 0;
+        let band = 'Baseline 5.5';
+        let cefr = 'Starting Level: CEFR B1';
+
+        if (skillKey === 'speaking') {
+            if (assessed && avgBand > 0) {
+                band = `Band ${avgBand.toFixed(1)}`;
+                if (avgBand >= 8.0) cefr = 'Mastered Level: CEFR C1-C2';
+                else if (avgBand >= 7.0) cefr = 'Mastered Level: CEFR B2-C1';
+                else if (avgBand >= 6.0) cefr = 'Developing: CEFR B2';
+                else cefr = 'Baseline: CEFR B1';
+            }
+        } else {
+            if (assessed && accuracy > 0) {
+                if (accuracy >= 90) {
+                    band = `Band 8.0 (${accuracy}%)`;
+                    cefr = 'Mastered Level: CEFR C1';
+                } else if (accuracy >= 80) {
+                    band = `Band 7.5 (${accuracy}%)`;
+                    cefr = 'Mastered Level: CEFR B2+';
+                } else if (accuracy >= 70) {
+                    band = `Band 7.0 (${accuracy}%)`;
+                    cefr = 'Mastered Level: CEFR B2';
+                } else if (accuracy >= 60) {
+                    band = `Band 6.5 (${accuracy}%)`;
+                    cefr = 'Developing: CEFR B1+';
+                } else {
+                    band = `Band 6.0 (${accuracy}%)`;
+                    cefr = 'Developing: CEFR B1';
+                }
+            }
+        }
+
+        return { count, accuracy, avgBand, band, cefr, assessed };
+    }
+
     // Main Dashboard Render Function
     function renderDashboard() {
         const root = document.getElementById('dashboardRoot');
@@ -322,10 +441,6 @@
         } catch (e) {}
 
         // 3. User Diagnostic & New User Possibilities Check
-        // Checks:
-        // - Quizzes taken is 0 AND Speaking tests taken is 0
-        // - No diagnostic test flag in localStorage
-        // - Account created or logged in today with zero activity
         const hasDiagnosticFlag = !!localStorage.getItem(`aiec_diagnostic_done_${currentUid}`);
         const isNewUser = (!hasDiagnosticFlag && scoring.quizzes_taken === 0 && scoring.speaking_tests_taken === 0);
         const isTodayFirstDay = isNewUser || (scoring.streak_days <= 1 && scoring.total_xp === 0);
@@ -348,6 +463,23 @@
 
         // Weekly Streak Strip
         const weekDays = computeWeeklyStreakStrip(scoring, user);
+
+        // Dynamic Skill Proficiency Calculations (Reading, Writing, Speaking)
+        const readingProf = computeSkillProficiency('reading', scoring);
+        const writingProf = computeSkillProficiency('writing', scoring);
+        const speakingProf = computeSkillProficiency('speaking', scoring);
+
+        // Fast Phrases Game persistent records
+        let gameBestScore = 0;
+        let gameTotalAnswered = 0;
+        try {
+            const rawGame = localStorage.getItem('fastphrases_save_v4');
+            if (rawGame) {
+                const gameData = JSON.parse(rawGame);
+                gameBestScore = gameData.bestScore || 0;
+                gameTotalAnswered = gameData.totalAnswered || 0;
+            }
+        } catch (e) {}
 
         // Current Random Meme Data
         const currentMeme = DASH_MEME_CATALOG[currentMemeIndex] || DASH_MEME_CATALOG[0];
@@ -443,36 +575,36 @@
 
                 <div class="dash-prof-grid">
                     <!-- 1. Reading Proficiency Card -->
-                    <div class="dash-prof-card prof-reading ${isNewUser ? 'is-new-user' : ''}">
+                    <div class="dash-prof-card prof-reading ${!readingProf.assessed ? 'is-new-user' : ''}">
                         <div>
                             <div class="dash-prof-header">
                                 <div class="dash-prof-icon-wrap icon-blue-bg">📖</div>
-                                <span class="dash-prof-band-badge ${isNewUser ? 'badge-amber' : 'badge-blue'}">
-                                    ${isNewUser ? 'Baseline 5.5' : 'Band 7.5 (85%)'}
+                                <span class="dash-prof-band-badge ${!readingProf.assessed ? 'badge-amber' : 'badge-blue'}">
+                                    ${readingProf.band}
                                 </span>
                             </div>
                             <h4 class="dash-prof-name">Reading & Lexis</h4>
                             <div class="dash-prof-level-tag">
-                                ${isNewUser ? 'Starting Level: CEFR B1' : 'Mastered Level: CEFR B2+'}
+                                ${readingProf.cefr}
                             </div>
 
                             <div class="dash-prof-bar-track">
-                                <div class="dash-prof-bar-fill ${isNewUser ? 'fill-dashed' : 'fill-blue'}" style="width: ${isNewUser ? '55%' : '85%'};"></div>
+                                <div class="dash-prof-bar-fill ${!readingProf.assessed ? 'fill-dashed' : 'fill-blue'}" style="width: ${!readingProf.assessed ? '55%' : `${readingProf.accuracy}%`};"></div>
                             </div>
 
-                            ${isNewUser ? `
+                            ${!readingProf.assessed ? `
                                 <div class="dash-new-user-note">
                                     Awaiting your first reading quiz to compute precise academic lexical resource.
                                 </div>
                             ` : `
                                 <div class="dash-prof-metrics">
                                     <div class="dash-prof-metric-row">
-                                        <span>Vocabulary Breadth</span>
-                                        <strong>88%</strong>
+                                        <span>Vocabulary Accuracy</span>
+                                        <strong>${readingProf.accuracy}%</strong>
                                     </div>
                                     <div class="dash-prof-metric-row">
-                                        <span>Reading Comprehension</span>
-                                        <strong>82%</strong>
+                                        <span>Quizzes Completed</span>
+                                        <strong>${readingProf.count} finished</strong>
                                     </div>
                                 </div>
                             `}
@@ -480,24 +612,24 @@
                     </div>
 
                     <!-- 2. Writing Proficiency Card -->
-                    <div class="dash-prof-card prof-writing ${isNewUser ? 'is-new-user' : ''}">
+                    <div class="dash-prof-card prof-writing ${!writingProf.assessed ? 'is-new-user' : ''}">
                         <div>
                             <div class="dash-prof-header">
                                 <div class="dash-prof-icon-wrap icon-purple-bg">✍️</div>
-                                <span class="dash-prof-band-badge ${isNewUser ? 'badge-amber' : 'badge-purple'}">
-                                    ${isNewUser ? 'Baseline 5.5' : 'Band 7.0 (78%)'}
+                                <span class="dash-prof-band-badge ${!writingProf.assessed ? 'badge-amber' : 'badge-purple'}">
+                                    ${writingProf.band}
                                 </span>
                             </div>
                             <h4 class="dash-prof-name">Writing & Grammar</h4>
                             <div class="dash-prof-level-tag">
-                                ${isNewUser ? 'Starting Level: CEFR B1' : 'Mastered Level: CEFR B2'}
+                                ${writingProf.cefr}
                             </div>
 
                             <div class="dash-prof-bar-track">
-                                <div class="dash-prof-bar-fill ${isNewUser ? 'fill-dashed' : 'fill-purple'}" style="width: ${isNewUser ? '55%' : '78%'};"></div>
+                                <div class="dash-prof-bar-fill ${!writingProf.assessed ? 'fill-dashed' : 'fill-purple'}" style="width: ${!writingProf.assessed ? '55%' : `${writingProf.accuracy}%`};"></div>
                             </div>
 
-                            ${isNewUser ? `
+                            ${!writingProf.assessed ? `
                                 <div class="dash-new-user-note">
                                     Awaiting your first grammar drill to measure sentence cohesion and grammatical range.
                                 </div>
@@ -505,11 +637,11 @@
                                 <div class="dash-prof-metrics">
                                     <div class="dash-prof-metric-row">
                                         <span>Grammar Accuracy</span>
-                                        <strong>84%</strong>
+                                        <strong>${writingProf.accuracy}%</strong>
                                     </div>
                                     <div class="dash-prof-metric-row">
-                                        <span>Cohesion & Linking</span>
-                                        <strong>72%</strong>
+                                        <span>Drills Completed</span>
+                                        <strong>${writingProf.count} finished</strong>
                                     </div>
                                 </div>
                             `}
@@ -517,36 +649,36 @@
                     </div>
 
                     <!-- 3. Speaking Proficiency Card -->
-                    <div class="dash-prof-card prof-speaking ${isNewUser ? 'is-new-user' : ''}">
+                    <div class="dash-prof-card prof-speaking ${!speakingProf.assessed ? 'is-new-user' : ''}">
                         <div>
                             <div class="dash-prof-header">
                                 <div class="dash-prof-icon-wrap icon-green-bg">🎙️</div>
-                                <span class="dash-prof-band-badge ${isNewUser ? 'badge-amber' : 'badge-green'}">
-                                    ${isNewUser ? 'Baseline 5.5' : 'Band 7.0 (76%)'}
+                                <span class="dash-prof-band-badge ${!speakingProf.assessed ? 'badge-amber' : 'badge-green'}">
+                                    ${speakingProf.band}
                                 </span>
                             </div>
                             <h4 class="dash-prof-name">Speaking & Fluency</h4>
                             <div class="dash-prof-level-tag">
-                                ${isNewUser ? 'Starting Level: CEFR B1' : 'Mastered Level: CEFR B2'}
+                                ${speakingProf.cefr}
                             </div>
 
                             <div class="dash-prof-bar-track">
-                                <div class="dash-prof-bar-fill ${isNewUser ? 'fill-dashed' : 'fill-green'}" style="width: ${isNewUser ? '55%' : '76%'};"></div>
+                                <div class="dash-prof-bar-fill ${!speakingProf.assessed ? 'fill-dashed' : 'fill-green'}" style="width: ${!speakingProf.assessed ? '55%' : `${speakingProf.accuracy}%`};"></div>
                             </div>
 
-                            ${isNewUser ? `
+                            ${!speakingProf.assessed ? `
                                 <div class="dash-new-user-note">
                                     Awaiting your first audio recording to analyze speech fluency, pause rate, and phonetics.
                                 </div>
                             ` : `
                                 <div class="dash-prof-metrics">
                                     <div class="dash-prof-metric-row">
-                                        <span>Fluency & Coherence</span>
-                                        <strong>78%</strong>
+                                        <span>Interviews Completed</span>
+                                        <strong>${speakingProf.count} recorded</strong>
                                     </div>
                                     <div class="dash-prof-metric-row">
-                                        <span>Pronunciation Clarity</span>
-                                        <strong>74%</strong>
+                                        <span>Average Band</span>
+                                        <strong>Band ${speakingProf.avgBand.toFixed(1)} / 9.0</strong>
                                     </div>
                                 </div>
                             `}
@@ -629,11 +761,11 @@
                             <h4>Fast Phrases Game</h4>
                             <p>Assemble grammatically flawless sentences under time pressure.</p>
                             <div class="dash-score-clean-num-big">
-                                1,680 <small>pts best</small>
+                                ${gameBestScore > 0 ? gameBestScore.toLocaleString() : '0'} <small>pts best</small>
                             </div>
                             <div class="dash-score-clean-subtags">
-                                <span>⏱️ Best Record: <strong>14.2s</strong></span>
-                                <span>🔥 Multiplier: <strong>x3 Streak Boost</strong></span>
+                                <span>⏱️ ${gameBestScore > 0 ? `Total Solved: <strong>${gameTotalAnswered} phrases</strong>` : 'Status: <strong>Ready to Play</strong>'}</span>
+                                <span>🔥 Multiplier: <strong>${scoring.streak_boost_label}</strong></span>
                             </div>
                         </div>
                         <a href="/game/" target="_blank" class="dash-game-play-btn" id="dashFastPhrasesBtn">
@@ -676,7 +808,7 @@
                                 ${scoring.accuracy_rate > 0 ? `${scoring.accuracy_rate}%` : 'New'} <small>accuracy</small>
                             </div>
                             <div class="dash-score-clean-subtags">
-                                <span>📝 Quizzes Taken: <strong>${scoring.quizzes_taken || (isNewUser ? 0 : 1)} Finished</strong></span>
+                                <span>📝 Quizzes Taken: <strong>${scoring.quizzes_taken || 0} Finished</strong></span>
                                 <span>🌟 Perfect Scores: <strong>${scoring.perfect_scores_count} Perfect</strong></span>
                             </div>
                         </div>
@@ -787,6 +919,17 @@
             });
         }
 
+        // Fast Phrases Game button
+        const fastPhrasesBtn = document.getElementById('dashFastPhrasesBtn');
+        if (fastPhrasesBtn) {
+            fastPhrasesBtn.addEventListener('click', (e) => {
+                if (typeof window.openFastPhrasesGame === 'function') {
+                    e.preventDefault();
+                    window.openFastPhrasesGame();
+                }
+            });
+        }
+
         // Shuffle Meme button
         const shuffleBtn = document.getElementById('dashShuffleMemeBtn');
         if (shuffleBtn) {
@@ -821,6 +964,20 @@
     });
 
     window.addEventListener('aiec-scoring-updated', () => {
+        const pageDashboard = document.getElementById('pageDashboard');
+        if (pageDashboard && pageDashboard.classList.contains('active')) {
+            renderDashboard();
+        }
+    });
+
+    window.addEventListener('aiec:scoring-updated', () => {
+        const pageDashboard = document.getElementById('pageDashboard');
+        if (pageDashboard && pageDashboard.classList.contains('active')) {
+            renderDashboard();
+        }
+    });
+
+    window.addEventListener('aiec-goal-updated', () => {
         const pageDashboard = document.getElementById('pageDashboard');
         if (pageDashboard && pageDashboard.classList.contains('active')) {
             renderDashboard();

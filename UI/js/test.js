@@ -81,6 +81,7 @@ function initSpeakingTest() {
     let audioContext = null;
     let analyser = null;
     let animFrameId = null;
+    let lastEvaluationResult = null;
 
     function updateTopicSelection(card) {
         document.querySelectorAll('.topic-card').forEach(c => c.classList.remove('selected'));
@@ -486,6 +487,15 @@ function initSpeakingTest() {
         stopSubmitBtn.addEventListener('click', async () => {
             await stopRecording();
 
+            // Validate that actual audio was recorded
+            if (!recordedAudioBlob || recordedAudioBlob.size < 500 || seconds < 3) {
+                alert('Please record your voice for at least 3 seconds before submitting for IELTS evaluation.');
+                stopRecording();
+                seconds = 0;
+                updateTimerDisplay();
+                return;
+            }
+
             // Show processing UI inside testStep2
             const originalBtnText = stopSubmitBtn.innerHTML;
             stopSubmitBtn.disabled = true;
@@ -505,37 +515,24 @@ function initSpeakingTest() {
                 overlay.innerHTML = `
                     <div style="font-size: 20px; margin-bottom: 6px;">🎙️ ⚡ 🤖</div>
                     <div style="font-weight: 600; color: #1E40AF; font-size: 14px;">Evaluating your spoken response...</div>
-                    <div style="font-size: 12px; color: #3B82F6; margin-top: 4px;">Compressing voice audio for size & running IELTS DeepSeek/MIMO evaluation</div>
+                    <div style="font-size: 12px; color: #3B82F6; margin-top: 4px;">Compressing voice audio for size & running IELTS evaluation</div>
                 `;
                 testStep2.appendChild(overlay);
             }
             overlay.classList.remove('hidden');
 
             try {
-                // If user recorded audio, send Blob
                 let responseData = null;
-                if (recordedAudioBlob && recordedAudioBlob.size > 0) {
-                    if (window.AIEC_API && typeof window.AIEC_API.evaluateSpeakingAudio === 'function') {
-                        responseData = await window.AIEC_API.evaluateSpeakingAudio(
-                            recordedAudioBlob,
-                            selectedTopic,
-                            selectedPrompt
-                        );
-                    }
-                }
-
-                // If no audio blob (e.g. mic not allowed or demo run), evaluate default prompt
-                if (!responseData) {
-                    if (window.AIEC_API && typeof window.AIEC_API.evaluateSpeakingText === 'function') {
-                        responseData = await window.AIEC_API.evaluateSpeakingText(
-                            `Furthermore, discussing ${selectedTopic} taught me that perseverance and personal exploration open extraordinary opportunities. The breathtaking scenery left me speechless.`,
-                            selectedTopic,
-                            selectedPrompt
-                        );
-                    }
+                if (window.AIEC_API && typeof window.AIEC_API.evaluateSpeakingAudio === 'function') {
+                    responseData = await window.AIEC_API.evaluateSpeakingAudio(
+                        recordedAudioBlob,
+                        selectedTopic,
+                        selectedPrompt
+                    );
                 }
 
                 if (responseData && !responseData.error) {
+                    lastEvaluationResult = responseData;
                     renderEvaluationReport(responseData);
                     // Duolingo Behavioral Scoring: Award Speaking XP & Trigger Level Up
                     if (window.AIEC_API && typeof window.AIEC_API.recordScoringEvent === 'function') {
@@ -551,20 +548,22 @@ function initSpeakingTest() {
                             }
                         });
                     }
+                    testStep2.classList.add('hidden');
+                    testStep3.classList.remove('hidden');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                 } else if (responseData && responseData.error) {
-                    alert(`Evaluation note: ${responseData.message || 'Please speak for at least 15 seconds.'}`);
+                    alert(`Evaluation note: ${responseData.message || responseData.error || 'Please speak clearly for at least 15 seconds.'}`);
+                } else {
+                    alert('Evaluation service is currently unavailable. Please check your connection and try again.');
                 }
 
             } catch (err) {
                 console.error('[Speaking Test] Evaluation error:', err);
-                alert(`Evaluation notice: Using cached examiner rubric (${err.message}).`);
+                alert(`Evaluation notice: Unable to process audio recording (${err.message}).`);
             } finally {
                 stopSubmitBtn.disabled = false;
                 stopSubmitBtn.innerHTML = originalBtnText;
                 if (overlay) overlay.classList.add('hidden');
-
-                testStep2.classList.add('hidden');
-                testStep3.classList.remove('hidden');
             }
         });
     }
@@ -577,11 +576,68 @@ function initSpeakingTest() {
             testStep2.classList.add('hidden');
             stopRecording();
             seconds = 0;
+            recordedAudioBlob = null;
             updateTimerDisplay();
             if (window.AIEC_Router) {
                 window.AIEC_Router.navigate('/test');
             }
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
+    // Share Speaking Report
+    const shareReportBtn = document.getElementById('shareSpeakingReportBtn');
+    if (shareReportBtn) {
+        shareReportBtn.addEventListener('click', async () => {
+            const overallBand = lastEvaluationResult ? (lastEvaluationResult.overall_band || '7.5') : '7.5';
+            const topic = selectedTopic || 'IELTS Speaking';
+            const shareText = `🎓 AI English Coach - Speaking Assessment\nTopic: ${topic}\nOverall Band Score: ${overallBand} / 9.0\nTry AI English Coach for IELTS prep!`;
+
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: 'My IELTS Speaking Band Score',
+                        text: shareText,
+                        url: window.location.origin
+                    });
+                    return;
+                } catch (e) {}
+            }
+            if (navigator.clipboard) {
+                try {
+                    await navigator.clipboard.writeText(shareText);
+                    alert('📋 Assessment score copied to clipboard!');
+                    return;
+                } catch (e) {}
+            }
+            alert(shareText);
+        });
+    }
+
+    // Save Speaking Report
+    const saveReportBtn = document.getElementById('saveSpeakingReportBtn');
+    if (saveReportBtn) {
+        saveReportBtn.addEventListener('click', () => {
+            if (!lastEvaluationResult) {
+                alert('No evaluation data to save.');
+                return;
+            }
+            try {
+                const existing = JSON.parse(localStorage.getItem('aiec_speaking_reports') || '[]');
+                existing.unshift({
+                    topic: selectedTopic,
+                    prompt: selectedPrompt,
+                    overall_band: lastEvaluationResult.overall_band || 7.0,
+                    criteria: lastEvaluationResult.criteria || {},
+                    transcript: lastEvaluationResult.transcript || '',
+                    timestamp: Date.now()
+                });
+                localStorage.setItem('aiec_speaking_reports', JSON.stringify(existing.slice(0, 30)));
+                alert('💾 Speaking test evaluation saved to your study records!');
+                window.dispatchEvent(new CustomEvent('aiec-scoring-updated'));
+            } catch (e) {
+                console.error('[Speaking Test] Save report failed:', e);
+            }
         });
     }
 
@@ -625,12 +681,16 @@ function initSpeakingTest() {
             const newBand = parseFloat(goalBandSelect ? goalBandSelect.value : 7.5);
             const newFocus = goalFocusSelect ? goalFocusSelect.value : 'Fluency & Coherence';
             const newMins = parseInt(goalMinutesSelect ? goalMinutesSelect.value : 30, 10);
+            const goalPayload = {
+                target_band: newBand,
+                current_focus: newFocus,
+                daily_minutes: newMins
+            };
             if (window.AIEC_API && typeof window.AIEC_API.saveGoal === 'function') {
-                await window.AIEC_API.saveGoal({
-                    target_band: newBand,
-                    current_focus: newFocus,
-                    daily_minutes: newMins
-                });
+                await window.AIEC_API.saveGoal(goalPayload);
+            } else {
+                localStorage.setItem('aiec_user_goal', JSON.stringify(goalPayload));
+                window.dispatchEvent(new CustomEvent('aiec-goal-updated', { detail: goalPayload }));
             }
             if (goalBandText) goalBandText.textContent = `Band ${newBand}`;
             if (goalFocusText) goalFocusText.textContent = `Focus: ${newFocus} · ${newMins} min/day`;

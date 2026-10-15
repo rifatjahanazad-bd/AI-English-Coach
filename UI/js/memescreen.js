@@ -411,6 +411,23 @@
             }
         }
 
+        // 2. Speaking Arena Meme Section
+        const speakingContainer = document.getElementById('speakingMemeContainer');
+        if (speakingContainer && !speakingContainer.hasChildNodes()) {
+            speakingContainer.innerHTML = createBannerHtml({
+                badgeText: '🎙️ Pre-Exam Chill • AI Meme Generator',
+                title: 'Nervous before speaking? Take a 2-minute meme break! 🎭',
+                subtitle: 'Laugh off pronunciation jitters and speaking test pressure with funny AI English memes! (1 meme per click • 15/day)',
+                btnText: 'Generate Meme',
+                themeClass: 'speaking-meme-theme'
+            });
+
+            const btn = speakingContainer.querySelector('.aiec-gen-meme-btn');
+            if (btn) {
+                btn.addEventListener('click', () => triggerMemeGeneration('IELTS Speaking Test Anxiety', btn));
+            }
+        }
+
         syncAllBanners();
     }
 
