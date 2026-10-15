@@ -489,21 +489,6 @@
 
         root.innerHTML = `
             <div class="dashboard-container">
-                <!-- 0. GUEST DEMO NOTICE (Only if not logged into Google) -->
-                ${!loggedIn ? `
-                    <div class="dash-guest-notice">
-                        <div class="dash-guest-notice-content">
-                            <span class="dash-guest-notice-icon">✨</span>
-                            <div class="dash-guest-notice-text">
-                                <strong>Guest Mode Active:</strong> Sign in with Google to sync your study streaks, IELTS mock tests, and AI mentor history across all devices.
-                            </div>
-                        </div>
-                        <button class="dash-guest-notice-btn" id="dashNoticeSignInBtn">
-                            <span>🔑 Sign In with Google</span>
-                        </button>
-                    </div>
-                ` : ''}
-
                 <!-- ============================================================== -->
                 <!-- [1] USER NAME WITH GREETINGS & PROFILE CAPSULE                  -->
                 <!-- ============================================================== -->
@@ -551,27 +536,9 @@
                         <span>English Proficiency Assessment</span>
                     </h3>
                     <span class="dash-clean-section-sub">
-                        ${isNewUser ? 'Initial Diagnostic Benchmark' : 'Comprehensive Skill Breakdown'}
+                        Comprehensive Skill Breakdown
                     </span>
                 </div>
-
-                ${isNewUser ? `
-                    <!-- New Learner / First Day Welcome Callout -->
-                    <div style="background: #EFF6FF; border: 1.5px solid #BFDBFE; border-radius: 20px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
-                        <div style="display: flex; align-items: center; gap: 12px; max-width: 700px;">
-                            <span style="font-size: 28px;">🌱</span>
-                            <div>
-                                <strong style="color: #1E3A8A; font-size: 14.5px;">Welcome to your first day! Baseline Ready (CEFR B1 / Band 5.5)</strong>
-                                <p style="margin: 3px 0 0 0; color: #3B82F6; font-size: 13px; font-weight: 600;">
-                                    Complete your first 5-minute diagnostic test below to calculate your real AI band scores across Reading, Writing, and Speaking!
-                                </p>
-                            </div>
-                        </div>
-                        <button class="dash-speaking-btn" id="dashTakeDiagnosticBtn" style="background: #2563EB; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);">
-                            <span>Take Diagnostic Test 🚀</span>
-                        </button>
-                    </div>
-                ` : ''}
 
                 <div class="dash-prof-grid">
                     <!-- 1. Reading Proficiency Card -->
@@ -882,27 +849,6 @@
 
     // Attach all clean dashboard event listeners
     function bindDashboardEvents() {
-        // Sign-in prompt
-        const signInBtn = document.getElementById('dashNoticeSignInBtn');
-        if (signInBtn) {
-            signInBtn.addEventListener('click', () => {
-                if (window.AIEC_Auth && typeof window.AIEC_Auth.openModal === 'function') {
-                    window.AIEC_Auth.openModal();
-                } else {
-                    const authHeaderBtn = document.getElementById('userAuthBtn');
-                    if (authHeaderBtn) authHeaderBtn.click();
-                }
-            });
-        }
-
-        // Diagnostic Test button (for new users)
-        const diagnosticBtn = document.getElementById('dashTakeDiagnosticBtn');
-        if (diagnosticBtn) {
-            diagnosticBtn.addEventListener('click', () => {
-                navigateTo('/practice');
-            });
-        }
-
         // Speaking Test Banner button
         const speakingBtn = document.getElementById('dashStartSpeakingTestBtn');
         if (speakingBtn) {
