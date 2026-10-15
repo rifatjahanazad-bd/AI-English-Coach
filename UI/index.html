@@ -345,63 +345,6 @@
                         </div>
                     </div>
 
-                    <!-- GOAL & STUDY TARGETS CARD -->
-                    <div class="card mb-16" id="goalTargetCard" style="padding: 18px 22px; background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%); border: 1.5px solid #E2E8F0; border-radius: 16px;">
-                        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;">
-                            <div style="display: flex; align-items: center; gap: 14px;">
-                                <div style="width: 44px; height: 44px; border-radius: 12px; background: #EEF2FF; display: flex; align-items: center; justify-content: center; font-size: 22px;">🎯</div>
-                                <div>
-                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                        <h3 style="margin: 0; font-size: 16px; font-weight: 700; color: #0F172A;">Your Study Target:</h3>
-                                        <span class="pill-chip green" id="goalTargetBandText" style="font-weight: 700; font-size: 13px;">Band 7.5</span>
-                                    </div>
-                                    <p class="caption" id="goalTargetFocusText" style="margin: 4px 0 0 0; color: #64748B;">Focus: Fluency & Coherence · 30 min/day</p>
-                                </div>
-                            </div>
-                            <button type="button" class="btn-secondary" id="editGoalBtn" style="padding: 8px 16px; font-size: 13px; border-radius: 10px;">
-                                ✏️ Edit Target
-                            </button>
-                        </div>
-                        <div id="goalEditPanel" class="hidden mt-12" style="border-top: 1px solid #E2E8F0; padding-top: 14px;">
-                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 12px;">
-                                <div>
-                                    <label style="font-size: 12px; font-weight: 700; color: #475569; display: block; margin-bottom: 4px;">Target Band Score</label>
-                                    <select id="goalBandSelect" style="width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid #CBD5E1; font-weight: 600; font-size: 13px;">
-                                        <option value="6.0">Band 6.0 (Competent)</option>
-                                        <option value="6.5">Band 6.5 (Competent+)</option>
-                                        <option value="7.0">Band 7.0 (Good User)</option>
-                                        <option value="7.5" selected>Band 7.5 (Good User+)</option>
-                                        <option value="8.0">Band 8.0 (Very Good)</option>
-                                        <option value="8.5">Band 8.5 (Near Native)</option>
-                                        <option value="9.0">Band 9.0 (Expert)</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label style="font-size: 12px; font-weight: 700; color: #475569; display: block; margin-bottom: 4px;">Primary Focus Area</label>
-                                    <select id="goalFocusSelect" style="width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid #CBD5E1; font-weight: 600; font-size: 13px;">
-                                        <option value="Fluency & Coherence" selected>Fluency & Coherence</option>
-                                        <option value="Lexical Resource">Lexical Resource</option>
-                                        <option value="Grammatical Range & Accuracy">Grammatical Range & Accuracy</option>
-                                        <option value="Pronunciation & Acoustic Clarity">Pronunciation & Acoustic Clarity</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label style="font-size: 12px; font-weight: 700; color: #475569; display: block; margin-bottom: 4px;">Daily Study Commitment</label>
-                                    <select id="goalMinutesSelect" style="width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid #CBD5E1; font-weight: 600; font-size: 13px;">
-                                        <option value="15">15 min / day (Casual)</option>
-                                        <option value="30" selected>30 min / day (Steady)</option>
-                                        <option value="45">45 min / day (Intensive)</option>
-                                        <option value="60">60 min / day (Exam Sprint)</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div style="display: flex; gap: 8px; justify-content: flex-end;">
-                                <button type="button" class="btn-secondary" id="cancelGoalBtn" style="padding: 6px 14px; font-size: 12.5px;">Cancel</button>
-                                <button type="button" class="btn-primary" id="saveGoalBtn" style="padding: 6px 18px; font-size: 12.5px;">Save Objectives ✓</button>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- STEP 1: CHOOSE TOPIC -->
                     <div id="testStep1">
                         <div class="topic-grid" id="topicGrid">
@@ -645,7 +588,7 @@
     <script src="js/practice/components/layout.js?v=2"></script>
     <script src="js/practice/modulepractice.js?v=2"></script>
     <script src="js/practice/practiceUI.js?v=2"></script>
-    <script src="js/test.js"></script>
+    <script src="js/test.js?v=3"></script>
     <script src="js/memescreen.js?v=2"></script>
     <script src="js/dashboard.js?v=2"></script>
     <script src="js/router.js"></script>
