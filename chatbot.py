@@ -33,8 +33,7 @@ SYSTEM_TOKEN_BUDGET = 1500
 MAX_FEEDBACK_CHARS = 8000
 MAX_FEEDBACK_FIELD_CHARS = 2000
 
-# Default key fallback if environment variable is not explicitly provided in serverless environments (e.g. Vercel)
-DEFAULT_TOKENHARBOR_KEY = "thk_live_eaZnj0OdWrXhfX1KV2lva1NHnWSHr3OpBhTynZ8RpDTDVulz1j1-mQj6m92mr67R"
+# SECURITY: API keys must be supplied via environment variables (never hardcoded).
 
 
 # ---------------- .env loader ----------------
@@ -140,19 +139,18 @@ def get_openai_compatible_targets() -> List[Tuple[str, OpenAI, List[str]]]:
     targets = []
 
     # 1. Token Harbor (Primary live key or verified default key)
-    th_key = os.environ.get("TOKENHARBOR_API_KEY") or DEFAULT_TOKENHARBOR_KEY
+    th_key = os.environ.get("TOKENHARBOR_API_KEY") or os.environ.get("OPENROUTER_API_KEY")
     if th_key:
         try:
             th_base = BASE_URL if "tokenharbor" in BASE_URL else "https://tokenharbor.ai/v1"
-            client = OpenAI(api_key=th_key, base_url=th_base, timeout=8.0, max_retries=1)
+            client = OpenAI(api_key=th_key, base_url=th_base, timeout=6.0, max_retries=0)
             targets.append((
                 "TokenHarbor",
                 client,
                 [
-                    "claude-haiku-5.5:free",
                     "deepseek-v4.1-flash:free",
-                    "mimo-v2.6-flash:free",
                     "deepseek-v4-flash:free",
+                    "mimo-v2.6-flash:free",
                 ]
             ))
         except Exception as e:

@@ -46,7 +46,7 @@ from openai import OpenAI
 REPO_ROOT = Path(__file__).resolve().parent.parent
 BASE_URL = os.getenv("OPENROUTER_BASE_URL", "https://tokenharbor.ai/v1")
 PRIMARY_MODEL = os.getenv("MODEL_NAME", "deepseek-v4.1-flash:free")
-BACKUP_MODEL = "mimo-v2.6-flash:free"
+BACKUP_MODEL = os.getenv("SPEAKING_BACKUP_MODEL", "deepseek-v4-flash:free")
 
 TARGET_SAMPLE_RATE = 16000  # 16 kHz mono PCM WAV for SpeechRecognition
 DEFAULT_CHUNK_DURATION = 45  # seconds per transcription chunk
@@ -98,12 +98,14 @@ _load_dotenv()
 
 
 def get_ai_client() -> Optional[OpenAI]:
-    """Returns an initialized OpenAI client connected to Token Harbor."""
-    api_key = (
-        os.environ.get("TOKENHARBOR_API_KEY")
-        or os.environ.get("OPENROUTER_API_KEY")
-        or "thk_live_eaZnj0OdWrXhfX1KV2lva1NHnWSHr3OpBhTynZ8RpDTDVulz1j1-mQj6m92mr67R"
-    )
+    """Returns an initialized OpenAI client connected to Token Harbor.
+
+    API keys must be provided via environment variables. Returns None when no
+    credential is configured so callers can fall back to the offline evaluator.
+    """
+    api_key = os.environ.get("TOKENHARBOR_API_KEY") or os.environ.get("OPENROUTER_API_KEY")
+    if not api_key:
+        return None
     return OpenAI(api_key=api_key, base_url=BASE_URL, timeout=REQUEST_TIMEOUT_SECONDS)
 
 

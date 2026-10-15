@@ -9,6 +9,8 @@
         "includeFiles": [
           "backend/**",
           "lessons/**",
+          "UI/modules/**",
+          "UI/js/practice/**",
           "requirements.txt"
         ]
       }

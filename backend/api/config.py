@@ -37,10 +37,12 @@ except Exception:
     pass
 GAME_DIR = BACKEND_DIR / "game"
 
-DEFAULT_TOKENHARBOR_KEY = "thk_live_eaZnj0OdWrXhfX1KV2lva1NHnWSHr3OpBhTynZ8RpDTDVulz1j1-mQj6m92mr67R"
-TOKENHARBOR_API_KEY = os.getenv("TOKENHARBOR_API_KEY") or os.getenv("OPENROUTER_API_KEY") or DEFAULT_TOKENHARBOR_KEY
+# SECURITY: API keys must be supplied via environment variables (never hardcoded).
+# Configure on the deployment platform (Vercel: Project → Settings → Environment Variables).
+TOKENHARBOR_API_KEY = (os.getenv("TOKENHARBOR_API_KEY") or os.getenv("OPENROUTER_API_KEY") or "").strip()
 OPENROUTER_BASE_URL = os.getenv("OPENROUTER_BASE_URL", "https://tokenharbor.ai/v1")
-MEME_MODEL = os.getenv("MODEL_NAME", "mimo-v2.6-flash:free")
+# Model served by TokenHarbor. `deepseek-v4.1-flash:free` is the fast, reliable default.
+MEME_MODEL = os.getenv("MODEL_NAME", "deepseek-v4.1-flash:free")
 SPEAKING_MODEL = os.getenv("SPEAKING_MODEL", "deepseek-v4.1-flash:free")
 
 # Meme rate limits

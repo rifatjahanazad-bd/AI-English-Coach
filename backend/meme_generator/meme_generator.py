@@ -44,8 +44,8 @@ try:
 except Exception:
     pass
 
-DEFAULT_TOKENHARBOR_KEY = "thk_live_eaZnj0OdWrXhfX1KV2lva1NHnWSHr3OpBhTynZ8RpDTDVulz1j1-mQj6m92mr67R"
-TOKENHARBOR_API_KEY = os.getenv("TOKENHARBOR_API_KEY") or os.getenv("OPENROUTER_API_KEY") or DEFAULT_TOKENHARBOR_KEY
+# SECURITY: API keys are read exclusively from environment variables (never hardcoded).
+TOKENHARBOR_API_KEY = (os.getenv("TOKENHARBOR_API_KEY") or os.getenv("OPENROUTER_API_KEY") or "").strip()
 BASE_URL = os.getenv("OPENROUTER_BASE_URL", "https://tokenharbor.ai/v1")
 DEFAULT_MODEL = os.getenv("MODEL_NAME", "deepseek-v4.1-flash:free")
 

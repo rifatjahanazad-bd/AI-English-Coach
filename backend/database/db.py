@@ -651,7 +651,40 @@ def save_user_goal(user_id: str, target_band: float = 7.5, target_exam_date: str
 # Curriculum Modules & Classes Database Management
 # -------------------------------------------------------------------------
 REPO_ROOT = DATABASE_DIR.parents[1] if len(DATABASE_DIR.parents) >= 2 else DATABASE_DIR.parent
-MODULES_DIR = REPO_ROOT / "UI" / "modules"
+# Curriculum JSON source. Allow an explicit override for serverless bundles where
+# the repository layout differs (see vercel.json includeFiles).
+MODULES_DIR = Path(os.getenv("CURRICULUM_MODULES_DIR") or (REPO_ROOT / "UI" / "modules"))
+
+
+def get_db_diagnostics() -> Dict[str, Any]:
+    """Returns non-sensitive diagnostics about DB availability and curriculum seeding."""
+    module_count = 0
+    class_count = 0
+    try:
+        with get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT COUNT(*) AS c FROM curriculum_modules")
+            module_count = cursor.fetchone()["c"]
+            cursor.execute("SELECT COUNT(*) AS c FROM curriculum_classes")
+            class_count = cursor.fetchone()["c"]
+    except Exception as exc:
+        return {
+            "db_path": str(DB_PATH),
+            "db_writable": False,
+            "modules_dir": str(MODULES_DIR),
+            "modules_dir_exists": MODULES_DIR.exists(),
+            "curriculum_modules": 0,
+            "curriculum_classes": 0,
+            "error": str(exc),
+        }
+    return {
+        "db_path": str(DB_PATH),
+        "db_writable": os.access(str(DB_PATH.parent), os.W_OK),
+        "modules_dir": str(MODULES_DIR),
+        "modules_dir_exists": MODULES_DIR.exists(),
+        "curriculum_modules": module_count,
+        "curriculum_classes": class_count,
+    }
 
 
 def seed_curriculum_modules(force: bool = False) -> int:
@@ -668,6 +701,11 @@ def seed_curriculum_modules(force: bool = False) -> int:
             return count
 
         if not MODULES_DIR.exists():
+            print(
+                f"[warn] Curriculum source directory not found: {MODULES_DIR}. "
+                "Practice modules will be unavailable. Bundle 'UI/modules/**' with the "
+                "serverless function (see vercel.json includeFiles)."
+            )
             return 0
 
         total_seeded = 0

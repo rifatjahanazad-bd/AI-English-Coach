@@ -33,8 +33,14 @@ SYSTEM_TOKEN_BUDGET = 1500
 MAX_FEEDBACK_CHARS = 8000
 MAX_FEEDBACK_FIELD_CHARS = 2000
 
-# Default key fallback if environment variable is not explicitly provided in serverless environments (e.g. Vercel)
-DEFAULT_TOKENHARBOR_KEY = "thk_live_eaZnj0OdWrXhfX1KV2lva1NHnWSHr3OpBhTynZ8RpDTDVulz1j1-mQj6m92mr67R"
+# Per-request timeout and model rotation. Kept small so a full fallback sweep
+# stays comfortably inside the serverless maxDuration (60s) budget.
+CHAT_REQUEST_TIMEOUT = float(os.getenv("CHAT_REQUEST_TIMEOUT", "6.0"))
+TH_CHAT_MODELS = [
+    "deepseek-v4.1-flash:free",  # primary: fast + reliable
+    "deepseek-v4-flash:free",    # secondary
+    "mimo-v2.6-flash:free",      # last-resort (slower)
+]
 
 
 # ---------------- .env loader ----------------
@@ -81,6 +87,21 @@ _load_dotenv()
 
 
 # ---------------- Provider Clients ----------------
+
+_MISSING_KEY_LOGGED = False
+
+
+def _warn_missing_key_once() -> None:
+    """Logs a single actionable warning when no LLM credential is configured."""
+    global _MISSING_KEY_LOGGED
+    if _MISSING_KEY_LOGGED:
+        return
+    _MISSING_KEY_LOGGED = True
+    print(
+        "[error] No LLM API key configured. Set TOKENHARBOR_API_KEY (or GEMINI_API_KEY / "
+        "OPENROUTER_API_KEY) in the deployment environment. Falling back to offline coaching."
+    )
+
 
 def get_gemini_client() -> Optional[Any]:
     """Returns Google GenAI client if GEMINI_API_KEY or GOOGLE_API_KEY is available."""
@@ -139,24 +160,17 @@ def get_openai_compatible_targets() -> List[Tuple[str, OpenAI, List[str]]]:
     _load_dotenv()
     targets = []
 
-    # 1. Token Harbor (Primary live key or verified default key)
-    th_key = os.environ.get("TOKENHARBOR_API_KEY") or DEFAULT_TOKENHARBOR_KEY
+    # 1. Token Harbor (requires TOKENHARBOR_API_KEY / OPENROUTER_API_KEY env var)
+    th_key = os.environ.get("TOKENHARBOR_API_KEY") or os.environ.get("OPENROUTER_API_KEY")
     if th_key:
         try:
             th_base = BASE_URL if "tokenharbor" in BASE_URL else "https://tokenharbor.ai/v1"
-            client = OpenAI(api_key=th_key, base_url=th_base, timeout=8.0, max_retries=1)
-            targets.append((
-                "TokenHarbor",
-                client,
-                [
-                    "claude-haiku-5.5:free",
-                    "deepseek-v4.1-flash:free",
-                    "mimo-v2.6-flash:free",
-                    "deepseek-v4-flash:free",
-                ]
-            ))
+            client = OpenAI(api_key=th_key, base_url=th_base, timeout=CHAT_REQUEST_TIMEOUT, max_retries=0)
+            targets.append(("TokenHarbor", client, list(TH_CHAT_MODELS)))
         except Exception as e:
             print(f"[warn] Failed to initialize TokenHarbor client: {e}")
+    else:
+        _warn_missing_key_once()
 
     # 2. OpenRouter (if explicitly configured)
     or_key = os.environ.get("OPENROUTER_API_KEY")

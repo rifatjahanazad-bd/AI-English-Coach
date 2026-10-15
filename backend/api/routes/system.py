@@ -11,11 +11,20 @@ router = APIRouter(prefix="/api", tags=["system"])
 
 @router.get("/health")
 def health_check():
-    """Returns database and module directories health status."""
+    """Returns database, curriculum seeding, and LLM configuration health status."""
+    diag = db.get_db_diagnostics()
     return {
         "status": "healthy",
         "database": str(db.DB_PATH.exists()),
         "modules_dir": str(MODULES_DIR.exists()),
+        "curriculum_modules": diag.get("curriculum_modules", 0),
+        "curriculum_classes": diag.get("curriculum_classes", 0),
+        "llm_key_configured": bool(
+            os.environ.get("TOKENHARBOR_API_KEY")
+            or os.environ.get("OPENROUTER_API_KEY")
+            or os.environ.get("GEMINI_API_KEY")
+            or os.environ.get("GOOGLE_API_KEY")
+        ),
         "architecture": "modular_backend_api"
     }
 
@@ -36,33 +45,44 @@ def test_llm_status():
         "tests": []
     }
 
-    # 1. Test TokenHarbor
-    th_start = time.time()
-    try:
-        from openai import OpenAI
-        th_key = os.environ.get("TOKENHARBOR_API_KEY") or chatbot.DEFAULT_TOKENHARBOR_KEY
-        client = OpenAI(api_key=th_key, base_url="https://tokenharbor.ai/v1", timeout=8.0, max_retries=1)
-        r = client.chat.completions.create(
-            model="claude-haiku-5.5:free",
-            messages=[{"role": "user", "content": "ping"}],
-            max_tokens=5
-        )
-        results["tests"].append({
-            "provider": "TokenHarbor",
-            "model": "claude-haiku-5.5:free",
-            "status": "ok",
-            "latency_sec": round(time.time() - th_start, 2),
-            "preview": (r.choices[0].message.content or "").strip()
-        })
-    except Exception as exc:
-        results["tests"].append({
-            "provider": "TokenHarbor",
-            "model": "claude-haiku-5.5:free",
-            "status": "error",
-            "error_type": type(exc).__name__,
-            "error_message": str(exc),
-            "latency_sec": round(time.time() - th_start, 2)
-        })
+    # 1. Test TokenHarbor (uses the same model rotation as the live chatbot)
+    th_key = os.environ.get("TOKENHARBOR_API_KEY") or os.environ.get("OPENROUTER_API_KEY")
+    for th_model in chatbot.TH_CHAT_MODELS:
+        th_start = time.time()
+        if not th_key:
+            results["tests"].append({
+                "provider": "TokenHarbor",
+                "model": th_model,
+                "status": "missing_key",
+                "error_message": "TOKENHARBOR_API_KEY is not configured in this environment.",
+                "latency_sec": 0.0
+            })
+            break
+        try:
+            from openai import OpenAI
+            client = OpenAI(api_key=th_key, base_url="https://tokenharbor.ai/v1", timeout=8.0, max_retries=0)
+            r = client.chat.completions.create(
+                model=th_model,
+                messages=[{"role": "user", "content": "ping"}],
+                max_tokens=5
+            )
+            results["tests"].append({
+                "provider": "TokenHarbor",
+                "model": th_model,
+                "status": "ok",
+                "latency_sec": round(time.time() - th_start, 2),
+                "preview": (r.choices[0].message.content or "").strip()
+            })
+            break
+        except Exception as exc:
+            results["tests"].append({
+                "provider": "TokenHarbor",
+                "model": th_model,
+                "status": "error",
+                "error_type": type(exc).__name__,
+                "error_message": str(exc),
+                "latency_sec": round(time.time() - th_start, 2)
+            })
 
     # 2. Test Gemini if configured
     gem_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
