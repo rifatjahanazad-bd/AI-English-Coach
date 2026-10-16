@@ -489,28 +489,13 @@
 
         root.innerHTML = `
             <div class="dashboard-container">
-                <!-- 0. GUEST DEMO NOTICE (Only if not logged into Google) -->
-                ${!loggedIn ? `
-                    <div class="dash-guest-notice">
-                        <div class="dash-guest-notice-content">
-                            <span class="dash-guest-notice-icon">✨</span>
-                            <div class="dash-guest-notice-text">
-                                <strong>Guest Mode Active:</strong> Sign in with Google to sync your study streaks, IELTS mock tests, and AI mentor history across all devices.
-                            </div>
-                        </div>
-                        <button class="dash-guest-notice-btn" id="dashNoticeSignInBtn">
-                            <span>🔑 Sign In with Google</span>
-                        </button>
-                    </div>
-                ` : ''}
-
                 <!-- ============================================================== -->
                 <!-- [1] USER NAME WITH GREETINGS & PROFILE CAPSULE                  -->
                 <!-- ============================================================== -->
                 <div class="dash-profile-bar">
                     <div class="dash-profile-info">
                         <div class="dash-avatar-circle" title="Student Profile">
-                            ${user.photoURL ? `<img src="${user.photoURL}" alt="User Avatar" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">` : `<span>🧑‍🎓</span>`}
+                            ${user.photoURL ? `<img src="${user.photoURL}" alt="User Avatar">` : `<span>🧑‍🎓</span>`}
                             <span class="dash-avatar-level-badge">LVL ${scoring.current_level}</span>
                         </div>
                         <div class="dash-user-names">
@@ -518,8 +503,8 @@
                             <div class="dash-user-subtitle">
                                 <span>IELTS Academic Prep</span>
                                 <span class="dash-band-tag">Target Band ${targetBand} 🎯</span>
-                                <span style="color: #CBD5E1;">•</span>
-                                <span style="color: ${loggedIn ? '#16A34A' : '#3B82F6'}; font-weight: 700;">
+                                <span class="dash-dot-sep">•</span>
+                                <span class="${loggedIn ? 'dash-status-synced' : 'dash-status-local'}">
                                     ${loggedIn ? '🟢 Google Synced' : '⚡ Local Session'}
                                 </span>
                             </div>
@@ -535,7 +520,7 @@
                             <span>⭐</span>
                             <span>${(scoring.total_xp || 0).toLocaleString()} XP</span>
                         </div>
-                        <div class="dash-xp-pill" style="background: rgba(99, 102, 241, 0.12); color: #4338CA;" title="${scoring.current_league} League Tier">
+                        <div class="dash-league-pill" title="${scoring.current_league} League Tier">
                             <span>${(scoring.league_details && scoring.league_details.badge) || '🥉'}</span>
                             <span>${scoring.current_league}</span>
                         </div>
@@ -557,19 +542,15 @@
 
                 ${isNewUser ? `
                     <!-- New Learner / First Day Welcome Callout -->
-                    <div style="background: #EFF6FF; border: 1.5px solid #BFDBFE; border-radius: 20px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
-                        <div style="display: flex; align-items: center; gap: 12px; max-width: 700px;">
-                            <span style="font-size: 28px;">🌱</span>
+                    <div class="dash-newcallout">
+                        <div class="dash-newcallout-content">
+                            <span class="dash-newcallout-icon">🌱</span>
                             <div>
-                                <strong style="color: #1E3A8A; font-size: 14.5px;">Welcome to your first day! Baseline Ready (CEFR B1 / Band 5.5)</strong>
-                                <p style="margin: 3px 0 0 0; color: #3B82F6; font-size: 13px; font-weight: 600;">
-                                    Complete your first 5-minute diagnostic test below to calculate your real AI band scores across Reading, Writing, and Speaking!
-                                </p>
+                                <strong>Welcome to your first day! Baseline Ready (CEFR B1 / Band 5.5)</strong>
+                                <p>Complete your first 5-minute diagnostic test below to calculate your real AI band scores across Reading, Writing, and Speaking!</p>
                             </div>
                         </div>
-                        <button class="dash-speaking-btn" id="dashTakeDiagnosticBtn" style="background: #2563EB; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);">
-                            <span>Take Diagnostic Test 🚀</span>
-                        </button>
+                        <button class="dash-newcallout-btn" id="dashTakeDiagnosticBtn">Take Diagnostic Test 🚀</button>
                     </div>
                 ` : ''}
 
@@ -755,7 +736,7 @@
                     <div class="dash-score-clean-card">
                         <div>
                             <div class="dash-score-clean-top">
-                                <div class="dash-score-clean-icon" style="background: #FEF3C7;">⚡</div>
+                                <div class="dash-score-clean-icon icon-amber">⚡</div>
                                 <span class="dash-prof-band-badge badge-amber">Speed Drill</span>
                             </div>
                             <h4>Fast Phrases Game</h4>
@@ -777,7 +758,7 @@
                     <div class="dash-score-clean-card">
                         <div>
                             <div class="dash-score-clean-top">
-                                <div class="dash-score-clean-icon" style="background: #F0FDF4;">⭐</div>
+                                <div class="dash-score-clean-icon icon-green">⭐</div>
                                 <span class="dash-prof-band-badge badge-green">${scoring.current_league} League</span>
                             </div>
                             <h4>Practice Experience</h4>
@@ -799,7 +780,7 @@
                     <div class="dash-score-clean-card">
                         <div>
                             <div class="dash-score-clean-top">
-                                <div class="dash-score-clean-icon" style="background: #EFF6FF;">🎯</div>
+                                <div class="dash-score-clean-icon icon-blue">🎯</div>
                                 <span class="dash-prof-band-badge badge-blue">Quizzes</span>
                             </div>
                             <h4>Drill Accuracy Rate</h4>

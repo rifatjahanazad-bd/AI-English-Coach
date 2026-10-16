@@ -16,7 +16,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <!-- Modular CSS Stylesheets -->
-    <link rel="stylesheet" href="css/style.css?v=9">
+    <link rel="stylesheet" href="css/style.css?v=10">
 </head>
 
 <body>
@@ -34,19 +34,6 @@
                     </div>
                 </div>
                 <div class="header-actions">
-                    <!-- Duolingo Global Behavioral Scoring & Level Pills -->
-                    <div class="global-streak-pill" id="globalStreakPill" title="Daily Study Streak">
-                        <span class="flame-icon">🔥</span>
-                        <span id="globalStreakCount">1</span>
-                    </div>
-                    <div class="global-xp-pill" id="globalXpPill" title="Total Lifetime XP">
-                        <span class="xp-star">⭐</span>
-                        <span id="globalXpCount">0</span>
-                    </div>
-                    <div class="global-level-pill" id="globalLevelPill" title="Current Level & League">
-                        <span id="globalLeagueBadge">🥉</span>
-                        <span id="globalLevelText">LVL 1</span>
-                    </div>
                     <a href="/game/" target="_blank" class="game-launch-btn" id="gameLaunchBtn"
                         title="Play Fast Phrases Speed Game">
                         <span>🎮</span>
@@ -166,7 +153,7 @@
                         <div class="space-between">
                             <div>
                                 <h2 style="font-size: 20px;">Practice Arena</h2>
-                                <p class="caption">Targeted drills for Grammar, Vocabulary, Listening, and Writing</p>
+                                <p class="caption">Select your own targeted drills for Grammar, Vocabulary, Listening and Writing</p>
                             </div>
                             <span class="pill-chip green">🟢 Online</span>
                         </div>
@@ -174,11 +161,6 @@
 
                     <!-- STEP 1: 4 CATEGORIES WITH BIG THUMBNAILS & NEXT BUTTON -->
                     <div id="practiceStep1">
-                        <div class="space-between mb-8">
-                            <p class="caption">Select a practice track · <span class="topic-count">4 available</span>
-                            </p>
-                        </div>
-
                         <div class="practice-category-scroll" id="practiceCategoryList">
                             <!-- 1. Grammar Lessons -->
                             <div class="practice-category-card selected" data-category="grammar">
@@ -641,12 +623,12 @@
     <script src="js/practice/components/cards.js?v=2"></script>
     <script src="js/practice/components/module_list.js?v=2"></script>
     <script src="js/practice/components/learning.js?v=2"></script>
-    <script src="js/practice/components/layout.js?v=2"></script>
+    <script src="js/practice/components/layout.js?v=3"></script>
     <script src="js/practice/modulepractice.js?v=2"></script>
     <script src="js/practice/practiceUI.js?v=2"></script>
     <script src="js/test.js"></script>
-    <script src="js/memescreen.js?v=2"></script>
-    <script src="js/dashboard.js?v=2"></script>
+    <script src="js/memescreen.js?v=3"></script>
+    <script src="js/dashboard.js?v=3"></script>
     <script src="js/router.js"></script>
     <script src="js/app.js"></script>
 </body>

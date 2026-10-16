@@ -9,10 +9,10 @@
    - test.css       : Speaking Test (topic selection, audio recorder, timer, scores)
    ========================================================================== */
 
-@import url('base.css');
-@import url('layout.css');
-@import url('components.css');
-@import url('dashboard.css');
-@import url('chat.css');
-@import url('practice.css');
-@import url('test.css');
+@import url('base.css?v=10');
+@import url('layout.css?v=10');
+@import url('components.css?v=10');
+@import url('dashboard.css?v=10');
+@import url('chat.css?v=10');
+@import url('practice.css?v=10');
+@import url('test.css?v=10');

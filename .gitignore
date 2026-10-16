@@ -30,3 +30,6 @@ __pycache__/
 # Generated output media (keep .gitkeep)
 output/*
 !output/.gitkeep
+
+# Local study / annotated copies (not for GitHub)
+*_BN_annotated.py

@@ -708,7 +708,7 @@
             window.AIEC_ActiveLevelController.selectClassById(o.initialClassId);
         }
 
-        // 3. Vibrant Meme Generator Banner ("Tired? Want some fun?" -> Generate 3 Memes)
+        // 3. Vibrant Meme Generator Banner ("Tired? Want some fun?" -> Random Meme)
         const memeBanner = el('div', 'meme-fun-banner');
         memeBanner.innerHTML = `
             <div class="meme-banner-left">
@@ -723,7 +723,7 @@
             <div class="meme-banner-right">
                 <button type="button" class="meme-generate-btn" id="generateMemeBtn">
                     <span class="meme-btn-icon">⚡</span>
-                    <span class="meme-btn-text">Generate Meme</span>
+                    <span class="meme-btn-text">Random Meme</span>
                 </button>
             </div>
         `;
@@ -840,7 +840,7 @@
                         clearInterval(memeCountdownInterval);
                         memeCountdownInterval = null;
                         if (btn) btn.disabled = false;
-                        if (btnText) btnText.textContent = 'Generate 3 Memes';
+                        if (btnText) btnText.textContent = 'Random Meme';
                         if (cooldownBadge) cooldownBadge.style.display = 'none';
                         syncMemeStatus();
                         return;
@@ -860,7 +860,7 @@
                 if (cooldownBadge) cooldownBadge.style.display = 'none';
             } else {
                 if (btn) btn.disabled = false;
-                if (btnText) btnText.textContent = 'Generate 3 Memes';
+                if (btnText) btnText.textContent = 'Random Meme';
                 if (cooldownBadge) cooldownBadge.style.display = 'none';
             }
         }
@@ -874,7 +874,7 @@
 
             const generateBtn = memeBanner.querySelector('#generateMemeBtn');
             const btnText = generateBtn ? generateBtn.querySelector('.meme-btn-text') : null;
-            const originalText = btnText ? btnText.textContent : 'Generate Meme';
+            const originalText = btnText ? btnText.textContent : 'Random Meme';
 
             if (generateBtn) generateBtn.disabled = true;
             if (btnText) btnText.textContent = '⚡ Generating Meme...';
@@ -933,10 +933,6 @@
             const modal = el('div', 'meme-modal-overlay');
             modal.id = 'memeFunModal';
 
-            const usedCount = (statsData && statsData.today_count) || 1;
-            const dailyLimit = (statsData && statsData.daily_limit) || 15;
-            const inCooldown = (statsData && statsData.in_cooldown);
-
             modal.innerHTML = `
                 <div class="meme-modal-dialog">
                     <div class="meme-modal-header">
@@ -965,23 +961,12 @@
                                         </div>
                                         <p class="meme-hint-text">"${esc(m.joke || 'Keep learning and smiling!')}"</p>
                                     </div>
-                                    <div class="meme-card-actions">
-                                        <a href="${esc(m.image_url)}" target="_blank" rel="noopener noreferrer" class="meme-download-btn" title="Open full image">
-                                            <span>↗ View Full Size</span>
-                                        </a>
-                                    </div>
                                 </div>
                             </div>
                         `).join('')}
                     </div>
 
-                    <!-- Cooldown & Quota Information Banner -->
-                    <div class="meme-modal-cooldown-notice">
-                        <span>🎯 <strong>Quota:</strong> ${usedCount}/${dailyLimit} used today ${inCooldown ? '• ⏳ <strong>30-Minute Break Active</strong> (take a study break!)' : ''}</span>
-                    </div>
-
                     <div class="meme-modal-footer">
-                        <span class="caption">1 meme per click • Laugh, refresh & get back to practice!</span>
                         <button type="button" class="meme-back-btn">Back to Practice</button>
                     </div>
                 </div>

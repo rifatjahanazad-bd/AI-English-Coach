@@ -306,10 +306,6 @@
         const old = document.getElementById('aiecMemeModal');
         if (old) old.remove();
 
-        const usedCount = (statsData && statsData.today_count) || 1;
-        const dailyLimit = (statsData && statsData.daily_limit) || 15;
-        const inCooldown = statsData && statsData.in_cooldown;
-
         const modal = document.createElement('div');
         modal.className = 'meme-modal-overlay';
         modal.id = 'aiecMemeModal';
@@ -341,22 +337,12 @@
                                     </div>
                                     <p class="meme-hint-text">"${esc(m.joke || 'Keep learning and smiling!')}"</p>
                                 </div>
-                                <div class="meme-card-actions">
-                                    <a href="${esc(m.image_url)}" target="_blank" rel="noopener noreferrer" class="meme-download-btn" title="Open full image">
-                                        <span>↗ View Full Size</span>
-                                    </a>
-                                </div>
                             </div>
                         </div>
                     `).join('')}
                 </div>
 
-                <div class="meme-modal-cooldown-notice">
-                    <span>🎯 <strong>Quota:</strong> ${usedCount}/${dailyLimit} used today ${inCooldown ? '• ⏳ <strong>30-Minute Break Active</strong>' : ''}</span>
-                </div>
-
                 <div class="meme-modal-footer">
-                    <span class="caption">1 meme per click • Laugh, refresh & get back to practice!</span>
                     <button type="button" class="meme-back-btn">Back to Practice</button>
                 </div>
             </div>
